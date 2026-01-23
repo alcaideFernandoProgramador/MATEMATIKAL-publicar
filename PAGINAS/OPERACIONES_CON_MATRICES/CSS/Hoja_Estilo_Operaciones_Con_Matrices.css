@@ -1,0 +1,215 @@
+:root{
+  --bg:#f6f7fb;--panel:#ffffff;--panel-2:#fbfcff;--text:#111827;--muted:#6b7280;
+  --border:#e5e7eb;--accent:#2563eb;--accent-2:#1d4ed8;--soft:#eef2ff;
+  --radius:12px;--radius-sm:8px;--shadow:0 8px 24px rgba(16,24,40,.08);
+  --shadow-sm:0 2px 8px rgba(16,24,40,.06);
+}
+
+*{box-sizing:border-box;}
+html,body,#contenedor{scroll-behavior:smooth;}
+
+body{
+  margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+/* Enlaces */
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* Titulares y texto */
+h1,h2,h3,h4,p{margin:0;}
+h1{font-size:22px;font-weight:700;letter-spacing:.2px;text-align:center;}
+h2{font-size:18px;font-weight:600;}
+h3{font-size:15px;font-weight:600;color:var(--muted);}
+h4{
+  font-size:12px;font-weight:700;color:var(--muted);
+  letter-spacing:.4px;text-transform:uppercase;
+}
+p{width:auto;padding:0;}
+
+.textos1{margin:0;}
+.lugardatos{align-items:center;}
+
+/* Labels y opciones (radios más pequeños y líneas más separadas) */
+label{
+  margin-right:10px;margin-bottom:6px;
+  color:var(--muted);font-weight:500;
+  display:inline-flex;align-items:center;
+}
+input[type="radio"]{
+  width:14px;height:14px;margin-right:6px;
+  accent-color:var(--accent);
+}
+
+/* Tablas / matrices */
+td{text-align:right;}
+table{
+  border-collapse:separate;border-spacing:10px;
+  font-size:14.5px;margin:0;padding:0;
+}
+table.matrix{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:10px 12px;box-shadow:var(--shadow-sm);
+}
+
+/* Inputs */
+.inputCorto,.inputLargo,.inputMuyLargo{
+  height:28px;border:1px solid var(--border);border-radius:6px;
+  padding:0 6px;background:var(--panel);color:var(--text);outline:none;
+}
+.inputCorto{margin:0;width:28px;}
+.inputLargo{width:110px;}
+.inputMuyLargo{width:150px;}
+.inputCorto:focus,.inputLargo:focus,.inputMuyLargo:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+/* Botones (incluidos Calcular) alineados a la izquierda */
+button,input[type="button"],input[type="submit"]{
+  display:inline-flex;align-items:center;justify-content:flex-start;
+  padding:6px 14px 6px 10px;margin:4px 8px 4px 0;
+  border-radius:8px;border:1px solid var(--border);
+  background:var(--panel-2);color:var(--text);cursor:pointer;
+  font-size:13px;font-weight:600;
+}
+button:hover,input[type="button"]:hover,input[type="submit"]:hover{
+  border-color:var(--accent);background:var(--soft);
+}
+
+/* Cabecera: título centrado, controles pegados a la derecha */
+#tituloinicial{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:center;
+  min-height:64px;padding:12px 22px;background:var(--panel);
+  border-bottom:1px solid var(--border);
+}
+#tituloinicial h1{
+  flex:0 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#controlesTop{
+  position:absolute;right:22px;top:50%;
+  transform:translateY(-50%);
+  display:flex;align-items:center;gap:16px;
+}
+
+#abreVentana1{
+  font-size:13px;font-weight:600;padding:6px 10px;
+  background:var(--soft);border:1px solid transparent;border-radius:8px;
+}
+#abreVentana1:hover{background:#e0e7ff;text-decoration:none;}
+
+/* Botón VOLVER */
+#btnHome{
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:44px;height:48px;background:var(--panel-2);
+  border:1px solid var(--border);border-radius:10px;
+  text-decoration:none;gap:2px;box-shadow:var(--shadow-sm);
+}
+#btnHome:hover{border-color:#d1d5db;background:var(--panel);text-decoration:none;}
+#btnHome span{
+  font-size:9px;line-height:9px;color:var(--text);
+  font-weight:700;letter-spacing:.35px;
+}
+
+/* Layout general */
+#contenedor{
+  width:100%;margin:0;padding:18px 22px 28px 22px;
+  display:grid;grid-template-columns:1fr;gap:16px;
+}
+
+/* Dos columnas en pantallas grandes, sin sticky en caja1 */
+@media (min-width:1100px){
+  #contenedor{
+    grid-template-columns:420px 1fr;align-items:flex-start;
+  }
+}
+
+/* Tarjetas principales siempre separadas */
+#caja1,#caja2{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 20px;
+}
+
+/* Caja2 en columna para que caja21 pueda crecer con scroll propio */
+#caja2{
+  display:flex;flex-direction:column;align-items:stretch;min-height:0;
+}
+
+/* Cabecera de caja1 (Introducción de datos) */
+#tituloCaja1{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;font-weight:800;letter-spacing:.4px;
+  text-transform:uppercase;color:var(--muted);
+  padding-bottom:8px;border-bottom:1px dashed var(--border);
+  margin-bottom:10px;
+}
+#caja111{margin-left:8px;font-size:12px;color:var(--muted);}
+
+/* Caja2: operaciones del usuario */
+#letreroUsuario{padding:2px 0;margin-bottom:8px;}
+
+/* CAJA21: siempre 99% de ancho + scroll vertical propio + sin crecer hacia arriba */
+#caja21{
+  display:block !important;
+  box-sizing:border-box;
+  width:99% !important;
+  max-width:99% !important;
+  margin:6px auto 0 auto;
+  height:calc(50vh - 120px);
+  min-height:120px;
+  overflow-y:auto;
+  overflow-x:auto;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:var(--panel-2);
+}
+#caja21::after{
+  content:"";display:block;clear:both;
+}
+
+
+/* Ventana modal de ayuda */
+.ventana{
+  display:none;position:fixed;inset:0;
+  background-color:rgba(2,6,23,0.55);
+  justify-content:center;align-items:center;z-index:1000;
+  padding:18px;
+}
+.contenidoVentana{
+  background:var(--panel);padding:18px 18px 14px 18px;
+  border-radius:var(--radius);width:min(900px,94vw);
+  text-align:center;position:relative;z-index:1001;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.cierraVentana{
+  position:absolute;top:10px;right:12px;
+  font-size:22px;cursor:pointer;color:var(--muted);
+}
+.cierraVentana:hover{color:var(--text);}
+iframe{border:none;border-radius:10px;}
+
+.tpasos td.exprCell{padding-right:14px!important;}
+.tpasos td.calcCell{text-align:left!important;padding-left:14px!important;border-left:1px dashed #ddd!important;}
+.tpasos td.calcCell .panelCalc{justify-content:flex-start!important;width:auto!important;}
+.tpasos colgroup col:nth-child(3){width:24rem!important;min-width:24rem!important;max-width:24rem!important;}
+
+
+.tpasos{table-layout:fixed!important;width:100%!important;}
+.tpasos colgroup col:nth-child(1){width:6rem!important;}
+.tpasos colgroup col:nth-child(2){width:55%!important;}
+.tpasos colgroup col:nth-child(3){width:45%!important;}
+.tpasos td.exprCell{max-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;padding-right:14px!important;}
+.tpasos td.calcCell{text-align:left!important;padding-left:14px!important;border-left:1px dashed #ddd!important;}
+.tpasos td.calcCell .panelCalc{justify-content:flex-start!important;width:auto!important;}
+
+html,body{height:100%;}
+body{min-height:100vh;display:flex;flex-direction:column;}
+#contenedor{flex:1;}
+footer{margin-top:auto;padding:14px 0;text-align:center;font-size:.95em;}
+footer hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
+footer p{margin:0;}
+footer a{text-decoration:none;}
+footer a:hover{text-decoration:underline;}
