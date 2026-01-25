@@ -413,7 +413,7 @@ function initPdfAyuda(){
 const abreVentana1=document.getElementById("abreVentana1"),cierraVentana1=document.getElementById("cierraVentana1");
 const v=document.getElementById("ventana1"),pdf1=document.getElementById("pdf1");
 if(!abreVentana1||!cierraVentana1||!v||!pdf1)return;
-const pdf1URL="instrucciones/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
+const pdf1URL="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
 abreVentana1.addEventListener("click",function(event){event.preventDefault();pdf1.src=pdf1URL;v.style.display="flex";});
 cierraVentana1.addEventListener("click",function(){v.style.display="none";pdf1.src="";});
 window.addEventListener("click",function(event){if(event.target==v){v.style.display="none";pdf1.src="";}});}

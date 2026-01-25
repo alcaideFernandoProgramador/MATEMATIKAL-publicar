@@ -281,7 +281,7 @@ if(b.tagName==="A"){b.href="#";b.removeAttribute("download")}else if(b.tagName==
 b.addEventListener("click",e=>{e.preventDefault();location.reload()});
 if(volver)cont.insertBefore(b,volver);else ayuda.insertAdjacentElement("afterend",b)};insertarOtrasMatrices();
 const archivos={abreVentana1:{pdf:'INSTRUCCIONES/Ayuda.pdf',
-docx:'INSTRUCCIONES/Archivos_Word/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;
+docx:'INSTRUCCIONES/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;
 
 const abrir=aid=>{const n=aid.replace('abreVentana',''),v=$('ventana'+n),f=$('pdf'+n),
 c=v?.querySelector('.contenidoVentana');if(!v||!f||!c)return;const m=vistaDe(archivos[aid]);
