@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://matematikal.com/</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Calculo_determinantes.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Calculo_matriz_escalonada.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss.html</loc></url>
-  <url><loc>https://matematikal.com/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro.html</loc></url>
+
+  <url><loc>https://matematikal.com/about</loc></url>
+  <url><loc>https://matematikal.com/contacto</loc></url>
+  <url><loc>https://matematikal.com/privacy</loc></url>
+  <url><loc>https://matematikal.com/cookies</loc></url>
+
+  <url><loc>https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Calculo_determinantes</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Calculo_matriz_escalonada</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss</loc></url>
+  <url><loc>https://matematikal.com/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro</loc></url>
 </urlset>
