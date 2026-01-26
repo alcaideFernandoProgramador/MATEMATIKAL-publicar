@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://matematikal.com/</loc></url>
-  <url><loc>https://matematikal.com/about.html</loc></url>
-  <url><loc>https://matematikal.com/contacto.html</loc></url>
-  <url><loc>https://matematikal.com/privacy.html</loc></url>
-  <url><loc>https://matematikal.com/cookies.html</loc></url>
+
+  <url><loc>https://matematikal.com/about</loc></url>
+  <url><loc>https://matematikal.com/contacto</loc></url>
+  <url><loc>https://matematikal.com/privacy</loc></url>
+  <url><loc>https://matematikal.com/cookies</loc></url>
+
   <url><loc>https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Calculo_determinantes</loc></url>
   <url><loc>https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Calculo_matriz_escalonada</loc></url>
   <url><loc>https://matematikal.com/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices</loc></url>
