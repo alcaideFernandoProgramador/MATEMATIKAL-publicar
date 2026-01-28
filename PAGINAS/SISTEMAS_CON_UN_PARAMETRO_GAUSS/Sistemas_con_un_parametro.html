@@ -46,6 +46,28 @@
 <footer class="siteFooter"><div class="footerInner"><a href="/about">Acerca de</a><a href="/contacto">Contacto</a><a href="/privacy">Privacidad</a><a href="/cookies">Cookies</a></div></footer>
 <script>
 (()=>{if(!document.body.classList.contains("pag-sistema-parametro"))return;
+let cont=document.getElementById("contenedor"),c1=document.getElementById("caja1"),t3=document.getElementById("titulo3"),c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");
+if(!cont||!c2||!c3)return;
+let footer=document.querySelector("footer.siteFooter"),minC3=160;
+let _gap=()=>{let cs=getComputedStyle(cont),g=parseFloat(cs.rowGap||cs.gap||"0");return isNaN(g)?10:g;};
+let _p=(k)=>{let cs=getComputedStyle(cont);let v=parseFloat(cs[k]||"0");return isNaN(v)?0:v;};
+let _scrollBottom=(el)=>{try{el.scrollTop=el.scrollHeight;}catch(e){}};
+let _update=()=>{requestAnimationFrame(()=>{let pt=_p("paddingTop"),pb=_p("paddingBottom"),gap=_gap();
+let inner=cont.clientHeight-pt-pb, h1=c1?c1.offsetHeight:0, h3=t3?t3.offsetHeight:0;
+let gaps=0;if(c1&&t3)gaps+=gap;if(t3&&c2)gaps+=gap;if(c2&&c3)gaps+=gap;
+let cap=inner-h1-h3-gaps-minC3;
+let desired=(c2.childElementCount?c2.scrollHeight:0);
+if(desired<1)desired=80;
+if(cap<80)cap=80;
+let h2=Math.min(desired,cap);
+c2.style.height=h2+"px";
+c3.style.minHeight=minC3+"px";
+_scrollBottom(c2);_scrollBottom(c3);});};
+addEventListener("resize",_update,{passive:true});
+let obs=new MutationObserver(()=>_update());
+obs.observe(c2,{childList:true,subtree:true});
+obs.observe(c3,{childList:true,subtree:true});
+_update();})();
 let c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");if(!c2||!c3)return;
 let g=12,min3=160,raf=0;
 let _hPrimer=()=>{let h=0;try{if(c2.children&&c2.children.length)h=c2.children[0].getBoundingClientRect().height||0;}catch(e){}return Math.max(260,Math.ceil(h)+40);};
