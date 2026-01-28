@@ -60,12 +60,12 @@ iframe{border:none}
 #controlesTop{position:relative;z-index:9999}
 #controlesTop a,#controlesTop button{position:relative;z-index:10000}
 
-html, body { height: 100%; overflow-y: hidden; }
-
-[id^="caja"] { overflow-y: hidden; }
-
-
-#caja2, #caja3 { overflow-y: auto; overflow-x: hidden; }
-
-
-#caja2, #caja3 { overscroll-behavior: contain; }
+body.pag-sistema-parametro{height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+body.pag-sistema-parametro footer.siteFooter{flex:0 0 auto;}
+body.pag-sistema-parametro #contenedor{flex:1;min-height:0;overflow:hidden;}
+body.pag-sistema-parametro #caja2{overflow-y:scroll;overflow-x:hidden;}
+body.pag-sistema-parametro #contenedorCaja3{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain;}
+body.pag-sistema-parametro #caja3{overflow:visible;}
+body.pag-sistema-parametro #caja12{overflow-x:hidden;}
+body.pag-sistema-parametro #caja12,body.pag-sistema-parametro #caja12 *{max-width:100%;box-sizing:border-box;overflow-x:hidden;}
+body.pag-sistema-parametro #caja12 label{white-space:normal;overflow-wrap:anywhere;word-break:break-word;}
