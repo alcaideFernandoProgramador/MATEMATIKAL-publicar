@@ -68,6 +68,20 @@ let obs=new MutationObserver(()=>_update());
 obs.observe(c2,{childList:true,subtree:true});
 obs.observe(c3,{childList:true,subtree:true});
 _update();})();
+let c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");if(!c2||!c3)return;
+let g=12,min3=160,raf=0;
+let _hPrimer=()=>{let h=0;try{if(c2.children&&c2.children.length)h=c2.children[0].getBoundingClientRect().height||0;}catch(e){}return Math.max(260,Math.ceil(h)+40);};
+let ajustar=()=>{let vh=innerHeight,r2=c2.getBoundingClientRect(),r3=c3.getBoundingClientRect(),min2=_hPrimer();
+let h2=Math.floor(r3.top-r2.top-g),h3=Math.floor(vh-r3.top-g);
+if(h2<min2){let d=min2-h2;h2=min2;h3-=d;}if(h3<min3){let d=min3-h3;h3=min3;h2-=d;}
+let avail=Math.floor(vh-r2.top-g);if(h2+h3>avail){let over=h2+h3-avail;h3=Math.max(min3,h3-over);h2=Math.max(180,avail-h3);}
+c2.style.height=h2+"px";c3.style.height=h3+"px";};
+let _sb=e=>{try{e.scrollTop=e.scrollHeight;}catch(err){}};
+let scrollAbajo=()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{ajustar();_sb(c2);_sb(c3);raf=0;});};
+let obsOpt={childList:true,subtree:true,characterData:true};
+new MutationObserver(scrollAbajo).observe(c2,obsOpt);
+new MutationObserver(scrollAbajo).observe(c3,obsOpt);
+addEventListener("resize",scrollAbajo,{passive:true});scrollAbajo();})();
 </script>
 </body>
 </html>
