@@ -16,7 +16,7 @@
 <link defer="" href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet"/>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.js"></script>
 </head>
-<body>
+<body class="pag-sistema-parametro">
 <div id="tituloinicial">
 <h1>DISCUSIÓN Y RESOLUCIÓN DE SISTEMAS DE ECUACIONES LINEALES con un parámetro<br/>MÉTODO DE GAUSS</h1>
 <div id="controlesTop">
@@ -44,5 +44,13 @@
 <div id="contenedorCaja3"><div id="caja3"></div></div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about">Acerca de</a><a href="/contacto">Contacto</a><a href="/privacy">Privacidad</a><a href="/cookies">Cookies</a></div></footer>
+<script>
+(()=>{if(!document.body.classList.contains("pag-sistema-parametro"))return;
+let c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");if(!c2||!c3)return;
+let f=()=>{let vh=innerHeight,r2=c2.getBoundingClientRect(),r3=c3.getBoundingClientRect(),g=12;
+let h2=Math.max(120,Math.floor(r3.top-r2.top-g)),h3=Math.max(120,Math.floor(vh-r3.top-g));
+c2.style.height=h2+"px";c3.style.height=h3+"px";};
+addEventListener("resize",f,{passive:true});f();})();
+</script>
 </body>
 </html>
