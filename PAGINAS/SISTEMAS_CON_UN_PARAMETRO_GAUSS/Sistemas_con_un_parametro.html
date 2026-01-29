@@ -46,42 +46,26 @@
 <footer class="siteFooter"><div class="footerInner"><a href="/about">Acerca de</a><a href="/contacto">Contacto</a><a href="/privacy">Privacidad</a><a href="/cookies">Cookies</a></div></footer>
 <script>
 (()=>{if(!document.body.classList.contains("pag-sistema-parametro"))return;
-let cont=document.getElementById("contenedor"),c1=document.getElementById("caja1"),t3=document.getElementById("titulo3"),c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");
-if(!cont||!c2||!c3)return;
-let footer=document.querySelector("footer.siteFooter"),minC3=160;
-let _gap=()=>{let cs=getComputedStyle(cont),g=parseFloat(cs.rowGap||cs.gap||"0");return isNaN(g)?10:g;};
-let _p=(k)=>{let cs=getComputedStyle(cont);let v=parseFloat(cs[k]||"0");return isNaN(v)?0:v;};
+let cont=document.getElementById("contenedor"),c1=document.getElementById("caja1"),t3=document.getElementById("titulo3"),c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3"),footer=document.querySelector("footer.siteFooter");
+if(!cont||!c2||!c3)return;let minC3=160,raf=0;
+let _num=(v)=>{let n=parseFloat(v||"0");return isNaN(n)?0:n;};
+let _gap=()=>{let cs=getComputedStyle(cont),g=_num(cs.rowGap||cs.gap);return g||10;};
+let _pad=()=>{let cs=getComputedStyle(cont);return {t:_num(cs.paddingTop),b:_num(cs.paddingBottom)};};
+let _footerH=()=>footer?Math.ceil(footer.getBoundingClientRect().height||0):0;
 let _scrollBottom=(el)=>{try{el.scrollTop=el.scrollHeight;}catch(e){}};
-let _update=()=>{requestAnimationFrame(()=>{let pt=_p("paddingTop"),pb=_p("paddingBottom"),gap=_gap();
-let inner=cont.clientHeight-pt-pb, h1=c1?c1.offsetHeight:0, h3=t3?t3.offsetHeight:0;
-let gaps=0;if(c1&&t3)gaps+=gap;if(t3&&c2)gaps+=gap;if(c2&&c3)gaps+=gap;
-let cap=inner-h1-h3-gaps-minC3;
-let desired=(c2.childElementCount?c2.scrollHeight:0);
-if(desired<1)desired=80;
-if(cap<80)cap=80;
-let h2=Math.min(desired,cap);
-c2.style.height=h2+"px";
-c3.style.minHeight=minC3+"px";
-_scrollBottom(c2);_scrollBottom(c3);});};
-addEventListener("resize",_update,{passive:true});
-let obs=new MutationObserver(()=>_update());
-obs.observe(c2,{childList:true,subtree:true});
-obs.observe(c3,{childList:true,subtree:true});
-_update();})();
-let c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3");if(!c2||!c3)return;
-let g=12,min3=160,raf=0;
-let _hPrimer=()=>{let h=0;try{if(c2.children&&c2.children.length)h=c2.children[0].getBoundingClientRect().height||0;}catch(e){}return Math.max(260,Math.ceil(h)+40);};
-let ajustar=()=>{let vh=innerHeight,r2=c2.getBoundingClientRect(),r3=c3.getBoundingClientRect(),min2=_hPrimer();
-let h2=Math.floor(r3.top-r2.top-g),h3=Math.floor(vh-r3.top-g);
-if(h2<min2){let d=min2-h2;h2=min2;h3-=d;}if(h3<min3){let d=min3-h3;h3=min3;h2-=d;}
-let avail=Math.floor(vh-r2.top-g);if(h2+h3>avail){let over=h2+h3-avail;h3=Math.max(min3,h3-over);h2=Math.max(180,avail-h3);}
-c2.style.height=h2+"px";c3.style.height=h3+"px";};
-let _sb=e=>{try{e.scrollTop=e.scrollHeight;}catch(err){}};
-let scrollAbajo=()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{ajustar();_sb(c2);_sb(c3);raf=0;});};
-let obsOpt={childList:true,subtree:true,characterData:true};
-new MutationObserver(scrollAbajo).observe(c2,obsOpt);
-new MutationObserver(scrollAbajo).observe(c3,obsOpt);
-addEventListener("resize",scrollAbajo,{passive:true});scrollAbajo();})();
+let _layout=()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{let gap=_gap(),p=_pad(),fh=_footerH();
+let r2=c2.getBoundingClientRect(),avail=Math.floor(innerHeight-fh-r2.top-gap);if(avail<120)avail=120;
+let fixed=(c1?c1.offsetHeight:0)+(t3?t3.offsetHeight:0);
+let g1=(c1&&t3)?gap:0,g2=(t3&&c2)?gap:0,g3=(c2&&c3)?gap:0;
+let inner=avail-(g3);let cap=Math.floor(inner-minC3);if(cap<80)cap=80;
+let desired=Math.ceil(c2.scrollHeight||0);if(desired<80)desired=80;
+let h2=Math.min(desired,cap),h3=Math.floor(inner-h2);
+if(h3<minC3){let d=minC3-h3;h3=minC3;h2=Math.max(80,h2-d);} 
+c2.style.height=h2+"px";c3.style.height=h3+"px";_scrollBottom(c2);_scrollBottom(c3);raf=0;});};
+addEventListener("resize",_layout,{passive:true});
+new MutationObserver(_layout).observe(c2,{childList:true,subtree:true,characterData:true});
+new MutationObserver(_layout).observe(c3,{childList:true,subtree:true,characterData:true});
+_layout();})();
 </script>
 </body>
 </html>

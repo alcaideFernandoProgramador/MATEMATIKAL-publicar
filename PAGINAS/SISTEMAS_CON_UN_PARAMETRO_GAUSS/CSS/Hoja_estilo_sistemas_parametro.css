@@ -60,28 +60,13 @@ iframe{border:none}
 #controlesTop{position:relative;z-index:9999}
 #controlesTop a,#controlesTop button{position:relative;z-index:10000}
 
-body.pag-sistema-parametro{height:100vh;overflow:hidden;display:flex;flex-direction:column;}
-body.pag-sistema-parametro footer.siteFooter{flex:0 0 auto;}
-body.pag-sistema-parametro #contenedor{flex:1;min-height:0;overflow:hidden;}
-body.pag-sistema-parametro #caja2{overflow-y:scroll;overflow-x:hidden;}
-body.pag-sistema-parametro #contenedorCaja3{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain;}
-body.pag-sistema-parametro #caja3{overflow:visible;}
-body.pag-sistema-parametro #caja12{overflow-x:hidden;}
-body.pag-sistema-parametro #caja12,body.pag-sistema-parametro #caja12 *{max-width:100%;box-sizing:border-box;overflow-x:hidden;}
-/*
-  Scroll local (sin scroll de página):
-  - barra vertical SIEMPRE visible en #caja2 y #contenedorCaja3
-  - nunca barra horizontal en el panel de opciones (#caja12)
-*/
-html,body{height:100%;overflow:hidden;}
-body.pag-sistema-parametro{overflow:hidden;}
-body.pag-sistema-parametro{padding-bottom:0;}
-
-body.pag-sistema-parametro #caja2,
-body.pag-sistema-parametro #contenedorCaja3{overflow-y:scroll;overflow-x:hidden;min-height:0;overscroll-behavior:contain;}
+/* Solo para esta página: scroll local y sin desconfigurar #caja1 */
+body.pag-sistema-parametro{overflow:hidden;padding-bottom:0;}
+body.pag-sistema-parametro #caja2,body.pag-sistema-parametro #contenedorCaja3{overflow-y:scroll;overflow-x:hidden;min-height:0;overscroll-behavior:contain;}
 
 /* Evita scrollbar horizontal en el panel de opciones (por textos largos tipo "(F_i = aF_i + ...)") */
 body.pag-sistema-parametro #caja12{overflow-x:hidden;}
+body.pag-sistema-parametro #caja12,body.pag-sistema-parametro #caja12 *{max-width:100%;box-sizing:border-box;overflow-x:hidden;}
 body.pag-sistema-parametro #caja12>div{flex-wrap:wrap;min-width:0;}
 body.pag-sistema-parametro #caja12>div>div{min-width:0;}
 body.pag-sistema-parametro #caja12 label{white-space:normal;overflow-wrap:anywhere;word-break:break-word;}
