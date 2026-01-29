@@ -3,133 +3,115 @@ let ecuacion="",numeroEcuaciones=0,numeroIncognitas=0,nombreParametro="",contado
 function _$(id){return document.getElementById(id);}function _hide(el){if(!el)return;el.classList.add("isHidden");el.classList.remove("isFlex");el.classList.remove("isBlock");}
 function _showFlex(el){if(!el)return;el.classList.remove("isHidden");el.classList.remove("isBlock");el.classList.add("isFlex");}
 function _showBlock(el){if(!el)return;el.classList.remove("isHidden");el.classList.remove("isFlex");el.classList.add("isBlock");}
-function _setOkEl(el){if(!el)return;el.classList.remove("txtErr");el.classList.add("txtOk");}function _setErrEl(el){if(!el)return;el.classList.remove("txtOk");el.classList.add("txtErr");}
+function _setOkEl(el){if(!el)return;el.classList.remove("txtErr");el.classList.add("txtOk");}
+function _setErrEl(el){if(!el)return;el.classList.remove("txtOk");el.classList.add("txtErr");}
 function _setOk(id){_setOkEl(_$(id));}function _setErr(id){_setErrEl(_$(id));}
 let caja1=_$("caja1"),caja2=_$("caja2"),contenedorCaja3=_$("contenedorCaja3"),caja3=_$("caja3"),titulo3=_$("titulo3");
 try{_hide(caja2);_hide(contenedorCaja3);}catch(e){}
 
-function _simpl(s){try{if(typeof ExpresionAlgebraica!=="undefined"&&ExpresionAlgebraica&&typeof ExpresionAlgebraica.simplificar==="function")return ExpresionAlgebraica.simplificar(s);}catch(e){}return (s==null?"":s.toString());}
-function _esCeroExpr(x){if(x===0||x==="0")return true;let s=(x==null?"":x.toString()).trim();if(!s.length)return false;if(s==="0"||s==="(0)")return true;let t=_simpl(s).trim();return t==="0"||t==="(0)";}
-function _strip(s){return (s||"").toString().replace(/\s+/g,"");}
-function _denomsTop(expr){expr=_strip(expr);if(!expr.length)return [];let dens=[],d=0;for(let i=0;i<expr.length;i++){let c=expr[i];if(c==="(")d++;else if(c===")"){d--;if(d<0)throw new Error("p");}if(c==="/"&&d===0){let rest=expr.slice(i+1);if(rest.length)dens.push(rest);break;}}return dens;}
-function _primerNoNuloFila(f){if(!Array.isArray(f)||!f.length)return null;for(let j=0;j<f.length-1;j++)if(!_esCeroExpr(f[j]))return f[j];return null;}
-function _registrarPivoteFila(idx){try{if(!Array.isArray(matrizActualExpresiones)||!matrizActualExpresiones[idx])return;let p=_primerNoNuloFila(matrizActualExpresiones[idx]);if(p==null)return;let s=p.toString();if(!pivotesUsados.includes(s))pivotesUsados.push(s);}catch(e){}}
-function _registrarDenomsCoef(coef){try{for(let d of _denomsTop(coef))if(d&&!pivotesUsados.includes(d))pivotesUsados.push(d);}catch(e){}}
-function _registrarDivisorUsado(mRaw){mRaw=_strip(mRaw);if(!mRaw.length)return;if(!pivotesUsados.includes(mRaw))pivotesUsados.push(mRaw);_registrarDenomsCoef(mRaw);}
-function _algunPivoteUsadoSeAnula(v){if(!Array.isArray(pivotesUsados)||!pivotesUsados.length)return false;try{for(let k=0;k<pivotesUsados.length;k++){let e=pivotesUsados[k],aux=[[e]],s=Matriz.sustituir(aux,nombreParametro,v)[0][0];if(_esCeroExpr(s))return true;}}catch(err){return true;}return false;}
-function _pivotesDesdeEscalonada(mat){let out=[];if(!Array.isArray(mat))return out;for(let i=0;i<mat.length;i++){let p=_primerNoNuloFila(mat[i]);if(p!=null)out.push(p.toString());}return out;}
+function _simpl(s){return (s||"").toString().replace(/\s+/g,"");}
+function _isZeroExpr(s){s=_simpl(s);return s==="0"||s===""}
+function _algunPivoteUsadoSeAnula(v){if(v==null||!pivotesUsados||!pivotesUsados.length)return false;for(let i=0;i<pivotesUsados.length;i++){let p=pivotesUsados[i];if(!p||!p.expr)continue;try{let r=Resolver.sustituir(p.expr,nombreParametro,v);if(_isZeroExpr(r))return true;}catch(e){}}return false;}
+function _pivotesDesdeEscalonada(mat){let piv=[];for(let i=0;i<mat.length;i++){for(let j=0;j<mat[0].length;j++){if(!_isZeroExpr(mat[i][j])){piv.push({i,j,expr:mat[i][j]});break;}}}return piv;}
 
-caja1.id="caja1";_showFlex(caja1);
-let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";_showBlock(caja11);
-let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";_showFlex(caja111);
-let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";_showBlock(caja1111);
+let contenido=document.getElementById("caja1");
+let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";
+let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";
+let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";
 let caja11111=document.createElement("div");caja1111.appendChild(caja11111);caja11111.id="caja11111";caja11111.innerHTML="INTRODUCCIÓN DE DATOS";
 let caja11112=document.createElement("div");caja1111.appendChild(caja11112);caja11112.id="caja11112";caja11112.innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
-let caja1112=document.createElement("div");caja111.appendChild(caja1112);caja1112.id="caja1112";_showFlex(caja1112);
-let caja11121=document.createElement("div");caja1112.appendChild(caja11121);caja11121.id="caja11121";_showBlock(caja11121);
-let caja11122=document.createElement("div");caja1112.appendChild(caja11122);caja11122.id="caja11122";_showBlock(caja11122);_showBlock(caja11122);
-let caja11123=document.createElement("div");caja1112.appendChild(caja11123);caja11123.id="caja11123";_showBlock(caja11123);
-let caja112=document.createElement("div");caja112.id="caja112";_showFlex(caja112);
-let caja12=document.createElement("div");caja1.appendChild(caja12);caja12.id="caja12";_showBlock(caja12);
-
-let texto1=document.createTextNode("Nº de Ecuaciones"),texto2=document.createTextNode("(Entre 1 y 5)"),lugarTexto1=document.createElement("p"),lugarTexto2=document.createElement("p");
-lugarTexto1.appendChild(texto1);lugarTexto2.appendChild(texto2);
-let texto3=document.createTextNode("Nº de Incógnitas"),texto4=document.createTextNode("(Entre 1 y 5)"),lugarTexto3=document.createElement("p"),lugarTexto4=document.createElement("p");
-lugarTexto3.appendChild(texto3);lugarTexto4.appendChild(texto4);
-let texto5=document.createTextNode("Nombre del parámetro"),texto6=document.createTextNode("(Letra minúscula)"),lugarTexto5=document.createElement("p"),lugarTexto6=document.createElement("p");
-lugarTexto5.appendChild(texto5);lugarTexto6.appendChild(texto6);
-
-crearNumeroEcuaciones();
+let caja1112=document.createElement("div");caja111.appendChild(caja1112);caja1112.id="caja1112";
+let caja11121=document.createElement("div");caja1112.appendChild(caja11121);caja11121.id="caja11121";
+let caja11122=document.createElement("div");caja1112.appendChild(caja11122);caja11122.id="caja11122";
+let caja11123=document.createElement("div");caja1112.appendChild(caja11123);caja11123.id="caja11123";
+let caja112=document.createElement("div");caja112.id="caja112";
+let caja12=document.createElement("div");caja1.appendChild(caja12);caja12.id="caja12";
 
 function crearNumeroEcuaciones(){
-  let nEcuaciones=document.createElement("input");nEcuaciones.type="text";
-  let lugarInputNumeroEcuaciones=document.createElement("p");lugarInputNumeroEcuaciones.appendChild(nEcuaciones);
-  caja11121.appendChild(lugarTexto1);caja11121.appendChild(lugarInputNumeroEcuaciones);caja11121.appendChild(lugarTexto2);
-  nEcuaciones.focus();
-  nEcuaciones.addEventListener("keydown",function(event){
+  while(caja11121.firstChild){caja11121.removeChild(caja11121.firstChild);}
+  let p1=document.createElement("p");p1.innerHTML="Nº de Ecuaciones";caja11121.appendChild(p1);
+  let numeroecuaciones=document.createElement("input");numeroecuaciones.id="numeroecuaciones";numeroecuaciones.type="text";caja11121.appendChild(numeroecuaciones);
+  let p2=document.createElement("p");p2.innerHTML="(Entre 1 y 5)";caja11121.appendChild(p2);
+  numeroecuaciones.addEventListener("keydown",function(event){
     if(event.key==="Enter"){
       try{
-        document.getElementById("caja11112"_setOkEl());document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
-        numeroEcuaciones=Number(nEcuaciones.value);
-        if(isNaN(numeroEcuaciones)||numeroEcuaciones<1||numeroEcuaciones>5||Number.isInteger(numeroEcuaciones)===false){nEcuaciones.value="";throw new Error();}
-        crearnumeroIncognitas();
+        _setOk("caja11112");document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        if(numeroecuaciones.value.length===0){numeroecuaciones.value="";numeroecuaciones.focus();throw new Error("errorB");}
+        if(numeroecuaciones.value.match(/^[0-9]+$/)===null){numeroecuaciones.value="";numeroecuaciones.focus();throw new Error("errorA");}
+        numeroEcuaciones=Number(numeroecuaciones.value);
+        if(numeroEcuaciones<1||numeroEcuaciones>5){numeroecuaciones.value="";numeroecuaciones.focus();throw new Error("errorA");}
+        crearNumeroIncognitas();document.getElementById("numeroincognitas").focus();
       }catch(error){
-        document.getElementById("caja11112"_setErrEl());
-        document.getElementById("caja11112").innerHTML="El carácter introducido en el nº de ecuaciones no es válido.<br> Debe ser un número entero comprendido entre 1 y 5.<br> Inténtalo otra vez por favor";
+        _setErr("caja11112");
+        if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Número de ecuaciones inválido.<br>Debe ser un entero entre 1 y 5.";
+        if(error.message==="errorB")document.getElementById("caja11112").innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
       }
     }
   });
 }
 
-function crearnumeroIncognitas(){
-  let nIncognitas=document.createElement("input");nIncognitas.type="text";
-  let lugarInputNumeroIncognitas=document.createElement("p");lugarInputNumeroIncognitas.appendChild(nIncognitas);
-  caja11122.appendChild(lugarTexto3);caja11122.appendChild(lugarInputNumeroIncognitas);caja11122.appendChild(lugarTexto4);
-  let nombreParametro=document.createElement("input");nombreParametro.type="text";
-  let lugarInputnumeroIncognitas=document.getElementById("caja11122");
-  lugarInputnumeroIncognitas.appendChild(lugarTexto3);lugarInputnumeroIncognitas.appendChild(nIncognitas);lugarInputnumeroIncognitas.appendChild(lugarTexto4);
-  nIncognitas.focus();
-  nIncognitas.addEventListener("keydown",function(event){
+function crearNumeroIncognitas(){
+  while(caja11122.firstChild){caja11122.removeChild(caja11122.firstChild);}
+  let p1=document.createElement("p");p1.innerHTML="Nº de Incógnitas";caja11122.appendChild(p1);
+  let numeroincognitas=document.createElement("input");numeroincognitas.id="numeroincognitas";numeroincognitas.type="text";caja11122.appendChild(numeroincognitas);
+  let p2=document.createElement("p");p2.innerHTML="(Entre 1 y 5)";caja11122.appendChild(p2);
+  numeroincognitas.addEventListener("keydown",function(event){
     if(event.key==="Enter"){
       try{
-        document.getElementById("caja11112"_setOkEl());document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
-        numeroIncognitas=Number(nIncognitas.value);
-        if(isNaN(numeroIncognitas)||numeroIncognitas<1||numeroIncognitas>5||Number.isInteger(numeroIncognitas)===false){nIncognitas.value="";throw new Error();}
-        for(let i=0;i<numeroIncognitas;i++){ordenLeyenda[i]=i+1}
-        crearNombreParametro();
+        _setOk("caja11112");document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        if(numeroincognitas.value.length===0){numeroincognitas.value="";numeroincognitas.focus();throw new Error("errorB");}
+        if(numeroincognitas.value.match(/^[0-9]+$/)===null){numeroincognitas.value="";numeroincognitas.focus();throw new Error("errorA");}
+        numeroIncognitas=Number(numeroincognitas.value);
+        if(numeroIncognitas<1||numeroIncognitas>5){numeroincognitas.value="";numeroincognitas.focus();throw new Error("errorA");}
+        crearNombreParametro();document.getElementById("nombreParametro").focus();
       }catch(error){
-        document.getElementById("caja11112"_setErrEl());
-        document.getElementById("caja11112").innerHTML="El carácter introducido en el nº de incógnitas no es válido. <br>Debe ser un número entero comprendido entre 1 y 5. <br>Inténtalo otra vez por favor";
+        _setErr("caja11112");
+        if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Número de incógnitas inválido.<br>Debe ser un entero entre 1 y 5.";
+        if(error.message==="errorB")document.getElementById("caja11112").innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
       }
     }
   });
 }
 
 function crearNombreParametro(){
-  let nParametro=document.createElement("input");nParametro.type="text";
-  let lugarInputNombreParametro=document.createElement("p");lugarInputNombreParametro.appendChild(nParametro);
-  caja11123.appendChild(lugarTexto5);caja11123.appendChild(lugarInputNombreParametro);caja11123.appendChild(lugarTexto6);
-  nParametro.focus();
-  nParametro.addEventListener("keydown",function(event){
+  while(caja11123.firstChild){caja11123.removeChild(caja11123.firstChild);}
+  let p1=document.createElement("p");p1.innerHTML="Nombre del parámetro";caja11123.appendChild(p1);
+  let nombreparametro=document.createElement("input");nombreparametro.id="nombreParametro";nombreparametro.type="text";caja11123.appendChild(nombreparametro);
+  let p2=document.createElement("p");p2.innerHTML="(Una letra)";caja11123.appendChild(p2);
+  nombreparametro.addEventListener("keydown",function(event){
     if(event.key==="Enter"){
       try{
-        document.getElementById("caja11112"_setOkEl());document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
-        nombreParametro=nParametro.value;
-        if(isNaN(nombreParametro)===false||nombreParametro.toLowerCase()!==nombreParametro||nombreParametro.length!==1){nParametro.value="";throw new Error();}
-        caja11.appendChild(caja112);crearSistemaVacio();
+        _setOk("caja11112");document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        if(nombreparametro.value.length===0){nombreparametro.value="";nombreparametro.focus();throw new Error("errorB");}
+        if(nombreparametro.value.match(/^[a-zA-Z]$/)===null){nombreparametro.value="";nombreparametro.focus();throw new Error("errorA");}
+        nombreParametro=nombreparametro.value;
+        crearTabla();crearBotonValidar();
       }catch(error){
-        document.getElementById("caja11112"_setErrEl());
-        document.getElementById("caja11112").innerHTML="El nombre del parámetro conviene que sea una letra minúscula.<br> Inténtalo otra vez por favor";
+        _setErr("caja11112");
+        if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Nombre del parámetro inválido.<br>Debe ser una sola letra.";
+        if(error.message==="errorB")document.getElementById("caja11112").innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
       }
     }
   });
 }
 
-function crearSistemaVacio(){
-  let contenedorMatriz=document.getElementById("caja112");Representar.abrirLlave(1.75*numeroEcuaciones,contenedorMatriz);
-  let tabla=document.createElement("table");
-  for(let i=0;i<numeroEcuaciones;i++){
-    let fila=document.createElement("tr"),filaMatriz=[];
-    for(let j=0;j<numeroIncognitas+1;j++){
-      let input=document.createElement("input");input.type="text";input.value="";filaMatriz.push(null);
-      let celda=document.createElement("td");
-      let texto=document.createElement("span"),igual=document.createElement("span");igual.innerHTML="=";
-      if(j<numeroIncognitas-1){texto.innerHTML=" x<sub>"+(j+1)+"</sub> + ";}
-      if(j===numeroIncognitas-1){texto.innerHTML=" x<sub>"+(j+1)+"</sub> ";}
-      celda.appendChild(input);celda.appendChild(texto);if(j===numeroIncognitas-1){celda.appendChild(igual);}
-      fila.appendChild(celda);
+function crearTabla(){
+  while(caja12.firstChild){caja12.removeChild(caja12.firstChild);}
+  let tabla=document.createElement("table");caja12.appendChild(tabla);
+  let filas=numeroEcuaciones,columnas=numeroIncognitas+1;
+  valores=[];for(let i=0;i<filas;i++){valores.push([]);for(let j=0;j<columnas;j++)valores[i].push("0");}
+  for(let i=0;i<filas;i++){
+    let tr=document.createElement("tr");tabla.appendChild(tr);
+    for(let j=0;j<columnas;j++){
+      let td=document.createElement("td");tr.appendChild(td);
+      let inp=document.createElement("input");inp.type="text";td.appendChild(inp);
     }
-    valores.push(filaMatriz);tabla.appendChild(fila);
   }
-  contenedorMatriz.appendChild(tabla);rellenarSistema(tabla);
-}
-
-function rellenarSistema(tabla){
   let inputs=tabla.getElementsByTagName("input");inputs[0].focus();
   for(let i=0;i<inputs.length;i++){
     inputs[i].addEventListener("keydown",function(event){
       if(event.key==="Enter"||event.key==="Tab"){
-        document.getElementById("caja11112"_setOkEl());
+        _setOk("caja11112");
         let fila=this.parentNode.parentNode.rowIndex,columna=this.parentNode.cellIndex;
         try{
           let texto="^[0-9\\.,\\+\\-\\(\\)\\^\\*\\/"+nombreParametro+"]*$",regex1=new RegExp(texto);
@@ -148,24 +130,18 @@ function rellenarSistema(tabla){
             pivotesUsados=[];pivotesUltimos=[];
             if(Matriz.esMatrizEscalonada(matrizExpresiones)){casoUnico=true;etapa="inicial";estudiarSistemaEscalonadoGauss();}
             else{
-              _showFlex(caja1111);caja1111.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";
+              caja1111.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";
               _showBlock(caja1112);while(caja1112.firstChild){caja1112.removeChild(caja1112.firstChild);}
               while(caja112.firstChild){caja112.removeChild(caja112.firstChild);}
-              _showFlex(caja112);
               let caja1121=document.createElement("div"),caja1122=document.createElement("div");caja1121.id="caja1121";caja1122.id="caja1122";
-              _showBlock(caja1121);_showBlock(caja1122);
-
               let caja11211=document.createElement("div"),caja11212=document.createElement("div"),caja11221=document.createElement("div"),caja11222=document.createElement("div");
               caja11211.id="caja11211";caja11212.id="caja11212";caja11221.id="caja11221";caja11222.id="caja11222";
-              _showFlex(caja11211);_showFlex(caja11212);_showFlex(caja11221);_showFlex(caja11222);
-
               caja112.appendChild(caja1121);caja112.appendChild(caja1122);caja1121.appendChild(caja11211);caja1121.appendChild(caja11212);caja1122.appendChild(caja11221);caja1122.appendChild(caja11222);
-              let titulo1=document.createElement("h3");titulo1.innerHTML="EL SISTEMA INICIAL INTRODUCIDO ES:";
-              caja11211.appendChild(titulo1);continuar();
+              let titulo1=document.createElement("h3");titulo1.innerHTML="EL SISTEMA INICIAL INTRODUCIDO ES:";caja11211.appendChild(titulo1);continuar();
             }
           }
         }catch(error){
-          document.getElementById("caja11112"_setErrEl());
+          _setErr("caja11112");
           if(error.message==="errorC")document.getElementById("caja11112").innerHTML="Se ha introducido un dato erróneo.<br>Inténtalo otra vez por favor";
           if(error.message==="errorB")document.getElementById("caja11112").innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
           if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Los paréntesis no están balanceados.<br>Inténtalo otra vez por favor";
@@ -179,11 +155,9 @@ function continuar(){
   let caja11121=document.createElement("div"),caja11122=document.createElement("div"),caja11123=document.createElement("div"),caja11124=document.createElement("div");
   caja11121.id="caja11121";caja11122.id="caja11122";caja11123.id="caja11123";caja11124.id="caja11124";
   caja1112.appendChild(caja11121);caja1112.appendChild(caja11122);caja1112.appendChild(caja11123);caja1112.appendChild(caja11124);
-
   Representar.sistemaCompleto(matrizOriginal,caja11212);
-
   let titulo2=document.createElement("h3");titulo2.innerHTML="LA MATRIZ DE GAUSS INICIAL ES:";caja11221.appendChild(titulo2);
-  _showFlex(caja2);caja2.id="caja2";
+  _showFlex(caja2);
   Representar.matrizGaussCompleta(matrizOriginal,caja11222,leyendaIncognitas,ordenLeyenda);
   titulo3=document.getElementById("titulo3");titulo3.innerHTML="ESPACIO PARA MOSTRAR LOS TRABAJOS REALIZADOS POR EL USUARIO";
   Representar.matrizGaussCompleta(matrizOriginal,caja2,leyendaIncognitas,ordenLeyenda);
@@ -196,16 +170,13 @@ function continuar(){
 }
 
 function crearFormulario(){
-  while(caja111.firstChild)caja111.removeChild(caja111.firstChild);_showBlock(caja111);
+  while(caja111.firstChild)caja111.removeChild(caja111.firstChild);
   let tex1=document.createElement("h3");tex1.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";caja111.appendChild(tex1);
   let tex2=document.createElement("h4");tex2.innerHTML="Para resolverlo, se utilizará el MÉTODO DE GAUSS";caja111.appendChild(tex2);
-
   let titulo=document.createElement("h3");titulo.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";caja12.appendChild(titulo);
   let caja121=document.createElement("div"),caja122=document.createElement("div"),caja123=document.createElement("div"),caja124=document.createElement("div"),caja125=document.createElement("div"),caja125bis=document.createElement("div");
   caja121.id="caja121";caja122.id="caja122";caja123.id="caja123";caja124.id="caja124";caja125.id="caja125";caja125bis.id="caja125bis";
-  _showFlex(caja121);_showFlex(caja122);_showFlex(caja123);_showFlex(caja124);_showFlex(caja125);_showFlex(caja125bis);
-
-  caja12.alignItems="center";caja12.appendChild(caja121);caja12.appendChild(caja122);caja12.appendChild(caja123);caja12.appendChild(caja124);caja12.appendChild(caja125);caja12.appendChild(caja125bis);
+  caja12.appendChild(caja121);caja12.appendChild(caja122);caja12.appendChild(caja123);caja12.appendChild(caja124);caja12.appendChild(caja125);caja12.appendChild(caja125bis);
   let caja1211=document.createElement("div"),caja1212=document.createElement("div");caja1211.id="caja1211";caja1212.id="caja1212";caja121.appendChild(caja1211);caja121.appendChild(caja1212);
   let caja1221=document.createElement("div"),caja1222=document.createElement("div");caja1221.id="caja1221";caja1222.id="caja1222";caja122.appendChild(caja1221);caja122.appendChild(caja1222);
   let caja1231=document.createElement("div"),caja1232=document.createElement("div");caja1231.id="caja1231";caja1232.id="caja1232";caja123.appendChild(caja1231);caja123.appendChild(caja1232);
@@ -214,7 +185,7 @@ function crearFormulario(){
   let caja1251bis=document.createElement("div"),caja1252bis=document.createElement("div");caja1251bis.id="caja1251bis";caja1252bis.id="caja1252bis";caja125bis.appendChild(caja1251bis);caja125bis.appendChild(caja1252bis);
   let caja126=document.createElement("div"),caja127=document.createElement("div"),caja128=document.createElement("div"),caja129=document.createElement("div");
   caja126.id="caja126";caja127.id="caja127";caja128.id="caja128";caja129.id="caja129";
-  caja12.appendChild(caja126);caja12.appendChild(caja127);caja12.appendChild(caja128);caja12.appendChild(caja129);_showFlex(caja129);
+  caja12.appendChild(caja126);caja12.appendChild(caja127);caja12.appendChild(caja128);caja12.appendChild(caja129);
   let opcion1=document.createElement("input");opcion1.type="radio";opcion1.value="opcion1";opcion1.name="option";opcion1.id="inputcorto1";caja1211.appendChild(opcion1);
   let etiquetaOpcion1=document.createElement("label");etiquetaOpcion1.innerHTML="Opción 1: Permutar el orden de dos filas";caja1211.appendChild(etiquetaOpcion1);
   let etiquetaOpcion1bis=document.createElement("label");etiquetaOpcion1bis.innerHTML="(F<sub>i</sub> ↔ F<sub>j</sub>)";caja1212.appendChild(etiquetaOpcion1bis);
@@ -264,145 +235,67 @@ function crearFormulario(){
         i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarFilas(f1,f2,n,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La fila j no es válida.<br>Debe estar entre 1 y "+n+" y ser distinta de i.");}});
-      }break;
+        break;}
 
       case "opcion2":{
         matrizActualExpresionesCopia=matrizActualExpresiones.map(a=>a.slice());
         let d1=document.createElement("div"),d2=document.createElement("div"),l1=document.createElement("label"),l2=document.createElement("label"),i1=document.createElement("input"),i2=document.createElement("input");
         d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);caja127.appendChild(d1);caja127.appendChild(d2);uiNodes.push(d1,d2);
         l1.innerHTML="C<sub>i</sub>:"+"\u00A0".repeat(3)+"i=";l2.innerHTML="C<sub>j</sub>:"+"\u00A0".repeat(3)+"j=";i1.focus();
-        let m=matrizActualExpresiones[0].length-1,c1=null,c2=null;
+        let m=matrizActualExpresiones[0].length,c1=null,c2=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La columna i no es válida.<br>Debe estar entre 1 y "+m+".");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
-          matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);_swapLeyenda(c1-1,c2-1);
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);_swapLeyenda(c1-1,c2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarColumnas(c1,c2,matrizActualExpresiones.length,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La columna j no es válida.<br>Debe estar entre 1 y "+m+" y ser distinta de i.");}});
-      }break;
+        break;}
 
       case "opcion3":{
         matrizActualExpresionesCopia=matrizActualExpresiones.map(a=>a.slice());
-        matrizActualExpresiones=Matriz.ordenarFilasPorCeros(matrizActualExpresiones);
-        if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){
-          if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloReordenarFilas==="function")Representar.simboloReordenarFilas(matrizActualExpresiones.length,caja2);
-          else if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloFilasNulasAbajo==="function")Representar.simboloFilasNulasAbajo(matrizActualExpresiones.length,caja2);
-          if(_render)matrizExpresionesR=_render(matrizActualExpresiones);_after();
-        }
-        _clearUI();
-      }break;
+        matrizActualExpresiones=Matriz.reordenarFilas(matrizActualExpresiones);
+        if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloReordenarFilas(matrizActualExpresiones.length,caja2);_after();}_clearUI();
+        break;}
 
       case "opcion4":{
         matrizActualExpresionesCopia=matrizActualExpresiones.map(a=>a.slice());
         let d1=document.createElement("div"),d2=document.createElement("div"),l1=document.createElement("label"),l2=document.createElement("label"),i1=document.createElement("input"),i2=document.createElement("input");
         d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);caja127.appendChild(d1);caja127.appendChild(d2);uiNodes.push(d1,d2);
-        l1.innerHTML="F<sub>a</sub>"+"\u00A0".repeat(3)+"a=";l2.innerHTML="Dividir por m=";i1.focus();
-        let n=matrizActualExpresiones.length,a=null;
+        l1.innerHTML="Fila a simplificar:"+"\u00A0".repeat(2)+"a=";l2.innerHTML="Divisor (m≠0):"+"\u00A0".repeat(2)+"m=";i1.focus();
+        let n=matrizActualExpresiones.length,a=null,mv=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");a=Number(i1.value);if(!Number.isInteger(a)||a<1||a>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila a no es válida.<br>Debe estar entre 1 y "+n+".");}});
-        i2.addEventListener("keydown",function(ev){
-          if(ev.key!=="Enter")return;
-          try{
-            _msgOk("");let mRaw=(i2.value||"").toString().trim();if(!mRaw.length)throw 0;
-            let texto="^[0-9\\+\\-\\(\\)\\^\\*\\/"+nombreParametro+"]*$",rx=new RegExp(texto);if(!rx.test(mRaw))throw 0;_registrarDivisorUsado(mRaw);
-            let mNum=null,isNum=false;try{let pm=_parseNumFrac(mRaw);mNum=pm.n;isNum=Number.isFinite(mNum);}catch(e){isNum=false;}
-            if(isNum&&mNum===0)throw 0;
-            if(!isNum){
-              for(let j=0;j<matrizActualExpresiones[0].length;j++){let expr=matrizActualExpresiones[a-1][j],div="("+expr+")/("+mRaw+")";matrizActualExpresiones[a-1][j]=_simpl(div);}
-              if(_render)matrizExpresionesR=_render(matrizActualExpresiones);if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloDividirFila==="function")Representar.simboloDividirFila(a,mRaw,matrizActualExpresiones.length,caja2);
-              _after();_clearUI();return;
-            }
-            let mStr=mRaw,canCoef=(typeof matrizExpresionesAValores==="function"&&typeof matrizCoeficientesAExpresion==="function"&&typeof quitarLlaves==="function");
-            if(canCoef){
-              let entero=true;matrizValoresCoeficientesActual=matrizExpresionesAValores(matrizActualExpresiones,nombreParametro);
-              if(!Number.isInteger(mNum))entero=false;else{for(let j=0;j<matrizActualExpresiones[0].length;j++)for(let k=0;k<matrizValoresCoeficientesActual[a-1][j].length;k++)if(matrizValoresCoeficientesActual[a-1][j][k]%mNum!==0)entero=false;}
-              if(!entero){for(let j=0;j<matrizActualExpresiones[0].length;j++){let expr=matrizActualExpresiones[a-1][j],div="("+expr+")/("+mStr+")";matrizActualExpresiones[a-1][j]=_simpl(div);}}
-              else{for(let j=0;j<matrizActualExpresiones[0].length;j++)for(let k=0;k<matrizValoresCoeficientesActual[a-1][j].length;k++)matrizValoresCoeficientesActual[a-1][j][k]=matrizValoresCoeficientesActual[a-1][j][k]/mNum;
-                matrizActualExpresiones=matrizCoeficientesAExpresion(matrizValoresCoeficientesActual,nombreParametro);matrizActualExpresiones=quitarLlaves(matrizActualExpresiones);}
-            }else{for(let j=0;j<matrizActualExpresiones[0].length;j++){let expr=matrizActualExpresiones[a-1][j],div="("+expr+")/("+mStr+")";matrizActualExpresiones[a-1][j]=_simpl(div);}}
-            if(_render)matrizExpresionesR=_render(matrizActualExpresiones);if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloDividirFila==="function")Representar.simboloDividirFila(a,mStr,matrizActualExpresiones.length,caja2);
-            _after();_clearUI();
-          }catch(e){i2.value="";i2.focus();_msgErr("m no es válido.<br>Debe ser una expresión válida distinta de 0.");}
-        });
-      }break;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");let p=_parseNumFrac(i2.value);mv=p.n;if(!Number.isFinite(mv)||Math.abs(mv)<1e-12)throw 0;matrizActualExpresiones=Matriz.dividirFila(matrizActualExpresiones,a-1,p.str);
+          if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloSimplificarFila(a,p.str,matrizActualExpresiones.length,caja2);_after();}_clearUI();
+        }catch(e){i2.value="";i2.focus();_msgErr("El divisor m no es válido.<br>Debe ser distinto de 0 (decimal o fracción).");}});
+        break;}
 
       case "opcion5":{
         matrizActualExpresionesCopia=matrizActualExpresiones.map(a=>a.slice());
-        let lugarExp=document.createElement("div");caja127.appendChild(lugarExp);uiNodes.push(lugarExp);
-        let lab=document.createElement("label");lab.innerHTML="Escribe la combinación lineal (ej.: F1=2F1-3/2F2+F3) y pulsa ENTER:";lugarExp.appendChild(lab);
-        let inp=document.createElement("input");lugarExp.appendChild(inp);inp.focus();
-        function _coefNoNulo(c){let s=_simpl(c);return s!=="0"&&s!=="(0)";}
-        function _splitTopLevelSum(expr){let s=(expr||"").replace(/\s+/g,""),out=[],buf="",depth=0;for(let i=0;i<s.length;i++){let ch=s[i];if(ch==="(")depth++;else if(ch===")"){depth--;if(depth<0)throw new Error("paren");}if((ch==="+"||ch==="-")&&depth===0){if(buf.length)out.push(buf);buf=ch;}else buf+=ch;}if(depth!==0)throw new Error("paren");if(buf.length)out.push(buf);return out;}
-        function _parseCL(cad,n){cad=(cad||"").replace(/\s+/g,"");if(!cad.length)throw new Error("vacia");let m=cad.match(/^F(\d+)=(.+)$/i);if(!m)throw new Error("formato");
-          let lhs=Number(m[1]);if(!Number.isInteger(lhs)||lhs<1||lhs>n)throw new Error("lhs");let rhs=m[2],partes=_splitTopLevelSum(rhs);if(!partes.length)throw new Error("rhs");
-          let terms=[];for(let t of partes){if(!t)continue;let mm=t.match(/^([+\-]?)(.*?)(?:\*)?F(\d+)$/i);if(!mm)throw new Error("termino");
-            let sgn=mm[1]||"+",coef=mm[2]||"",fila=Number(mm[3]);if(!Number.isInteger(fila)||fila<1||fila>n)throw new Error("fila");
-            if(coef==="")coef="1";if(coef==="+")coef="1";if(coef==="-"||coef==="")coef="1";if(sgn==="-"&&coef==="1")coef="-1";else if(sgn==="-"&&coef!=="-1")coef="-("+coef+")";
-            terms.push({fila,factor:coef});
-          }
-          let tSelf=terms.find(x=>x.fila===lhs);if(!tSelf)throw new Error("faltaSelf");if(!_coefNoNulo(tSelf.factor))throw new Error("selfCero");return {lhs,terms};
-        }
-        inp.addEventListener("keydown",function(ev){
-          if(ev.key!=="Enter")return;
-          try{
-            _msgOk("");let n=matrizActualExpresiones.length,cad=inp.value,obj=_parseCL(cad,n),target=obj.lhs-1,terms=obj.terms;
-            for(let t of terms){_registrarPivoteFila(t.fila-1);_registrarDenomsCoef(t.factor);}
-            for(let j=0;j<matrizActualExpresiones[0].length;j++){let acc="0";for(let t of terms){let expr=matrizActualExpresiones[t.fila-1][j];
-              let prod=_simpl("("+expr+")*("+t.factor+")");acc=_simpl("("+acc+")+("+prod+")");}matrizActualExpresiones[target][j]=acc;}
-            Representar.simboloCambiarLinea(cad,matrizActualExpresiones.length,caja2);_after();_clearUI();
-          }catch(e){
-            let msg="Formato no válido. Ejemplo: F1=2F1-3/2F2+F3";
-            if(e.message==="lhs")msg="La fila del primer miembro no es válida.";
-            if(e.message==="faltaSelf")msg="La fila del primer miembro debe aparecer también en el segundo miembro.";
-            if(e.message==="selfCero")msg="El coeficiente de la fila del primer miembro debe ser no nulo.";
-            if(e.message==="fila")msg="Alguna fila del segundo miembro no es válida.";
-            _msgErr(msg+"<br>Pulsa RESET y vuelve a intentarlo.");inp.focus();
-          }
-        });
-      }break;
+        let d=document.createElement("div"),l=document.createElement("label"),inp=document.createElement("input");
+        d.appendChild(l);d.appendChild(inp);caja127.appendChild(d);uiNodes.push(d);
+        l.innerHTML="Introduce la combinación (ej: F1=2F1-3F2):";inp.focus();
+        inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{
+          _msgOk("");let s=(inp.value||"").toString().trim();if(!s.length)throw 0;
+          matrizActualExpresiones=Matriz.combinacionLinealFilas(matrizActualExpresiones,s);
+          if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloCombinacionLineal(s,matrizActualExpresiones.length,caja2);_after();}_clearUI();
+        }catch(e){inp.value="";inp.focus();_msgErr("No se ha podido aplicar la combinación. Revisa el formato.");}});
+        break;}
 
       case "opcion6":{
         matrizActualExpresionesCopia=matrizActualExpresiones.map(a=>a.slice());
-        matrizActualExpresiones=Matriz.eliminarFilasNulas(matrizActualExpresiones);
-        if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){
-          if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloEliminarFilasNulas==="function")Representar.simboloEliminarFilasNulas(caja2);
-          else if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloFilasNulas==="function")Representar.simboloFilasNulas(caja2);
-          else if(typeof Representar!=="undefined"&&Representar&&typeof Representar.simboloEliminarFilas==="function")Representar.simboloEliminarFilas(caja2);
-          if(_render)matrizExpresionesR=_render(matrizActualExpresiones);_after();
-        }
-        _clearUI();
-      }break;
+        matrizActualExpresiones=Matriz.moverFilasNulasFinal(matrizActualExpresiones);
+        if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloEliminarFilasNulas(matrizActualExpresiones.length,caja2);_after();}_clearUI();
+        break;}
 
-      default:_msgErr("Selecciona una opción.");break;
+      default:_msgErr("Selecciona una opción.");lockReset=false;break;
     }
     lockReset=false;
   });
 }
 
 function estudiarSistemaEscalonadoGauss(){
-  while(caja1.firstChild){caja1.removeChild(caja1.firstChild)}
-  _showBlock(caja1);
-  let caja11=document.createElement("div"),caja12=document.createElement("div");caja11.id="caja11";caja12.id="caja12";
-  caja1.appendChild(caja11);caja1.appendChild(caja12);
-  _showFlex(caja11);
-  _showFlex(caja12);
-
-  let caja121=document.createElement("div"),caja122=document.createElement("div"),caja123=document.createElement("div"),caja124=document.createElement("div");
-  caja121.id="caja121";caja122.id="caja122";caja123.id="caja123";caja124.id="caja124";
-  _showBlock(caja121);_showBlock(caja122);_showBlock(caja123);_showBlock(caja124);
-  caja12.appendChild(caja121);caja12.appendChild(caja122);caja12.appendChild(caja123);caja12.appendChild(caja124);
-
-  let caja1211=document.createElement("div"),caja1212=document.createElement("div"),caja1221=document.createElement("div"),caja1222=document.createElement("div"),caja1231=document.createElement("div"),caja1232=document.createElement("div"),caja1241=document.createElement("div"),caja1242=document.createElement("div"),caja1243=document.createElement("div");
-  caja1211.id="caja1211";caja1212.id="caja1212";caja1221.id="caja1221";caja1222.id="caja1222";caja1231.id="caja1231";caja1232.id="caja1232";caja1243.id="caja1243";
-  caja1241.id="caja1241";caja1242.id="caja1242";
-  caja121.appendChild(caja1211);caja121.appendChild(caja1212);caja122.appendChild(caja1221);caja122.appendChild(caja1222);caja123.appendChild(caja1231);caja123.appendChild(caja1232);caja124.appendChild(caja1241);caja124.appendChild(caja1242);caja124.appendChild(caja1243);
-
-  _showFlex(caja1212);_showFlex(caja1222);_showFlex(caja1232);_showFlex(caja1242);
-
-  _showBlock(caja1243);
-  caja11.innerHTML="LA MATRIZ MODIFICADA DEL SISTEMA INICIAL INTRODUCIDO YA ES ESCALONADA";
-  caja1211.innerHTML="El sistema inicial introducido es: ";Representar.sistemaCompleto(matrizExpresiones,caja1212);
-  caja1221.innerHTML="El sistema SIMPLIFICADO es: ";Representar.sistemaCompleto(matrizExpresiones,caja1222);
-  caja1231.innerHTML="Una matriz escalonada de GAUSS es: ";Representar.matrizGaussCompleta(matrizActualExpresiones,caja1232,leyendaIncognitas,ordenLeyenda);
-
-  let caja12411=document.createElement("div");caja12411.id="caja12411";caja1241.appendChild(caja12411);caja12411.innerHTML="CASOS ESPECÍFICOS QUE SE DEBEN ESTUDIAR POR SEPARADO";
+  _showBlock(contenedorCaja3);while(caja3.firstChild)caja3.removeChild(caja3.firstChild);
+  let matUso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matUso))matUso=Matriz.escalonarMatrizNumerica(matUso);
+  pivotesUltimos=_pivotesDesdeEscalonada(matUso);
+  tipoCaso=Sistema.discutir(matUso);
 
   function _abrirModalEcuacion(){
     let ov=_$("modalEcuacion");if(ov)ov.remove();
@@ -496,166 +389,30 @@ function estudiarSistemaEscalonadoGauss(){
     casosString=casosString.filter(x=>x!==v.raw&&x!==v.str&&x!==v.num.toString());
   }
 
-if(casosAutomatico.length===0){
-  tipoCaso="G";casoUnico=true;_showBlock(caja1242);
-  let lista1=document.createElement("div");lista1.innerHTML="Para este sistema, no hay NINGÚN CASO ESPECÍFICO del valor de \""+nombreParametro+"\" que haya que estudiar por separado.<br>";caja1242.appendChild(lista1);
-  let lista2=document.createElement("div");lista2.innerHTML="Para cualquier valor de \""+nombreParametro+"\" el sistema es siempre del mismo tipo.<br>";caja1242.appendChild(lista2);
-  let lista3=document.createElement("div");lista3.innerHTML="<br>Pulsa el botón \"CASO GENERAL\" para resolverlo.";caja1242.appendChild(lista3);
-  let botonEstudiar=document.createElement("button");botonEstudiar.innerHTML="CASO GENERAL";_showFlex(caja1243);caja1243.appendChild(botonEstudiar);
-
-  function _parseValorSimple(raw){
-    raw=(raw||"").toString().trim();if(!raw.length)throw new Error("v");
-    if(raw.includes("/")){if(typeof pasarADecimal==="function")raw=pasarADecimal(raw);else{let p=raw.split("/");if(p.length!==2)throw new Error("v");raw=(parseFloat(p[0])/parseFloat(p[1])).toString();}}
-    if(raw.includes(","))raw=raw.replace(",",".");let n=parseFloat(raw);if(Number.isNaN(n))throw new Error("v");return n;
-  }
-
-  function _dejarCaja124SoloParaOtrosCasos(){
-    while(caja124.firstChild)caja124.removeChild(caja124.firstChild);
-    let c1=document.createElement("div"),c2=document.createElement("div"),c3=document.createElement("div");caja124.appendChild(c1);caja124.appendChild(c2);caja124.appendChild(c3);
-    c1.id="caja1241";c2.id="caja1242";c3.id="caja1243";
-    c1.innerHTML="YA SE HA RESUELTO EL CASO GENERAL";
-    c2.innerHTML="Ahora puedes estudiar cualquier valor específico de "+nombreParametro+" (el tipo será el mismo).";
-    _showFlex(c3);let c31=document.createElement("div"),c32=document.createElement("div");c3.appendChild(c31);c3.appendChild(c32);
-    c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Introduce dicho valor "+nombreParametro+"= ";let inputValor=document.createElement("input");c32.appendChild(inputValor);inputValor.focus();
-    let msg=document.createElement("div");msg.id="caja124msg";caja124.appendChild(msg);
-
-    inputValor.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
+  if(casosAutomatico.length===0){
+    tipoCaso="G";casoUnico=true;
+    let lista1=document.createElement("div");lista1.innerHTML="Para este sistema, no hay NINGÚN CASO ESPECÍFICO del valor de \""+nombreParametro+"\" que haya que estudiar por separado.<br>";caja3.appendChild(lista1);
+    let lista2=document.createElement("div");lista2.innerHTML="Para cualquier valor de \""+nombreParametro+"\" el sistema es siempre del mismo tipo.<br>";caja3.appendChild(lista2);
+    let lista3=document.createElement("div");lista3.innerHTML="<br>Pulsa el botón \"CASO GENERAL\" para resolverlo.";caja3.appendChild(lista3);
+    let botonEstudiar=document.createElement("button");botonEstudiar.innerHTML="CASO GENERAL";caja3.appendChild(botonEstudiar);
+    botonEstudiar.addEventListener("click",function(){_resolverYpintarCasoValor(null,"CASO GENERAL",true);});
+  }else{
+    let intro=document.createElement("div");intro.innerHTML="Introduce los casos específicos (y luego el caso general G).";caja3.appendChild(intro);
+    let row=document.createElement("div");row.className="rowFlexWrap mt8";caja3.appendChild(row);
+    let lab=document.createElement("label");lab.innerHTML=nombreParametro+"=";row.appendChild(lab);
+    let inputValor=document.createElement("input");row.appendChild(inputValor);
+    let msg=document.createElement("div");msg.className="minH18 mt8 txtOk";caja3.appendChild(msg);inputValor.focus();
+    inputValor.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;
       try{
         _setOkEl(msg);msg.innerHTML="";
-        let v=_parseValorSimple(inputValor.value);
-        let txt="CASO: "+nombreParametro+"="+(typeof fraccionContinua==="function"?fraccionContinua(v.toString(),long):v.toString());
-        _resolverYpintarCasoValor(v,txt,false);inputValor.value="";inputValor.focus();
-      }catch(e){
-        _setErrEl(msg);msg.innerHTML="Entrada no válida. Usa decimal (0.5) o fracción (1/2).";
-        inputValor.value="";inputValor.focus();
-      }
-    }});
-  }
-
-  botonEstudiar.addEventListener("click",function(){
-    let txt="CASO GENERAL";_resolverYpintarCasoValor(null,txt,true);
-    let matUso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matUso))matUso=Matriz.escalonarMatrizNumerica(matUso);
-    tipoCaso=Sistema.discutir(matUso);
-    _dejarCaja124SoloParaOtrosCasos();
-  });
-}
-
-  else{
-    if(casos.length===0)caja1242.innerHTML="Ahora, debes introducir todos los casos específicos del valor de \""+nombreParametro+"\" que se deben estudiar de forma separada. Puedes utilizar la matriz escalonada para encontrarlos (Es IMPRESCINDIBLE que los introduzcas todos)";
-    else caja1241.innerHTML="Casos a estudiar: "+casos;
-    let caja12431=document.createElement("div"),caja12432=document.createElement("div"),caja12433=document.createElement("div"),caja12434=document.createElement("div"),caja12435=document.createElement("div");
-    caja12431.id="caja12431";caja12432.id="caja12432";caja12433.id="caja12433";caja12434.id="caja12434";caja12435.id="caja12435";
-    _showFlex(caja12431);_showFlex(caja12432);_showFlex(caja12433);_showFlex(caja12434);_showFlex(caja12435);
-    let caja1241=document.createElement("div");caja124.appendChild(caja1241);_showBlock(caja124);caja1241.id="caja1241";
-    let caja12411=document.createElement("div");caja1241.appendChild(caja12411);caja12411.id="caja12411";
-    let caja12412=document.createElement("div");caja1241.appendChild(caja12412);caja12412.id="caja12412";
-    _showFlex(caja12411);
-    caja12412.innerHTML=casosString;
-    let caja1243=document.createElement("div");_showBlock(caja1243);caja124.appendChild(caja1243);caja1243.id="caja1243";
-    let caja1244=document.createElement("div");_showFlex(caja1244);caja1244.id="caja1244";caja124.appendChild(caja1244);
-    let caja1245=document.createElement("div");_showFlex(caja1245);caja124.appendChild(caja1245);caja1245.id="caja1245";
-    let caja1246=document.createElement("div");_showFlex(caja1246);caja124.appendChild(caja1246);caja1246.id="caja1246";
-    caja1243.appendChild(caja12431);caja1243.appendChild(caja12432);caja1243.appendChild(caja12433);caja1243.appendChild(caja12434);caja1243.appendChild(caja12435);
-
-    let inputCaso=document.createElement("input");
-    let leyenda1=document.createElement("label");leyenda1.innerHTML="Introduce los valores validando, en cada paso, con la tecla \"ENTER\". Cuando hayas acabado, pulsa el botón \"FIN\"";caja1243.appendChild(leyenda1);
-
-    let leyenda2=document.createElement("label");leyenda2.innerHTML=nombreParametro+"=";caja1244.appendChild(leyenda2);caja1244.appendChild(inputCaso);inputCaso.focus();
-    let botonEcuacion=document.createElement("button");botonEcuacion.id="ecuacion";
-    let ly=document.createElement("div");ly.innerHTML="Si necesistas resolver una ecuación, puedes hacer click en el botón";caja1245.appendChild(ly);
-    botonEcuacion.innerHTML="RESOLVER ECUACIÓN";caja1245.appendChild(botonEcuacion);
-    botonEcuacion.addEventListener("click",function(){_abrirModalEcuacion();});
-    let botonFin=document.createElement("button");botonFin.innerHTML="FIN";caja1244.appendChild(botonFin);
-
-    inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"){
-      caja1242.remove();
-      try{
-        _setOkEl(caja1246);caja1246.innerHTML="";
-        let texto=/^(-?\d+(\.\d+)?|-\d+\/\d+|\d+\/\d+)$/,regex1=new RegExp(texto);
-        if(regex1.test(inputCaso.value)===false){inputCaso.value="";inputCaso.focus();throw new Error();}
-        let cas=inputCaso.value,casN;
-        if(cas.includes("/")){let partes=cas.split("/");casN=parseFloat(partes[0]/partes[1]);}
-        else casN=parseFloat(inputCaso.value);
-        if(!casos.includes(casN))casos.push(casN);
-        if(!casosString.includes(cas))casosString.push(cas);
-        _showFlex(caja12412);
-        caja12412.innerHTML="CASOS: "+casosString;inputCaso.value="";
-      }catch(error){
-        _setErrEl(caja1246);caja1246.innerHTML="Has introducido un caso no válido. Debe ser un número entero o racional. Puedes utilizar la expresión a/b";
-      }
-    }});
-
-    botonFin.addEventListener("click",function(){
-      let todosIncluidos=casosAutomatico.every(function(va){return casosString.includes(va);});
-      if(todosIncluidos){
-        casos.push("G");casosString.push("G");caja12412.innerHTML="CASOS: "+casosString;
-        while(caja1243.firstChild){caja1243.removeChild(caja1243.firstChild);}while(caja1244.firstChild){caja1244.removeChild(caja1244.firstChild);}while(caja1245.firstChild){caja1245.removeChild(caja1245.firstChild);}
-        let tx1="Ya has ingresado todos los casos específicos que se deben de estudiar.";
-        let tx2="Ahora, puedes estudiar casa uno de ellos por separado.<br>Además, también debes estudiar el caso general que engloba el resto de valores de "+nombreParametro+". Para ello, introduce\"G\"";
-        caja1243.innerHTML=tx1;caja1244.innerHTML=tx2;
-        _showFlex(caja1245);
-        let leyenda3=document.createElement("label");_showFlex(leyenda3);leyenda3.innerHTML="Introduce el valor a estudiar y presiona \"ENTER\"";
-        caja1245.appendChild(leyenda3);
-        let espacio=document.createElement("div");espacio.innerHTML="VALOR:";
-        let inputValor=document.createElement("input");caja1245.appendChild(espacio);caja1245.appendChild(inputValor);
-
-        inputValor.focus();
-        inputValor.addEventListener("keydown",function(event){if(event.key==="Enter"){
-          let v;try{v=_parseValor(inputValor.value);}catch(e){caja1243.innerHTML="Entrada no válida. Usa decimal (0.5), fracción (1/2) o G.";inputValor.value="";inputValor.focus();return;}
-          if(!_hasCaso(v)){caja1243.innerHTML="El valor introducido no está entre los casos a estudiar ni es el caso general G.<br>Introduce otro valor, por favor.";inputValor.value="";inputValor.focus();return;}
-
-          casoUnico=false;
-          if(v.tipo!=="G"){
-            let txt="CASO: "+nombreParametro+"="+fraccionContinua(v.num.toString(),long);
-            _resolverYpintarCasoValor(v.num,txt,false);_removeCaso(v);caja12412.innerHTML="CASOS: "+casosString;inputValor.value="";inputValor.focus();return;
-          }
-
-          let casosAutomaticoCadena=[];for(let i=0;i<casosAutomatico.length;i++)
-            {if(casosAutomatico[i].includes(".")){casosAutomaticoCadena[i]=fraccionContinua(casosAutomatico[i].toString(),long);}
-             else{casosAutomaticoCadena[i]=casosAutomatico[i]}  }
-          let txt="CASO GENERAL: "+nombreParametro+" \u2260"+casosAutomaticoCadena;
-          let ui=_crearCajaCasoHeader(txt);ui.caja31211.innerHTML="EL SISTEMA INICIAL PARA ESTE CASO ES:";Representar.sistemaCompleto(matrizExpresiones,ui.caja31212);
-          ui.caja31221.innerHTML="UNA MATRIZ ESCALONADA PARA ESTE CASO ES:";Representar.matrizGaussCompleta(matrizActualExpresiones,ui.caja31222,leyendaIncognitas,ordenLeyenda);
-          let matUso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matUso))matUso=Matriz.escalonarMatrizNumerica(matUso);
-          tipoCaso=Sistema.discutir(matUso);Representar.solucionesSistemaLineal(matUso,ui.caja314,leyendaIncognitas,ordenLeyenda);
-          _removeCaso(v);caja12412.innerHTML="CASOS: "+casosString;inputValor.value="";inputValor.focus();
-
-          if(casos.length===0){
-            while(caja124.firstChild){caja124.removeChild(caja124.firstChild);}
-            let c1=document.createElement("div"),c2=document.createElement("div"),c3=document.createElement("div");caja124.appendChild(c1);caja124.appendChild(c2);caja124.appendChild(c3);
-            c1.id="caja1241";c2.id="caja1242";c3.id="caja1243";
-            c1.innerHTML="YA HAS ESTUDIADO TODOS LOS CASOS ESPECÍFICOS POSIBLES DE "+nombreParametro;
-            c2.innerHTML="Si quieres, ahora puedes obtener la solución para un valor específico del parámetro.";
-            let inputValor2=document.createElement("input");_showFlex(c3);
-            let c31=document.createElement("div"),c32=document.createElement("div");c3.appendChild(c31);c3.appendChild(c32);
-            c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Para ello, introduce dicho valor "+nombreParametro+"= ";c32.appendChild(inputValor2);
-
-            inputValor2.focus();
-            inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
-              let valorrr=inputValor2.value;
-              try{if((valorrr||"").trim().length===0)throw new Error();if(valorrr.includes("/"))valorrr=parseFloat(pasarADecimal(valorrr));if(valorrr.includes(","))valorrr=valorrr.replace(",",".");valorrr=parseFloat(valorrr);if(Number.isNaN(valorrr))throw new Error();}
-              catch(e){c2.innerHTML="Entrada no válida. Usa decimal (0.5) o fracción (1/2).";inputValor2.value="";inputValor2.focus();return;}
-              let txt="CASO: "+nombreParametro+"="+fraccionContinua(valorrr.toString(),long);
-              _resolverYpintarCasoValor(valorrr,txt,false);inputValor2.value="";inputValor2.focus();
-            }});
-          }
-        }});
-      }else caja1243.innerHTML="Todavía no has introducido todos los casos específicos que se deben estudiar. Continúa incluyendo casos.";
+        let v=_parseValor(inputValor.value);if(!_hasCaso(v)&&v.tipo!=="G")throw new Error("x");
+        let txt=v.tipo==="G"?"CASO GENERAL":"CASO: "+nombreParametro+"="+(typeof fraccionContinua==="function"?fraccionContinua(v.num.toString(),long):v.num.toString());
+        _resolverYpintarCasoValor(v.tipo==="G"?null:v.num,txt,v.tipo==="G");inputValor.value="";inputValor.focus();
+      }catch(e){_setErrEl(msg);msg.innerHTML="Entrada no válida. Usa decimal (0.5), fracción (1/2) o G.";inputValor.value="";inputValor.focus();}
     });
+    let btnEq=document.createElement("button");btnEq.innerHTML="RESOLVER ECUACIÓN";caja3.appendChild(btnEq);
+    btnEq.addEventListener("click",function(){_abrirModalEcuacion();});
   }
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-  const abreVentana1=document.getElementById("abreVentana1"),cierraVentana1=document.getElementById("cierraVentana1"),ventana=document.getElementById("ventana1"),pdf1=document.getElementById("pdf1");
-  const pdf1URL="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
-  let otroSistema=document.getElementById("otroSistema");if(!otroSistema){otroSistema=document.createElement("button");otroSistema.id="otroSistema";otroSistema.innerHTML="Otro sistema";}
-  let parent=abreVentana1&&abreVentana1.parentNode,volver=(document.getElementById("volver")||document.getElementById("volver1")||document.getElementById("btnVolver"));
-  if(parent){
-    if(volver&&volver.parentNode===parent)parent.insertBefore(otroSistema,volver);
-    else parent.insertBefore(otroSistema,abreVentana1?abreVentana1.nextSibling:null);
-  }else document.body.appendChild(otroSistema);
-  otroSistema.addEventListener("click",function(){window.location.reload();});
-  abreVentana1.addEventListener("click",function(event){event.preventDefault();pdf1.src=pdf1URL;_showFlex(ventana);});
-  cierraVentana1.addEventListener("click",function(){_hide(ventana);pdf1.src="";});
-  window.addEventListener("click",function(event){if(event.target==ventana){_hide(ventana);pdf1.src="";}});
-});
+crearNumeroEcuaciones();
