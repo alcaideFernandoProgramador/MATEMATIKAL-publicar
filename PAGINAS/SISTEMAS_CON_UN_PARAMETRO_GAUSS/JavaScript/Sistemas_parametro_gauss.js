@@ -6,26 +6,12 @@ function _showBlock(el){if(!el)return;el.classList.remove("isHidden");el.classLi
 function _setOkEl(el){if(!el)return;el.classList.remove("txtErr");el.classList.add("txtOk");}
 function _setErrEl(el){if(!el)return;el.classList.remove("txtOk");el.classList.add("txtErr");}
 function _setOk(id){_setOkEl(_$(id));}function _setErr(id){_setErrEl(_$(id));}
-let caja1=_$("caja1"),caja2=_$("caja2"),contenedorCaja3=_$("contenedorCaja3"),caja3=_$("caja3"),titulo3=_$("titulo3");
-try{_hide(caja2);_hide(contenedorCaja3);}catch(e){}
-
+let caja1=_$("caja1"),caja11=_$("caja11"),caja111=_$("caja111"),caja1111=_$("caja1111"),caja11111=_$("caja11111"),caja11112=_$("caja11112"),caja1112=_$("caja1112"),caja11121=_$("caja11121"),caja11122=_$("caja11122"),caja11123=_$("caja11123"),caja112=_$("caja112"),caja12=_$("caja12"),titulo3=_$("titulo3"),caja2=_$("caja2"),contenedorCaja3=_$("contenedorCaja3"),caja3=_$("caja3");
+try{_hide(caja2);_hide(contenedorCaja3);_hide(caja112);}catch(e){}
 function _simpl(s){return (s||"").toString().replace(/\s+/g,"");}
 function _isZeroExpr(s){s=_simpl(s);return s==="0"||s===""}
 function _algunPivoteUsadoSeAnula(v){if(v==null||!pivotesUsados||!pivotesUsados.length)return false;for(let i=0;i<pivotesUsados.length;i++){let p=pivotesUsados[i];if(!p||!p.expr)continue;try{let r=Resolver.sustituir(p.expr,nombreParametro,v);if(_isZeroExpr(r))return true;}catch(e){}}return false;}
 function _pivotesDesdeEscalonada(mat){let piv=[];for(let i=0;i<mat.length;i++){for(let j=0;j<mat[0].length;j++){if(!_isZeroExpr(mat[i][j])){piv.push({i,j,expr:mat[i][j]});break;}}}return piv;}
-
-let contenido=document.getElementById("caja1");
-let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";
-let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";
-let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";
-let caja11111=document.createElement("div");caja1111.appendChild(caja11111);caja11111.id="caja11111";caja11111.innerHTML="INTRODUCCIÓN DE DATOS";
-let caja11112=document.createElement("div");caja1111.appendChild(caja11112);caja11112.id="caja11112";caja11112.innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
-let caja1112=document.createElement("div");caja111.appendChild(caja1112);caja1112.id="caja1112";
-let caja11121=document.createElement("div");caja1112.appendChild(caja11121);caja11121.id="caja11121";
-let caja11122=document.createElement("div");caja1112.appendChild(caja11122);caja11122.id="caja11122";
-let caja11123=document.createElement("div");caja1112.appendChild(caja11123);caja11123.id="caja11123";
-let caja112=document.createElement("div");caja112.id="caja112";
-let caja12=document.createElement("div");caja1.appendChild(caja12);caja12.id="caja12";
 
 function crearNumeroEcuaciones(){
   while(caja11121.firstChild){caja11121.removeChild(caja11121.firstChild);}
@@ -85,7 +71,7 @@ function crearNombreParametro(){
         if(nombreparametro.value.length===0){nombreparametro.value="";nombreparametro.focus();throw new Error("errorB");}
         if(nombreparametro.value.match(/^[a-zA-Z]$/)===null){nombreparametro.value="";nombreparametro.focus();throw new Error("errorA");}
         nombreParametro=nombreparametro.value;
-        crearTabla();crearBotonValidar();
+        crearTabla();
       }catch(error){
         _setErr("caja11112");
         if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Nombre del parámetro inválido.<br>Debe ser una sola letra.";
@@ -132,7 +118,7 @@ function crearTabla(){
             else{
               caja1111.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";
               _showBlock(caja1112);while(caja1112.firstChild){caja1112.removeChild(caja1112.firstChild);}
-              while(caja112.firstChild){caja112.removeChild(caja112.firstChild);}
+              while(caja112.firstChild){caja112.removeChild(caja112.firstChild);} _showFlex(caja112);
               let caja1121=document.createElement("div"),caja1122=document.createElement("div");caja1121.id="caja1121";caja1122.id="caja1122";
               let caja11211=document.createElement("div"),caja11212=document.createElement("div"),caja11221=document.createElement("div"),caja11222=document.createElement("div");
               caja11211.id="caja11211";caja11212.id="caja11212";caja11221.id="caja11221";caja11222.id="caja11222";
