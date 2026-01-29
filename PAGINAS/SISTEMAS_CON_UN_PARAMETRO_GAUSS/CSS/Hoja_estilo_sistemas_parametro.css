@@ -55,9 +55,6 @@ td{vertical-align:middle;}
 #caja11{flex:1 1 auto;min-width:0;}
 #caja12{flex:0 0 360px;min-width:320px;max-width:40%;}
 
-#caja12:empty{display:none;}
-#titulo3:empty{display:none;}
-
 #caja111{display:flex;align-items:stretch;gap:10px;flex-wrap:nowrap;}
 #caja1111,#caja1112,#caja112,#caja1121,#caja1122{border:1px solid #d1d5db;border-radius:12px;background:#fff;}
 #caja1111,#caja1112{padding:8px;}
