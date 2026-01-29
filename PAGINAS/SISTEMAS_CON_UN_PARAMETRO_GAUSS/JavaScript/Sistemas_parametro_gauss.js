@@ -191,7 +191,7 @@ function crearFormulario(){
   while(caja111.firstChild)caja111.removeChild(caja111.firstChild);caja111.style.display="block";caja111.style.justifyContent="center";
   let tex1=document.createElement("h3");tex1.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";tex1.style.margin="0px";tex1.style.padding="0px";caja111.appendChild(tex1);
   let tex2=document.createElement("h4");tex2.innerHTML="Para resolverlo, se utilizará el MÉTODO DE GAUSS";tex2.style.margin="0px";tex2.style.padding="0px";caja111.appendChild(tex2);
-  caja11.style.width="60%";caja12.style.width="40%";caja111.style.border="1px solid black";caja111.style.width="97%";caja111.style.margin="4px 0px 7px 5px";caja111.style.height="15%";
+  caja11.style.width="60%";caja12.style.width="40%";caja111.style.border="1px solid black";caja111.style.width="97%";caja111.style.margin="4px 0px 7px 5px";caja111.style.height="21%";
   caja1121.style.width="55%";caja1122.style.width="43.3%";
   let titulo=document.createElement("h3");titulo.style.margin="3px";titulo.style.padding="0px";titulo.style.justifyContent="center";titulo.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";caja12.appendChild(titulo);
   let caja121=document.createElement("div"),caja122=document.createElement("div"),caja123=document.createElement("div"),caja124=document.createElement("div"),caja125=document.createElement("div"),caja125bis=document.createElement("div");
@@ -203,8 +203,8 @@ function crearFormulario(){
   let caja1221=document.createElement("div"),caja1222=document.createElement("div");caja1221.id="caja1221";caja1222.id="caja1222";caja1221.style.width="84%";caja122.appendChild(caja1221);caja122.appendChild(caja1222);
   let caja1231=document.createElement("div"),caja1232=document.createElement("div");caja1231.id="caja1231";caja1232.id="caja1232";caja1231.style.width="84%";caja123.appendChild(caja1231);caja123.appendChild(caja1232);
   let caja1241=document.createElement("div"),caja1242=document.createElement("div");caja1241.id="caja1241";caja1242.id="caja1242";caja1241.style.width="84%";caja124.appendChild(caja1241);caja124.appendChild(caja1242);
-  let caja1251=document.createElement("div"),caja1252=document.createElement("div");caja1251.id="caja1251";caja1252.id="caja1252";caja1251.style.width="84%";caja125.appendChild(caja1251);caja125.appendChild(caja1252);
-  let caja1251bis=document.createElement("div"),caja1252bis=document.createElement("div");caja1251bis.id="caja1251bis";caja1252bis.id="caja1252bis";caja1251bis.style.width="84%";caja125bis.appendChild(caja1251bis);caja125bis.appendChild(caja1252bis);caja125bis.style.marginBottom="5px";
+  let caja1251=document.createElement("div"),caja1252=document.createElement("div");caja1251.id="caja1251";caja1252.id="caja1252";caja1251.style.width="80%";caja125.appendChild(caja1251);caja125.appendChild(caja1252);
+  let caja1251bis=document.createElement("div"),caja1252bis=document.createElement("div");caja1251bis.id="caja1251bis";caja1252bis.id="caja1252bis";caja1251bis.style.width="80%";caja125bis.appendChild(caja1251bis);caja125bis.appendChild(caja1252bis);caja125bis.style.marginBottom="5px";
   let caja126=document.createElement("div"),caja127=document.createElement("div"),caja128=document.createElement("div"),caja129=document.createElement("div");
   caja126.id="caja126";caja127.id="caja127";caja128.id="caja128";caja129.id="caja129";
   caja12.appendChild(caja126);caja12.appendChild(caja127);caja12.appendChild(caja128);caja12.appendChild(caja129);caja129.style.display="flex";caja129.style.justifyContent="flex-end";
