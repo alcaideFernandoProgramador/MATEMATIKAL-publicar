@@ -18,13 +18,11 @@
 </head>
 <body class="pag-sistema-parametro">
 <div id="tituloinicial">
-<h1>DISCUSIÓN Y RESOLUCIÓN DE SISTEMAS DE ECUACIONES LINEALES con un parámetro<br/>MÉTODO DE GAUSS</h1>
+<h1>DISCUSIÓN Y RESOLUCIÓN DE SISTEMAS LINEALES CON UN PARÁMETRO (GAUSS)</h1>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
-<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18">
-<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
-</svg>
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path></svg>
 <span>VOLVER</span>
 </a>
 </div>
@@ -36,52 +34,24 @@
 </div>
 </div>
 </div>
-<p id="notaParametro"><span id="span1">(El parámetro solo puede tomar valores enteros o racionales)</span></p>
 <div id="contenedor">
+<div class="subnota"><span id="span1">(El parámetro solo puede tomar valores enteros o racionales)</span></div>
 <div id="caja1">
-  <div id="caja11">
-    <div id="caja111">
-      <div id="caja1111">
-        <div id="caja11111">INTRODUCCIÓN DE DATOS</div>
-        <div id="caja11112">Valida todos los datos introducidos con la tecla ENTER del teclado</div>
-      </div>
-      <div id="caja1112">
-        <div id="caja11121"></div>
-        <div id="caja11122"></div>
-        <div id="caja11123"></div>
-      </div>
-    </div>
-    <div id="caja112"></div>
-  </div>
-  <div id="caja12"></div>
+<div id="caja11">
+<div id="caja111">
+<div id="caja1111"><div id="caja11111">INTRODUCCIÓN DE DATOS</div><div id="caja11112">Valida todos los datos introducidos con la tecla ENTER del teclado</div></div>
+<div id="caja1112"><div id="caja11121"></div><div id="caja11122"></div><div id="caja11123"></div></div>
 </div>
+<div id="caja112"></div>
+</div>
+<div id="caja12"></div>
+</div>
+<div id="panelResultados">
 <h3 id="titulo3"></h3>
 <div id="caja2"></div>
 <div id="contenedorCaja3"><div id="caja3"></div></div>
 </div>
+</div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about">Acerca de</a><a href="/contacto">Contacto</a><a href="/privacy">Privacidad</a><a href="/cookies">Cookies</a></div></footer>
-<script>
-(()=>{if(!document.body.classList.contains("pag-sistema-parametro"))return;
-let cont=document.getElementById("contenedor"),c1=document.getElementById("caja1"),t3=document.getElementById("titulo3"),c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3"),footer=document.querySelector("footer.siteFooter");
-if(!cont||!c2||!c3)return;let minC3=160,raf=0;
-let _num=(v)=>{let n=parseFloat(v||"0");return isNaN(n)?0:n;};
-let _gap=()=>{let cs=getComputedStyle(cont),g=_num(cs.rowGap||cs.gap);return g||10;};
-let _pad=()=>{let cs=getComputedStyle(cont);return {t:_num(cs.paddingTop),b:_num(cs.paddingBottom)};};
-let _footerH=()=>footer?Math.ceil(footer.getBoundingClientRect().height||0):0;
-let _scrollBottom=(el)=>{try{el.scrollTop=el.scrollHeight;}catch(e){}};
-let _layout=()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{let gap=_gap(),p=_pad(),fh=_footerH();
-let r2=c2.getBoundingClientRect(),avail=Math.floor(innerHeight-fh-r2.top-gap);if(avail<120)avail=120;
-let fixed=(c1?c1.offsetHeight:0)+(t3?t3.offsetHeight:0);
-let g1=(c1&&t3)?gap:0,g2=(t3&&c2)?gap:0,g3=(c2&&c3)?gap:0;
-let inner=avail-(g3);let cap=Math.floor(inner-minC3);if(cap<80)cap=80;
-let desired=Math.ceil(c2.scrollHeight||0);if(desired<80)desired=80;
-let h2=Math.min(desired,cap),h3=Math.floor(inner-h2);
-if(h3<minC3){let d=minC3-h3;h3=minC3;h2=Math.max(80,h2-d);} 
-c2.style.height=h2+"px";c3.style.height=h3+"px";_scrollBottom(c2);_scrollBottom(c3);raf=0;});};
-addEventListener("resize",_layout,{passive:true});
-new MutationObserver(_layout).observe(c2,{childList:true,subtree:true,characterData:true});
-new MutationObserver(_layout).observe(c3,{childList:true,subtree:true,characterData:true});
-_layout();})();
-</script>
 </body>
 </html>
