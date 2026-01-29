@@ -60,13 +60,14 @@ iframe{border:none}
 #controlesTop{position:relative;z-index:9999}
 #controlesTop a,#controlesTop button{position:relative;z-index:10000}
 
-/* Solo para esta página: scroll local y sin desconfigurar #caja1 */
-body.pag-sistema-parametro{overflow:hidden;padding-bottom:0;}
+
+body.pag-sistema-parametro{overflow:hidden;padding-bottom:var(--footerH);}
 body.pag-sistema-parametro #caja2,body.pag-sistema-parametro #contenedorCaja3{overflow-y:scroll;overflow-x:hidden;min-height:0;overscroll-behavior:contain;}
 
-/* Evita scrollbar horizontal en el panel de opciones (por textos largos tipo "(F_i = aF_i + ...)") */
+
 body.pag-sistema-parametro #caja12{overflow-x:hidden;}
 body.pag-sistema-parametro #caja12,body.pag-sistema-parametro #caja12 *{max-width:100%;box-sizing:border-box;overflow-x:hidden;}
 body.pag-sistema-parametro #caja12>div{flex-wrap:wrap;min-width:0;}
 body.pag-sistema-parametro #caja12>div>div{min-width:0;}
 body.pag-sistema-parametro #caja12 label{white-space:normal;overflow-wrap:anywhere;word-break:break-word;}
+body.pag-sistema-parametro #contenedor{height:calc(100vh - var(--footerH));overflow:hidden;}
