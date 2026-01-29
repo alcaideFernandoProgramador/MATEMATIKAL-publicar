@@ -65,3 +65,5 @@ body.pag-sistema-parametro #caja12 label{white-space:normal;overflow-wrap:anywhe
   #controlesTop{justify-content:flex-end}
   body.pag-sistema-parametro #caja2{max-height:38vh}
 }
+
+#caja112{display:none;}
