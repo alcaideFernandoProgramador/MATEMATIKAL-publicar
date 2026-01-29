@@ -22,7 +22,9 @@ a{text-decoration:none;color:inherit;}
 #notaParametro{margin:10px 0 12px;text-align:center;}
 #notaParametro #span1{display:inline-block;padding:6px 10px;border-radius:10px;border:1px solid var(--line2);background:#fff;color:#374151;font-weight:700;font-size:12px;}
 
-#contenedor{display:flex;flex-direction:column;gap:12px;}
+/* Solo para esta página: scroll local y sin desconfigurar #caja1 */
+body.pag-sistema-parametro{overflow:hidden;padding-bottom:0;}
+body.pag-sistema-parametro #caja2,body.pag-sistema-parametro #contenedorCaja3{overflow-y:scroll;overflow-x:hidden;min-height:0;overscroll-behavior:contain;}
 
 #caja1,#caja2,#contenedorCaja3{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:12px;}
 #caja1:empty,#caja2:empty,#contenedorCaja3:empty{min-height:34px;}

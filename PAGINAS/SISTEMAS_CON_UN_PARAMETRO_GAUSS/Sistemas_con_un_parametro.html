@@ -60,6 +60,28 @@
 <div id="contenedorCaja3"><div id="caja3"></div></div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about">Acerca de</a><a href="/contacto">Contacto</a><a href="/privacy">Privacidad</a><a href="/cookies">Cookies</a></div></footer>
-
+<script>
+(()=>{if(!document.body.classList.contains("pag-sistema-parametro"))return;
+let cont=document.getElementById("contenedor"),c1=document.getElementById("caja1"),t3=document.getElementById("titulo3"),c2=document.getElementById("caja2"),c3=document.getElementById("contenedorCaja3"),footer=document.querySelector("footer.siteFooter");
+if(!cont||!c2||!c3)return;let minC3=160,raf=0;
+let _num=(v)=>{let n=parseFloat(v||"0");return isNaN(n)?0:n;};
+let _gap=()=>{let cs=getComputedStyle(cont),g=_num(cs.rowGap||cs.gap);return g||10;};
+let _pad=()=>{let cs=getComputedStyle(cont);return {t:_num(cs.paddingTop),b:_num(cs.paddingBottom)};};
+let _footerH=()=>footer?Math.ceil(footer.getBoundingClientRect().height||0):0;
+let _scrollBottom=(el)=>{try{el.scrollTop=el.scrollHeight;}catch(e){}};
+let _layout=()=>{if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{let gap=_gap(),p=_pad(),fh=_footerH();
+let r2=c2.getBoundingClientRect(),avail=Math.floor(innerHeight-fh-r2.top-gap);if(avail<120)avail=120;
+let fixed=(c1?c1.offsetHeight:0)+(t3?t3.offsetHeight:0);
+let g1=(c1&&t3)?gap:0,g2=(t3&&c2)?gap:0,g3=(c2&&c3)?gap:0;
+let inner=avail-(g3);let cap=Math.floor(inner-minC3);if(cap<80)cap=80;
+let desired=Math.ceil(c2.scrollHeight||0);if(desired<80)desired=80;
+let h2=Math.min(desired,cap),h3=Math.floor(inner-h2);
+if(h3<minC3){let d=minC3-h3;h3=minC3;h2=Math.max(80,h2-d);} 
+c2.style.height=h2+"px";c3.style.height=h3+"px";_scrollBottom(c2);_scrollBottom(c3);raf=0;});};
+addEventListener("resize",_layout,{passive:true});
+new MutationObserver(_layout).observe(c2,{childList:true,subtree:true,characterData:true});
+new MutationObserver(_layout).observe(c3,{childList:true,subtree:true,characterData:true});
+_layout();})();
+</script>
 </body>
 </html>
