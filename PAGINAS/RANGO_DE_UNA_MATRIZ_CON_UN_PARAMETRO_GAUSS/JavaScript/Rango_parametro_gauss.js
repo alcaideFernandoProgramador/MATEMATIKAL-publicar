@@ -16,7 +16,7 @@ function _parseCombLineal(expr,n){expr=_strip(expr);let m=expr.match(/^F(\d+)\=(
 function _aplicarCombMultiple(M,expr){let n=M.length,m=M[0].length,o=_parseCombLineal(expr,n),snap=_clone2(M),nueva=Array(m).fill("0");for(let t of o.terms){_registrarPivoteFila(t.idx);_registrarDenomsCoef(t.coef);for(let j=0;j<m;j++){let p=Polinomio.multiplicar("("+t.coef+")","("+snap[t.idx][j]+")");nueva[j]=_simpl(Polinomio.sumar(nueva[j],p));}}M[o.target]=nueva;return o;}
 function _parseValorSimple(raw){raw=(raw||"").toString().trim();if(!raw.length)throw new Error("v");if(raw.includes("/"))raw=ExpresionAlgebraica.pasarADecimal(raw);if(raw.includes(","))raw=raw.replace(",",".");let n=parseFloat(raw);if(Number.isNaN(n))throw new Error("v");return n;}
 function _insertarBotonOtraMatriz(){try{let ayuda=_$("abreVentana1"),volver=_$("btnHome");if(!ayuda)return;let btn=_$("otraMatriz");if(btn)btn.remove();btn=document.createElement("button");btn.id="otraMatriz";btn.innerHTML="Otra matriz";btn.addEventListener("click",function(e){e.preventDefault();window.location.reload();});let parent=ayuda.parentNode;if(parent){if(volver&&volver.parentNode===parent)parent.insertBefore(btn,volver);else parent.insertBefore(btn,ayuda.nextSibling);}}catch(e){}}
-function _setupAyuda(){const abre=_$("abreVentana1"),cierra=_$("cierraVentana1"),vent=_$("ventana1"),pdf=_$("pdf1");const url="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";if(abre)abre.addEventListener("click",function(ev){ev.preventDefault();pdf.src=url;vent.style.display="flex";});if(cierra)cierra.addEventListener("click",function(){vent.style.display="none";pdf.src="";});window.addEventListener("click",function(ev){if(ev.target===vent){vent.style.display="none";pdf.src="";}});}
+function _setupAyuda(){const abre=_$("abreVentana1"),cierra=_$("cierraVentana1"),vent=_$("ventana1"),pdf=_$("pdf1");const url="instrucciones/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";if(abre)abre.addEventListener("click",function(ev){ev.preventDefault();pdf.src=url;vent.style.display="flex";});if(cierra)cierra.addEventListener("click",function(){vent.style.display="none";pdf.src="";});window.addEventListener("click",function(ev){if(ev.target===vent){vent.style.display="none";pdf.src="";}});}
 function _appendMatrizTrabajo(M){let caja2=_$("caja2");if(!caja2)return;caja2.style.display="flex";Representar.matriz(M,caja2);}
 function _validarExpresionEntrada(expr){
   expr=(expr||"").toString().trim();if(!expr.length)return [false,"No has introducido nada."];
@@ -47,15 +47,15 @@ function _init(){
 
   function crearNumeroFilas(){
     let inp=document.createElement("input");inp.type="text";caja1121.appendChild(t1);caja1121.appendChild(inp);inp.focus();
-    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");numeroFilas=Number(inp.value);if(!Number.isInteger(numeroFilas)||numeroFilas<1||numeroFilas>6)throw 0;crearNumeroColumnas();}catch(e){inp.value="";_msgErrBox("caja1112","El nº de filas no es válido.<br>Debe ser un entero entre 1 y 6.");inp.focus();}});
+    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");numeroFilas=Number(inp.value);if(!Number.isInteger(numeroFilas)||numeroFilas<1||numeroFilas>6)throw 0;crearNumeroColumnas();}catch(e){inp.value="";_msgErrBox("caja1112","El nº de filas no es válido.<br>Debe ser un entero entre 1 y 6.");inp.focus();}});
   }
   function crearNumeroColumnas(){
     let inp=document.createElement("input");inp.type="text";caja1122.appendChild(t2);caja1122.appendChild(inp);inp.focus();
-    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");numeroColumnas=Number(inp.value);if(!Number.isInteger(numeroColumnas)||numeroColumnas<1||numeroColumnas>8)throw 0;crearNombreParametro();}catch(e){inp.value="";_msgErrBox("caja1112","El nº de columnas no es válido.<br>Debe ser un entero entre 1 y 8.");inp.focus();}});
+    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");numeroColumnas=Number(inp.value);if(!Number.isInteger(numeroColumnas)||numeroColumnas<1||numeroColumnas>8)throw 0;crearNombreParametro();}catch(e){inp.value="";_msgErrBox("caja1112","El nº de columnas no es válido.<br>Debe ser un entero entre 1 y 8.");inp.focus();}});
   }
   function crearNombreParametro(){
     let inp=document.createElement("input");inp.type="text";caja1123.appendChild(t3);caja1123.appendChild(inp);inp.focus();
-    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");nombreParametro=inp.value;if(isNaN(nombreParametro)===false||nombreParametro.toLowerCase()!==nombreParametro||nombreParametro.length!==1)throw 0;crearMatrizVacia();}catch(e){inp.value="";_msgErrBox("caja1112","El parámetro debe ser una letra minúscula.");inp.focus();}});
+    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOkBox("caja1112","Valida todos los datos introducidos con la tecla ENTER del teclado");nombreParametro=inp.value;if(isNaN(nombreParametro)===false||nombreParametro.toLowerCase()!==nombreParametro||nombreParametro.length!==1)throw 0;crearMatrizVacia();}catch(e){inp.value="";_msgErrBox("caja1112","El parámetro debe ser una letra minúscula.");inp.focus();}});
   }
   function crearMatrizVacia(){
     caja12.innerHTML="";valores=[];let cont=document.createElement("div");cont.className="rowFlex";caja12.appendChild(cont);
@@ -143,9 +143,9 @@ function continuar(){
         let l1=document.createElement("label"),l2=document.createElement("label"),i1=document.createElement("input"),i2=document.createElement("input");
         i1.className="w40";i2.className="w40";d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);
         caja127.appendChild(d1);caja127.appendChild(d2);l1.innerHTML="i=";l2.innerHTML="j=";i1.focus();let n=matrizActualExpresiones.length,f1=null;
-        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}
+        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}
           catch(e){i1.value="";i1.focus();_msgErr("i no válido (1.."+n+").");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
           matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
           if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloPermutarFilas(f1,f2,n,caja2);_after();_clearUI();}
           catch(e){i2.value="";i2.focus();_msgErr("j no válido (1.."+n+") y distinto de i.");}});
@@ -157,9 +157,9 @@ function continuar(){
         let l1=document.createElement("label"),l2=document.createElement("label"),i1=document.createElement("input"),i2=document.createElement("input");
         i1.className="w40";i2.className="w40";d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);
         caja127.appendChild(d1);caja127.appendChild(d2);l1.innerHTML="i=";l2.innerHTML="j=";i1.focus();let m=matrizActualExpresiones[0].length,c1=null;
-        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}
+        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}
           catch(e){i1.value="";i1.focus();_msgErr("i no válido (1.."+m+").");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
           matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);
           if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloPermutarColumnas(c1,c2,matrizActualExpresiones.length,caja2);_after();_clearUI();}
           catch(e){i2.value="";i2.focus();_msgErr("j no válido (1.."+m+") y distinto de i.");}});
@@ -174,7 +174,7 @@ function continuar(){
       case "op4":{
         let d=document.createElement("div");d.className="rowFlex";let lab=document.createElement("label"),inp=document.createElement("input");
         lab.innerHTML="Introduce combinación lineal y ENTER:";inp.className="w150 mL8";d.appendChild(lab);d.appendChild(inp);caja127.appendChild(d);inp.focus();
-        inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{let expr=inp.value.trim();if(!expr.length)throw 0;let matrizAux=_clone2(matrizActualExpresiones);
+        inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{let expr=inp.value.trim();if(!expr.length)throw 0;let matrizAux=_clone2(matrizActualExpresiones);
           _aplicarCombMultiple(matrizActualExpresiones,expr);if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloCambiarLinea(expr,matrizActualExpresiones.length,caja2);
           _after();_clearUI();}catch(e){inp.value="";inp.focus();_msgErr("Expresión no válida. Ej: F3=2F3-(a-1)F2");}});
       }break;
@@ -232,7 +232,7 @@ function solucionEscalonada(escalonada){
     let zona=_$("zonaExtraCasos");if(zona)zona.remove();_dejarSoloCasosExtra();zona=document.createElement("div");zona.id="zonaExtraCasos";zona.className="mt8";panel.appendChild(zona);
     let row=document.createElement("div");row.className="rowFlex rowGap6 mt8";let lab=document.createElement("label");lab.innerHTML=nombreParametro+"=";
     let inp=document.createElement("input");inp.className="w40";row.appendChild(lab);row.appendChild(inp);zona.appendChild(row);inp.focus();
-    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{let num=_parseValorSimple(inp.value);inp.value="";let s=(typeof fraccionContinua==="function")?fraccionContinua(num.toString(),long):num.toString();_imprimirRangoCaso(num,s);inp.focus();}catch(e){inp.value="";inp.focus();}});
+    inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{let num=_parseValorSimple(inp.value);inp.value="";let s=(typeof fraccionContinua==="function")?fraccionContinua(num.toString(),long):num.toString();_imprimirRangoCaso(num,s);inp.focus();}catch(e){inp.value="";inp.focus();}});
   }
 
   function _autoCasos(){
@@ -255,7 +255,7 @@ function solucionEscalonada(escalonada){
   ui.row1=row1;ui.list=list;ui.fin=fin;ui.inp1=inp;ui.auto=auto;auto.addEventListener("click",function(ev){ev.preventDefault();_autoCasos();});
 
   inp.focus();
-  inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;
+  inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;
     try{let num=_parseValorSimple(inp.value);let s=(typeof fraccionContinua==="function")?fraccionContinua(num.toString(),long):num.toString();
       if(valoresExcluidosNumerico.includes(num)||valoresExcluidos.includes(s))throw 0;if(!casosNumerico.includes(num))casosNumerico.push(num);if(!casos.includes(s))casos.push(s);
       list.style.color="black";list.innerHTML="CASOS: "+casos;inp.value="";inp.focus();}
@@ -269,7 +269,7 @@ function solucionEscalonada(escalonada){
     let row2=document.createElement("div");row2.className="rowFlexWrap mt8";let lab2=document.createElement("label");lab2.innerHTML="Valor:";let inp2=document.createElement("input");inp2.className="w110";
     row2.appendChild(lab2);row2.appendChild(inp2);panel.appendChild(row2);ui.row2=row2;inp2.focus();let general=true;
 
-    inp2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;let raw=(inp2.value||"").trim();inp2.value="";
+    inp2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;let raw=(inp2.value||"").trim();inp2.value="";
       if(raw==="G"||raw==="g"){if(!general){info.innerHTML="El caso general ya fue estudiado.";inp2.focus();return;}
         _imprimirRangoCaso(null,"general");general=false;casos=casos.filter(x=>x!=="G"&&x!=="g");list.innerHTML="CASOS: "+casos;
         if(casos.length===0)_activarEstudioExtra();inp2.focus();return;}

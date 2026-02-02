@@ -303,7 +303,7 @@ function op4(){
       let sign=x[1]==="-"?"-":"",coef=(x[2]??"");if(coef==="")return true;
       let v=normNumStr(sign+coef);if(isNumStr(v)&&!_Z(simp(v)))return true;}return false;}
   ic.addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
       msgOK("caja1251","");let cad=ic.value;aplicarCombinacionDesdeCadena(cad);
       if(!rhsIncluyeFilaNoNula(cad))throw 1;
@@ -417,7 +417,7 @@ function crearNumeroFilas(lug,lugc){
   let p=document.createElement("p");p.id="textosinmargen";p.appendChild(document.createTextNode("Nº de filas"));
   let i=document.createElement("input");i.id="nfilas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
       S.nf=Number(i.value);if(isNaN(S.nf)||S.nf<1||!Number.isInteger(S.nf))throw 0;crearNumeroColumnas("caja11122","caja11112");
     }catch(_){ok=false;msgERR(lugc,"El nº de filas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
@@ -427,7 +427,7 @@ function crearNumeroColumnas(lug,lugc){
   let p=document.createElement("p");p.id="textosinmargen";p.appendChild(document.createTextNode("Nº de columnas"));
   let i=document.createElement("input");i.id="ncolumnas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
       S.nc=Number(i.value);if(isNaN(S.nc)||S.nc<1||!Number.isInteger(S.nc))throw 0;crearMatrizVacia();
     }catch(_){ok=false;msgERR(lugc,"El nº de columnas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
@@ -494,7 +494,7 @@ activarScrollVerticalSiNecesario(b2,320);
 function rellenarMatriz(tabla){
   let inputs=tabla.getElementsByTagName("input");if(inputs[0])inputs[0].focus();
   for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
       msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;

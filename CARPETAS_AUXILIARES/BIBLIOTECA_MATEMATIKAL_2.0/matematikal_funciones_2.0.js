@@ -2363,7 +2363,7 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
         linea.style.display = "flex"; linea.style.alignItems = "center"; linea.style.gap = "6px"; panel.appendChild(linea); const label = document.createElement("span"); 
         label.textContent = "Nº de matrices:"; const input = document.createElement("input"); input.type = "text"; input.style.width = "40px"; linea.appendChild(label); 
         linea.appendChild(input); setTimeout(() => input.focus(), 0); const cajaError = document.createElement("div"); lugar.appendChild(cajaError); 
-        return await new Promise((ok) => { input.addEventListener("keydown", (e) => { if(e.key==="Enter"||e.key==="Tab") { e.preventDefault(); 
+        return await new Promise((ok) => { input.addEventListener("keydown", (e) => { if(e.key==="Enter"||e.key==="Tab"){e.preventDefault(); e.preventDefault(); 
           try { const n = Validar.validarEntradaNumeroEnteroPositivo(input.value); ok(n); } 
           catch (err) { Representar.mostrarError(cajaError, "Entrada inválida: introduce un entero positivo."); input.select(); } } }); }); }; 
     const pedirNombres = async (numero) => { lugar.textContent = ""; const nombresPorDefecto = Array.from({ length: numero }, (_, i) => nombrePorIndice(i)); 
@@ -2400,16 +2400,16 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           columnaContainer.style.gap = "5px"; caj1.appendChild(columnaContainer); const labelColumnas = document.createElement("span"); labelColumnas.textContent = "Nº de columnas:"; 
           columnaContainer.appendChild(labelColumnas); const inputColumnas = document.createElement("input"); inputColumnas.type = "text"; inputColumnas.min = "1"; 
           inputColumnas.style.width = "30px"; columnaContainer.appendChild(inputColumnas); const cajaError = document.createElement("div"); lugar.appendChild(cajaError); 
-          inputFilas.addEventListener("keydown", (e1) => { if(e1.key==="Enter"||e1.key==="Tab") { e1.preventDefault(); try { filas = Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value); 
+          inputFilas.addEventListener("keydown", (e1) => { if(e1.key==="Enter"||e1.key==="Tab"){e1.preventDefault(); e1.preventDefault(); try { filas = Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value); 
           inputColumnas.focus(); } catch { Representar.mostrarError(cajaError, "Entrada de filas inválida."); } } }); 
-          inputColumnas.addEventListener("keydown", (e2) => { if(e2.key==="Enter"||e2.key==="Tab") { e2.preventDefault(); 
+          inputColumnas.addEventListener("keydown", (e2) => { if(e2.key==="Enter"||e2.key==="Tab"){e2.preventDefault(); e2.preventDefault(); 
           try { columnas = Validar.validarEntradaNumeroEnteroPositivo(inputColumnas.value); inputColumnas.disabled = true; 
           const tabla = document.createElement("table"); tabla.style.borderCollapse = "collapse"; const contenedor = document.createElement("div"); 
           contenedor.style.display = "flex"; contenedor.style.alignItems = "center"; lugar.appendChild(contenedor); Representar.abrirParentesis(filas * 1.25, contenedor); 
           for (let i = 0; i < filas; i++) { const fila = document.createElement("tr"); const filaDatos = []; 
           for (let j = 0; j < columnas; j++) { const celda = document.createElement("td"); celda.style.border = "1px solid #ccc"; celda.style.padding = "2px"; 
           const input = document.createElement("input"); input.type = "text"; input.style.width = "40px"; filaDatos.push(null); 
-          input.addEventListener("keydown", (ev) => { if(ev.key==="Enter"||ev.key==="Tab") { ev.preventDefault(); const filaIdx = input.parentNode.parentNode.rowIndex; 
+          input.addEventListener("keydown", (ev) => { if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault(); ev.preventDefault(); const filaIdx = input.parentNode.parentNode.rowIndex; 
           const colIdx = input.parentNode.cellIndex; try { Validar.expresionParentesisBalanceadosYCaracteresValidos(input.value); 
           matrizCreada[filaIdx][colIdx] = input.value; const idxPlano = filaIdx * columnas + colIdx; const total = filas * columnas; 
           if (idxPlano < total - 1) { const inputs = tabla.querySelectorAll("input"); inputs[idxPlano + 1].focus(); } 
@@ -2449,7 +2449,7 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           nombreC.replaceChild(inputTemp,spanNombre);inputTemp.focus();btnCambiar.textContent="Aceptar";editando=true;
           const finalizar=()=>{if(!inputTemp.value.trim())return;nombreActual=inputTemp.value.trim();spanNombre.textContent=nombreActual;
           nombreC.replaceChild(spanNombre,inputTemp);btnCambiar.textContent="Cambiar nombre";btnCambiar.style.marginLeft="36px";editando=false};
-          inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();finalizar()}});btnCambiar.addEventListener("click",finalizar,{once:true});}});
+          inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar()});btnCambiar.addEventListener("click",finalizar,{once:true});}});
       inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
           try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus()}
           catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.")}}});
@@ -2490,7 +2490,7 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           nombreC.replaceChild(inputTemp,spanNombre);inputTemp.focus();btnCambiar.textContent="Aceptar";editando=true;
           const finalizar=()=>{if(!inputTemp.value.trim())return;nombreActual=inputTemp.value.trim();spanNombre.textContent=nombreActual;
             nombreC.replaceChild(spanNombre,inputTemp);btnCambiar.textContent="Cambiar nombre";btnCambiar.style.marginLeft="36px";editando=false;};
-          inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();finalizar()};});btnCambiar.addEventListener("click",finalizar,{once:true});}});
+          inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar();});btnCambiar.addEventListener("click",finalizar,{once:true});}});
         inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
           try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus();}
           catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");}}});

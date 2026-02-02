@@ -89,7 +89,3 @@ span.mjx-mtable{padding:0!important;margin:0!important}
 /* AJUSTES PARA SISTEMAS NUMÉRICOS (fracciones más largas) */
 #caja112 input{width:64px;max-width:96px}
 #caja11121,#caja11122{flex-wrap:wrap}
-
-/* FIX: asegurar que los controles superiores reciben el clic */
-#controlesTop{position:relative;z-index:9999}
-#controlesTop a,#controlesTop button{position:relative;z-index:10000}

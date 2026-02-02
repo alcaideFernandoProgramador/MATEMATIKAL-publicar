@@ -154,7 +154,7 @@ let primerInput=null;for(let i=0;i<filas;i++){let fila=document.createElement("t
 let celda=document.createElement("td");celda.style.border="1px solid black";celda.style.padding="2px";
 let input=document.createElement("input");input.type="text";input.style.width="40px";input.style.fontSize="13px";
 input.style.textAlign="center";if(!primerInput)primerInput=input;input.addEventListener("keydown",e=>{
-if(e.key==="Enter"){e.preventDefault();mensajeError.style.display="none";let valor=input.value.trim();
+if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();mensajeError.style.display="none";let valor=input.value.trim();
 let correcto=resultado[i][j];if(valor===""||ExpresionAlgebraica.simplificar("("+valor+")-("+correcto+")")!=="0"){
 input.value="";input.style.border="2px solid red";mensajeError.style.display="block";input.focus()}else{
 input.style.border="";let inputs=tablaInputs.querySelectorAll("input");let actualIndex=[...inputs].indexOf(input);
@@ -181,7 +181,7 @@ function crearInputsYProcesar(inputConfigs,operacion,simbolo){envolverInversa();
 const inputs=[],inputValues=[];inputConfigs.forEach(config=>{let div=document.createElement("div");
 let label=document.createElement("label");label.textContent=config.label;let input=document.createElement("input");
 input.className="inputCorto";input.type="text";div.append(label,input);caja124.appendChild(div);inputs.push(input)});
-inputs[0].focus();inputs.forEach((input,idx)=>{input.addEventListener("keydown",e=>{if(e.key==="Enter"){
+inputs[0].focus();inputs.forEach((input,idx)=>{input.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
 e.preventDefault();inputValues[idx]=input.value.trim();if(idx+1<inputs.length){inputs[idx+1].focus()}else{try{
 let matricesOperandos=[],nombreOperandos=[],escalar=null,exponente=null;inputConfigs.forEach((config,i)=>{
 let val=inputValues[i];if(config.type==='matriz'){let indiceMatriz=nombreMatrices.indexOf(val);
@@ -229,7 +229,7 @@ case"opcion6":return crearInputsYProcesar([{type:'matriz',label:'Matriz:'}],Matr
 case"opcion7":return crearInputsYProcesar([{type:'matriz',label:'Nombre de la matriz:'},{type:'numero',label:'Exponente (entero positivo):'}],Matriz.potencia);
 case"opcion8":{let label=document.createElement("label");label.textContent="Escribe la operación combinada:";
 let input=document.createElement("input");input.className="inputLargo";caja124.append(label,input);input.focus();
-input.addEventListener("keydown",e=>{if(e.key==="Enter"){try{resetearFormulario();caja125.style.color="";
+input.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();try{resetearFormulario();caja125.style.color="";
 caja125.innerHTML="";let expre=prepararExpresionMatrices(input.value);let wrap=crearCajaOperacion();
 let contenedorResultado=document.createElement("div");wrap.appendChild(contenedorResultado);
 document.getElementById("caja21").appendChild(wrap);
@@ -238,7 +238,7 @@ mantenerScrollAbajo(document.getElementById("caja21"))}catch(err){let msg=err.me
 pintarErrorEnCaja21(msg)}}});break}
 case"opcion9":{let label=document.createElement("label");label.textContent="Escribe la operación combinada:";
 let input=document.createElement("input");input.className="inputLargo";caja124.append(label,input);input.focus();
-input.addEventListener("keydown",e=>{if(e.key==="Enter"){try{resetearFormulario();caja125.style.color="";
+input.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();try{resetearFormulario();caja125.style.color="";
 caja125.innerHTML="";function signoIgual(){let contenedorIgual=document.createElement("div");
 contenedorIgual.id="contenedorIgual";contenedorIgual.style.cssText="width:auto;height:auto;display:flex;align-items:center;margin-bottom:10px;font-size:13px;";
 contenedorResultado.appendChild(contenedorIgual);katex.render("=",contenedorIgual)}let expre=prepararExpresionMatrices(input.value);
@@ -262,7 +262,7 @@ try{let simp=ExpresionAlgebraica.simplificar("("+t+")");let dec=aDecimal(simp);
 return "("+dec+")"}catch(_){return m}});
 if(s===prev)break}
 return s};
-input.addEventListener("keydown",e=>{if(e.key!=="Enter")return;e.preventDefault();try{resetearFormulario();caja125.style.color="";
+input.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();try{resetearFormulario();caja125.style.color="";
 caja125.innerHTML="";
 let expre=preparar10(input.value),wrap=crearCajaOperacion(),contenedorResultado=document.createElement("div");
 wrap.appendChild(contenedorResultado);document.getElementById("caja21").appendChild(wrap);
@@ -281,7 +281,7 @@ if(b.tagName==="A"){b.href="#";b.removeAttribute("download")}else if(b.tagName==
 b.addEventListener("click",e=>{e.preventDefault();location.reload()});
 if(volver)cont.insertBefore(b,volver);else ayuda.insertAdjacentElement("afterend",b)};insertarOtrasMatrices();
 const archivos={abreVentana1:{pdf:'INSTRUCCIONES/Ayuda.pdf',
-docx:'INSTRUCCIONES/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;
+docx:'INSTRUCCIONES/Archivos_Word/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;
 
 const abrir=aid=>{const n=aid.replace('abreVentana',''),v=$('ventana'+n),f=$('pdf'+n),
 c=v?.querySelector('.contenidoVentana');if(!v||!f||!c)return;const m=vistaDe(archivos[aid]);

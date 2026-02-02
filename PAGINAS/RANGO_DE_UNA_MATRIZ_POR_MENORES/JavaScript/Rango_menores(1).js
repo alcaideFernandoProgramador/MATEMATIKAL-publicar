@@ -291,10 +291,10 @@ mostrarMensajeRangoFinal(2,menorActual.menor,porDim);ui.remove();desmarcarOpcion
 }}
 ui.remove();desmarcarOpcionActual();
 }
-f1.focus();f1.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();f2.focus();}});
-f2.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();c1.focus();}});
-c1.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();c2.focus();}});
-c2.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validarMenor2();}});return;
+f1.focus();f1.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();f2.focus();}});
+f2.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();c1.focus();}});
+c1.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();c2.focus();}});
+c2.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validarMenor2();}});return;
 }
 
 case "opcion2":{
@@ -349,8 +349,8 @@ mostrarMenorActual(mA,true);mostrarMensajeRangoFinal(nF.length,mA,porDim);desmar
 }}
 ui.remove();desmarcarOpcionActual();
 }
-fN.focus();fN.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();cN.focus();}});
-cN.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validarAmp();}});return;
+fN.focus();fN.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();cN.focus();}});
+cN.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validarAmp();}});return;
 }
 
 case "opcion3":{
@@ -367,8 +367,8 @@ const prop=Matriz.sonFilasProporcionales(A-1,B-1,matriz);if(!prop){logLinea("Las
 let msg="Las filas "+A+" y "+B+" son proporcionales ⇒ se elimina la fila "+B+" sin cambiar el rango.",mS=matriz.filter((_,i)=>i!==(B-1));
 registrarOperacionConMatriz(msg,mS);ui.remove();desmarcarOpcionActual();
 }
-a.focus();a.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();b.focus();}});
-b.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validar();}});return;
+a.focus();a.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();b.focus();}});
+b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validar();}});return;
 }
 
 case "opcion4":{
@@ -385,8 +385,8 @@ const prop=Matriz.sonColumnasProporcionales(A-1,B-1,matriz);if(!prop){logLinea("
 let msg="Las columnas "+A+" y "+B+" son proporcionales ⇒ se elimina la columna "+B+" sin cambiar el rango.",mS=matriz.map(f=>f.filter((_,i)=>i!==(B-1)));
 registrarOperacionConMatriz(msg,mS);ui.remove();desmarcarOpcionActual();
 }
-a.focus();a.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();b.focus();}});
-b.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validar();}});return;
+a.focus();a.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();b.focus();}});
+b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validar();}});return;
 }
 
 case "opcion5":{
@@ -402,8 +402,8 @@ if(f<1||f>nf){logLinea("Error: fila fuera de rango (1 a "+nf+").");return;}if(d=
 let mS=matriz.map((fila,i)=>i===f-1?fila.map(x=>Matriz.dividirElemento?Matriz.dividirElemento(x,d):x/d):fila.slice());
 registrarOperacionConMatriz("Se ha dividido la fila "+f+" entre "+d+".",mS);ui.remove();desmarcarOpcionActual();
 }
-iF.focus();iF.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();iD.focus();}});
-iD.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validar();}});return;
+iF.focus();iF.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();iD.focus();}});
+iD.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validar();}});return;
 }
 
 case "opcion6":{
@@ -419,8 +419,8 @@ if(c<1||c>nc){logLinea("Error: columna fuera de rango (1 a "+nc+").");return;}if
 let mS=matriz.map(fila=>fila.map((x,j)=>j===c-1?(Matriz.dividirElemento?Matriz.dividirElemento(x,d):x/d):x));
 registrarOperacionConMatriz("Se ha dividido la columna "+c+" entre "+d+".",mS);ui.remove();desmarcarOpcionActual();
 }
-iC.focus();iC.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();iD.focus();}});
-iD.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();validar();}});return;
+iC.focus();iC.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();iD.focus();}});
+iD.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();validar();}});return;
 }
 
 case "opcion7":{
@@ -457,7 +457,7 @@ botonReset.addEventListener("click",()=>resetearFormulario());
 document.addEventListener("DOMContentLoaded",function(){
 const abreVentana1=document.getElementById("abreVentana1"),cierraVentana1=document.getElementById("cierraVentana1");
 const ventana=document.getElementById("ventana1"),pdf1=document.getElementById("pdf1");
-const pdf1URL="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
+const pdf1URL="instrucciones/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
 if(abreVentana1)abreVentana1.addEventListener("click",function(event){event.preventDefault();pdf1.src=pdf1URL;ventana.style.display="flex";});
 if(cierraVentana1)cierraVentana1.addEventListener("click",function(){ventana.style.display="none";pdf1.src="";});
 window.addEventListener("click",function(event){if(event.target==ventana){ventana.style.display="none";pdf1.src="";}});

@@ -104,7 +104,7 @@ function crearOrden(lug,lugc){
   lugarInputOrden.appendChild(lugarTexto1);lugarInputOrden.appendChild(nOrden);
   lugarInputOrden.appendChild(lugarTexto2);nOrden.focus();let ctrol=true;
   nOrden.addEventListener("keydown",function(event){
-    if(event.key==="Enter"){
+    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
       try{
         if(ctrol===false){
           document.getElementById(lugc).style.color="black";
@@ -144,7 +144,7 @@ function rellenarDeterminante(tabla){
   let inputs=tabla.getElementsByTagName('input');inputs[0].focus();
   for(let i=0;i<inputs.length;i++){
     inputs[i].addEventListener("keydown",function(event){
-      if(event.key==="Enter"){
+      if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
         try{
             let fila=this.parentNode.parentNode.rowIndex,columna=this.parentNode.cellIndex,valor=this.value;
             document.getElementById("caja11112bis").innerHTML="";
@@ -272,7 +272,7 @@ async function crearFormulario(){
           document.getElementById("caja1236").innerHTML="";inputFila4.focus();
 
           inputFila4.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 if(isNaN(inputFila4.value)||inputFila4.value<1||inputFila4.value>determinanteActual.length
                   ||inputFila4.value%1!==0){throw new(error);}
@@ -290,7 +290,7 @@ async function crearFormulario(){
           });
 
           inputFila5.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 let filaCambio=inputFila4.value-1,coef=inputFila5.value,coefS=_simp(coef);
                 if(coefS==="0"){throw new(error);}let entero=true;
@@ -350,7 +350,7 @@ async function crearFormulario(){
           document.getElementById("caja1236").innerHTML="";inputFila4C.focus();
 
           inputFila4C.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 if(isNaN(inputFila4C.value)||inputFila4C.value<1||inputFila4C.value>determinanteActual.length
                   ||inputFila4C.value%1!==0){throw new(error);}
@@ -368,7 +368,7 @@ async function crearFormulario(){
           });
 
           inputFila5C.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 let colCambio=inputFila4C.value-1,coef=inputFila5C.value,coefS=_simp(coef);
                 if(coefS==="0"){tipoError="divisionPorCero";throw new(error);}let entero=true;
@@ -426,7 +426,7 @@ async function crearFormulario(){
           inputE.focus();
 
           inputE.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 estado="usuario";document.getElementById("caja1236").innerHTML="";
                 let r=aplicarExpresionFila(determinanteActual,inputE.value);
@@ -485,7 +485,7 @@ async function crearFormulario(){
           inputEC.focus();
 
           inputEC.addEventListener("keydown",function(event){
-            if(event.key==="Enter"){
+            if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
               try{
                 estado="usuario";document.getElementById("caja1236").innerHTML="";
                 let r=aplicarExpresionColumna(determinanteActual,inputEC.value);
@@ -553,7 +553,7 @@ async function crearFormulario(){
             lugarFila12.appendChild(inputFila12);inputFila12.focus();
 
             inputFila12.addEventListener("keydown",function(event){
-              if(event.key==="Enter"){
+              if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
                 try{
                   if(posibilidadesEleccion.includes(inputFila12.value)===false){throw new(error);}
                   lineaElegida=inputFila12.value;

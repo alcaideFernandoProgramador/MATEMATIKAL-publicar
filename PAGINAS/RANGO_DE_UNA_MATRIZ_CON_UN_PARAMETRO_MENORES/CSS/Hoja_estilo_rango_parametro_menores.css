@@ -56,7 +56,3 @@ iframe{border:none}
   #controlesTop{justify-content:flex-end}
   #contenedor{min-height:calc(100vh - 76px)}
 }
-
-/* FIX: asegurar que los controles superiores reciben el clic */
-#controlesTop{position:relative;z-index:9999}
-#controlesTop a,#controlesTop button{position:relative;z-index:10000}

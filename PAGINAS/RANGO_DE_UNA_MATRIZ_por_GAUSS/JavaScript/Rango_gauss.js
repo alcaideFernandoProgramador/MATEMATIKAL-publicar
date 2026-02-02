@@ -341,7 +341,7 @@ function op4(){
   ic.type="text";ic.value="";ic.placeholder="";ic.style.width="150px";ic.style.padding="2px 4px";
   ic.style.fontSize=S.FS_IN;ic.focus();
   ic.addEventListener("keydown",function(e){
-  if(e.key!=="Enter")return;
+  if(e.key!=="Enter"&&e.key!=="Tab")return;
   let cad=ic.value;
   try{
     msgOK("caja1251","");if(!rhsIncluyeFiNoNula(cad))throw 1;aplicarCombinacionDesdeCadena(cad);
@@ -421,7 +421,7 @@ function crearNumeroFilas(lug,lugc){
   let i=document.createElement("input");i.id="nfilas";i.type="text";l.appendChild(p1);l.appendChild(i);l.appendChild(p2);i.focus();
   let ok=true;
   i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
   if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
   let s=i.value.toString().trim().replace(/\s+/g,"");
@@ -437,7 +437,7 @@ function crearNumeroColumnas(lug,lugc){
   let i=document.createElement("input");i.id="ncolumnas";i.type="text";l.appendChild(p1);l.appendChild(i);l.appendChild(p2);i.focus();
   let ok=true;
   i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
   if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
   let s=i.value.toString().trim().replace(/\s+/g,"");
@@ -485,7 +485,7 @@ function finalizarEntrada(){
 function rellenarMatriz(tabla){
   let inputs=tabla.getElementsByTagName("input");if(inputs[0])inputs[0].focus();
   for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(e){
-    if(e.key!=="Enter")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
       msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
@@ -625,7 +625,7 @@ document.addEventListener("DOMContentLoaded",function(){
   msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
   setupCaja1121();
   const abre=$("abreVentana1"),cierra=$("cierraVentana1"),vent=$("ventana1"),pdf=$("pdf1");
-  const url="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
+  const url="INSTRUCCIONES/AYUDA.pdf#view=FitH&navpanes=0&zoom=300";
   if(abre)abre.addEventListener("click",e=>{e.preventDefault();if(pdf)pdf.src=url;if(vent)vent.style.display="flex";});
   if(cierra)cierra.addEventListener("click",()=>{if(vent)vent.style.display="none";if(pdf)pdf.src="";});
   window.addEventListener("click",e=>{if(e.target==vent){vent.style.display="none";if(pdf)pdf.src="";}});
