@@ -2354,127 +2354,74 @@ class Validar {
 }
 
 class Crear {
-static async matrices(lugar){
-if(!(lugar instanceof HTMLElement))throw new Error("El parámetro 'lugar' debe ser un HTMLElement.");
-const clonarMatriz=m=>m.map(f=>[...f]);
-const nombrePorIndice=idx=>{const A="A".charCodeAt(0);let n=idx+1,s="";while(n>0){const r=(n-1)%26;
-s=String.fromCharCode(A+r)+s;n=Math.floor((n-1)/26);}return s;};
-const pedirNumeroDeMatrices=async()=>{lugar.textContent="";const panel=document.createElement("div");
-panel.style.display="flex";panel.style.flexDirection="column";panel.style.gap="10px";lugar.appendChild(panel);
-const titulo=document.createElement("div");titulo.textContent="¿Cuántas matrices quieres crear?";
-titulo.style.fontWeight="bold";panel.appendChild(titulo);
-const linea=document.createElement("div");linea.style.display="flex";linea.style.alignItems="center";
-linea.style.gap="6px";panel.appendChild(linea);
-const label=document.createElement("span");label.textContent="Nº de matrices:";
-const input=document.createElement("input");input.type="text";input.style.width="40px";
-linea.appendChild(label);linea.appendChild(input);setTimeout(()=>input.focus(),0);
-const cajaError=document.createElement("div");lugar.appendChild(cajaError);
-return await new Promise(ok=>{input.addEventListener("keydown",e=>{if(e.key!=="Enter")return;e.preventDefault();
-try{const n=Validar.validarEntradaNumeroEnteroPositivo(input.value);ok(n);}
-catch(err){Representar.mostrarError(cajaError,"Entrada inválida: introduce un entero positivo.");
-input.value="";input.focus();}});});};
-const pedirNombres=async numero=>{lugar.textContent="";
-const nombresPorDefecto=Array.from({length:numero},(_,i)=>nombrePorIndice(i)),panel=document.createElement("div");
-let nombresElegidos=[...nombresPorDefecto];
-panel.style.display="flex";panel.style.flexDirection="column";panel.style.gap="10px";lugar.appendChild(panel);
-const titulo=document.createElement("div");
-titulo.textContent=`Vas a crear ${numero} ${numero===1?"matriz":"matrices"}.`;titulo.style.fontWeight="bold";
-panel.appendChild(titulo);
-const vistaNombres=document.createElement("div");
-vistaNombres.textContent=`Nombres por defecto: ${nombresPorDefecto.join(", ")}`;panel.appendChild(vistaNombres);
-const botones=document.createElement("div");botones.style.display="flex";botones.style.gap="10px";
-panel.appendChild(botones);
-const btnCambiar=document.createElement("button");btnCambiar.textContent="Cambiar nombres (opcional)";
-const btnUsarDefecto=document.createElement("button");btnUsarDefecto.textContent="Usar nombres por defecto";
-botones.appendChild(btnCambiar);botones.appendChild(btnUsarDefecto);
-const formNombres=document.createElement("div");formNombres.style.display="none";
-formNombres.style.flexDirection="column";formNombres.style.gap="6px";panel.appendChild(formNombres);
-const inputs=[];
-for(let i=0;i<numero;i++){const fila=document.createElement("div");fila.style.display="flex";
-fila.style.alignItems="center";fila.style.gap="8px";
-const lab=document.createElement("span");lab.textContent=`Nombre ${i+1}:`;
-const inp=document.createElement("input");inp.type="text";inp.value=nombresPorDefecto[i];inp.maxLength=12;
-inputs.push(inp);fila.appendChild(lab);fila.appendChild(inp);formNombres.appendChild(fila);}
-const acciones=document.createElement("div");acciones.style.display="flex";acciones.style.gap="10px";
-acciones.style.marginTop="6px";formNombres.appendChild(acciones);
-const btnEmpezar=document.createElement("button");btnEmpezar.textContent="Empezar";
-const btnCancelar=document.createElement("button");btnCancelar.textContent="Cancelar cambios";
-acciones.appendChild(btnEmpezar);acciones.appendChild(btnCancelar);
-btnCambiar.addEventListener("click",()=>{formNombres.style.display="flex";});
-btnCancelar.addEventListener("click",()=>{formNombres.style.display="none";
-inputs.forEach((inp,i)=>inp.value=nombresPorDefecto[i]);nombresElegidos=[...nombresPorDefecto];});
-await new Promise(ok=>{btnUsarDefecto.onclick=()=>{nombresElegidos=[...nombresPorDefecto];ok();};
-btnEmpezar.onclick=()=>{const propuestos=inputs.map(inp=>inp.value.trim());
-if(propuestos.some(n=>n.length===0)){alert("Los nombres no pueden estar vacíos.");return;}
-nombresElegidos=propuestos;ok();};});
-return nombresElegidos;};
-const crearUnaMatriz=async nombre=>{lugar.textContent="";
-return await new Promise(resolve=>{let filas,columnas;const matrizCreada=[];
-const caj1=document.createElement("div");caj1.id="caj1";caj1.style.display="flex";
-caj1.style.flexDirection="column";caj1.style.alignItems="flex-start";caj1.style.gap="10px";
-caj1.style.marginBottom="10px";lugar.appendChild(caj1);
-const labelMatriz=document.createElement("div");labelMatriz.textContent=`Matriz ${nombre}`;
-labelMatriz.style.textAlign="center";labelMatriz.style.fontWeight="bold";caj1.appendChild(labelMatriz);
-const filaContainer=document.createElement("div");filaContainer.style.display="flex";
-filaContainer.style.alignItems="center";filaContainer.style.gap="5px";caj1.appendChild(filaContainer);
-const labelFilas=document.createElement("span");labelFilas.textContent="Nº de filas:";filaContainer.appendChild(labelFilas);
-const inputFilas=document.createElement("input");inputFilas.type="text";inputFilas.min="1";
-inputFilas.style.width="30px";filaContainer.appendChild(inputFilas);inputFilas.focus();
-const columnaContainer=document.createElement("div");columnaContainer.style.display="flex";
-columnaContainer.style.alignItems="center";columnaContainer.style.gap="5px";caj1.appendChild(columnaContainer);
-const labelColumnas=document.createElement("span");labelColumnas.textContent="Nº de columnas:";
-columnaContainer.appendChild(labelColumnas);
-const inputColumnas=document.createElement("input");inputColumnas.type="text";inputColumnas.min="1";
-inputColumnas.style.width="30px";columnaContainer.appendChild(inputColumnas);
-const cajaError=document.createElement("div");lugar.appendChild(cajaError);
-inputFilas.addEventListener("keydown",e1=>{if(e1.key!=="Enter")return;e1.preventDefault();
-try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputColumnas.focus();}
-catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");inputFilas.value="";inputFilas.focus();}});
-inputColumnas.addEventListener("keydown",e2=>{if(e2.key!=="Enter")return;e2.preventDefault();
-try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputColumnas.value);inputColumnas.disabled=true;
-const tabla=document.createElement("table");tabla.style.borderCollapse="collapse";
-const contenedor=document.createElement("div");contenedor.style.display="flex";
-contenedor.style.alignItems="center";lugar.appendChild(contenedor);
-Representar.abrirParentesis(filas*1.25,contenedor);
-for(let i=0;i<filas;i++){const tr=document.createElement("tr"),filaDatos=[];
-for(let j=0;j<columnas;j++){const td=document.createElement("td");td.style.border="1px solid #ccc";
-td.style.padding="2px";const inp=document.createElement("input");inp.type="text";inp.style.width="40px";
-filaDatos.push(null);
-inp.addEventListener("keydown",ev=>{if(ev.key!=="Enter")return;ev.preventDefault();
-const filaIdx=inp.parentNode.parentNode.rowIndex,colIdx=inp.parentNode.cellIndex;
-try{Validar.expresionParentesisBalanceadosYCaracteresValidos(inp.value);
-matrizCreada[filaIdx][colIdx]=inp.value;const idxPlano=filaIdx*columnas+colIdx,total=filas*columnas;
-if(idxPlano<total-1){const inputs=tabla.querySelectorAll("input");inputs[idxPlano+1].focus();}
-else resolve(clonarMatriz(matrizCreada));}
-catch(err){const errores={errorC:"Se ha introducido una expresión errónea.",errorB:"No has introducido nada.",
-errorA:"Los paréntesis no están balanceados."};
-Representar.mostrarError(cajaError,errores[err.message]||"Error desconocido");inp.value="";inp.focus();}});
-td.appendChild(inp);tr.appendChild(td);}
-matrizCreada.push(filaDatos);tabla.appendChild(tr);}
-contenedor.appendChild(tabla);Representar.cerrarParentesis(filas*1.25,contenedor);
-const first=tabla.querySelector("input");if(first)first.focus();
-const botonReset=document.createElement("button");botonReset.textContent="RESET";
-botonReset.style.marginTop="10px";lugar.appendChild(botonReset);
-botonReset.addEventListener("click",()=>{contenedor.remove();botonReset.remove();
-inputFilas.disabled=false;inputColumnas.disabled=false;inputFilas.focus();
-matrizCreada.length=0;cajaError.textContent="";});}
-catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.");inputColumnas.value="";inputColumnas.focus();}});});};
-const numero=await pedirNumeroDeMatrices(),nombres=await pedirNombres(numero);
-matricesCreadas.length=matricesCreadas.length||0;
-for(let i=0;i<numero;i++){const matriz=await crearUnaMatriz(nombres[i]);
-matricesCreadas.push({nombre:nombres[i],matriz});if(i<numero-1)lugar.textContent="";}
-lugar.textContent="";
-const linea=document.createElement("div");linea.style.display="flex";linea.style.flexWrap="nowrap";
-linea.style.alignItems="center";linea.style.gap="16px";linea.style.overflowX="auto";lugar.appendChild(linea);
-const ultimas=matricesCreadas.slice(-numero);
-ultimas.forEach(({nombre,matriz})=>{const bloque=document.createElement("div");bloque.style.display="inline-flex";
-bloque.style.alignItems="center";
-const etiqueta=document.createElement("span");etiqueta.textContent=`${nombre}=`;etiqueta.style.fontWeight="bold";
-etiqueta.style.marginRight="6px";bloque.appendChild(etiqueta);
-const sublugar=document.createElement("span");sublugar.style.display="inline-block";bloque.appendChild(sublugar);
-Representar.matriz(matriz,sublugar);linea.appendChild(bloque);});
-}
-  static async unaMatriz(lugar){
+static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new Error("El parámetro 'lugar' debe ser un HTMLElement."); } 
+    const clonarMatriz = (m) => m.map(f => [...f]); const nombrePorIndice = (idx) => { const A = "A".charCodeAt(0); let n = idx + 1, s = ""; 
+    while (n > 0) { const r = (n - 1) % 26; s = String.fromCharCode(A + r) + s; n = Math.floor((n - 1) / 26); } return s; }; 
+    const pedirNumeroDeMatrices = async () => { lugar.textContent = ""; const panel = document.createElement("div"); panel.style.display = "flex"; 
+        panel.style.flexDirection = "column"; panel.style.gap = "10px"; lugar.appendChild(panel); const titulo = document.createElement("div"); 
+        titulo.textContent = "¿Cuántas matrices quieres crear?"; titulo.style.fontWeight = "bold"; panel.appendChild(titulo); const linea = document.createElement("div"); 
+        linea.style.display = "flex"; linea.style.alignItems = "center"; linea.style.gap = "6px"; panel.appendChild(linea); const label = document.createElement("span"); 
+        label.textContent = "Nº de matrices:"; const input = document.createElement("input"); input.type = "text"; input.style.width = "40px"; linea.appendChild(label); 
+        linea.appendChild(input); setTimeout(() => input.focus(), 0); const cajaError = document.createElement("div"); lugar.appendChild(cajaError); 
+        return await new Promise((ok) => { input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); 
+          try { const n = Validar.validarEntradaNumeroEnteroPositivo(input.value); ok(n); } 
+          catch (err) { Representar.mostrarError(cajaError, "Entrada inválida: introduce un entero positivo."); input.value = ""; input.focus(); } } }); }); }; 
+    const pedirNombres = async (numero) => { lugar.textContent = ""; const nombresPorDefecto = Array.from({ length: numero }, (_, i) => nombrePorIndice(i)); 
+        let nombresElegidos = [...nombresPorDefecto]; const panel = document.createElement("div"); panel.style.display = "flex"; panel.style.flexDirection = "column"; 
+        panel.style.gap = "10px"; lugar.appendChild(panel); const titulo = document.createElement("div"); titulo.textContent = `Vas a crear ${numero} ${numero === 1 ? "matriz" : "matrices"}.`; 
+        titulo.style.fontWeight = "bold"; panel.appendChild(titulo); const vistaNombres = document.createElement("div"); vistaNombres.textContent = `Nombres por defecto: ${nombresPorDefecto.join(", ")}`; 
+        panel.appendChild(vistaNombres); const botones = document.createElement("div"); botones.style.display = "flex"; botones.style.gap = "10px"; panel.appendChild(botones); 
+        const btnCambiar = document.createElement("button"); btnCambiar.textContent = "Cambiar nombres (opcional)"; const btnUsarDefecto = document.createElement("button"); 
+        btnUsarDefecto.textContent = "Usar nombres por defecto"; botones.appendChild(btnCambiar); botones.appendChild(btnUsarDefecto); 
+        const formNombres = document.createElement("div"); formNombres.style.display = "none"; formNombres.style.flexDirection = "column"; formNombres.style.gap = "6px"; panel.appendChild(formNombres); 
+        const inputs = []; for (let i = 0; i < numero; i++) { const fila = document.createElement("div"); fila.style.display = "flex"; fila.style.alignItems = "center"; fila.style.gap = "8px"; 
+          const lab = document.createElement("span"); lab.textContent = `Nombre ${i + 1}:`; const inp = document.createElement("input"); inp.type = "text"; inp.value = nombresPorDefecto[i]; 
+          inp.maxLength = 12; inputs.push(inp); fila.appendChild(lab); fila.appendChild(inp); formNombres.appendChild(fila); } 
+        const acciones = document.createElement("div"); acciones.style.display = "flex"; acciones.style.gap = "10px"; acciones.style.marginTop = "6px"; formNombres.appendChild(acciones); 
+        const btnEmpezar = document.createElement("button"); btnEmpezar.textContent = "Empezar"; const btnCancelar = document.createElement("button"); btnCancelar.textContent = "Cancelar cambios"; 
+        acciones.appendChild(btnEmpezar); acciones.appendChild(btnCancelar); btnCambiar.addEventListener("click", () => { formNombres.style.display = "flex"; }); 
+        btnCancelar.addEventListener("click", () => { formNombres.style.display = "none"; inputs.forEach((inp, i) => inp.value = nombresPorDefecto[i]); nombresElegidos = [...nombresPorDefecto]; }); 
+        await new Promise((ok) => { btnUsarDefecto.onclick = () => { nombresElegidos = [...nombresPorDefecto]; ok(); }; 
+          btnEmpezar.onclick = () => { const propuestos = inputs.map(inp => inp.value.trim()); if (propuestos.some(n => n.length === 0)) { alert("Los nombres no pueden estar vacíos."); return; } 
+          nombresElegidos = propuestos; ok(); }; }); return nombresElegidos; }; 
+    const crearUnaMatriz = async (nombre) => { lugar.textContent = ""; return await new Promise((resolve) => { let filas, columnas; const matrizCreada = []; 
+          const caj1 = document.createElement("div"); caj1.id = "caj1"; caj1.style.display = "flex"; caj1.style.flexDirection = "column"; caj1.style.alignItems = "flex-start"; caj1.style.gap = "10px"; 
+          caj1.style.marginBottom = "10px"; lugar.appendChild(caj1); const labelMatriz = document.createElement("div"); labelMatriz.textContent = `Matriz ${nombre}`; labelMatriz.style.textAlign = "center"; 
+          labelMatriz.style.fontWeight = "bold"; caj1.appendChild(labelMatriz); const filaContainer = document.createElement("div"); filaContainer.style.display = "flex"; filaContainer.style.alignItems = "center"; 
+          filaContainer.style.gap = "5px"; caj1.appendChild(filaContainer); const labelFilas = document.createElement("span"); labelFilas.textContent = "Nº de filas:"; filaContainer.appendChild(labelFilas); 
+          const inputFilas = document.createElement("input"); inputFilas.type = "text"; inputFilas.min = "1"; inputFilas.style.width = "30px"; filaContainer.appendChild(inputFilas); inputFilas.focus(); 
+          const columnaContainer = document.createElement("div"); columnaContainer.style.display = "flex"; columnaContainer.style.alignItems = "center"; columnaContainer.style.gap = "5px"; caj1.appendChild(columnaContainer); 
+          const labelColumnas = document.createElement("span"); labelColumnas.textContent = "Nº de columnas:"; columnaContainer.appendChild(labelColumnas); 
+          const inputColumnas = document.createElement("input"); inputColumnas.type = "text"; inputColumnas.min = "1"; inputColumnas.style.width = "30px"; columnaContainer.appendChild(inputColumnas); 
+          const cajaError = document.createElement("div"); lugar.appendChild(cajaError); 
+          inputFilas.addEventListener("keydown", (e1) => { if (e1.key === "Enter") { e1.preventDefault(); 
+          try { filas = Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value); inputColumnas.focus(); } 
+          catch { Representar.mostrarError(cajaError, "Entrada de filas inválida."); inputFilas.value = ""; inputFilas.focus(); } } }); 
+          inputColumnas.addEventListener("keydown", (e2) => { if (e2.key === "Enter") { e2.preventDefault(); 
+          try { columnas = Validar.validarEntradaNumeroEnteroPositivo(inputColumnas.value); inputColumnas.disabled = true; 
+            const tabla = document.createElement("table"); tabla.style.borderCollapse = "collapse"; const contenedor = document.createElement("div"); contenedor.style.display = "flex"; contenedor.style.alignItems = "center"; 
+            lugar.appendChild(contenedor); Representar.abrirParentesis(filas * 1.25, contenedor); 
+            for (let i = 0; i < filas; i++) { const tr = document.createElement("tr"), filaDatos = []; 
+              for (let j = 0; j < columnas; j++) { const td = document.createElement("td"); td.style.border = "1px solid #ccc"; td.style.padding = "2px"; 
+                const inp = document.createElement("input"); inp.type = "text"; inp.style.width = "40px"; filaDatos.push(null); 
+                inp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { ev.preventDefault(); const filaIdx = inp.parentNode.parentNode.rowIndex, colIdx = inp.parentNode.cellIndex; 
+                    try { if(!esNumeroCadena(inp.value))throw new Error("errorC"); matrizCreada[filaIdx][colIdx]=inp.value; const idxPlano=filaIdx*columnas+colIdx,total=filas*columnas; 
+                      if (idxPlano < total - 1) { const inputs = tabla.querySelectorAll("input"); inputs[idxPlano + 1].focus(); } else resolve(clonarMatriz(matrizCreada)); } 
+                    catch (err) { const errores = { errorC: "Se ha introducido una expresión errónea.", errorB: "No has introducido nada.", errorA: "Los paréntesis no están balanceados." }; 
+                      Representar.mostrarError(cajaError, errores[err.message] || "Error desconocido"); inp.value = ""; inp.focus(); } } }); 
+                td.appendChild(inp); tr.appendChild(td); } matrizCreada.push(filaDatos); tabla.appendChild(tr); } contenedor.appendChild(tabla); Representar.cerrarParentesis(filas * 1.25, contenedor); 
+            const first = tabla.querySelector("input"); if (first) first.focus(); const botonReset = document.createElement("button"); botonReset.textContent = "RESET"; botonReset.style.marginTop = "10px"; 
+            lugar.appendChild(botonReset); botonReset.addEventListener("click", () => { contenedor.remove(); botonReset.remove(); inputFilas.disabled = false; inputColumnas.disabled = false; inputFilas.focus(); 
+            matrizCreada.length = 0; cajaError.textContent = ""; }); } 
+          catch { Representar.mostrarError(cajaError, "Entrada de columnas inválida."); inputColumnas.value = ""; inputColumnas.focus(); } } }); }); }; 
+    const numero = await pedirNumeroDeMatrices(); const nombres = await pedirNombres(numero); matricesCreadas.length = matricesCreadas.length || 0; 
+    for (let i = 0; i < numero; i++) { const matriz = await crearUnaMatriz(nombres[i]); matricesCreadas.push({ nombre: nombres[i], matriz }); if (i < numero - 1) lugar.textContent = ""; } 
+    lugar.textContent = ""; const linea = document.createElement("div"); linea.style.display = "flex"; linea.style.flexWrap = "nowrap"; linea.style.alignItems = "center"; linea.style.gap = "16px"; 
+    linea.style.overflowX = "auto"; lugar.appendChild(linea); const ultimas = matricesCreadas.slice(-numero); 
+    ultimas.forEach(({ nombre, matriz }) => { const bloque = document.createElement("div"); bloque.style.display = "inline-flex"; bloque.style.alignItems = "center"; 
+    const etiqueta = document.createElement("span"); etiqueta.textContent = `${nombre}=`; etiqueta.style.fontWeight = "bold"; etiqueta.style.marginRight = "6px"; bloque.appendChild(etiqueta); 
+    const sublugar = document.createElement("span"); sublugar.style.display = "inline-block"; bloque.appendChild(sublugar); Representar.matriz(matriz, sublugar); linea.appendChild(bloque); }); }
+static async unaMatriz(lugar){
     const clonarMatriz=m=>m.map(f=>[...f]);lugar.textContent="";
     return await new Promise(resolve=>{
       let filas,columnas,nombreActual="A",editando=false;const matrizCreada=[];
@@ -2495,7 +2442,7 @@ Representar.matriz(matriz,sublugar);linea.appendChild(bloque);});
           inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar()});btnCambiar.addEventListener("click",finalizar,{once:true});}});
       inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"){
           try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus()}
-          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.")}}});
+          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");inputFilas.value="";inputFilas.focus();}}});
       inputCols.addEventListener("keydown",e=>{if(e.key==="Enter"){
           try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);inputCols.disabled=true;
             const tabla=document.createElement("table");tabla.style.borderCollapse="collapse";
@@ -2511,8 +2458,8 @@ Representar.matriz(matriz,sublugar);linea.appendChild(bloque);});
                       if(err?.message&&e[err.message])Representar.mostrarError(cajaError,e[err.message]);inp.value="";inp.focus();}}});
                 td.appendChild(inp);tr.appendChild(td);};matrizCreada.push(filaDatos);tabla.appendChild(tr);}
             cont.appendChild(tabla);Representar.cerrarParentesis(filas*1.25,cont);tabla.querySelector("input")?.focus();}
-          catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.")}}});});}
-  static async unaMatrizNumerica(lugar){
+          catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.");inputCols.value="";inputCols.focus();}}});});}
+static async unaMatrizNumerica(lugar){
       const clonarMatriz=m=>m.map(f=>[...f]),esNumeroCadena=v=>{v=(v??"").toString().trim();if(!v)throw new Error("errorB");
         v=v.replace(/\s+/g,"");if(/^[-+]?\d+(?:\.\d+)?(?:e[-+]?\d+)?$/i.test(v)){const n=Number(v);if(!Number.isFinite(n))throw new Error("noNumero");return v;}
         const m=v.match(/^([-+]?\d+)\/(\d+)$/);if(m){const a=Number(m[1]),b=Number(m[2]);if(!Number.isFinite(a)||!Number.isFinite(b)||b===0)throw new Error("noNumero");return v;}
@@ -2526,7 +2473,7 @@ Representar.matriz(matriz,sublugar);linea.appendChild(bloque);});
         const btnCambiar=document.createElement("button");btnCambiar.textContent="Cambiar nombre";btnCambiar.style.marginLeft="36px";nombreC.appendChild(btnCambiar);
         const filaC=document.createElement("div");filaC.innerHTML=`Nº de filas: <input type="text" style="width:30px;">`;caj1.appendChild(filaC);
         const colC=document.createElement("div");colC.innerHTML=`Nº de columnas: <input type="text" style="width:30px;">`;caj1.appendChild(colC);
-        const [inputFilas]=filaC.getElementsByTagName("input"),[inputCols]=colC.getElementsByTagName("input");
+        const [inputFilas]=filaC.getElementsByTagName("input");const [inputCols]=colC.getElementsByTagName("input");
         const cajaError=document.createElement("div");lugar.appendChild(cajaError);inputFilas.focus();
         btnCambiar.addEventListener("click",()=>{if(!editando){
           const inputTemp=document.createElement("input");inputTemp.type="text";inputTemp.style.width="30px";inputTemp.value=nombreActual;
@@ -2536,27 +2483,26 @@ Representar.matriz(matriz,sublugar);linea.appendChild(bloque);});
           inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar();});btnCambiar.addEventListener("click",finalizar,{once:true});}});
         inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"){
           try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus();}
-          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");}}});
+          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");inputFilas.value="";inputFilas.focus();}}});
         inputCols.addEventListener("keydown",e=>{if(e.key==="Enter"){
           try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);inputCols.disabled=true;
             const tabla=document.createElement("table");tabla.style.borderCollapse="collapse";
             const cont=document.createElement("div");cont.style.display="flex";cont.style.alignItems="center";lugar.appendChild(cont);
             Representar.abrirParentesis(filas*1.25,cont);
-            for(let i=0;i<filas;i++){const tr=document.createElement("tr"),filaDatos=[];
-              for(let j=0;j<columnas;j++){const td=document.createElement("td"),inp=document.createElement("input");
-                td.style.border="1px solid #ccc";inp.style.width="40px";filaDatos.push(null);
-                inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"){const fi=inp.parentNode.parentNode.rowIndex,co=inp.parentNode.cellIndex;
-                  try{const val=esNumeroCadena(inp.value);matrizCreada[fi][co]=val;
-                    const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
-                    if(idx<inputs.length-1)inputs[idx+1].focus();else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});
-                  }catch(err){const e={errorB:"Entrada vacía",noNumero:"Solo se admiten números (enteros, decimales o fracciones a/b)."};
-                    if(err?.message&&e[err.message])Representar.mostrarError(cajaError,e[err.message]);else Representar.mostrarError(cajaError,"Entrada inválida.");
+            for(let i=0;i<filas;i++){const tr=document.createElement("tr"),filaDatos=[];for(let j=0;j<columnas;j++){
+                const td=document.createElement("td");td.style.border="1px solid #ccc";td.style.padding="2px";
+                const inp=document.createElement("input");inp.type="text";inp.style.width="40px";filaDatos.push(null);
+                inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"){ev.preventDefault();const fi=inp.parentNode.parentNode.rowIndex,co=inp.parentNode.cellIndex;
+                  try{esNumeroCadena(inp.value);matrizCreada[fi][co]=inp.value;const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
+                    if(idx<inputs.length-1)inputs[idx+1].focus();else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});}
+                  catch(err){const e={errorB:"Entrada vacía",noNumero:"No es un número válido"};Representar.mostrarError(cajaError,e[err.message]||"Error");
                     inp.value="";inp.focus();}}});
                 td.appendChild(inp);tr.appendChild(td);}
               matrizCreada.push(filaDatos);tabla.appendChild(tr);}
             cont.appendChild(tabla);Representar.cerrarParentesis(filas*1.25,cont);tabla.querySelector("input")?.focus();}
-            catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.");}}});});}
+            catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.");inputCols.value="";inputCols.focus();}}});});}
 }
+
 
 
 class ExpresionMatricial {
