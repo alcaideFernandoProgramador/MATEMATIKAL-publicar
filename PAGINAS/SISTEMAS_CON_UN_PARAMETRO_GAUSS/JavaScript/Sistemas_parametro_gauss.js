@@ -10,6 +10,13 @@ function _registrarDivisorUsado(mRaw){mRaw=_strip(mRaw);if(!mRaw.length)return;i
 function _algunPivoteUsadoSeAnula(v){if(!Array.isArray(pivotesUsados)||!pivotesUsados.length)return false;try{for(let k=0;k<pivotesUsados.length;k++){let e=pivotesUsados[k],aux=[[e]],s=Matriz.sustituir(aux,nombreParametro,v)[0][0];if(_esCeroExpr(s))return true;}}catch(err){return true;}return false;}
 function _pivotesDesdeEscalonada(mat){let out=[];if(!Array.isArray(mat))return out;for(let i=0;i<mat.length;i++){let p=_primerNoNuloFila(mat[i]);if(p!=null)out.push(p.toString());}return out;}
 
+let _scrollCaja3Box=null,_scrollCaja3Lock=false;
+function _scrollCaja3ToBottom(){if(!_scrollCaja3Box)_scrollCaja3Box=document.getElementById("caja3");if(!_scrollCaja3Box)return;_scrollCaja3Box.scrollTop=_scrollCaja3Box.scrollHeight;}
+function _initScrollCaja3(){_scrollCaja3Box=document.getElementById("caja3");if(!_scrollCaja3Box)return;_scrollCaja3ToBottom();let obs=new MutationObserver(()=>_scrollCaja3ToBottom());obs.observe(_scrollCaja3Box,{childList:true,subtree:true,characterData:true});_scrollCaja3Box.addEventListener("scroll",()=>{if(_scrollCaja3Lock)return;_scrollCaja3Lock=true;requestAnimationFrame(()=>{_scrollCaja3ToBottom();_scrollCaja3Lock=false;});},{passive:true});window.addEventListener("resize",_scrollCaja3ToBottom,{passive:true});}
+
+
+_initScrollCaja3();
+
 caja1.id="caja1";caja1.style.height="auto";caja1.style.width="99%";caja1.style.border="2px solid black";caja1.style.display="flex";caja1.style.padding="5px";caja1.style.justifyContent="center";caja1.style.alignItems="center";
 let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";caja11.style.height="100%";caja11.style.width="60%";caja11.style.padding="0px";caja11.style.display="block";caja11.style.justifyContent="center";
 let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";caja111.style.height="23%";caja111.style.width="99%";caja111.style.display="flex";caja111.style.alignItems="center";caja111.style.padding="5px";
