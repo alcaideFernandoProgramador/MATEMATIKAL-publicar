@@ -10,13 +10,6 @@ function _registrarDivisorUsado(mRaw){mRaw=_strip(mRaw);if(!mRaw.length)return;i
 function _algunPivoteUsadoSeAnula(v){if(!Array.isArray(pivotesUsados)||!pivotesUsados.length)return false;try{for(let k=0;k<pivotesUsados.length;k++){let e=pivotesUsados[k],aux=[[e]],s=Matriz.sustituir(aux,nombreParametro,v)[0][0];if(_esCeroExpr(s))return true;}}catch(err){return true;}return false;}
 function _pivotesDesdeEscalonada(mat){let out=[];if(!Array.isArray(mat))return out;for(let i=0;i<mat.length;i++){let p=_primerNoNuloFila(mat[i]);if(p!=null)out.push(p.toString());}return out;}
 
-let _scrollCaja3Box=null,_scrollCaja3Lock=false;
-function _scrollCaja3ToBottom(){if(!_scrollCaja3Box)_scrollCaja3Box=document.getElementById("caja3");if(!_scrollCaja3Box)return;_scrollCaja3Box.scrollTop=_scrollCaja3Box.scrollHeight;}
-function _initScrollCaja3(){_scrollCaja3Box=document.getElementById("caja3");if(!_scrollCaja3Box)return;_scrollCaja3ToBottom();let obs=new MutationObserver(()=>_scrollCaja3ToBottom());obs.observe(_scrollCaja3Box,{childList:true,subtree:true,characterData:true});_scrollCaja3Box.addEventListener("scroll",()=>{if(_scrollCaja3Lock)return;_scrollCaja3Lock=true;requestAnimationFrame(()=>{_scrollCaja3ToBottom();_scrollCaja3Lock=false;});},{passive:true});window.addEventListener("resize",_scrollCaja3ToBottom,{passive:true});}
-
-
-_initScrollCaja3();
-
 caja1.id="caja1";caja1.style.height="auto";caja1.style.width="99%";caja1.style.border="2px solid black";caja1.style.display="flex";caja1.style.padding="5px";caja1.style.justifyContent="center";caja1.style.alignItems="center";
 let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";caja11.style.height="100%";caja11.style.width="60%";caja11.style.padding="0px";caja11.style.display="block";caja11.style.justifyContent="center";
 let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";caja111.style.height="23%";caja111.style.width="99%";caja111.style.display="flex";caja111.style.alignItems="center";caja111.style.padding="5px";
@@ -45,7 +38,7 @@ function crearNumeroEcuaciones(){
   caja11121.appendChild(lugarTexto1);caja11121.appendChild(lugarInputNumeroEcuaciones);caja11121.appendChild(lugarTexto2);
   nEcuaciones.focus();
   nEcuaciones.addEventListener("keydown",function(event){
-    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
+    if(event.key==="Enter"){
       try{
         document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
         numeroEcuaciones=Number(nEcuaciones.value);
@@ -68,7 +61,7 @@ function crearnumeroIncognitas(){
   lugarInputnumeroIncognitas.appendChild(lugarTexto3);lugarInputnumeroIncognitas.appendChild(nIncognitas);lugarInputnumeroIncognitas.appendChild(lugarTexto4);
   nIncognitas.focus();
   nIncognitas.addEventListener("keydown",function(event){
-    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
+    if(event.key==="Enter"){
       try{
         document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
         numeroIncognitas=Number(nIncognitas.value);
@@ -89,7 +82,7 @@ function crearNombreParametro(){
   caja11123.appendChild(lugarTexto5);caja11123.appendChild(lugarInputNombreParametro);caja11123.appendChild(lugarTexto6);
   nParametro.focus();
   nParametro.addEventListener("keydown",function(event){
-    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
+    if(event.key==="Enter"){
       try{
         document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
         nombreParametro=nParametro.value;
@@ -260,8 +253,8 @@ function crearFormulario(){
         d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);caja127.appendChild(d1);caja127.appendChild(d2);uiNodes.push(d1,d2);
         l1.innerHTML="F<sub>i</sub>:"+"\u00A0".repeat(3)+"i=";l2.innerHTML="F<sub>j</sub>:"+"\u00A0".repeat(3)+"j=";i1.focus();
         let n=matrizActualExpresiones.length,f1=null,f2=null;
-        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila i no es válida.<br>Debe estar entre 1 y "+n+".");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
+        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila i no es válida.<br>Debe estar entre 1 y "+n+".");}});
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarFilas(f1,f2,n,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La fila j no es válida.<br>Debe estar entre 1 y "+n+" y ser distinta de i.");}});
       }break;
@@ -272,8 +265,8 @@ function crearFormulario(){
         d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);caja127.appendChild(d1);caja127.appendChild(d2);uiNodes.push(d1,d2);
         l1.innerHTML="C<sub>i</sub>:"+"\u00A0".repeat(3)+"i=";l2.innerHTML="C<sub>j</sub>:"+"\u00A0".repeat(3)+"j=";i1.focus();
         let m=matrizActualExpresiones[0].length-1,c1=null,c2=null;
-        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La columna i no es válida.<br>Debe estar entre 1 y "+m+".");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
+        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La columna i no es válida.<br>Debe estar entre 1 y "+m+".");}});
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
           matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);_swapLeyenda(c1-1,c2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarColumnas(c1,c2,matrizActualExpresiones.length,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La columna j no es válida.<br>Debe estar entre 1 y "+m+" y ser distinta de i.");}});
@@ -296,9 +289,9 @@ function crearFormulario(){
         d1.appendChild(l1);d1.appendChild(i1);d2.appendChild(l2);d2.appendChild(i2);caja127.appendChild(d1);caja127.appendChild(d2);uiNodes.push(d1,d2);
         l1.innerHTML="F<sub>a</sub>"+"\u00A0".repeat(3)+"a=";l2.innerHTML="Dividir por m=";i1.focus();
         let n=matrizActualExpresiones.length,a=null;
-        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{_msgOk("");a=Number(i1.value);if(!Number.isInteger(a)||a<1||a>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila a no es válida.<br>Debe estar entre 1 y "+n+".");}});
+        i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");a=Number(i1.value);if(!Number.isInteger(a)||a<1||a>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila a no es válida.<br>Debe estar entre 1 y "+n+".");}});
         i2.addEventListener("keydown",function(ev){
-          if(ev.key!=="Enter"&&ev.key!=="Tab")return;
+          if(ev.key!=="Enter")return;
           try{
             _msgOk("");let mRaw=(i2.value||"").toString().trim();if(!mRaw.length)throw 0;
             let texto="^[0-9\\+\\-\\(\\)\\^\\*\\/"+nombreParametro+"]*$",rx=new RegExp(texto);if(!rx.test(mRaw))throw 0;_registrarDivisorUsado(mRaw);
@@ -340,7 +333,7 @@ function crearFormulario(){
           let tSelf=terms.find(x=>x.fila===lhs);if(!tSelf)throw new Error("faltaSelf");if(!_coefNoNulo(tSelf.factor))throw new Error("selfCero");return {lhs,terms};
         }
         inp.addEventListener("keydown",function(ev){
-          if(ev.key!=="Enter"&&ev.key!=="Tab")return;
+          if(ev.key!=="Enter")return;
           try{
             _msgOk("");let n=matrizActualExpresiones.length,cad=inp.value,obj=_parseCL(cad,n),target=obj.lhs-1,terms=obj.terms;
             for(let t of terms){_registrarPivoteFila(t.fila-1);_registrarDenomsCoef(t.factor);}
@@ -432,7 +425,7 @@ function estudiarSistemaEscalonadoGauss(){
     cerrar.addEventListener("click",_close);ov.addEventListener("click",function(e){if(e.target===ov)_close();});
     let soluciones=null;inp.focus();
     inp.addEventListener("keydown",function(ev){
-      if(ev.key!=="Enter"&&ev.key!=="Tab")return;
+      if(ev.key!=="Enter")return;
       let ecu=inp.value||"";ecu=ecu.toString().trim();
       if(!ecu.length){out.style.color="red";out.innerHTML="No has introducido ninguna ecuación.";usar.disabled=true;soluciones=null;return;}
       try{let sol=Resolver.ecuacionValores(ecu);soluciones=sol;out.style.color="black";out.innerHTML="Soluciones: <span style='margin-left:8px'>"+sol+"</span>";usar.disabled=false;}
@@ -535,7 +528,7 @@ if(casosAutomatico.length===0){
     c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Introduce dicho valor "+nombreParametro+"= ";let inputValor=document.createElement("input");c32.appendChild(inputValor);inputValor.focus();
     let msg=document.createElement("div");msg.id="caja124msg";msg.style.marginTop="8px";msg.style.minHeight="18px";caja124.appendChild(msg);
 
-    inputValor.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();
+    inputValor.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
       try{
         msg.style.color="black";msg.innerHTML="";
         let v=_parseValorSimple(inputValor.value);
@@ -584,7 +577,7 @@ if(casosAutomatico.length===0){
     botonEcuacion.addEventListener("click",function(){_abrirModalEcuacion();});
     let botonFin=document.createElement("button");botonFin.innerHTML="FIN";botonFin.style.marginLeft="auto";caja1244.appendChild(botonFin);
 
-    inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
+    inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"){
       caja1242.remove();
       try{
         caja1246.style.color="black";caja1246.innerHTML="";
@@ -617,7 +610,7 @@ if(casosAutomatico.length===0){
         let inputValor=document.createElement("input");caja1245.appendChild(espacio);caja1245.appendChild(inputValor);
 
         inputValor.focus();
-        inputValor.addEventListener("keydown",function(event){if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
+        inputValor.addEventListener("keydown",function(event){if(event.key==="Enter"){
           let v;try{v=_parseValor(inputValor.value);}catch(e){caja1243.innerHTML="Entrada no válida. Usa decimal (0.5), fracción (1/2) o G.";inputValor.value="";inputValor.focus();return;}
           if(!_hasCaso(v)){caja1243.innerHTML="El valor introducido no está entre los casos a estudiar ni es el caso general G.<br>Introduce otro valor, por favor.";inputValor.value="";inputValor.focus();return;}
 
@@ -648,7 +641,7 @@ if(casosAutomatico.length===0){
             c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Para ello, introduce dicho valor "+nombreParametro+"= ";c32.appendChild(inputValor2);
 
             inputValor2.focus();
-            inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();
+            inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
               let valorrr=inputValor2.value;
               try{if((valorrr||"").trim().length===0)throw new Error();if(valorrr.includes("/"))valorrr=parseFloat(pasarADecimal(valorrr));if(valorrr.includes(","))valorrr=valorrr.replace(",",".");valorrr=parseFloat(valorrr);if(Number.isNaN(valorrr))throw new Error();}
               catch(e){c2.innerHTML="Entrada no válida. Usa decimal (0.5) o fracción (1/2).";inputValor2.value="";inputValor2.focus();return;}
