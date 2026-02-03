@@ -625,7 +625,7 @@ document.addEventListener("DOMContentLoaded",function(){
   msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
   setupCaja1121();
   const abre=$("abreVentana1"),cierra=$("cierraVentana1"),vent=$("ventana1"),pdf=$("pdf1");
-  const url="INSTRUCCIONES/AYUDA.pdf#view=FitH&navpanes=0&zoom=300";
+  const url="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
   if(abre)abre.addEventListener("click",e=>{e.preventDefault();if(pdf)pdf.src=url;if(vent)vent.style.display="flex";});
   if(cierra)cierra.addEventListener("click",()=>{if(vent)vent.style.display="none";if(pdf)pdf.src="";});
   window.addEventListener("click",e=>{if(e.target==vent){vent.style.display="none";if(pdf)pdf.src="";}});
