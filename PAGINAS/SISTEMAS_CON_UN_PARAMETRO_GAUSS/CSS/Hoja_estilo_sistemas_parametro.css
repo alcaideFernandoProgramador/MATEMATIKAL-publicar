@@ -15,8 +15,8 @@ h1,h2,h3,h4,p{margin:0}
 #btnHome svg{display:block;fill:var(--ink)}
 #btnHome span{font-size:9px;line-height:9px;color:var(--ink);font-weight:800;letter-spacing:.5px}
 
-#notaParametro{padding:0 var(--gap);margin:6px 0 0 0;flex:0 0 auto;}
-#span1{display:inline-block;font-size:12px;font-weight:800;color:var(--muted);padding:4px 8px;border-radius:var(--radius-sm);background:var(--panel);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.03);text-align:center;}
+#notaParametro{padding:0 var(--gap);margin:10px 0 0 0;flex:0 0 auto;}
+#span1{display:inline-block;font-size:14px;font-weight:800;color:var(--muted);padding:6px 10px;border-radius:var(--radius-sm);background:var(--panel);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.03);text-align:center;}
 
 #contenedor{flex:1 1 auto;min-height:0;width:100%;padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
 #caja1,#caja2,#caja3{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;min-width:0;}
