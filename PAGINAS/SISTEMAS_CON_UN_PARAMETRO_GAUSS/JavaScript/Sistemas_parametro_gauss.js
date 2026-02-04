@@ -370,6 +370,13 @@ function crearFormulario(){
 }
 
 function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonada");
+  let b=document.getElementById("btnToggleTrabajos");
+if(!b){
+  b=document.createElement("button");b.id="btnToggleTrabajos";b.type="button";b.innerHTML="Ocultar trabajos";b.style.display="inline-flex";
+  let top=document.getElementById("controlesTop")||document.getElementById("tituloinicial");(top||document.body).appendChild(b);
+}
+b.style.display="inline-flex";
+
   while(caja1.firstChild){caja1.removeChild(caja1.firstChild)}
   caja1.style.display="block";caja1.style.border="2px solid black";caja1.style.margin="2px";caja1.style.padding="2px";caja1.style.width="100%";
   let caja11=document.createElement("div"),caja12=document.createElement("div");caja11.id="caja11";caja12.id="caja12";caja12.style.alignItems="center";
@@ -577,7 +584,6 @@ if(casosAutomatico.length===0){
     let botonFin=document.createElement("button");botonFin.innerHTML="FIN";botonFin.style.marginLeft="auto";caja1244.appendChild(botonFin);
 
     inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"){
-      caja1242.remove();
       try{
         caja1246.style.color="black";caja1246.innerHTML="";
         let texto=/^(-?\d+(\.\d+)?|-\d+\/\d+|\d+\/\d+)$/,regex1=new RegExp(texto);
@@ -599,6 +605,7 @@ if(casosAutomatico.length===0){
       if(todosIncluidos){
         casos.push("G");casosString.push("G");caja12412.innerHTML="CASOS: "+casosString;
         while(caja1243.firstChild){caja1243.removeChild(caja1243.firstChild);}while(caja1244.firstChild){caja1244.removeChild(caja1244.firstChild);}while(caja1245.firstChild){caja1245.removeChild(caja1245.firstChild);}
+        caja1242.innerHTML="Los casos ya se han ingresado. Ahora puedes estudiar cada caso por separado.";
         let tx1="Ya has ingresado todos los casos específicos que se deben de estudiar.";
         let tx2="Ahora, puedes estudiar casa uno de ellos por separado.<br>Además, también debes estudiar el caso general que engloba el resto de valores de "+nombreParametro+". Para ello, introduce\"G\"";
         caja1243.innerHTML=tx1;caja1244.style.margin="20px 5px 20px 5px";caja1244.innerHTML=tx2;
@@ -670,13 +677,9 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 
 function autoScrollCaja3SiempreAbajo(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
-
-function setupToggleTrabajos(){try{let btn=document.getElementById("btnToggleTrabajos"),wrap=document.getElementById("contenedorCaja3"),c3=document.getElementById("caja3");if(!btn||!wrap||!c3)return;
-let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)c3.scrollTop=c3.scrollHeight;};
-btn.addEventListener("click",()=>set(document.body.classList.contains("trabajosOcultos")));
-let sync=()=>{let esc=document.body.classList.contains("escalonada");btn.style.display=esc?"inline-flex":"none";if(!esc){document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
-sync();if(!window.__obsBodyCls){window.__obsBodyCls=new MutationObserver(sync);window.__obsBodyCls.observe(document.body,{attributes:true,attributeFilter:["class"]});}}catch(e){}}
-
-function _initUIExtras(){autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
-
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_initUIExtras,{once:true});else _initUIExtras();
+function setupToggleTrabajos(){let btn=document.getElementById("btnToggleTrabajos"),tit=document.getElementById("titulo3"),cont=document.getElementById("contenedorCaja3"),caja3=document.getElementById("caja3");if(!btn||!tit||!cont||!caja3)return;
+let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);if(cont)cont.style.display=on?"":"none";btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)caja3.scrollTop=caja3.scrollHeight;};
+btn.addEventListener("click",()=>{let hidden=document.body.classList.contains("trabajosOcultos")||cont.style.display==="none";set(hidden);});
+let check=()=>{let t=(tit.textContent||"").toLowerCase(),esc=t.includes("escalonada");document.body.classList.toggle("escalonada",esc);if(esc){btn.style.display="inline-flex";}else{btn.style.display="none";document.body.classList.remove("trabajosOcultos");if(cont)cont.style.display="";btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
+check();if(!window.__obsTit3){window.__obsTit3=new MutationObserver(check);window.__obsTit3.observe(tit,{childList:true,subtree:true});}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();},{once:true});else{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
