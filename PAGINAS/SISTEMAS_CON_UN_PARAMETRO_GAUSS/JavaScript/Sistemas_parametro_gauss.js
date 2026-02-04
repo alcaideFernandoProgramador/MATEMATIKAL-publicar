@@ -370,6 +370,14 @@ function crearFormulario(){
 }
 
 function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonada");
+  let b=document.getElementById("btnToggleTrabajos");
+if(!b){
+  b=document.createElement("button");b.id="btnToggleTrabajos";b.type="button";b.innerHTML="Ocultar trabajos";b.style.display="inline-flex";
+  let top=document.getElementById("controlesTop")||document.getElementById("tituloinicial");(top||document.body).appendChild(b);
+}
+b.onclick=function(){let on=!document.body.classList.contains("trabajosOcultos");document.body.classList.toggle("trabajosOcultos",on);b.setAttribute("aria-expanded",on?"false":"true");b.innerHTML=on?"Mostrar trabajos":"Ocultar trabajos";};
+b.style.display="inline-flex";
+
   while(caja1.firstChild){caja1.removeChild(caja1.firstChild)}
   caja1.style.display="block";caja1.style.border="2px solid black";caja1.style.margin="2px";caja1.style.padding="2px";caja1.style.width="100%";
   let caja11=document.createElement("div"),caja12=document.createElement("div");caja11.id="caja11";caja12.id="caja12";caja12.style.alignItems="center";
