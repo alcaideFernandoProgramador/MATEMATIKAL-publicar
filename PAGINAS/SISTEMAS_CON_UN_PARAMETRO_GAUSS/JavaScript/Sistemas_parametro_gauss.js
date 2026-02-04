@@ -192,7 +192,6 @@ function continuar(){
 function crearFormulario(){
   while(caja111.firstChild)caja111.removeChild(caja111.firstChild);caja111.style.display="block";caja111.style.justifyContent="center";
   let tex1=document.createElement("h3");tex1.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";tex1.style.margin="0px";tex1.style.padding="0px";caja111.appendChild(tex1);
-  let tex2=document.createElement("h4");tex2.innerHTML="Para resolverlo, se utilizará el MÉTODO DE GAUSS";tex2.style.margin="0px";tex2.style.padding="0px";caja111.appendChild(tex2);
   caja11.style.width="60%";caja12.style.width="40%";caja111.style.border="1px solid black";caja111.style.width="97%";caja111.style.margin="4px 0px 7px 5px";caja111.style.height="15%";
   caja1121.style.width="55%";caja1122.style.width="43.3%";
   let titulo=document.createElement("h3");titulo.style.margin="3px";titulo.style.padding="0px";titulo.style.justifyContent="center";titulo.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";caja12.appendChild(titulo);

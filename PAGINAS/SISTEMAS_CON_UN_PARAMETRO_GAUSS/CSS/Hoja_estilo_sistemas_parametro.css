@@ -6,81 +6,62 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 h1,h2,h3,h4,p{margin:0}
 
-#tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px;}
-#tituloinicial h1{font-size:18px;font-weight:800;letter-spacing:.2px;line-height:1.2;flex:1;display:flex;justify-content:center;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#controlesTop{display:flex;align-items:center;gap:18px}
-.abreVentana{font-size:14px;font-weight:700;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);}
+#tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 16px;}
+#tituloinicial h1{flex:1;display:flex;flex-direction:column;gap:4px;line-height:1.15;min-width:0;}
+#tituloinicial .t1{font-size:18px;font-weight:900;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#tituloinicial .t2{font-size:13px;font-weight:900;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#tituloinicial .mini{font-weight:900;opacity:.9;}
+#controlesTop{display:flex;align-items:center;gap:14px;flex:0 0 auto}
+.abreVentana{font-size:14px;font-weight:800;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);}
+
 #btnHome{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:46px;height:50px;background:var(--soft);border:1px solid var(--border);border-radius:10px;gap:2px;transition:.15s transform,.15s background;}
 #btnHome:hover{transform:translateY(-1px);background:#e9eef9}
 #btnHome svg{display:block;fill:var(--ink)}
-#btnHome span{font-size:9px;line-height:9px;color:var(--ink);font-weight:800;letter-spacing:.5px}
+#btnHome span{font-size:9px;line-height:9px;color:var(--ink);font-weight:900;letter-spacing:.5px}
 
-#notaParametro{padding:0 var(--gap);margin:10px 0 0 0;flex:0 0 auto;}
-#span1{display:inline-block;font-size:14px;font-weight:800;color:var(--muted);padding:6px 10px;border-radius:var(--radius-sm);background:var(--panel);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.03);text-align:center;}
-
+/* Contenedor principal: sin scroll; el scroll vive en caja3 */
 #contenedor{flex:1 1 auto;min-height:0;width:100%;padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
-#filaSuperior{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--gap);min-height:0;align-items:start;}
-#panelMatriz{display:flex;flex-direction:column;min-height:0;gap:6px;}
-#panelPasos{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;}
 
+/* Tarjetas */
 #caja1,#caja2,#caja3{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;min-width:0;}
-#caja1{width:100%!important;height:auto!important;display:block!important;border:1px solid var(--border)!important;}
-#caja2{width:100%!important;height:auto!important;}
-#titulo3{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:2px 0 0 0;padding:0 2px;}
-#contenedorCaja3{display:block;flex:1 1 auto;min-height:0}
+#caja1{flex:0 0 auto}
+#titulo3{flex:0 0 auto;font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:2px 0 0 0;padding:0 2px;}
+#caja2{flex:0 0 auto}
 
-#caja3{display:flex;flex-wrap:wrap;height:100%;overflow-y:auto;align-content:flex-start}
+/* Caja 3: única con scroll y ocupa el alto sobrante */
+#contenedorCaja3{flex:1 1 auto;min-height:0}
+#caja3{height:100%;overflow-y:auto;display:flex;flex-wrap:wrap;align-content:flex-start}
 #caja31{margin:10px}
 
-/* Compatibilidad: el JS original inyecta muchos estilos inline; aquí se suavizan sin cambiar la lógica */
-#caja11,#caja111,#caja1111,#caja1112,#caja112,#caja12,#caja121,#caja122,#caja123,#caja124,#caja125,#caja125bis{height:auto!important;}
-#caja11{display:flex!important;gap:10px!important;align-items:stretch!important;}
-#caja12{display:flex!important;flex-direction:column!important;gap:8px!important;}
-#caja111{border:1px solid var(--border)!important;border-radius:var(--radius-sm)!important;background:linear-gradient(180deg,#ffffff,#f8fafc)!important;}
-#caja1111,#caja1112,#caja112{border:1px solid var(--border)!important;border-radius:var(--radius-sm)!important;}
-#caja11111{font-size:14px!important;letter-spacing:.2px!important;}
-#caja11112{font-size:12px!important;color:var(--muted)!important;}
-#caja12 h3{font-size:14px!important;letter-spacing:.3px!important;}
-#caja12 label{font-size:12px!important;}
-#caja12 input[type="radio"]{transform:scale(1.05);margin-right:8px;}
-#caja126 button,#caja129 button{width:auto;}
-#caja129{margin-top:4px;}
-
-/* Caja 2 (matriz): aspecto más compacto */
-#panelMatriz #caja2{padding:8px;}
-
-/* Caja 3 (pasos): tipografía y spacing más legibles */
-#caja3{padding:10px;}
-#caja3 h3,#caja3 h4{margin-top:6px;}
-
-h3{margin:0;padding:0;font-size:20px}
-h4{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:6px 0 4px 0;}
-
+/* Controles/inputs */
 table{table-layout:auto;border-spacing:7px;font-size:14px;margin:0;padding:0}
 td{padding:0 3px;text-align:right;width:auto}
-
-input{width:30px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:white;font-weight:700;color:var(--ink);outline:none;transition:border-color .12s,box-shadow .12s;}
+input{width:30px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:white;font-weight:800;color:var(--ink);outline:none;transition:border-color .12s,box-shadow .12s;}
 input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
 label{margin-right:10px}
-button{appearance:none;border:1px solid var(--border);background:var(--soft);padding:7px 10px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;transition:.12s transform,.12s background,.12s border-color;}
+button{appearance:none;border:1px solid var(--border);background:var(--soft);padding:7px 10px;border-radius:8px;font-weight:900;font-size:12px;cursor:pointer;transition:.12s transform,.12s background,.12s border-color;}
 button:hover{transform:translateY(-1px);background:#e9eef9;border-color:#c7d2fe}
 button:active{transform:translateY(0)}
 #botonautomatico{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border-color:transparent;}
 #botonautomatico:hover{filter:brightness(1.03)}
 
+/* Ventana ayuda */
 .ventana{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.55);justify-content:center;align-items:center;z-index:1000;padding:14px;}
 .contenidoVentana{background-color:white;padding:18px;border-radius:var(--radius);width:min(900px,92vw);text-align:center;position:relative;box-shadow:0 18px 50px rgba(0,0,0,.22);}
 .contenidoVentana h2{font-size:18px;font-weight:900;margin-bottom:10px}
 .cierraVentana{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--soft);border:1px solid var(--border);}
 iframe{border:none}
 
+/* KaTeX/MathJax */
 .mjx-math{font-size:14px;font-family:monospace}
 .katex .op-limits>.vlist-t{text-align:center;font-weight:600}
 
+/* Footer fuera de caja3 */
+footer.siteFooter{flex:0 0 auto}
+
+/* Responsive */
 @media (max-width:700px){
   #tituloinicial{flex-direction:column;align-items:stretch}
-  #tituloinicial h1{justify-content:flex-start;text-align:left;white-space:normal;overflow:visible;text-overflow:clip}
   #controlesTop{justify-content:flex-end}
-  #contenedor{flex:1 1 auto;min-height:0}
-  #filaSuperior{grid-template-columns:1fr;}
+  #tituloinicial .t1,#tituloinicial .t2{white-space:normal;overflow:visible;text-overflow:clip}
 }
