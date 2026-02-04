@@ -23,7 +23,7 @@ h1,h2,h3,h4,p{margin:0}
 #contenedor{flex:1 1 auto;min-height:0;width:100%;padding:var(--gap);padding-bottom:calc(var(--gap) + var(--footerH));display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
 
 /* Caja 1 */
-#caja1{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;min-width:0;flex:0 0 auto;}
+#caja1{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;min-width:0;min-height:100px;flex:0 0 auto;}
 
 /* Panel matriz (caja2 con botón) */
 #panelMatriz{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;min-width:0;flex:0 0 auto;}
@@ -31,7 +31,6 @@ h1,h2,h3,h4,p{margin:0}
 #titulo3{margin:0;font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;flex:1;min-width:0}
 #caja2{margin-top:8px}
 #panelMatriz.oculto #caja2{display:none}
-#panelMatriz.oculto #btnToggleMatriz{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
 
 /* Caja 3: única con scroll y ocupa el alto sobrante */
 #contenedorCaja3{flex:1 1 auto;min-height:0}
@@ -67,3 +66,6 @@ iframe{border:none}
   #controlesTop{justify-content:flex-end}
   #tituloinicial .t1,#tituloinicial .t2{white-space:normal;overflow:visible;text-overflow:clip}
 }
+#btnToggleTrabajos{display:none}
+body.escalonada #btnToggleTrabajos{display:inline-flex}
+body.trabajosOcultos #contenedorCaja3{display:none}
