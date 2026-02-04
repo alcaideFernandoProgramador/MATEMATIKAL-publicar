@@ -31,12 +31,6 @@ h1,h2,h3,h4,p{margin:0}
 #titulo3{margin:0;font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;flex:1;min-width:0}
 #caja2{margin-top:8px}
 #panelMatriz.oculto #caja2{display:none}
-#panelMatriz.oculto #btnToggleTrabajos{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
-/* Botón trabajos: solo aparece al llegar a escalonada */
-#btnToggleTrabajos{display:none}
-body.escalonada #btnToggleTrabajos{display:inline-flex}
-body.trabajosOcultos #contenedorCaja3{display:none}
-
 
 /* Caja 3: única con scroll y ocupa el alto sobrante */
 #contenedorCaja3{flex:1 1 auto;min-height:0}
@@ -72,3 +66,5 @@ iframe{border:none}
   #controlesTop{justify-content:flex-end}
   #tituloinicial .t1,#tituloinicial .t2{white-space:normal;overflow:visible;text-overflow:clip}
 }
+#btnToggleTrabajos{display:none}
+body.trabajosOcultos #contenedorCaja3{display:none}
