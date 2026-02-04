@@ -30,7 +30,10 @@ h1,h2,h3,h4,p{margin:0}
 #barraMatriz{display:flex;align-items:center;justify-content:space-between;gap:10px}
 #titulo3{margin:0;font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;flex:1;min-width:0}
 #caja2{margin-top:8px}
-#panelMatriz.oculto #caja2{display:none}
+#btnToggleTrabajos{display:none}
+body.escalonada #btnToggleTrabajos{display:inline-flex}
+body.trabajosOcultos #contenedorCaja3{display:none}
+#btnToggleTrabajos{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
 
 /* Caja 3: única con scroll y ocupa el alto sobrante */
 #contenedorCaja3{flex:1 1 auto;min-height:0}
