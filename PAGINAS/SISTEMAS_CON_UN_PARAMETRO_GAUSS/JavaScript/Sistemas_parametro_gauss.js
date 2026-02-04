@@ -1,6 +1,5 @@
 let ecuacion="",numeroEcuaciones=0,numeroIncognitas=0,nombreParametro="",contadorp=1,valores=[],matrizExpresiones=[],matrizExpresionesR=[],matrizActualExpresionesR=[],matrizActualExpresiones=[],matrizActualSustituida=[],matrizAntiguaExpresiones=[],matrizOriginal=[],matrizValoresCoeficientes=[],matrizValoresCoeficientesActual=[],primerNumeroNoNulo=[],coeficientes,expresion="",alturaPrimerHijo=0,bandera2=true,matrizActualExpresionesCopia=[],leyendaIncognitas=false,ordenLeyenda=[],primerHijo=true,numeroMatricesImprimidas=0,controlAltura=false,eliminar=false,casos=[],casosString=[],etapa="",casosAutomatico=[],filasMenor=[],columnasMenor=[],menorActual=[],matrizSustituida=[],rango=0,tipoCaso="",matrizSoluciones=[],numeroParametros=0,parametros=[],variablesPrincipales=[],casoUnico=true,pivotesUsados=[],pivotesUltimos=[];
 
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_autoscrollCaja3,{once:true});else _autoscrollCaja3();
 function _simpl(s){try{if(typeof ExpresionAlgebraica!=="undefined"&&ExpresionAlgebraica&&typeof ExpresionAlgebraica.simplificar==="function")return ExpresionAlgebraica.simplificar(s);}catch(e){}return (s==null?"":s.toString());}
 function _esCeroExpr(x){if(x===0||x==="0")return true;let s=(x==null?"":x.toString()).trim();if(!s.length)return false;if(s==="0"||s==="(0)")return true;let t=_simpl(s).trim();return t==="0"||t==="(0)";}
 function _strip(s){return (s||"").toString().replace(/\s+/g,"");}
@@ -370,7 +369,7 @@ function crearFormulario(){
   });
 }
 
-function estudiarSistemaEscalonadoGauss(){
+function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonada");
   while(caja1.firstChild){caja1.removeChild(caja1.firstChild)}
   caja1.style.display="block";caja1.style.border="2px solid black";caja1.style.margin="2px";caja1.style.padding="2px";caja1.style.width="100%";
   let caja11=document.createElement("div"),caja12=document.createElement("div");caja11.id="caja11";caja12.id="caja12";caja12.style.alignItems="center";
@@ -403,7 +402,7 @@ function estudiarSistemaEscalonadoGauss(){
   caja1242.style.height="auto";caja1242.style.paddingLeft="5px";caja1242.style.paddingRight="7px";caja1231.style.marginBottom="10px";
   caja1243.style.width="99%";caja1243.style.display="block";caja1243.style.fontSize="15px";
   caja11.style.fontSize="20px";caja11.style.justifyContent="center";caja11.innerHTML="LA MATRIZ MODIFICADA DEL SISTEMA INICIAL INTRODUCIDO YA ES ESCALONADA";
-  caja1211.style.fontWeight="bold";caja1211.innerHTML="El sistema inicial introducido es: <span style='font-weight:800;font-size:12px;color:#444;margin-left:6px'>(se utiliza Gauss)</span>";Representar.sistemaCompleto(matrizExpresiones,caja1212);
+  caja1211.style.fontWeight="bold";caja1211.innerHTML="El sistema inicial introducido es:";Representar.sistemaCompleto(matrizExpresiones,caja1212);
   caja1231.style.fontWeight="bold";caja1231.innerHTML="Una matriz escalonada de GAUSS es: ";Representar.matrizGaussCompleta(matrizActualExpresiones,caja1232,leyendaIncognitas,ordenLeyenda);
   caja1241.style.fontWeight="bold";
   let caja12411=document.createElement("div");caja12411.id="caja12411";caja1241.appendChild(caja12411);caja12411.style.marginBottom="2px";caja12411.innerHTML="CASOS ESPECÍFICOS QUE SE DEBEN ESTUDIAR POR SEPARADO";
@@ -670,10 +669,14 @@ document.addEventListener("DOMContentLoaded",function(){
   window.addEventListener("click",function(event){if(event.target==ventana){ventana.style.display="none";pdf1.src="";}});
 });
 
-
 function autoScrollCaja3SiempreAbajo(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
-function setupToggleMatriz(){let panel=document.getElementById("panelMatriz"),btn=document.getElementById("btnToggleMatriz"),tit=document.getElementById("titulo3");if(!panel||!btn||!tit)return;
-let set=(on)=>{panel.classList.toggle("oculto",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar matriz":"Mostrar matriz";};
-btn.addEventListener("click",()=>set(panel.classList.contains("oculto"))); let auto=()=>{let t=(tit.textContent||"").toLowerCase();if(t.includes("escalonada"))set(false);};
-auto(); if(!window.__obsTit3){window.__obsTit3=new MutationObserver(auto);window.__obsTit3.observe(tit,{childList:true,subtree:true});}}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{autoScrollCaja3SiempreAbajo();setupToggleMatriz();},{once:true});else{autoScrollCaja3SiempreAbajo();setupToggleMatriz();}
+
+function setupToggleTrabajos(){try{let btn=document.getElementById("btnToggleTrabajos"),wrap=document.getElementById("contenedorCaja3"),c3=document.getElementById("caja3");if(!btn||!wrap||!c3)return;
+let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)c3.scrollTop=c3.scrollHeight;};
+btn.addEventListener("click",()=>set(document.body.classList.contains("trabajosOcultos")));
+let sync=()=>{let esc=document.body.classList.contains("escalonada");btn.style.display=esc?"inline-flex":"none";if(!esc){document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
+sync();if(!window.__obsBodyCls){window.__obsBodyCls=new MutationObserver(sync);window.__obsBodyCls.observe(document.body,{attributes:true,attributeFilter:["class"]});}}catch(e){}}
+
+function _initUIExtras(){autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
+
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_initUIExtras,{once:true});else _initUIExtras();
