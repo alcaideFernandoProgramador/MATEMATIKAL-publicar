@@ -670,13 +670,9 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 
 function autoScrollCaja3SiempreAbajo(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
-
-function setupToggleTrabajos(){try{let btn=document.getElementById("btnToggleTrabajos"),wrap=document.getElementById("contenedorCaja3"),c3=document.getElementById("caja3");if(!btn||!wrap||!c3)return;
-let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)c3.scrollTop=c3.scrollHeight;};
+function setupToggleTrabajos(){let btn=document.getElementById("btnToggleTrabajos"),tit=document.getElementById("titulo3"),cont=document.getElementById("contenedorCaja3"),caja3=document.getElementById("caja3");if(!btn||!tit||!cont||!caja3)return;
+let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)caja3.scrollTop=caja3.scrollHeight;};
 btn.addEventListener("click",()=>set(document.body.classList.contains("trabajosOcultos")));
-let sync=()=>{let esc=document.body.classList.contains("escalonada");btn.style.display=esc?"inline-flex":"none";if(!esc){document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
-sync();if(!window.__obsBodyCls){window.__obsBodyCls=new MutationObserver(sync);window.__obsBodyCls.observe(document.body,{attributes:true,attributeFilter:["class"]});}}catch(e){}}
-
-function _initUIExtras(){autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
-
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_initUIExtras,{once:true});else _initUIExtras();
+let check=()=>{let t=(tit.textContent||"").toLowerCase(),esc=t.includes("escalonada");document.body.classList.toggle("escalonada",esc);if(esc){btn.style.display="inline-flex";}else{btn.style.display="none";document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
+check();if(!window.__obsTit3){window.__obsTit3=new MutationObserver(check);window.__obsTit3.observe(tit,{childList:true,subtree:true});}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();},{once:true});else{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
