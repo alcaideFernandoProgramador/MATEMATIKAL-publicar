@@ -671,12 +671,18 @@ document.addEventListener("DOMContentLoaded",function(){
 
 function autoScrollCaja3SiempreAbajo(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
 
-function setupToggleTrabajos(){try{let btn=document.getElementById("btnToggleTrabajos"),wrap=document.getElementById("contenedorCaja3"),c3=document.getElementById("caja3");if(!btn||!wrap||!c3)return;
-let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)c3.scrollTop=c3.scrollHeight;};
-btn.addEventListener("click",()=>set(document.body.classList.contains("trabajosOcultos")));
-let sync=()=>{let esc=document.body.classList.contains("escalonada");btn.style.display=esc?"inline-flex":"none";if(!esc){document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
+
+
+function setupToggleTrabajos(){try{let btn=document.getElementById("btnToggleTrabajos"),c2=document.getElementById("caja2");if(!btn||!c2)return;
+c2.style.position=c2.style.position||"relative";btn.style.position="absolute";btn.style.top="6px";btn.style.right="6px";btn.style.zIndex="10";
+btn.style.margin="0";btn.style.alignSelf="flex-start";if(btn.parentNode!==c2)c2.appendChild(btn);else c2.appendChild(btn);
+let kids=()=>Array.from(c2.children).filter(x=>x!==btn),set=(on)=>{btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";kids().forEach(el=>{el.style.display=on?"":"none";});};
+btn.addEventListener("click",()=>{let visible=kids().some(el=>el.style.display!=="none");set(!visible);});
+let sync=()=>{let esc=document.body.classList.contains("escalonada");btn.style.display=esc?"inline-flex":"none";if(!esc)set(true);};
 sync();if(!window.__obsBodyCls){window.__obsBodyCls=new MutationObserver(sync);window.__obsBodyCls.observe(document.body,{attributes:true,attributeFilter:["class"]});}}catch(e){}}
+
 
 function _initUIExtras(){autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
 
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_initUIExtras,{once:true});else _initUIExtras();
+
