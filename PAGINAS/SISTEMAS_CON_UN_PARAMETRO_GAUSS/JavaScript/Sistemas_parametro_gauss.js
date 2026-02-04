@@ -1,6 +1,7 @@
 let ecuacion="",numeroEcuaciones=0,numeroIncognitas=0,nombreParametro="",contadorp=1,valores=[],matrizExpresiones=[],matrizExpresionesR=[],matrizActualExpresionesR=[],matrizActualExpresiones=[],matrizActualSustituida=[],matrizAntiguaExpresiones=[],matrizOriginal=[],matrizValoresCoeficientes=[],matrizValoresCoeficientesActual=[],primerNumeroNoNulo=[],coeficientes,expresion="",alturaPrimerHijo=0,bandera2=true,matrizActualExpresionesCopia=[],leyendaIncognitas=false,ordenLeyenda=[],primerHijo=true,numeroMatricesImprimidas=0,controlAltura=false,eliminar=false,casos=[],casosString=[],etapa="",casosAutomatico=[],filasMenor=[],columnasMenor=[],menorActual=[],matrizSustituida=[],rango=0,tipoCaso="",matrizSoluciones=[],numeroParametros=0,parametros=[],variablesPrincipales=[],casoUnico=true,pivotesUsados=[],pivotesUltimos=[];
-
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_autoscrollCaja3,{once:true});else _autoscrollCaja3();
+function _autoscrollCaja3(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
+function _toggleMatrizSetup(){return;}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{_autoscrollCaja3();_toggleMatrizSetup();},{once:true});else{_autoscrollCaja3();_toggleMatrizSetup();}
 function _simpl(s){try{if(typeof ExpresionAlgebraica!=="undefined"&&ExpresionAlgebraica&&typeof ExpresionAlgebraica.simplificar==="function")return ExpresionAlgebraica.simplificar(s);}catch(e){}return (s==null?"":s.toString());}
 function _esCeroExpr(x){if(x===0||x==="0")return true;let s=(x==null?"":x.toString()).trim();if(!s.length)return false;if(s==="0"||s==="(0)")return true;let t=_simpl(s).trim();return t==="0"||t==="(0)";}
 function _strip(s){return (s||"").toString().replace(/\s+/g,"");}
@@ -672,8 +673,9 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 function autoScrollCaja3SiempreAbajo(){try{let el=document.getElementById("caja3");if(!el)return;let go=()=>{el.scrollTop=el.scrollHeight;};go();if(window.__obsCaja3)return;window.__obsCaja3=new MutationObserver(go);window.__obsCaja3.observe(el,{childList:true,subtree:true});window.addEventListener("resize",go,{passive:true});}catch(e){}}
-function setupToggleMatriz(){let panel=document.getElementById("panelMatriz"),btn=document.getElementById("btnToggleMatriz"),tit=document.getElementById("titulo3");if(!panel||!btn||!tit)return;
-let set=(on)=>{panel.classList.toggle("oculto",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar matriz":"Mostrar matriz";};
-btn.addEventListener("click",()=>set(panel.classList.contains("oculto"))); let auto=()=>{let t=(tit.textContent||"").toLowerCase();if(t.includes("escalonada"))set(false);};
-auto(); if(!window.__obsTit3){window.__obsTit3=new MutationObserver(auto);window.__obsTit3.observe(tit,{childList:true,subtree:true});}}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{autoScrollCaja3SiempreAbajo();setupToggleMatriz();},{once:true});else{autoScrollCaja3SiempreAbajo();setupToggleMatriz();}
+function setupToggleTrabajos(){let btn=document.getElementById("btnToggleTrabajos"),tit=document.getElementById("titulo3"),cont=document.getElementById("contenedorCaja3"),caja3=document.getElementById("caja3");if(!btn||!tit||!cont||!caja3)return;
+let set=(on)=>{document.body.classList.toggle("trabajosOcultos",!on);btn.setAttribute("aria-expanded",on?"true":"false");btn.textContent=on?"Ocultar trabajos":"Mostrar trabajos";if(on)caja3.scrollTop=caja3.scrollHeight;};
+btn.addEventListener("click",()=>set(document.body.classList.contains("trabajosOcultos")));
+let check=()=>{let t=(tit.textContent||"").toLowerCase(),esc=t.includes("escalonada");document.body.classList.toggle("escalonada",esc);if(esc){btn.style.display="inline-flex";}else{btn.style.display="none";document.body.classList.remove("trabajosOcultos");btn.setAttribute("aria-expanded","true");btn.textContent="Ocultar trabajos";}};
+check();if(!window.__obsTit3){window.__obsTit3=new MutationObserver(check);window.__obsTit3.observe(tit,{childList:true,subtree:true});}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();},{once:true});else{autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
