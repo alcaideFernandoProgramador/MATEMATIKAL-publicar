@@ -11,7 +11,7 @@ function _registrarDivisorUsado(mRaw){mRaw=_strip(mRaw);if(!mRaw.length)return;i
 function _algunPivoteUsadoSeAnula(v){if(!Array.isArray(pivotesUsados)||!pivotesUsados.length)return false;try{for(let k=0;k<pivotesUsados.length;k++){let e=pivotesUsados[k],aux=[[e]],s=Matriz.sustituir(aux,nombreParametro,v)[0][0];if(_esCeroExpr(s))return true;}}catch(err){return true;}return false;}
 function _pivotesDesdeEscalonada(mat){let out=[];if(!Array.isArray(mat))return out;for(let i=0;i<mat.length;i++){let p=_primerNoNuloFila(mat[i]);if(p!=null)out.push(p.toString());}return out;}
 
-caja1.id="caja1";caja1.style.height="auto";caja1.style.width="99%";caja1.style.border="2px solid black";caja1.style.display="flex";caja1.style.padding="5px";caja1.style.justifyContent="center";caja1.style.alignItems="center";
+caja1.id="caja1";caja1.style.height="100px";caja1.style.width="99%";caja1.style.border="2px solid black";caja1.style.display="flex";caja1.style.padding="5px";caja1.style.justifyContent="center";caja1.style.alignItems="center";
 let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";caja11.style.height="100%";caja11.style.width="60%";caja11.style.padding="0px";caja11.style.display="block";caja11.style.justifyContent="center";
 let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";caja111.style.height="100%";caja111.style.width="99%";caja111.style.display="flex";caja111.style.alignItems="center";caja111.style.padding="5px";
 let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";caja1111.style.height="99%";caja1111.style.width="50%";caja1111.style.display="block";caja1111.style.border="1px solid black";caja1111.style.marginRight="3px";
