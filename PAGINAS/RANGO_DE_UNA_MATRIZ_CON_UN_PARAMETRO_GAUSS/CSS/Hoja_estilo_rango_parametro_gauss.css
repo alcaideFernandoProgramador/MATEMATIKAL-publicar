@@ -122,15 +122,3 @@ td{vertical-align:middle;}
   .casosCard{min-width:320px;flex:1 1 100%;}
   #caja2,#contenedorCaja3{max-height:50vh;}
 }
-
-/* ===== Responsive (móvil/tablet) ===== */
-@media (max-width: 900px){
-  #contenedor{width:100% !important;padding:12px !important;}
-  #caja1,#caja2{width:100% !important;max-width:100% !important;}
-  #caja2{padding:12px !important;}
-  #caja21{max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
-}
-@media (max-width: 700px){
-  #caja1{padding:12px !important;}
-  #caja1 input,#caja1 select,#caja1 textarea{max-width:100% !important;}
-}

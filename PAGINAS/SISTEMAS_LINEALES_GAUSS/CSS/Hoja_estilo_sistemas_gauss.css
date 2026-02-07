@@ -89,15 +89,3 @@ span.mjx-mtable{padding:0!important;margin:0!important}
 /* AJUSTES PARA SISTEMAS NUMÉRICOS (fracciones más largas) */
 #caja112 input{width:64px;max-width:96px}
 #caja11121,#caja11122{flex-wrap:wrap}
-
-/* ===== Responsive (móvil/tablet) ===== */
-@media (max-width: 900px){
-  #contenedor{width:100% !important;padding:12px !important;}
-  #caja1,#caja2{width:100% !important;max-width:100% !important;}
-  #caja2{padding:12px !important;}
-  #caja21{max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
-}
-@media (max-width: 700px){
-  #caja1{padding:12px !important;}
-  #caja1 input,#caja1 select,#caja1 textarea{max-width:100% !important;}
-}
