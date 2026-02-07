@@ -13,3 +13,14 @@ body{padding-bottom:74px;}
 .infoPage h2{margin:18px 0 10px;font-size:18px}
 .infoPage p,.infoPage li{line-height:1.55}
 .infoPage a{color:var(--accent,#2563eb)}
+
+/* === Modal ayuda: ventana grande + movible + fullscreen (PC y móvil) === */
+.ventana{position:fixed;inset:0;display:none;z-index:9999}
+.ventana.is-open{display:block}
+.ventana .contenidoVentana{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1600px,96vw);height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.ventana .barraVentana{display:flex;align-items:center;gap:10px;padding:10px;cursor:move;user-select:none}
+.ventana .accionesVentana{margin-left:auto;display:flex;gap:8px}
+.ventana .btnVentana{border:0;border-radius:10px;padding:10px 12px;font:inherit;cursor:pointer}
+.ventana .cuerpoVentana{flex:1;min-height:0}
+.ventana .cuerpoVentana iframe{width:100%!important;height:100%!important;border:0;display:block}
+.ventana.fullscreen .contenidoVentana{left:0;top:0;transform:none;width:100vw;height:100vh;border-radius:0}
