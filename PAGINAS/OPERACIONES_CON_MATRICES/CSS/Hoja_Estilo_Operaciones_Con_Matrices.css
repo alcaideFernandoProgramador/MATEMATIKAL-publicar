@@ -213,3 +213,22 @@ footer hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
 footer p{margin:0;}
 footer a{text-decoration:none;}
 footer a:hover{text-decoration:underline;}
+
+
+/* Ventanas de ayuda: casi pantalla completa (PC, tablet y móvil) */
+.contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
+.contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
+.cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
+
+
+/* Responsive fuerte: evitar formulario apelmazado cuando el JS mete estilos inline */
+@media (max-width:900px){
+  #caja1{display:flex!important;flex-direction:column!important;gap:14px!important}
+  #cajaMatricesIntroducidas{width:100%!important;min-width:0!important;margin-right:0!important;margin-bottom:0!important}
+  #cajaFormulario{width:100%!important;min-width:0!important}
+  #cajaMatricesIntroducidas>div{width:100%!important;margin-right:0!important;min-height:0!important}
+  #cajaFormulario div[style*="height:20px"]{height:auto!important;align-items:flex-start!important;gap:10px!important;padding:8px 10px!important}
+  #cajaFormulario input[type="radio"]{transform:scale(1.15)!important}
+  #cajaFormulario label,#cajaFormulario span{font-size:16px!important;line-height:1.25!important}
+  #cajaFormulario button,#cajaFormulario input[type="button"],#cajaFormulario input[type="submit"]{width:100%!important;min-height:44px!important;margin-top:10px!important}
+}

@@ -275,3 +275,9 @@ iframe{border:none}
   margin:0 !important;
   padding:0 !important;
 }
+
+
+/* Ventanas de ayuda: casi pantalla completa (PC, tablet y móvil) */
+.contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
+.contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
+.cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
