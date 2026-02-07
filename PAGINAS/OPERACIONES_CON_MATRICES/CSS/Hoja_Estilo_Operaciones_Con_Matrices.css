@@ -213,3 +213,13 @@ footer hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
 footer p{margin:0;}
 footer a{text-decoration:none;}
 footer a:hover{text-decoration:underline;}
+/* === Responsive (móvil/tablet): desapelmazar formulario creado por JS === */
+@media (max-width:900px){
+  #caja1{flex-direction:column!important;gap:12px!important;}
+  #cajaMatricesIntroducidas,#cajaFormulario{width:100%!important;min-width:0!important;margin-right:0!important;}
+  #cajaFormulario{padding:10px!important;}
+  #cajaFormulario div[style*="height:20px"]{height:auto!important;align-items:flex-start!important;padding:8px 6px!important;}
+  #cajaFormulario input[type="radio"]{transform:scale(1)!important;margin-left:10px!important;margin-right:10px!important;}
+  #cajaFormulario label{line-height:1.25!important;}
+  #cajaFormulario button,#cajaFormulario input[type="button"],#cajaFormulario input[type="submit"]{width:100%!important;min-height:44px!important;}
+}
