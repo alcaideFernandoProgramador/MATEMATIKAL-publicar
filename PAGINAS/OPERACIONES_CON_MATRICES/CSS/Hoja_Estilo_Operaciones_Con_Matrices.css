@@ -213,3 +213,29 @@ footer hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
 footer p{margin:0;}
 footer a{text-decoration:none;}
 footer a:hover{text-decoration:underline;}
+
+/* ===== Responsive (móvil/tablet) ===== */
+@media (max-width: 900px){
+  #contenedor{width:100% !important;padding:12px !important;}
+  #caja1,#caja2{width:100% !important;max-width:100% !important;}
+  #caja2{padding:12px !important;}
+  #caja21{max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
+}
+@media (max-width: 700px){
+  #caja1{padding:12px !important;}
+  #caja1 input,#caja1 select,#caja1 textarea{max-width:100% !important;}
+}
+
+/* ===== Operaciones con matrices: formulario "desapelmazado" ===== */
+@media (max-width: 900px){
+  #caja1{display:block !important;}
+  #tituloCaja1{position:sticky;top:0;z-index:5;}
+  #caja111{display:block !important;width:100% !important;}
+  /* Filas creadas por JS con height fija */
+  #caja1 div[style*="height:20px"]{height:auto !important;min-height:44px !important;padding:8px 10px !important;align-items:flex-start !important;}
+  #caja1 div[style*="height:20px"] input{margin-top:2px !important;}
+  #caja1 label{line-height:1.2 !important;padding:4px 0 !important;}
+  /* Botones/inputs a bloque en móvil */
+  #caja1 input[type="text"],#caja1 input[type="number"],#caja1 select{width:100% !important;}
+  #caja1 button,#caja1 input[type="button"],#caja1 input[type="submit"]{width:100% !important;margin:8px 0 0 !important;}
+}
