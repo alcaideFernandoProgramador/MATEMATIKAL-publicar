@@ -163,7 +163,7 @@ h1,h2,h3,h4,p{margin:0}
 
 #caja2{
   height:100%;background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;display:flex;flex-direction:column;align-items:stretch;min-height:0;
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;display:block;
 }
 
 h4{
@@ -175,17 +175,13 @@ h4{
   min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);
   background:linear-gradient(180deg,#fff,var(--soft));
   margin:4px 0 10px 0;padding:8px;display:flex;flex-wrap:wrap;
-  align-items:center;gap:6px;overflow-x:auto;;
-  flex:1 1 0;
-  overflow:auto
+  align-items:center;gap:6px;overflow-x:auto;
 }
 
 #caja22{
   min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);
   background:linear-gradient(180deg,#fff,var(--soft));
-  padding:8px;display:block;;
-  flex:1 1 0;
-  overflow:auto
+  padding:8px;display:block;
 }
 
 #caja221{
@@ -301,30 +297,4 @@ iframe{border:none}
   #caja11121,#caja11122{width:100%;justify-content:space-between}
   #caja11121 label,#caja11122 label{margin-right:0}
   #nfilas,#ncolumnas{width:76px;flex:0 0 auto}
-}
-
-#tituloCaja2,#tituloCaja22{flex:0 0 auto}
-
-/* CLAVE: permitir que los hijos de un flex-column se encojan y hagan scroll */
-#caja21,#caja22{min-height:0!important;-webkit-overflow-scrolling:touch}
-
-/* En móvil: que se pueda acceder SIEMPRE a la zona automática */
-@media (max-width:700px){
-  #contenedor{height:auto!important}            /* permite scroll de página en iPhone */
-  #caja1{flex-direction:column!important;min-height:0!important}
-  #caja2borde{min-height:0!important}
-  #caja2{height:auto!important;min-height:0!important}
-  #caja21,#caja22{max-height:34vh!important;overflow:auto!important}
-}
-/* 1) Deja espacio real para el footer fijo (para que no tape la zona automática) */
-:root{--footer-h:74px;--safe-b:env(safe-area-inset-bottom,0px);}
-#contenedor{padding-bottom:calc(var(--footer-h) + var(--safe-b) + 18px)!important;}
-
-/* 2) Permite que los hijos de los flex/grid ENCOJAN (si no, no aparece scroll interno) */
-#caja2borde,#caja2,#caja21,#caja22{min-height:0!important;}
-
-/* 3) En móvil: fuerza que #caja21 y #caja22 tengan alto y scroll propio */
-@media (max-width:700px){
-  #caja21{max-height:28vh!important;overflow:auto!important;-webkit-overflow-scrolling:touch;}
-  #caja22{max-height:32vh!important;overflow:auto!important;-webkit-overflow-scrolling:touch;}
 }
