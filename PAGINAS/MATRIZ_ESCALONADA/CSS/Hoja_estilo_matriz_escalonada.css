@@ -304,3 +304,15 @@ iframe{border:none}
 }
 
 #tituloCaja2,#tituloCaja22{flex:0 0 auto}
+
+/* CLAVE: permitir que los hijos de un flex-column se encojan y hagan scroll */
+#caja21,#caja22{min-height:0!important;-webkit-overflow-scrolling:touch}
+
+/* En móvil: que se pueda acceder SIEMPRE a la zona automática */
+@media (max-width:700px){
+  #contenedor{height:auto!important}            /* permite scroll de página en iPhone */
+  #caja1{flex-direction:column!important;min-height:0!important}
+  #caja2borde{min-height:0!important}
+  #caja2{height:auto!important;min-height:0!important}
+  #caja21,#caja22{max-height:34vh!important;overflow:auto!important}
+}
