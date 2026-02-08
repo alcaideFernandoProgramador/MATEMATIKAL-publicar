@@ -163,7 +163,7 @@ h1,h2,h3,h4,p{margin:0}
 
 #caja2{
   height:100%;background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;display:block;
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;display:flex;flex-direction:column;align-items:stretch;min-height:0;
 }
 
 h4{
@@ -175,13 +175,17 @@ h4{
   min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);
   background:linear-gradient(180deg,#fff,var(--soft));
   margin:4px 0 10px 0;padding:8px;display:flex;flex-wrap:wrap;
-  align-items:center;gap:6px;overflow-x:auto;
+  align-items:center;gap:6px;overflow-x:auto;;
+  flex:1 1 0;
+  overflow:auto
 }
 
 #caja22{
   min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);
   background:linear-gradient(180deg,#fff,var(--soft));
-  padding:8px;display:block;
+  padding:8px;display:block;;
+  flex:1 1 0;
+  overflow:auto
 }
 
 #caja221{
@@ -298,3 +302,5 @@ iframe{border:none}
   #caja11121 label,#caja11122 label{margin-right:0}
   #nfilas,#ncolumnas{width:76px;flex:0 0 auto}
 }
+
+#tituloCaja2,#tituloCaja22{flex:0 0 auto}
