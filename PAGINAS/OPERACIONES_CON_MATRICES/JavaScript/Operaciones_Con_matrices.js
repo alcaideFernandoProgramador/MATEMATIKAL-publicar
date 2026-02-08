@@ -92,12 +92,8 @@ const opciones=["Sumar dos matrices","Restar dos matrices","Multiplicar dos matr
 "Operaciones combinadas: mostrar pasos de forma automática",
 "Operaciones combinadas: mediante pasos realizados por el usuario"];
 
-opciones.forEach((texto,i)=>{let contenedor=document.createElement("div");
-contenedor.style.cssText=`display:flex;align-items:center;height:20px;width:99%;`;let input=document.createElement("input");
-input.type="radio";input.name="option";input.value=`opcion${i+1}`;input.className="inputCorto";
-input.style.cssText=`transform:scale(0.8);margin-left:10px;margin-right:8px;`;let label=document.createElement("label");
-label.textContent=`Opción ${i+1}: ${texto}`;label.style.fontSize="16px";contenedor.appendChild(input);
-contenedor.appendChild(label);cajaFormulario.appendChild(contenedor)});
+opciones.forEach((texto,i)=>{let contenedor=document.createElement("div");contenedor.className="opcionMatriz";contenedor.style.cssText=`display:flex;align-items:flex-start;width:99%;gap:6px;`;let input=document.createElement("input");input.type="radio";input.name="option";input.value=`opcion${i+1}`;input.className="inputCorto";input.style.cssText=`transform:scale(0.9);margin-left:10px;margin-top:2px;`;let label=document.createElement("label");label.textContent=`Opción ${i+1}: ${texto}`;label.style.fontSize="16px";label.style.lineHeight="1.25";label.style.whiteSpace="normal";contenedor.appendChild(input);contenedor.appendChild(label);cajaFormulario.appendChild(contenedor)});
+
 
 let caja122=document.createElement("div");caja122.id="caja122";caja122.style.cssText="display:flex;width:99%;margin-top:5px;";
 cajaFormulario.appendChild(caja122);let botonSeleccionar=document.createElement("button");
