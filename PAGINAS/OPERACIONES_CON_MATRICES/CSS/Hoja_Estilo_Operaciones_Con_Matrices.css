@@ -215,26 +215,34 @@ footer a{text-decoration:none;}
 footer a:hover{text-decoration:underline;}
 
 
-/* Ventanas de ayuda: casi pantalla completa (PC, tablet y móvil) */
-.contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
-.contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
-.cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
+/* ===== FIX footer + responsive (solo esta página) ===== */
+:root{--footer-h:74px;--safe-b:env(safe-area-inset-bottom,0px);--head-h:64px}
 
+/* 1) Que el footer fijo no tape nada (PC + móvil) */
+body{padding-bottom:calc(var(--footer-h) + var(--safe-b) + 16px)!important}
 
-/* Responsive fuerte: evitar formulario apelmazado cuando el JS mete estilos inline */
-@media (max-width:900px){
-  #caja1{display:flex!important;flex-direction:column!important;gap:14px!important}
-  #cajaMatricesIntroducidas{width:100%!important;min-width:0!important;margin-right:0!important;margin-bottom:0!important}
-  #cajaFormulario{width:100%!important;min-width:0!important}
-  #cajaMatricesIntroducidas>div{width:100%!important;margin-right:0!important;min-height:0!important}
-  #cajaFormulario div[style*="height:20px"]{height:auto!important;align-items:flex-start!important;gap:10px!important;padding:8px 10px!important}
-  #cajaFormulario input[type="radio"]{transform:scale(1.15)!important}
-  #cajaFormulario label,#cajaFormulario span{font-size:16px!important;line-height:1.25!important}
-  #cajaFormulario button,#cajaFormulario input[type="button"],#cajaFormulario input[type="submit"]{width:100%!important;min-height:44px!important;margin-top:10px!important}
+/* 2) El contenedor deja hueco abajo y permite scroll correcto */
+#contenedor{min-height:0!important}
+
+/* 3) Caja del usuario: alto útil = viewport - cabecera - footer - márgenes */
+#caja21{
+  width:100%!important;max-width:100%!important;margin:6px 0 0 0!important;
+  height:calc(50vh - 120px - var(--footer-h)/2); /* base */
+  max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 260px);
+  overflow:auto;-webkit-overflow-scrolling:touch;
 }
 
+/* 4) Tablet: una columna, más ancho útil */
+@media (max-width:1024px){
+  #contenedor{grid-template-columns:1fr!important;padding:14px 14px calc(var(--footer-h) + var(--safe-b) + 16px)!important}
+  #caja1,#caja2{padding:16px 14px}
+  #caja21{max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 220px)}
+}
 
-/* Opciones (evita solapes en móvil) */
-.opcionMatriz{height:auto!important;flex-wrap:wrap;}
-.opcionMatriz label{display:block;line-height:1.25;white-space:normal;}
-@media (max-width:480px){.opcionMatriz{padding:2px 0;}.opcionMatriz label{font-size:15px}}
+/* 5) Móvil: una columna, controles y opciones sin solapes */
+@media (max-width:480px){
+  #contenedor{padding:12px 10px calc(var(--footer-h) + var(--safe-b) + 16px)!important}
+  #caja1,#caja2{padding:14px 12px}
+  #caja21{max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 210px)}
+}
+
