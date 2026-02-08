@@ -131,6 +131,6 @@ td{vertical-align:middle;}
 
 #contenedor{
   height:auto;
-  min-height:calc(100vh - 76px - 74px);
+  min-height:calc(100vh - 76px - var(--footer-h,74px));
   padding-bottom:10px;
 }

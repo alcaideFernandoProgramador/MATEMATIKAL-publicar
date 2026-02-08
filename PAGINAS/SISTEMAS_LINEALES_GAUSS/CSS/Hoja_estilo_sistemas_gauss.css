@@ -13,7 +13,7 @@ h1,h2,h3,h4,p{margin:0}
 #btnHome svg{display:block;fill:var(--ink)}
 #btnHome span{font-size:9px;line-height:9px;color:var(--ink);font-weight:800;letter-spacing:.5px}
 
-#contenedor{height:calc(100vh - 76px);width:100%;padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap);}
+#contenedor{height:calc(100vh - 76px - var(--footer-h,74px));width:100%;padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap);}
 #caja1{display:flex;gap:var(--gap);width:100%;min-height:290px;flex:0 0 auto;}
 #caja11,#caja12{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;flex:1;min-width:0;}
 
@@ -83,7 +83,7 @@ iframe{border:none}
 span.mjx-mtable{padding:0!important;margin:0!important}
 
 @media (max-width:1100px){#caja1{flex-direction:column}#caja1111{width:100%;min-width:0}}
-@media (max-width:700px){#tituloinicial{flex-direction:column;align-items:stretch}#tituloinicial h1{justify-content:flex-start;text-align:left}#controlesTop{justify-content:flex-end}#contenedor{height:auto;min-height:calc(100vh - 76px)}}
+@media (max-width:700px){#tituloinicial{flex-direction:column;align-items:stretch}#tituloinicial h1{justify-content:flex-start;text-align:left}#controlesTop{justify-content:flex-end}#contenedor{height:auto;min-height:calc(100vh - 76px - var(--footer-h,74px))}}
 #caja112 .katex,#caja21 .katex,#caja221 .katex{font-size:14px;}
 
 /* AJUSTES PARA SISTEMAS NUMÉRICOS (fracciones más largas) */
