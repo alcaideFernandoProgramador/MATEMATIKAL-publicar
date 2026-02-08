@@ -118,6 +118,23 @@ button:hover,input[type="button"]:hover,input[type="submit"]:hover{
   display:grid;grid-template-columns:1fr;gap:16px;
 }
 
+/* IMPORTANT: el JS mete estilos inline en #contenedor (display:flex;justify-content:center),
+   lo que en móvil estrecha la página. Esta regla (con !important) lo neutraliza. */
+#contenedor{display:grid!important;justify-content:stretch!important;align-content:start!important}
+#caja1,#caja2{width:100%!important;max-width:100%!important}
+
+/* Móvil: cabecera sin solapes y layout a pantalla completa */
+@media (max-width:480px){
+  #tituloinicial{padding:10px 12px;min-height:56px;justify-content:space-between;gap:10px}
+  #tituloinicial h1{white-space:normal;line-height:1.15;font-size:18px}
+  #controlesTop{position:static;transform:none;margin-left:auto;gap:10px}
+  #contenedor{padding:12px 12px 22px 12px}
+  #btnHome{width:46px;height:46px}
+  #abreVentana1{padding:8px 10px}
+  input,select,button,textarea{font-size:16px}
+  button,input[type="button"],input[type="submit"]{min-height:44px;justify-content:center}
+}
+
 /* Dos columnas en pantallas grandes, sin sticky en caja1 */
 @media (min-width:1100px){
   #contenedor{
