@@ -16,7 +16,7 @@ let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="ca
 let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";caja111.style.height="auto";caja111.style.width="99%";caja111.style.display="flex";caja111.style.alignItems="center";caja111.style.padding="5px";
 let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";caja1111.style.height="auto";caja1111.style.width="50%";caja1111.style.display="block";caja1111.style.border="1px solid black";caja1111.style.marginRight="3px";
 let caja11111=document.createElement("div");caja1111.appendChild(caja11111);caja11111.id="caja11111";caja11111.style.height="auto";caja11111.style.width="99%";caja11111.style.marginRight="3px";caja11111.style.fontWeight="bold";caja11111.style.fontSize="18px";caja11111.innerHTML="INTRODUCCIÓN DE DATOS";
-let caja11112=document.createElement("div");caja1111.appendChild(caja11112);caja11112.id="caja11112";caja11112.style.height="auto";caja11112.style.width="99%";caja11112.style.padding="5px";caja11112.style.marginRight="3px";caja11112.style.fontSize="13px";caja11112.innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+let caja11112=document.createElement("div");caja1111.appendChild(caja11112);caja11112.id="caja11112";caja11112.style.height="auto";caja11112.style.width="99%";caja11112.style.padding="5px";caja11112.style.marginRight="3px";caja11112.style.fontSize="13px";caja11112.innerHTML="Valida todos los datos introducidos con la tecla ENTER o TAB o TAB del teclado";
 let caja1112=document.createElement("div");caja111.appendChild(caja1112);caja1112.id="caja1112";caja1112.style.height="auto";caja1112.style.width="50%";caja1112.style.border="1px solid black";caja1112.style.marginLeft="3px";caja1112.style.display="flex";caja1112.style.justifyContent="center";caja1112.style.alignItems="center";
 let caja11121=document.createElement("div");caja1112.appendChild(caja11121);caja11121.id="caja11121";caja11121.style.height="auto";caja11121.style.width="32%";caja11121.style.marginLeft="3px";caja11121.style.display="block";
 let caja11122=document.createElement("div");caja1112.appendChild(caja11122);caja11122.id="caja11122";caja11122.style.height="auto";caja11122.style.width="32%";caja11122.style.display="block";caja11122.style.marginLeft="3px";caja11122.style.display="block";
@@ -39,9 +39,9 @@ function crearNumeroEcuaciones(){
   caja11121.appendChild(lugarTexto1);caja11121.appendChild(lugarInputNumeroEcuaciones);caja11121.appendChild(lugarTexto2);
   nEcuaciones.focus();
   nEcuaciones.addEventListener("keydown",function(event){
-    if(event.key==="Enter"){
+    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
       try{
-        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER o TAB o TAB del teclado";
         numeroEcuaciones=Number(nEcuaciones.value);
         if(isNaN(numeroEcuaciones)||numeroEcuaciones<1||numeroEcuaciones>5||Number.isInteger(numeroEcuaciones)===false){nEcuaciones.value="";throw new Error();}
         crearnumeroIncognitas();
@@ -62,9 +62,9 @@ function crearnumeroIncognitas(){
   lugarInputnumeroIncognitas.appendChild(lugarTexto3);lugarInputnumeroIncognitas.appendChild(nIncognitas);lugarInputnumeroIncognitas.appendChild(lugarTexto4);
   nIncognitas.focus();
   nIncognitas.addEventListener("keydown",function(event){
-    if(event.key==="Enter"){
+    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
       try{
-        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER o TAB o TAB del teclado";
         numeroIncognitas=Number(nIncognitas.value);
         if(isNaN(numeroIncognitas)||numeroIncognitas<1||numeroIncognitas>5||Number.isInteger(numeroIncognitas)===false){nIncognitas.value="";throw new Error();}
         for(let i=0;i<numeroIncognitas;i++){ordenLeyenda[i]=i+1}
@@ -83,9 +83,9 @@ function crearNombreParametro(){
   caja11123.appendChild(lugarTexto5);caja11123.appendChild(lugarInputNombreParametro);caja11123.appendChild(lugarTexto6);
   nParametro.focus();
   nParametro.addEventListener("keydown",function(event){
-    if(event.key==="Enter"){
+    if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
       try{
-        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+        document.getElementById("caja11112").style.color="black";document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER o TAB o TAB del teclado";
         nombreParametro=nParametro.value;
         if(isNaN(nombreParametro)===false||nombreParametro.toLowerCase()!==nombreParametro||nombreParametro.length!==1){nParametro.value="";throw new Error();}
         caja11.appendChild(caja112);crearSistemaVacio();
@@ -527,7 +527,7 @@ if(casosAutomatico.length===0){
     c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Introduce dicho valor "+nombreParametro+"= ";let inputValor=document.createElement("input");c32.appendChild(inputValor);inputValor.focus();
     let msg=document.createElement("div");msg.id="caja124msg";msg.style.marginTop="8px";msg.style.minHeight="18px";caja124.appendChild(msg);
 
-    inputValor.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
+    inputValor.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();
       try{
         msg.style.color="black";msg.innerHTML="";
         let v=_parseValorSimple(inputValor.value);
@@ -576,7 +576,7 @@ if(casosAutomatico.length===0){
     botonEcuacion.addEventListener("click",function(){_abrirModalEcuacion();});
     let botonFin=document.createElement("button");botonFin.innerHTML="FIN";botonFin.style.marginLeft="auto";caja1244.appendChild(botonFin);
 
-    inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"){
+    inputCaso.addEventListener("keydown",function(event){if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
       caja1242.remove();
       try{
         caja1246.style.color="black";caja1246.innerHTML="";
@@ -609,7 +609,7 @@ if(casosAutomatico.length===0){
         let inputValor=document.createElement("input");caja1245.appendChild(espacio);caja1245.appendChild(inputValor);
 
         inputValor.focus();
-        inputValor.addEventListener("keydown",function(event){if(event.key==="Enter"){
+        inputValor.addEventListener("keydown",function(event){if(event.key==="Enter"||event.key==="Tab"){event.preventDefault();
           let v;try{v=_parseValor(inputValor.value);}catch(e){caja1243.innerHTML="Entrada no válida. Usa decimal (0.5), fracción (1/2) o G.";inputValor.value="";inputValor.focus();return;}
           if(!_hasCaso(v)){caja1243.innerHTML="El valor introducido no está entre los casos a estudiar ni es el caso general G.<br>Introduce otro valor, por favor.";inputValor.value="";inputValor.focus();return;}
 
@@ -640,7 +640,7 @@ if(casosAutomatico.length===0){
             c31.id="caja12431";c32.id="caja12432";c31.innerHTML="Para ello, introduce dicho valor "+nombreParametro+"= ";c32.appendChild(inputValor2);
 
             inputValor2.focus();
-            inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"){
+            inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();
               let valorrr=inputValor2.value;
               try{if((valorrr||"").trim().length===0)throw new Error();if(valorrr.includes("/"))valorrr=parseFloat(pasarADecimal(valorrr));if(valorrr.includes(","))valorrr=valorrr.replace(",",".");valorrr=parseFloat(valorrr);if(Number.isNaN(valorrr))throw new Error();}
               catch(e){c2.innerHTML="Entrada no válida. Usa decimal (0.5) o fracción (1/2).";inputValor2.value="";inputValor2.focus();return;}

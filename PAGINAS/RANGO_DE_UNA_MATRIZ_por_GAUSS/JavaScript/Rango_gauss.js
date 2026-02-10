@@ -288,8 +288,8 @@ function op1(){
       renderPasoPermutar(A,B);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Filas no válidas. Enteros distintos y dentro del rango.");}
   }
-  iA.addEventListener("keydown",e=>{if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",e=>{if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function op2(){
@@ -330,8 +330,8 @@ function op3(){
       S.act=nueva;renderPasoDividir(a,m);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Fila válida y divisor numérico distinto de 0.");}
   }
-  iA.addEventListener("keydown",e=>{if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",e=>{if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function op4(){

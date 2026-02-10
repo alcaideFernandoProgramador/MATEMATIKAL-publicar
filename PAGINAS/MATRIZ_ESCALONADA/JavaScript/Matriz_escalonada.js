@@ -262,8 +262,8 @@ function op1(){
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Datos no válidos. Usa enteros distintos y dentro del rango.");}}
-  iA.addEventListener("keydown",function(e){if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",function(e){if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function op3(){
@@ -284,8 +284,8 @@ function op3(){
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Datos no válidos. Fila válida y divisor numérico distinto de 0.");}}
-  iA.addEventListener("keydown",function(e){if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",function(e){if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function aplicarCombinacionDesdeCadena(cad){
