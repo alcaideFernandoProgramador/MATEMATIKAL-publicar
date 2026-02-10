@@ -94,9 +94,12 @@ td{vertical-align:middle;}
   overflow-x:visible;
 }
 #contenedorCaja3{
-  max-height:42vh;
+  max-height:calc(100vh - var(--footer-h,74px) - 260px);
   overflow-y:auto;
   overflow-x:hidden;
+  box-sizing:border-box;
+  padding-bottom:calc(var(--footer-h,74px) + 12px);
+  scroll-padding-bottom:calc(var(--footer-h,74px) + 12px);
 }
 #caja2>div{flex:0 0 auto;}
 #contenedorCaja3.casosWrap{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;}
@@ -120,7 +123,7 @@ td{vertical-align:middle;}
   #caja1.layoutContinuar .formAuto{min-width:320px;}
   #caja112{flex-wrap:wrap;}
   .casosCard{min-width:320px;flex:1 1 100%;}
-  #caja2,#contenedorCaja3{max-height:50vh;}
+  #caja2,#contenedorCaja3{max-height:calc(100vh - var(--footer-h,74px) - 220px);}
 }
 
 

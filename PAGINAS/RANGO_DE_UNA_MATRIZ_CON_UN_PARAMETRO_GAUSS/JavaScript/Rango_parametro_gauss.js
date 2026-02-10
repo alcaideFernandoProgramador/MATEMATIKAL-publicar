@@ -28,8 +28,18 @@ function _validarExpresionEntrada(expr){
   return [true,""];
 }
 
+let _moCaja3=null;
+function _scrollCaja3Bottom(){let c=_$("contenedorCaja3");if(!c||c.style.display==="none")return;c.scrollTop=c.scrollHeight;}
+function _activarAutoScrollCaja3(){let c=_$("contenedorCaja3");if(!c||c._autoBottom)return;c._autoBottom=true;let tick=()=>requestAnimationFrame(()=>requestAnimationFrame(_scrollCaja3Bottom));
+  try{_moCaja3=new MutationObserver(tick);_moCaja3.observe(c,{childList:true,subtree:true,characterData:true});}catch(e){}
+  window.addEventListener("resize",tick);window.addEventListener("orientationchange",tick);document.addEventListener("visibilitychange",tick);
+  tick();
+}
+
+
 function _init(){
   _insertarBotonOtraMatriz();_setupAyuda();let caja1=_$("caja1"),caja2=_$("caja2"),caja3=_$("contenedorCaja3");
+  _activarAutoScrollCaja3();
   caja1.className="";if(caja2){caja2.style.display="none";caja2.innerHTML="";}if(caja3){caja3.style.display="none";caja3.classList.remove("casosWrap");caja3.innerHTML="";}
   caja1.innerHTML="";let caja11=document.createElement("div");caja11.id="caja11";caja1.appendChild(caja11);
   let caja111=document.createElement("div");caja111.id="caja111";caja11.appendChild(caja111);
