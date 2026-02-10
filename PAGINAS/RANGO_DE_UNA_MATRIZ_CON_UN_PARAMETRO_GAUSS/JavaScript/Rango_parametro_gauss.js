@@ -1,7 +1,24 @@
 let numeroFilas=0,numeroColumnas=0,nombreParametro="",valores=[],matrizOriginal=[],matrizAntigua=[],matrizActualExpresiones=[],valoresExcluidos=[],valoresExcluidosNumerico=[],pivotesUsados=[],casos=["G"],casosAutomatico=[],casosNumerico=[],casosAutomaticoNumerico=[],_enSol=false;
 function _$(id){return document.getElementById(id);}function _strip(s){return (s||"").toString().replace(/\s+/g,"");}
 function _clone2(m){return m.map(r=>r.slice());}function _simpl(s){try{if(ExpresionAlgebraica&&typeof ExpresionAlgebraica.simplificar==="function")return ExpresionAlgebraica.simplificar(s);}catch(e){}return (s==null?"":s.toString());}
-function _esCeroExpr(x){if(x===0||x==="0")return true;let s=(x==null?"":x.toString()).trim();if(!s.length)return false;if(s==="0"||s==="(0)")return true;let t=_simpl(s).trim();return t==="0"||t==="(0)";}
+function _esCeroExpr(x){
+  if(x===0||x==="0")return true;let s=(x==null?"":x.toString()).trim();if(!s.length)return false;if(s==="0"||s==="(0)")return true;
+  let t=_simpl(s).trim();if(t==="0"||t==="(0)")return true;
+  /* Tolerancia numérica: algunos casos generan restos tipo 2.4e-14 (debería ser 0) */
+  try{
+    let u=_strip(t);while(u.length&&u[0]==="("&&u[u.length-1]===")"){u=u.slice(1,-1);u=_strip(u);}u=u.replace(/\s+/g,"");
+    if(!/[a-zA-Z]/.test(u)){
+      let val=null;
+      if(/^[-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?$/i.test(u))val=parseFloat(u);
+      else{
+        let m=u.match(/^([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)\/([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)$/i);
+        if(m){let a=parseFloat(m[1]),b=parseFloat(m[6]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)val=a/b;}
+      }
+      if(val!=null&&Number.isFinite(val)&&Math.abs(val)<1e-10)return true;
+    }
+  }catch(e){}
+  return false;
+}
 function _primerNoNuloFila(f){if(!Array.isArray(f)||!f.length)return null;for(let j=0;j<f.length;j++)if(!_esCeroExpr(f[j]))return f[j];return null;}
 function _denomsTop(expr){expr=_strip(expr);if(!expr.length)return [];let dens=[],d=0;for(let i=0;i<expr.length;i++){let c=expr[i];if(c==="(")d++;else if(c===")"){d--;if(d<0)throw new Error("p");}if(c==="/"&&d===0){let rest=expr.slice(i+1);if(rest.length)dens.push(rest);break;}}return dens;}
 function _registrarPivoteFila(idx){try{if(!matrizActualExpresiones||!matrizActualExpresiones[idx])return;let p=_primerNoNuloFila(matrizActualExpresiones[idx]);if(p==null)return;let s=p.toString();if(!pivotesUsados.includes(s))pivotesUsados.push(s);}catch(e){}}
