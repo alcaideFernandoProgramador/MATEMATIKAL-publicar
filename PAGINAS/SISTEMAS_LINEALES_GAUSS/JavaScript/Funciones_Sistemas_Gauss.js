@@ -121,13 +121,13 @@ function _afterPasoUsuario(){_syncSfromN();_appendUsuario(matrizActualS,true);if
 function crearNumeroEcuaciones(){
   _clear(caja11121);_clear(caja11122);_clear(caja112);_clear(caja12);_clear(caja21);_clear(caja221);_clear(caja222);hayAlgoUsuario=false;autoReady=false;
   caja1111.style.fontSize="";caja1111.style.display="flex";caja1111.style.flexDirection="column";caja1111.style.justifyContent="space-between";
-  let t=document.getElementById("caja11111");if(t)t.innerHTML="INTRODUCCIÓN DE DATOS";_msgOk("Valida todos los datos introducidos con la tecla ENTER del teclado");
+  let t=document.getElementById("caja11111");if(t)t.innerHTML="INTRODUCCIÓN DE DATOS";_msgOk("Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
   let p1=document.createElement("p"),p2=document.createElement("p"),p3=document.createElement("p"),inp=document.createElement("input");
   p1.style.fontSize="12px";p2.style.fontSize="12px";p3.style.fontSize="12px";p1.textContent="Nº de Ecuaciones";p3.textContent="(Entre 1 y 5)";
   inp.type="text";p2.appendChild(inp);caja11121.appendChild(p1);caja11121.appendChild(p2);caja11121.appendChild(p3);inp.focus();
   inp.addEventListener("keydown",function(ev){
-    if(ev.key!=="Enter"&&ev.key!=="Tab")return;
-    try{_msgOk("Valida todos los datos introducidos con la tecla ENTER del teclado");
+    if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();
+    try{_msgOk("Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
       numeroEcuaciones=Number(inp.value);if(!Number.isInteger(numeroEcuaciones)||numeroEcuaciones<1||numeroEcuaciones>5)throw 0;
       crearNumeroIncognitas();
     }catch(e){inp.value="";inp.focus();_msgErr("El nº de ecuaciones no es válido.<br>Entero entre 1 y 5.");}
@@ -139,8 +139,8 @@ function crearNumeroIncognitas(){
   p1.style.fontSize="12px";p2.style.fontSize="12px";p3.style.fontSize="12px";p1.textContent="Nº de Incógnitas";p3.textContent="(Entre 1 y 5)";
   inp.type="text";inp.style.marginTop="4px";p2.appendChild(inp);caja11122.appendChild(p1);caja11122.appendChild(p2);caja11122.appendChild(p3);inp.focus();
   inp.addEventListener("keydown",function(ev){
-    if(ev.key!=="Enter"&&ev.key!=="Tab")return;
-    try{_msgOk("Valida todos los datos introducidos con la tecla ENTER del teclado");
+    if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();
+    try{_msgOk("Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
       numeroIncognitas=Number(inp.value);if(!Number.isInteger(numeroIncognitas)||numeroIncognitas<1||numeroIncognitas>5)throw 0;
       ordenLeyenda=[];for(let i=0;i<numeroIncognitas;i++)ordenLeyenda[i]=i+1;crearSistemaVacio();
     }catch(e){inp.value="";inp.focus();_msgErr("El nº de incógnitas no es válido.<br>Entero entre 1 y 5.");}
@@ -166,7 +166,7 @@ function rellenarSistema(tabla){
   let inputs=tabla.getElementsByTagName("input");if(!inputs.length)return;inputs[0].focus();
   for(let i=0;i<inputs.length;i++){
     inputs[i].addEventListener("keydown",function(ev){
-      if(ev.key!=="Enter"&&ev.key!=="Tab")return;
+      if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();
       let fila=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
       try{
         let v=_strip(this.value);if(!v.length)throw new Error("B");_parseRacional(v);valores[fila][col]=v;
@@ -215,8 +215,8 @@ function crearFormulario(){
       d.style.display="flex";d.style.alignItems="center";d.style.gap="10px";l1.innerHTML="i=";l2.innerHTML="j=";
       i1.type="text";i2.type="text";ui.appendChild(d);d.appendChild(l1);d.appendChild(i1);d.appendChild(l2);d.appendChild(i2);i1.focus();
       let n=matrizActualN.length,f1=null;
-      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Fila i no válida.");}});
-      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
+      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Fila i no válida.");}});
+      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
           _permutarFilasN(matrizActualN,f1-1,f2-1);_afterPasoUsuario();_clr();
         }catch(e){i2.value="";i2.focus();_err("Fila j no válida.");}});
       return;
@@ -226,8 +226,8 @@ function crearFormulario(){
       d.style.display="flex";d.style.alignItems="center";d.style.gap="10px";l1.innerHTML="i=";l2.innerHTML="j=";
       i1.type="text";i2.type="text";ui.appendChild(d);d.appendChild(l1);d.appendChild(i1);d.appendChild(l2);d.appendChild(i2);i1.focus();
       let m=matrizActualN[0].length-1,c1=null;
-      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Columna i no válida.");}});
-      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
+      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Columna i no válida.");}});
+      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
           _permutarColsN(matrizActualN,c1-1,c2-1);_swapLey(c1-1,c2-1);_afterPasoUsuario();_clr();
         }catch(e){i2.value="";i2.focus();_err("Columna j no válida.");}});
       return;
@@ -238,8 +238,8 @@ function crearFormulario(){
       d.style.display="flex";d.style.alignItems="center";d.style.gap="10px";l1.innerHTML="a=";l2.innerHTML="m=";
       i1.type="text";i2.type="text";ui.appendChild(d);d.appendChild(l1);d.appendChild(i1);d.appendChild(l2);d.appendChild(i2);i1.focus();
       let n=matrizActualN.length,a=null;
-      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{a=Number(i1.value);if(!Number.isInteger(a)||a<1||a>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Fila a no válida.");}});
-      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;try{let m=_parseRacional(i2.value);if(_esCeroNum(m))throw 0;
+      i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{a=Number(i1.value);if(!Number.isInteger(a)||a<1||a>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Fila a no válida.");}});
+      i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let m=_parseRacional(i2.value);if(_esCeroNum(m))throw 0;
           for(let j=0;j<matrizActualN[0].length;j++)matrizActualN[a-1][j]/=m;_afterPasoUsuario();_clr();
         }catch(e){i2.value="";i2.focus();_err("m no válido (≠0).");}});
       return;
@@ -267,7 +267,7 @@ function crearFormulario(){
         let self=terms.find(x=>x.fila===lhs);if(!self||_esCeroNum(self.factor))throw 0;return {lhs,terms};
       }
       inp.addEventListener("keydown",function(ev){
-        if(ev.key!=="Enter"&&ev.key!=="Tab")return;
+        if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();
         try{
           let cad=inp.value,n=matrizActualN.length,obj=_parseCL(cad,n),target=obj.lhs-1,terms=obj.terms,row=new Array(matrizActualN[0].length).fill(0);
           for(let j=0;j<matrizActualN[0].length;j++){let acc=0;for(let t of terms)acc+=matrizActualN[t.fila-1][j]*t.factor;row[j]=acc;}

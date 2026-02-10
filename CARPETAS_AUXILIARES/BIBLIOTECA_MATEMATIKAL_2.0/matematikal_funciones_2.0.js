@@ -2153,7 +2153,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
         const ok=inp=>{const i=+inp.dataset.i,j=+inp.dataset.j,d=inp.value.trim(),esp=A[i][j];
           try{return d!==""&&ExpresionAlgebraica.simplificar("("+d+")-("+esp+")")==="0"}catch(_){return false}};
         let k=0;const foc=()=>{inputs[k]?.focus();inputs[k]?.select()};
-        const onEnter=e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();const inp=e.currentTarget;
+        const onEnter=e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();const inp=e.currentTarget;
           if(ok(inp)){inp.style.border="";inp.readOnly=true;k++;if(k<inputs.length)foc();else{msg.textContent="";
             btnAuto.style.display="none";btnCont.style.display="inline-block"}scroll()}
           else{inp.style.border="2px solid #d33";msg.textContent="Valor incorrecto.";inp.focus();inp.select();scroll()}};

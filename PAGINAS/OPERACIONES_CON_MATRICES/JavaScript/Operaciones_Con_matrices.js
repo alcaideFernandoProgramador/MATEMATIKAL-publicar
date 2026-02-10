@@ -7,7 +7,7 @@ tituloUsuario.style.margin="10px 0px 10px 0px";
 
 let numeroMatrices=0,nombreMatrices=[],matrices=[],matricesIniciales=[];caja2.style.display="none";
 let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";
-aviso.style.color="red";aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER del teclado)";
+aviso.style.color="red";aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER o TAB del teclado)";
 crearMatrices();let matricesCreadasActuales=[];
 
 const mantenerScrollAbajo=el=>{if(!el)return;requestAnimationFrame(()=>{el.scrollTop=el.scrollHeight});
@@ -258,7 +258,7 @@ try{let simp=ExpresionAlgebraica.simplificar("("+t+")");let dec=aDecimal(simp);
 return "("+dec+")"}catch(_){return m}});
 if(s===prev)break}
 return s};
-input.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();try{resetearFormulario();caja125.style.color="";
+input.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();try{resetearFormulario();caja125.style.color="";
 caja125.innerHTML="";
 let expre=preparar10(input.value),wrap=crearCajaOperacion(),contenedorResultado=document.createElement("div");
 wrap.appendChild(contenedorResultado);document.getElementById("caja21").appendChild(wrap);
