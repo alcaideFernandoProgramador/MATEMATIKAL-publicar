@@ -11,14 +11,27 @@ function _esCeroExpr(x){
       let val=null;
       if(/^[-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?$/i.test(u))val=parseFloat(u);
       else{
+        /* fracción simple a/b */
         let m=u.match(/^([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)\/([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)$/i);
         if(m){let a=parseFloat(m[1]),b=parseFloat(m[6]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)val=a/b;}
+        /* fracción o número en notación científica sin '*' (p.ej. 248/17e-14) */
+        if(val==null){
+          let mm=u.match(/^([-+]?\d+(?:\.\d+)?|\.\d+|[-+]?\d+\/\d+)e([-+]?\d+)$/i);
+          if(mm){
+            let base=mm[1],exp=parseInt(mm[2],10),bval=null;
+            if(base.includes('/')){let parts=base.split('/');let a=parseFloat(parts[0]),b=parseFloat(parts[1]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)bval=a/b;}
+            else bval=parseFloat(base);
+            if(bval!=null&&Number.isFinite(bval)&&Number.isFinite(exp))val=bval*Math.pow(10,exp);
+          }
+        }
       }
       if(val!=null&&Number.isFinite(val)&&Math.abs(val)<1e-10)return true;
     }
   }catch(e){}
   return false;
 }
+
+function _ceroizarMatriz(M){if(!Array.isArray(M))return M;return M.map(r=>Array.isArray(r)?r.map(x=>_esCeroExpr(x)?"0":x):r);}
 function _primerNoNuloFila(f){if(!Array.isArray(f)||!f.length)return null;for(let j=0;j<f.length;j++)if(!_esCeroExpr(f[j]))return f[j];return null;}
 function _denomsTop(expr){expr=_strip(expr);if(!expr.length)return [];let dens=[],d=0;for(let i=0;i<expr.length;i++){let c=expr[i];if(c==="(")d++;else if(c===")"){d--;if(d<0)throw new Error("p");}if(c==="/"&&d===0){let rest=expr.slice(i+1);if(rest.length)dens.push(rest);break;}}return dens;}
 function _registrarPivoteFila(idx){try{if(!matrizActualExpresiones||!matrizActualExpresiones[idx])return;let p=_primerNoNuloFila(matrizActualExpresiones[idx]);if(p==null)return;let s=p.toString();if(!pivotesUsados.includes(s))pivotesUsados.push(s);}catch(e){}}
@@ -248,10 +261,10 @@ function solucionEscalonada(escalonada){
     let card=document.createElement("div");card.className="casosCard";caja3.appendChild(card);
     let hh=document.createElement("div");hh.className="panelTitle";hh.innerHTML=(estado==="general")?_tituloGeneral():("CASO "+nombreParametro+"="+estado);card.appendChild(hh);
     let matIni,matEsc,r;if(estado==="general"){matEsc=_clone2(matrizActualExpresiones);if(!Matriz.esMatrizEscalonada(matEsc))try{matEsc=Matriz.escalonarMatrizNumerica(matEsc);}catch(e){}
-      matEsc=Matriz.eliminarFilasNulas(matEsc);r=matEsc.length;_lineaRango(card,matrizAntigua,matEsc,r);return;}
-    matIni=Matriz.sustituir(matrizAntigua,nombreParametro,valorNum);let usarUsuario=!_algunPivoteUsadoSeAnula(valorNum),base=usarUsuario?matrizActualExpresiones:matrizAntigua;
-    let m0=Matriz.sustituir(base,nombreParametro,valorNum);matEsc=(Matriz.esMatrizEscalonada(m0))?m0:Matriz.escalonarMatrizNumerica(m0);
-    matEsc=Matriz.eliminarFilasNulas(matEsc);r=matEsc.length;_lineaRango(card,matIni,matEsc,r);
+      matEsc=_ceroizarMatriz(matEsc);matEsc=Matriz.eliminarFilasNulas(matEsc);r=matEsc.length;_lineaRango(card,_ceroizarMatriz(matrizAntigua),matEsc,r);return;}
+    matIni=_ceroizarMatriz(Matriz.sustituir(matrizAntigua,nombreParametro,valorNum));let usarUsuario=!_algunPivoteUsadoSeAnula(valorNum),base=usarUsuario?matrizActualExpresiones:matrizAntigua;
+    let m0=_ceroizarMatriz(Matriz.sustituir(base,nombreParametro,valorNum));matEsc=(Matriz.esMatrizEscalonada(m0))?m0:Matriz.escalonarMatrizNumerica(m0);
+    matEsc=_ceroizarMatriz(matEsc);matEsc=Matriz.eliminarFilasNulas(matEsc);r=matEsc.length;_lineaRango(card,matIni,matEsc,r);
   }
 
   function _dejarSoloCasosExtra(){if(ui.row1)ui.row1.remove();if(ui.row2)ui.row2.remove();if(ui.list)ui.list.remove();if(ui.auto)ui.auto.remove();info.innerHTML="Ya has estudiado todos los casos. Si quieres, estudia un valor específico más.";}
