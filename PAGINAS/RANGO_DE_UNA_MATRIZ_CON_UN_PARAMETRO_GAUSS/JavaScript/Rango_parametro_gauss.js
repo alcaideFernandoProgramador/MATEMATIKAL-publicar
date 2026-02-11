@@ -6,24 +6,45 @@ function _esCeroExpr(x){
   let t=_simpl(s).trim();if(t==="0"||t==="(0)")return true;
   /* Tolerancia numérica: algunos casos generan restos tipo 2.4e-14 (debería ser 0) */
   try{
-    let u=_strip(t);while(u.length&&u[0]==="("&&u[u.length-1]===")"){u=u.slice(1,-1);u=_strip(u);}u=u.replace(/\s+/g,"");
+    let u=_strip(t).replace(/−/g,"-");
+    while(u.length&&u[0]==="("&&u[u.length-1]===")"){u=u.slice(1,-1);u=_strip(u).replace(/−/g,"-");}
     if(!/[a-zA-Z]/.test(u)){
       let val=null;
+      /* Caso: número normal / decimal / notación científica */
       if(/^[-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?$/i.test(u))val=parseFloat(u);
       else{
-        /* fracción simple a/b */
+        /* Caso: fracción simple (posible sci en num/den) */
         let m=u.match(/^([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)\/([-+]?((\d+\.?\d*)|(\.\d+))(e[-+]?\d+)?)$/i);
         if(m){let a=parseFloat(m[1]),b=parseFloat(m[6]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)val=a/b;}
-        /* fracción o número en notación científica sin '*' (p.ej. 248/17e-14) */
+        /* Caso: BASE e EXP (sin '*'), donde BASE puede ser fracción, con o sin paréntesis.
+           Ejemplos reales: 248/17e-14, (248/17)e-14, -248/17e-14 */
         if(val==null){
-          let mm=u.match(/^([-+]?\d+(?:\.\d+)?|\.\d+|[-+]?\d+\/\d+)e([-+]?\d+)$/i);
-          if(mm){
-            let base=mm[1],exp=parseInt(mm[2],10),bval=null;
-            if(base.includes('/')){let parts=base.split('/');let a=parseFloat(parts[0]),b=parseFloat(parts[1]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)bval=a/b;}
-            else bval=parseFloat(base);
-            if(bval!=null&&Number.isFinite(bval)&&Number.isFinite(exp))val=bval*Math.pow(10,exp);
+          let i=u.toLowerCase().lastIndexOf('e');
+          if(i>0){
+            let base=u.slice(0,i),exp=u.slice(i+1);
+            if(/^[-+]?\d+$/.test(exp)){
+              while(base.length&&base[0]==="("&&base[base.length-1]===")")base=base.slice(1,-1);
+              let bval=null;
+              if(base.includes('/')){
+                let p=base.split('/');if(p.length===2){let a=parseFloat(p[0]),b=parseFloat(p[1]);if(Number.isFinite(a)&&Number.isFinite(b)&&b!==0)bval=a/b;}
+              }else if(/^[-+]?((\d+\.?\d*)|(\.\d+))$/.test(base))bval=parseFloat(base);
+              if(bval!=null&&Number.isFinite(bval))val=bval*Math.pow(10,parseInt(exp,10));
+            }
           }
         }
+      }
+      /* Último recurso: evaluación numérica segura (solo dígitos y operadores) para casos raros.
+         Ejemplos que aparecen en KaTeX: (2489341/1751718)e-14, 2489341/1751718*10^-14, etc. */
+      if(val==null){
+        try{
+          let z=u;
+          if(/^[0-9eE\+\-\.\*\/\(\)\^]+$/.test(z)){
+            if(z.includes('^')&&!z.includes('**'))z=z.replace(/\^/g,"**");
+            let f=Function("'use strict';return ("+z+")");
+            let w=f();
+            if(typeof w==='number'&&Number.isFinite(w))val=w;
+          }
+        }catch(e){}
       }
       if(val!=null&&Number.isFinite(val)&&Math.abs(val)<1e-10)return true;
     }
@@ -216,7 +237,7 @@ function continuar(){
         lab.innerHTML="Introduce combinación lineal y ENTER:";inp.className="w150 mL8";d.appendChild(lab);d.appendChild(inp);caja127.appendChild(d);inp.focus();
         inp.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let expr=inp.value.trim();if(!expr.length)throw 0;let matrizAux=_clone2(matrizActualExpresiones);
           _aplicarCombMultiple(matrizActualExpresiones,expr);if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloCambiarLinea(expr,matrizActualExpresiones.length,caja2);
-          _after();_clearUI();}catch(e){inp.value="";inp.focus();_msgErr("Expresión no válida. Ej: F3=2F3-(a-1)F2");}});
+          _after();_clearUI();}catch(e){inp.focus();_msgErr("Expresión no válida. Ej: F3=2F3-(a-1)F2");}});
       }break;
 
       case "op5":{

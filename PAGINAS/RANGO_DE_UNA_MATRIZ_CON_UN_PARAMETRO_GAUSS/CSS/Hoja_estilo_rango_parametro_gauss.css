@@ -27,6 +27,8 @@ a{text-decoration:none;color:inherit;}
 
 /* Contenedores principales */
 #caja1,#caja2,#contenedorCaja3{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:12px;}
+/* Caja1 y caja2 siempre completas: sin scroll interno */
+#caja1,#caja2{flex:0 0 auto;overflow:visible!important;max-height:none!important;height:auto!important;}
 #caja1:empty,#caja2:empty,#contenedorCaja3:empty{min-height:34px;}
 #caja2,#contenedorCaja3{display:none;}
 

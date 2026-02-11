@@ -1008,11 +1008,24 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
       return (base ** expo).toString();});
   expres = expres.replace(/(\d+)\s*\/\s*(\d+)(?!\s*\^)/g,(_, n, d) => (Number(d) === 0 ? 'NaN' : (Number(n) / Number(d)).toString()));
   expres = expres.replace(/(^|[^A-Za-z0-9_])\((\d+(?:\.\d+)?)\)(?![A-Za-z0-9_])/g,(_, pre, num) => pre + num);return expres;}
-  static pasarAFraccion(expr, long = 10) {let regexCoeficientes = /(?<!\^)(\d+\.\d+)/g; let numerosDecimalesCoeficientes = expr.match(regexCoeficientes);
-    if (numerosDecimalesCoeficientes !== null) {for (let i = 0; i < numerosDecimalesCoeficientes.length; i++) 
-    {let fraccion = fraccionContinua(numerosDecimalesCoeficientes[i].toString(), long);expr = expr.replace(numerosDecimalesCoeficientes[i], fraccion);}}
-    let regexExponente = /(\^)(\d+\.\d+)/g;expr = expr.replace(regexExponente, (_, caret, exponente) => {let fraccionExponente = fraccionContinua(exponente.toString(), long);
-    return `${caret}(${fraccionExponente})`;});return expr;}
+  static pasarAFraccion(expr, long = 10) {
+    const tol=1e-10;
+    const sciToDec=(s)=>{s=s.toString().replace(/\s+/g,"").replace(/−/g,"-");let m=s.match(/^([+-]?)(\d*\.?\d+)[eE]([+-]?\d+)$/);
+      if(!m)return s;let sign=m[1]==="-"?"-":"";let mant=m[2];let exp=parseInt(m[3]);
+      let parts=mant.split(".");let intp=parts[0]||"0";let frac=parts[1]||"";let digits=(intp+frac).replace(/^0+(?=\d)/,"");
+      let decPos=intp.length+exp;
+      if(digits==="")digits="0";
+      if(decPos<=0)return sign+"0."+"0".repeat(-decPos)+digits;
+      if(decPos>=digits.length)return sign+digits+"0".repeat(decPos-digits.length);
+      return sign+digits.slice(0,decPos)+"."+digits.slice(decPos);
+    };
+    expr=(expr??"").toString().replace(/(\d+)\s*\/\s*(\d+)\s*[eE]([+-]?\d+)/g,(m,n,d,e)=>{let den=Number(d);if(!den)return"NaN";let v=(Number(n)/den)*10**Number(e);if(Number.isFinite(v)&&Math.abs(v)<tol)return"0";let s=(Number(n)/den).toString()+"e"+e;return sciToDec(s);})
+      .replace(/([+-]?\d*\.?\d+)[eE]([+-]?\d+)/g,(m)=>{let n=Number(m);if(Number.isFinite(n)&&Math.abs(n)<tol)return"0";return sciToDec(m);});
+    let regexCoeficientes=/(?<!\^)(\d+\.\d+)/g;let nums=expr.match(regexCoeficientes);
+    if(nums!==null){for(let i=0;i<nums.length;i++){let fr=fraccionContinua(nums[i].toString(),long);expr=expr.replace(nums[i],fr);}}
+    let regexExponente=/(\^)(\d+\.\d+)/g;expr=expr.replace(regexExponente,(_,c,e)=>{let fr=fraccionContinua(e.toString(),long);return `${c}(${fr})`;});
+    return expr;
+  }
   static sustituir (exp,letra,valor){valor=valor.toString();valor=ExpresionAlgebraica.pasarADecimal(valor);let expPostFija=ExpresionAlgebraica.infijaAPostfija(exp);
     let expSustituida=[];
     for (let i=0;i<expPostFija.length;i++){if(expPostFija[i]===letra){expSustituida[i]=valor}else{expSustituida[i]=expPostFija[i]};}
@@ -1076,7 +1089,18 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
     let numeradorr=FraccionAlgebraica.parseFraccion(expPostfija)[0].toString();let denominadorr=FraccionAlgebraica.parseFraccion(expPostfija)[1].toString();
     numeradorr=Polinomio.ordenarTotal(numeradorr); denominadorr=Polinomio.ordenarTotal(denominadorr);
     expPostfija="("+numeradorr+")/("+denominadorr+")";expPostfija=FraccionAlgebraica.simplificar(expPostfija)}else{expPostfija=Polinomio.ordenarTotal(expPostfija);};  
-    expPostfija=ExpresionAlgebraica.pasarAFraccion(expPostfija,long);return expPostfija;}  
+    expPostfija=ExpresionAlgebraica.pasarAFraccion(expPostfija,long);
+    let tol=1e-10;let s=expPostfija.toString().replace(/\s+/g,"").replace(/−/g,"-");
+    if(!/[A-Za-z\u0391-\u03A9\u03B1-\u03C9_]/.test(s)){
+      let n=NaN;
+      let t=s.replace(/(\d+)\/(\d+)e([+-]?\d+)/i,"($1/$2)*1e$3").replace(/\*10\^\(?([+-]?\d+)\)?/i,"*1e$1").replace(/10\^\(?([+-]?\d+)\)?/i,"1e$1");
+      if(/^[0-9+\-*/().^eE]+$/.test(t)){
+        try{n=Function("return ("+t.replace(/\^/g,"**")+")")();}catch(e){n=NaN;}
+      }
+      if(Number.isFinite(n) && Math.abs(n)<tol) return "0";
+      if(Number.isFinite(n)) return (Math.abs(n)<tol?"0":s);
+    }
+    return expPostfija;}  
   static obtenerFactores(expresion) {
     function balancear(exp){let parentesisA=0; let parentesisC=0;for (let i=0;i<exp.length;i++){if(exp[i]==="("){parentesisA++};if(exp[i]===")")
     {parentesisC++}}; while(parentesisA!==parentesisC){if(parentesisA<parentesisC){exp="("+exp;parentesisA++};if(parentesisA>parentesisC){exp=exp+")";parentesisC++}}
