@@ -41,5 +41,10 @@ body{padding-bottom:calc(var(--footer-h) + env(safe-area-inset-bottom,0px))!impo
   #tituloinicial{flex-direction:column;align-items:stretch;}
   #tituloinicial h1{justify-content:flex-start;text-align:left;}
   #controlesTop{justify-content:flex-end;}
+  .pg-determinantes #tituloinicial h1{width:100%;max-width:100%;justify-content:center;text-align:center;hyphens:none;text-wrap:wrap;font-size:15px;line-height:1.2;}
+
 }
 
+@media (max-width: 520px){
+  .pg-determinantes #tituloinicial h1{font-size:13px;}
+}
