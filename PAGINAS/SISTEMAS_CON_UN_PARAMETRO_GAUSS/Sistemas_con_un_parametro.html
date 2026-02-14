@@ -1,72 +1,60 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <title>Estudio y resolución de sistemas lineales con un parámetro por el método de Gauss</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"
-     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/common.css?v=1102269"/>
-  <meta content="Fernando Alcaide Guindo" name="authot"/>
-  <meta content="Sistemas Lineales con un parámetro" name="description"/>
-  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
-
-  <link href="CSS/Hoja_estilo_sistemas_parametro.css?v=1102269" rel="stylesheet" type="text/css"/>
-
-  <script defer src="JavaScript/Sistemas_parametro_gauss.js?v=1102269" type="text/javascript"></script>
-  <script defer src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js?v=1102269" type="text/javascript"></script>
-  <link defer href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1102269" rel="stylesheet"/>
-  <script defer src="../../CARPETAS_AUXILIARES/katex/katex.js?v=1102269"></script>
-
+<title>Estudio y resolución de sistemas lineales con un parámetro por el método de Gauss</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/common.css?v=1402261" rel="stylesheet"/>
+<meta content="Fernando Alcaide Guindo" name="authot"/>
+<meta content="Sistemas Lineales con un parámetro" name="description"/>
+<meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+<link href="CSS/Hoja_estilo_sistemas_parametro.css?v=1402261" rel="stylesheet" type="text/css"/>
+<script defer="" src="JavaScript/Sistemas_parametro_gauss.js?v=1402261" type="text/javascript"></script>
+<script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js?v=1402261" type="text/javascript"></script>
+<link defer="" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1402261" rel="stylesheet"/>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.js?v=1402261"></script>
 </head>
-
 <body>
-  <div id="tituloinicial">
-    <h1>
-      <span class="t1">DISCUSIÓN Y RESOLUCIÓN DE SISTEMAS DE ECUACIONES LINEALES con un parámetro</span>
-      <span class="t2">Método de Gauss <span class="mini">(El parámetro solo puede tomar valores enteros o racionales)</span></span>
-    </h1>
-
-    <div id="controlesTop">
-      <a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
-
-      <a aria-label="Volver a inicio" href="../../index.html?v=1102269" id="btnHome" title="Inicio">
-        <svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18">
-          <path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
-        </svg>
-        <span>VOLVER</span>
-      </a>
-    </div>
-
-    <div class="ventana" id="ventana1">
-      <div class="contenidoVentana">
-        <span class="cierraVentana" id="cierraVentana1">×</span>
-        <h2>Instrucciones</h2>
-        <iframe height="500px" id="pdf1" src="" width="100%"></iframe>
-      </div>
-    </div>
-  </div>
-
-  <div id="contenedor">
-    <div id="caja1"></div>
-
-    <div id="panelMatriz">
-      <div id="barraMatriz">
-        <h3 id="titulo3"></h3>
-        <button id="btnToggleTrabajos" type="button" aria-expanded="true">Ocultar trabajos</button>
-      </div>
-      <div id="caja2"></div>
-    </div>
-
-    <div id="contenedorCaja3"><div id="caja3"></div></div>
-  </div>
-
-  <footer class="siteFooter">
-    <div class="footerInner">
-      <a href="/about.html?v=1102269">Acerca de</a>
-      <a href="/contacto.html?v=1102269">Contacto</a>
-      <a href="/privacy.html?v=1102269">Privacidad</a>
-      <a href="/cookies.html?v=1102269">Cookies</a>
-    </div>
-  </footer>
-<script src="/common.js?v=1102269"></script></body>
+<div id="tituloinicial">
+<h1>
+<span class="t1">DISCUSIÓN Y RESOLUCIÓN DE SISTEMAS DE ECUACIONES LINEALES con un parámetro</span>
+<span class="t2">Método de Gauss <span class="mini">(El parámetro solo puede tomar valores enteros o racionales)</span></span>
+</h1>
+<div id="controlesTop">
+<a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
+<a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18">
+<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
+</svg>
+<span>VOLVER</span>
+</a>
+</div>
+<div class="ventana" id="ventana1">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana1">×</span>
+<h2>Instrucciones</h2>
+<iframe height="500px" id="pdf1" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+<div id="contenedor">
+<div id="caja1"></div>
+<div id="panelMatriz">
+<div id="barraMatriz">
+<h3 id="titulo3"></h3>
+<button aria-expanded="true" id="btnToggleTrabajos" type="button">Ocultar trabajos</button>
+</div>
+<div id="caja2"></div>
+</div>
+<div id="contenedorCaja3"><div id="caja3"></div></div>
+</div>
+<footer class="siteFooter">
+<div class="footerInner">
+<a href="/about.html">Acerca de</a>
+<a href="/contacto.html">Contacto</a>
+<a href="/privacy.html">Privacidad</a>
+<a href="/cookies.html">Cookies</a>
+</div>
+</footer>
+</body>
 </html>
