@@ -438,7 +438,7 @@ if(!contenedor||!caja1||!tituloCaja1||!caja2||!tituloUsuario)return;
 tituloUsuario.style.fontSize="20px";caja2.style.marginTop="10px";tituloUsuario.style.margin="10px 0 10px 0";
 caja2.style.display="none";tituloCaja1.style.display="block";tituloCaja1.style.width="500px";
 let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";aviso.style.color="red";
-aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER del teclado)";
+aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER o TAB del teclado)";
 inyectarEstilosUI();
 let btnOtra=document.createElement("button");btnOtra.id="btnOtraMatriz";btnOtra.className="btn";btnOtra.textContent="Otra matriz";
 btnOtra.addEventListener("click",()=>{location.reload();});
