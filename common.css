@@ -7,44 +7,9 @@ body{padding-bottom:calc(var(--footer-h) + env(safe-area-inset-bottom,0px))!impo
 .siteFooter a:active{transform:translateY(1px)}
 .siteFooter a:focus{outline:2px solid var(--accent,#2563eb);outline-offset:2px}
 
-/* Responsive: en tablet/móvil, reducir tipografía y forzar 1 sola línea (scroll horizontal si hiciera falta) */
-@media (max-width:1024px){
-  .siteFooter .footerInner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
-  .siteFooter a{font-size:13px;padding:8px 12px;white-space:nowrap}
-}
-
-@media (max-width:600px){
-  .siteFooter{padding:8px 10px}
-  .siteFooter .footerInner{gap:8px}
-  .siteFooter a{font-size:12px;padding:7px 10px}
-}
-
 .infoPage{background:var(--bg,#f5f7fb);color:var(--mf-ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0}
 .infoPage .infoCard{max-width:980px;margin:22px auto 0;padding:20px 18px;background:var(--panel,#ffffff);border:1px solid var(--mf-border);border-radius:12px;box-shadow:var(--mf-shadow)}
 .infoPage h1{margin:0 0 12px;font-size:28px}
 .infoPage h2{margin:18px 0 10px;font-size:18px}
 .infoPage p,.infoPage li{line-height:1.55}
 .infoPage a{color:var(--accent,#2563eb)}
-
-
-/* ===== Global responsive rules (shared across pages) ===== */
-/* Many pages set #contenedor to a fixed viewport height (height:calc(100vh-...)).
-   That breaks scrolling on landscape mobile (wide but short viewports). Force
-   natural document scrolling everywhere; pages that need internal scrolling
-   handle it with their own container overflow rules. */
-#contenedor{height:auto !important;min-height:calc(100vh - 76px - var(--footer-h,74px));}
-@media (max-width: 1100px){
-  #caja1{flex-direction:column;}
-  #caja1111{width:100%;min-width:0;}
-}
-@media (max-width: 700px){
-  #tituloinicial{flex-direction:column;align-items:stretch;}
-  #tituloinicial h1{justify-content:flex-start;text-align:left;}
-  #controlesTop{justify-content:flex-end;}
-  .pg-determinantes #tituloinicial h1{width:100%;max-width:100%;justify-content:center;text-align:center;hyphens:none;text-wrap:wrap;font-size:15px;line-height:1.2;}
-
-}
-
-@media (max-width: 520px){
-  .pg-determinantes #tituloinicial h1{font-size:13px;}
-}

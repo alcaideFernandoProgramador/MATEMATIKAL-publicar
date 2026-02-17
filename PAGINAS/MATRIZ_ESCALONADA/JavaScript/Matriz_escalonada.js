@@ -262,8 +262,8 @@ function op1(){
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Datos no válidos. Usa enteros distintos y dentro del rango.");}}
-  iA.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
-  iB.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
+  iA.addEventListener("keydown",function(e){if(e.key==="Enter")iB.focus();});
+  iB.addEventListener("keydown",function(e){if(e.key==="Enter")exec();});
 }
 
 function op3(){
@@ -284,8 +284,8 @@ function op3(){
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Datos no válidos. Fila válida y divisor numérico distinto de 0.");}}
-  iA.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
-  iB.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
+  iA.addEventListener("keydown",function(e){if(e.key==="Enter")iB.focus();});
+  iB.addEventListener("keydown",function(e){if(e.key==="Enter")exec();});
 }
 
 function aplicarCombinacionDesdeCadena(cad){
@@ -303,7 +303,7 @@ function op4(){
       let sign=x[1]==="-"?"-":"",coef=(x[2]??"");if(coef==="")return true;
       let v=normNumStr(sign+coef);if(isNumStr(v)&&!_Z(simp(v)))return true;}return false;}
   ic.addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
       msgOK("caja1251","");let cad=ic.value;aplicarCombinacionDesdeCadena(cad);
       if(!rhsIncluyeFilaNoNula(cad))throw 1;
@@ -417,8 +417,8 @@ function crearNumeroFilas(lug,lugc){
   let p=document.createElement("p");p.id="textosinmargen";p.appendChild(document.createTextNode("Nº de filas"));
   let i=document.createElement("input");i.id="nfilas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
-    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
+    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
       S.nf=Number(i.value);if(isNaN(S.nf)||S.nf<1||!Number.isInteger(S.nf))throw 0;crearNumeroColumnas("caja11122","caja11112");
     }catch(_){ok=false;msgERR(lugc,"El nº de filas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
 
@@ -427,8 +427,8 @@ function crearNumeroColumnas(lug,lugc){
   let p=document.createElement("p");p.id="textosinmargen";p.appendChild(document.createTextNode("Nº de columnas"));
   let i=document.createElement("input");i.id="ncolumnas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
-    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
+    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
       S.nc=Number(i.value);if(isNaN(S.nc)||S.nc<1||!Number.isInteger(S.nc))throw 0;crearMatrizVacia();
     }catch(_){ok=false;msgERR(lugc,"El nº de columnas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
 
@@ -494,9 +494,9 @@ activarScrollVerticalSiNecesario(b2,320);
 function rellenarMatriz(tabla){
   let inputs=tabla.getElementsByTagName("input");if(inputs[0])inputs[0].focus();
   for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
+    if(e.key!=="Enter"&&e.key!=="Tab")return;
     try{
-      msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+      msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
       let v=normNumStr(this.value);if(!isNumStr(v))throw 0;S.val[f][col]=simp(v);
       if(i<inputs.length-1)inputs[i+1].focus();else finalizarEntrada();
@@ -510,7 +510,7 @@ function insertarBotonOtraMatriz(){
 
 document.addEventListener("DOMContentLoaded",function(){
   crearNumeroFilas("caja11121","caja11112");let cInit=$("caja11112");
-  if(cInit)html(cInit,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+  if(cInit)html(cInit,"Valida todos los datos introducidos con la tecla ENTER del teclado");
   const a=$("abreVentana1"),c=$("cierraVentana1"),v=$("ventana1"),p=$("pdf1"),u="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
   if(a)a.addEventListener("click",function(e){e.preventDefault();if(p)p.src=u;if(v)v.style.display="flex";});
   if(c)c.addEventListener("click",function(){if(v)v.style.display="none";if(p)p.src="";});
