@@ -89,7 +89,7 @@ function insertarBotonOtroDeterminante(){
 }
 
 crearOrden("caja1112","caja11112");
-document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER del teclado";
+document.getElementById("caja11112").innerHTML="Valida todos los datos introducidos con la tecla ENTER o TAB del teclado";
 
 function crearOrden(lug,lugc){
   let texto1=document.createElement("span");texto1.style.fontSize="16px";
@@ -109,7 +109,7 @@ function crearOrden(lug,lugc){
         if(ctrol===false){
           document.getElementById(lugc).style.color="black";
           document.getElementById("caja11112").innerHTML=
-          "Valida todos los datos introducidos con la tecla ENTER del teclado";
+          "Valida todos los datos introducidos con la tecla ENTER o TAB del teclado";
         }
         orden=parseInt(document.getElementById("nOrden").value);
         if(isNaN(orden)||orden<2||orden>6){document.getElementById("nOrden").value="";throw new Error();}
