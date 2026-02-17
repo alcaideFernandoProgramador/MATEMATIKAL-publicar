@@ -82,11 +82,14 @@ iframe{border:none}
 .katex .op-limits>.vlist-t{text-align:center;font-weight:600}
 span.mjx-mtable{padding:0!important;margin:0!important}
 
+@media (max-width:1100px){#caja1{flex-direction:column}#caja1111{width:100%;min-width:0}}
+@media (max-width:700px){#tituloinicial{flex-direction:column;align-items:stretch}#tituloinicial h1{justify-content:flex-start;text-align:left}#controlesTop{justify-content:flex-end}#contenedor{height:auto;min-height:calc(100vh - 76px - var(--footer-h,74px))}}
 #caja112 .katex,#caja21 .katex,#caja221 .katex{font-size:14px;}
 
 /* AJUSTES PARA SISTEMAS NUMÉRICOS (fracciones más largas) */
 #caja112 input{width:64px;max-width:96px}
 #caja11121,#caja11122{flex-wrap:wrap}
+
 
 /* Ventanas de ayuda: casi pantalla completa (PC, tablet y móvil) */
 .contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
