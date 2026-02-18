@@ -288,8 +288,8 @@ function op1(){
       renderPasoPermutar(A,B);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Filas no válidas. Enteros distintos y dentro del rango.");}
   }
-  iA.addEventListener("keydown",e=>{if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",e=>{if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function op2(){
@@ -330,8 +330,8 @@ function op3(){
       S.act=nueva;renderPasoDividir(a,m);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Fila válida y divisor numérico distinto de 0.");}
   }
-  iA.addEventListener("keydown",e=>{if(e.key==="Enter")iB.focus();});
-  iB.addEventListener("keydown",e=>{if(e.key==="Enter")exec();});
+  iA.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();iB.focus();}});
+  iB.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();exec();}});
 }
 
 function op4(){
@@ -341,7 +341,7 @@ function op4(){
   ic.type="text";ic.value="";ic.placeholder="";ic.style.width="150px";ic.style.padding="2px 4px";
   ic.style.fontSize=S.FS_IN;ic.focus();
   ic.addEventListener("keydown",function(e){
-  if(e.key!=="Enter"&&e.key!=="Tab")return;
+  if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
   let cad=ic.value;
   try{
     msgOK("caja1251","");if(!rhsIncluyeFiNoNula(cad))throw 1;aplicarCombinacionDesdeCadena(cad);
@@ -421,9 +421,9 @@ function crearNumeroFilas(lug,lugc){
   let i=document.createElement("input");i.id="nfilas";i.type="text";l.appendChild(p1);l.appendChild(i);l.appendChild(p2);i.focus();
   let ok=true;
   i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
     try{
-  if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
+  if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
   let s=i.value.toString().trim().replace(/\s+/g,"");
   if(!/^\d+$/.test(s))throw 0;
   S.nf=parseInt(s,10);if(isNaN(S.nf)||S.nf<1||S.nf>6)throw 0;
@@ -437,9 +437,9 @@ function crearNumeroColumnas(lug,lugc){
   let i=document.createElement("input");i.id="ncolumnas";i.type="text";l.appendChild(p1);l.appendChild(i);l.appendChild(p2);i.focus();
   let ok=true;
   i.addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
     try{
-  if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER del teclado");
+  if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
   let s=i.value.toString().trim().replace(/\s+/g,"");
   if(!/^\d+$/.test(s))throw 0;
   S.nc=parseInt(s,10);if(isNaN(S.nc)||S.nc<1||S.nc>8)throw 0;
@@ -485,9 +485,9 @@ function finalizarEntrada(){
 function rellenarMatriz(tabla){
   let inputs=tabla.getElementsByTagName("input");if(inputs[0])inputs[0].focus();
   for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(e){
-    if(e.key!=="Enter"&&e.key!=="Tab")return;
+    if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
     try{
-      msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
+      msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
       let v=normNumStr(this.value);if(!isNumStr(v))throw 0;S.val[f][col]=simp(v);
       if(i<inputs.length-1)inputs[i+1].focus();else finalizarEntrada();
@@ -622,7 +622,7 @@ function insertarBotonOtraMatriz(){
 
 document.addEventListener("DOMContentLoaded",function(){
   crearNumeroFilas("caja11121","caja11112");
-  msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER del teclado");
+  msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
   setupCaja1121();
   const abre=$("abreVentana1"),cierra=$("cierraVentana1"),vent=$("ventana1"),pdf=$("pdf1");
   const url="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";

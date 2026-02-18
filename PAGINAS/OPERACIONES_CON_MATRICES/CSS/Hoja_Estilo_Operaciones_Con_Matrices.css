@@ -208,58 +208,13 @@ iframe{border:none;border-radius:10px;}
 html,body{height:100%;}
 body{min-height:100vh;display:flex;flex-direction:column;}
 #contenedor{flex:1;}
-footer{margin-top:auto;padding:14px 0;text-align:center;font-size:.95em;}
-footer hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
-footer p{margin:0;}
-footer a{text-decoration:none;}
-footer a:hover{text-decoration:underline;}
 
+/* Evitar que estilos genéricos de footer afecten al footer fijo global (.siteFooter) */
+footer:not(.siteFooter){margin-top:auto;padding:14px 0;text-align:center;font-size:.95em;}
+footer:not(.siteFooter) hr{margin:0 0 10px;border:0;border-top:1px solid var(--border);}
+footer:not(.siteFooter) p{margin:0;}
+footer:not(.siteFooter) a{text-decoration:none;}
+footer:not(.siteFooter) a:hover{text-decoration:underline;}
 
-/* ===== FIX footer + responsive (solo esta página) ===== */
-:root{--footer-h:74px;--safe-b:env(safe-area-inset-bottom,0px);--head-h:64px}
-
-/* 1) Que el footer fijo no tape nada (PC + móvil) */
-body{padding-bottom:calc(var(--footer-h) + var(--safe-b) + 16px)!important}
-
-/* 2) El contenedor deja hueco abajo y permite scroll correcto */
-#contenedor{min-height:0!important}
-
-/* 3) Caja del usuario: alto útil = viewport - cabecera - footer - márgenes */
-#caja21{
-  width:100%!important;max-width:100%!important;margin:6px 0 0 0!important;
-  height:calc(50vh - 120px - var(--footer-h)/2); /* base */
-  max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 260px);
-  overflow:auto;-webkit-overflow-scrolling:touch;
-}
-
-/* 4) Tablet: una columna, más ancho útil */
-@media (max-width:1024px){
-  #contenedor{grid-template-columns:1fr!important;padding:14px 14px calc(var(--footer-h) + var(--safe-b) + 16px)!important}
-  #caja1,#caja2{padding:16px 14px}
-  #caja21{max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 220px)}
-}
-
-/* 5) Móvil: una columna, controles y opciones sin solapes */
-@media (max-width:480px){
-  #contenedor{padding:12px 10px calc(var(--footer-h) + var(--safe-b) + 16px)!important}
-  #caja1,#caja2{padding:14px 12px}
-  #caja21{max-height:calc(100vh - var(--head-h) - var(--footer-h) - var(--safe-b) - 210px)}
-}
-
-/* ===== Fix extra: el JS mete estilos inline que rompen móvil/tablet ===== */
-/* Fuerza el layout correcto aunque el JS ponga display:flex/block inline */
-#contenedor{display:grid!important;justify-content:stretch!important;align-items:stretch!important}
-#caja1,#caja2{width:100%;max-width:100%}
-
-/* Cabecera: en pantallas pequeñas, evitar solape del título con los controles */
-@media (max-width:700px){
-  #tituloinicial{position:sticky;top:0;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:12px 12px}
-  #tituloinicial h1{white-space:normal;line-height:1.15;font-size:18px;text-align:left}
-  #controlesTop{position:static;transform:none;justify-content:flex-end;gap:10px}
-}
-
-/* Evita que el contenido quede "encajonado" en móvil/tablet */
-@media (max-width:1024px){
-  #contenedor{grid-template-columns:1fr!important;}
-}
-
+/* Fix: caja1 inicial ajustada al contenido (no estira en grid) */
+#caja1{display:block;align-self:start;height:auto;min-height:0;}
