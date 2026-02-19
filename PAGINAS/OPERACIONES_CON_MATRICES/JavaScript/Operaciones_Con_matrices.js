@@ -17,9 +17,13 @@ const activarAutoScroll=caja=>{if(!caja)return;caja.style.scrollBehavior="smooth
 try{new MutationObserver(()=>mantenerScrollAbajo(caja)).observe(caja,{childList:true,subtree:true})}catch(_){}}; 
 
 
+
+
 const prepararExpresionMatrices=e=>{let s=String(e||"").replace(/\s+/g,"");
-s=s.replace(/(^|[^\w\.])(-?\d+\s*\/\s*\d+)\s*([A-Za-z]\w*)/g,(_,p,f,m)=>p+"("+f.replace(/\s+/g,"")+")*"+m);
-s=s.replace(/(^|[^\w\.])(-?\d*\.\d+|-?\d+)\s*([A-Za-z]\w*)/g,(_,p,n,m)=>p+"("+n+")*"+m);
+s=s.replace(/(^|[\(\+\-\*\/\^])-(\d+\s*\/\s*\d+)\s*([A-Za-z]\w*)/g,(_,p,f,m)=>p+"(-"+f.replace(/\s+/g,"")+")*"+m);
+s=s.replace(/(^|[\(\+\-\*\/\^])-(\d*\.\d+|\d+)\s*([A-Za-z]\w*)/g,(_,p,n,m)=>p+"(-"+n+")*"+m);
+s=s.replace(/(^|[^\w\.])(\d+\s*\/\s*\d+)\s*([A-Za-z]\w*)/g,(_,p,f,m)=>p+"("+f.replace(/\s+/g,"")+")*"+m);
+s=s.replace(/(^|[^\w\.])(\d*\.\d+|\d+)\s*([A-Za-z]\w*)/g,(_,p,n,m)=>p+"("+n+")*"+m);
 s=s.replace(/\)\s*([A-Za-z]\w*)/g,")*$1");return s};
 
 const crearCajaOperacion=()=>{let w=document.createElement("div");w.className="opBox";
