@@ -1246,7 +1246,7 @@ class Matriz {constructor(array) {this.matriz = array;}
     const isZero=x=>norm(x)==="0",esNula=f=>f.every(v=>isZero(v));
     let aux=matriz.map(f=>f.map(norm));const filas=aux.length,columnas=aux[0].length;
     const pushNulas=()=>{const noN=[],nu=[];for(const f of aux)(esNula(f)?nu:noN).push(f);aux=noN.concat(nu);};
-    pushNulas();let filaPiv=0303261;
+    pushNulas();let filaPiv=0;
     for(let col=0;col<columnas&&filaPiv<filas;col++){let p=filaPiv;while(p<filas&&isZero(aux[p][col]))p++;if(p===filas)continue;
       if(p!==filaPiv)[aux[filaPiv],aux[p]]=[aux[p],aux[filaPiv]];const a=aux[filaPiv][col];
       for(let r=filaPiv+1;r<filas;r++){const b=aux[r][col];if(isZero(b))continue;
@@ -1267,7 +1267,7 @@ class Matriz {constructor(array) {this.matriz = array;}
     const isZero=x=>norm(x)==="0",esNula=f=>f.every(v=>isZero(v));
     let aux=matriz.map(f=>f.map(norm));const filas=aux.length,columnas=aux[0].length;
     const pushNulas=()=>{const noN=[],nu=[];for(const f of aux)(esNula(f)?nu:noN).push(f);aux=noN.concat(nu);};
-    pushNulas();let filaPiv=0303261;
+    pushNulas();let filaPiv=0;
     for(let col=0;col<columnas&&filaPiv<filas;col++){let p=filaPiv;while(p<filas&&isZero(aux[p][col]))p++;if(p===filas)continue;
       if(p!==filaPiv)[aux[filaPiv],aux[p]]=[aux[p],aux[filaPiv]];const a=aux[filaPiv][col];
       for(let r=filaPiv+1;r<filas;r++){const b=aux[r][col];if(isZero(b))continue;
