@@ -1,52 +1,161 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
-<title>Cálculo de expresiones algebraicas con matrices</title>
+<title>Operaciones con matrices</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="stylesheet" href="/common.css?v=0303261"/>
+<link rel="stylesheet" href="/common.css?v=0403266"/>
+<link href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css?v=0403266" rel="stylesheet" type="text/css"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Operaciones con matrices" name="description"/>
-<link href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css?v=0303261" rel="stylesheet" type="text/css"/>
-<link href="../../CARPETAS_AUXILIARES/katex/katex.css?v=0303261" rel="stylesheet"/>
-<script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js?v=0303261"></script>
-<script defer="" src="JavaScript/Operaciones_Con_matrices.js?v=0303261"></script>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0303261"></script>
+<meta content="Operaciones con matrices: guía de uso, opciones disponibles, formatos admitidos y errores típicos." name="description"/>
+<style>
+.introWrap{max-width:1100px;margin:0 auto;padding:20px}
+.hero{margin:6px 0 18px;padding:18px 18px 16px;border-radius:18px;border:1px solid rgba(0,0,0,.08);background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,0));box-shadow:0 10px 22px rgba(0,0,0,.08)}
+.heroRow{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.heroText{min-width:240px}
+.heroSub{margin:6px 0 0;opacity:.82}
+.trabajoBtn{background:#2563eb;color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:800;display:inline-block}
+.trabajoBtn:active{transform:translateY(1px)}
+.card{border:1px solid rgba(0,0,0,.08);padding:22px;border-radius:16px;background:#fff;margin-bottom:20px;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.card h2{margin-top:0}
+.grid2{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.steps{padding-left:20px;margin:10px 0 0}
+.bullets{padding-left:20px;margin:10px 0 0}
+.muted{opacity:.82}
+.callout{border-left:6px solid rgba(0,0,0,.08)}
+.miniCard{margin-top:12px;padding:14px 14px 12px;border-radius:12px;background:rgba(0,0,0,.03)}
+.mutedBox{background:rgba(0,0,0,.02)}
+kbd{padding:2px 6px;border-radius:6px;background:rgba(0,0,0,.06);font-weight:900}
+code{padding:2px 6px;border-radius:6px;background:rgba(0,0,0,.06)}
+.optGrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+@media(min-width:900px){.optGrid{grid-template-columns:1fr 1fr}}
+.optCard{display:flex;gap:12px;align-items:flex-start;padding:12px 12px 10px;border-radius:14px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.06)}
+.optNum{min-width:90px;font-weight:900;opacity:.9}
+.optTxt{opacity:.95}
 
+body{line-height:1.6}
+.heroText h1{font-size:34px;letter-spacing:-0.3px}
+.heroLead{margin:8px 0 10px;font-size:16px;opacity:.88}
+.heroDesc{max-width:1483px}
+.modeGrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media(min-width:900px){.modeGrid{grid-template-columns:1fr 1fr}}
+.modeCard{padding:12px 14px;border-radius:14px;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18)}
+.modeTitle{font-weight:900;margin-bottom:6px}
+.modeText{opacity:.92}
+.card{padding:24px}
+.card h2{font-size:22px}
+.optNum{min-width:96px}
+.optCard{padding:14px 14px 12px}
+
+.heroHeader{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+.heroTitle{margin:0;font-size:34px;letter-spacing:-0.3px}
+.trabajoBtn{margin-left:auto}
+
+.heroHeader{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+.heroTitle{margin:0;font-size:34px;letter-spacing:-0.3px}
+.trabajoBtn{background:#2563eb;color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:800;display:inline-block}
+.trabajoBtn:active{transform:translateY(1px)}
+.heroDesc{max-width:1250px}
+.heroLead{margin:8px 0 10px;font-size:16px;opacity:.88}
+.modeGrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media(min-width:900px){.modeGrid{grid-template-columns:1fr 1fr}}
+.modeCard{padding:12px 14px;border-radius:14px;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18)}
+.modeTitle{font-weight:900;margin-bottom:6px}
+.modeText{opacity:.92}
+
+</style>
 </head>
 <body>
-<div id="tituloinicial">
-<h1>OPERACIONES CON MATRICES</h1>
-<div id="controlesTop">
-<a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
-<a aria-label="Volver a inicio" href="../../index.html?v=0303261" id="btnHome" title="Inicio">
-<svg aria-hidden="true" height="18" style="display:block;fill:#111827;" viewbox="0 0 24 24" width="18">
-<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
-</svg>
-<span>VOLVER</span>
-</a>
+<div class="introWrap">
+<header class="hero">
+  <div class="heroHeader">
+    <h1 class="heroTitle">Operaciones con matrices</h1>
+    <a class="trabajoBtn" href="Operaciones_con_matrices_trabajo.html?v=0403266">IR A LA PÁGINA DE TRABAJO</a>
+  </div>
+  <div class="heroDesc">
+    <p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos matriciales de dos formas:</p>
+    <div class="modeGrid">
+      <div class="modeCard">
+        <div class="modeTitle">Operaciones directas</div>
+        <div class="modeText">Se introduce la operación y o bien introduces el resultado tú mismo o la página lo muestra directamente de forma automática.</div>
+      </div>
+      <div class="modeCard">
+        <div class="modeTitle">Operaciones combinadas</div>
+        <div class="modeText">La página puede simplificar y resolver expresiones algebraicas matriciales dando el resultado directamente o paso a paso.</div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="introContent">
+<section class="card">
+<h2>Cómo se usa</h2>
+<ol class="steps">
+<li><strong>Indica cuántas matrices</strong> vas a introducir y valida con <kbd>ENTER</kbd> (o también con <kbd>TAB</kbd>).</li>
+<li><strong>Cambia, si lo deseas, el nombre</strong> de las matrices (inicialmente son <code>A, B, …</code>).</li>
+<li><strong>Crea cada matriz</strong> introduciendo sus <strong>dimensiones</strong> y sus <strong>elementos</strong>. Valida siempre con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>. Si algún dato no es válido aparecerá un aviso y deberá volver a introducirse.</li>
+<li>En las <strong>opciones</strong> se seleccionan las operaciones que se desean realizar y en la <strong>zona de trabajo del usuario</strong> se muestran los resultados.</li>
+</ol>
+</section>
+
+<section class="card callout">
+<h2>Opciones disponibles</h2>
+<div class="optGrid">
+<div class="optCard"><div class="optNum">Opción 1</div><div class="optTxt">Sumar dos matrices</div></div>
+<div class="optCard"><div class="optNum">Opción 2</div><div class="optTxt">Restar dos matrices</div></div>
+<div class="optCard"><div class="optNum">Opción 3</div><div class="optTxt">Multiplicar dos matrices</div></div>
+<div class="optCard"><div class="optNum">Opción 4</div><div class="optTxt">Multiplicar un número por una matriz</div></div>
+<div class="optCard"><div class="optNum">Opción 5</div><div class="optTxt">Obtener la traspuesta de una matriz</div></div>
+<div class="optCard"><div class="optNum">Opción 6</div><div class="optTxt">Obtener la inversa de una matriz</div></div>
+<div class="optCard"><div class="optNum">Opción 7</div><div class="optTxt">Obtener una potencia de una matriz</div></div>
+<div class="optCard"><div class="optNum">Opción 8</div><div class="optTxt">Operaciones combinadas: mostrar paso a paso</div></div>
+<div class="optCard"><div class="optNum">Opción 9</div><div class="optTxt">Operaciones combinadas: mostrar pasos de forma automática</div></div>
+<div class="optCard"><div class="optNum">Opción 10</div><div class="optTxt">Operaciones combinadas: mediante pasos realizados por el usuario</div></div>
 </div>
-<div class="ventana" id="ventana1">
-<div class="contenidoVentana">
-<span class="cierraVentana" id="cierraVentana1">×</span>
-<h2>Instrucciones</h2>
-<iframe height="500px" id="pdf1" src="" width="100%"></iframe>
+</section>
+
+<section class="grid2">
+<div class="card">
+<h2>Formatos admitidos</h2>
+<p>En los elementos de las matrices se admiten:</p>
+<ul class="bullets">
+<li>Números enteros y decimales.</li>
+<li>Fracciones del tipo <code>a/b</code> (por ejemplo, <code>2/3</code>).</li>
+<li>Expresiones algebraicas con las matrices introducidas y con la matriz identidad <code>I</code>.</li>
+</ul>
+<p class="muted">Conviene mantener una notación consistente al introducir los datos.</p>
+</div>
+
+<div class="card">
+<h2>Estructura de la página de trabajo</h2>
+<div class="miniCard">
+<h3>Introducción de datos</h3>
+<p>En esta zona se crean las matrices que se van a utilizar.</p>
+</div>
+<div class="miniCard">
+<h3>Zona de operaciones y resultados</h3>
+<ul class="bullets">
+<li>Las operaciones propuestas.</li>
+<li>Las operaciones realizadas por el usuario con los resultados y, en algunos casos, los pasos intermedios.</li>
+</ul>
 </div>
 </div>
+</section>
+
+<section class="card mutedBox">
+<h2>Errores típicos</h2>
+<ul class="bullets">
+<li>Intentar sumar matrices con dimensiones distintas.</li>
+<li>Intentar multiplicar matrices cuando las dimensiones no son compatibles: el número de columnas de la primera matriz debe ser igual al número de filas de la segunda.</li>
+<li>Recordar que el producto de matrices no es conmutativo: en algunos casos está definido <code>AB</code> pero no <code>BA</code>.</li>
+<li>Para obtener la matriz inversa de una matriz dada, esta debe ser regular: debe ser cuadrada y tener determinante distinto de cero.</li>
+<li>Confundir la matriz traspuesta con la matriz inversa.</li>
+<li>Tener especial cuidado con los paréntesis en expresiones algebraicas con matrices: deben estar balanceados y su posición puede cambiar el valor final. Por ejemplo, no es lo mismo <code>A(B+C+A)</code> que <code>A(B+C)+A</code>.</li>
+<li>Para introducir una matriz traspuesta se utiliza la notación <code>A^t</code> y para la inversa <code>A^(-1)</code>.</li>
+<li>Olvidar validar los datos con <kbd>ENTER</kbd> o <kbd>TAB</kbd>.</li>
+</ul>
+</section>
 </div>
-<div id="contenedor">
-<div id="caja1">
-<div id="tituloCaja1">
-<span>INTRODUCCIÓN DE DATOS</span>
-<span id="caja111"></span>
 </div>
-</div>
-<div id="caja2">
-<h4 id="letreroUsuario">ESPACIO DE OPERACIONES PROPUESTAS Y EFECTUADAS POR EL USUARIO/A</h4>
-<div id="caja21"></div>
-</div>
-</div>
-<footer class="siteFooter"><div class="footerInner"><a href="/about.html?v=0303261">Acerca de</a><a href="/contacto.html?v=0303261">Contacto</a><a href="/privacy.html?v=0303261">Privacidad</a><a href="/cookies.html?v=0303261">Cookies</a></div></footer>
-<script src="/common.js?v=0303261"></script></body>
+</body>
 </html>
