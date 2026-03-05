@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <title>Operaciones con matrices</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="stylesheet" href="/common.css?v=0403266"/>
-<link href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css?v=0403266" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="/common.css?v=0503263"/>
+<link href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css?v=0503263" rel="stylesheet" type="text/css"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Operaciones con matrices: guía de uso, opciones disponibles, formatos admitidos y errores típicos." name="description"/>
 <style>
@@ -64,14 +64,22 @@ body{line-height:1.6}
 .modeTitle{font-weight:900;margin-bottom:6px}
 .modeText{opacity:.92}
 
+
+.btnRow{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap}
+.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
+
 </style>
+
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=0503263"></script>
 </head>
 <body>
 <div class="introWrap">
 <header class="hero">
   <div class="heroHeader">
     <h1 class="heroTitle">Operaciones con matrices</h1>
-    <a class="trabajoBtn" href="Operaciones_con_matrices_trabajo.html?v=0403266">IR A LA PÁGINA DE TRABAJO</a>
+    <a class="trabajoBtn" href="Operaciones_con_matrices_trabajo.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
   </div>
   <div class="heroDesc">
     <p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos matriciales de dos formas:</p>
@@ -87,6 +95,12 @@ body{line-height:1.6}
     </div>
   </div>
 </header>
+<section class="card" id="miniEjemplo">
+<h2>Ejemplo rápido (con un paso)</h2>
+<p class="muted">Sea \(A=\begin{bmatrix}2 & 1 & -1\\ 1 & 0 & -3\\ 2 & 1 & -3\end{bmatrix}\) y \(B=\begin{bmatrix}1 & -2 & -2\\ 3 & 1 & -1\\ 0 & -1 & 0\end{bmatrix}\). La suma se obtiene sumando elemento a elemento.</p>
+<div class="k">\[A+B\;=\;\begin{bmatrix}2+1&1-2&-1-2\\ 1+3&0+1&-3-1\\ 2+0&1-1&-3+0\end{bmatrix}\;=\;\begin{bmatrix}3 & -1 & -3\\ 4 & 1 & -4\\ 2 & 0 & -3\end{bmatrix}\]</div>
+<div class="btnRow"><a class="trabajoBtn" href="ejemplo_operaciones_matrices.html?v=0503263">Ver ejemplo resuelto completo</a></div>
+</section>
 <div class="introContent">
 <section class="card">
 <h2>Cómo se usa</h2>
@@ -97,6 +111,8 @@ body{line-height:1.6}
 <li>En las <strong>opciones</strong> se seleccionan las operaciones que se desean realizar y en la <strong>zona de trabajo del usuario</strong> se muestran los resultados.</li>
 </ol>
 </section>
+
+
 
 <section class="card callout">
 <h2>Opciones disponibles</h2>
@@ -157,5 +173,19 @@ body{line-height:1.6}
 </section>
 </div>
 </div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
 </body>
 </html>

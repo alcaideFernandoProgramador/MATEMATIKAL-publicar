@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Rango por menores</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="stylesheet" href="/common.css?v=0503263"/>
+<meta content="Fernando Alcaide Guindo" name="author"/>
+<meta content="Calcula el rango de una matriz usando rango por menores y comprueba el resultado con un ejemplo." name="description"/>
+
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=0503263"></script>
+
+
+<style>
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}
+.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
+.heroTop{display:flex;align-items:center;gap:14px}
+.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
+.heroTop .trabajoBtn{margin-left:auto}
+.muted{opacity:.82;margin:8px 0 0}
+.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
+.card h2{margin:0 0 10px;font-size:20px}
+.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
+ul{margin:10px 0 0;padding-left:18px}
+li{margin:6px 0}
+</style>
+
+</head>
+<body>
+<div class="introWrap">
+  <section class="hero">
+    <div class="heroTop">
+      <h1>Rango por menores</h1>
+      <a class="trabajoBtn" href="Rango_menores.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
+    </div>
+    <p class="muted">Calcula el rango de una matriz usando rango por menores y comprueba el resultado con un ejemplo.</p>
+<p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
+<p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
+  </section>
+
+  <section class="card">
+    <h2>Cómo se usa</h2>
+    <ul>
+      <li>Introduce las dimensiones de la matriz.</li><li>Rellena los elementos y valida con ENTER/TAB.</li><li>Pulsa calcular para obtener el rango y, según la página, los pasos.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Ejemplo rápido</h2>
+    <div class="k">\[
+A=\begin{bmatrix}
+1&2&0\\
+0&1&3\\
+2&1&1
+\end{bmatrix},\quad
+\det(A)=1\neq0\Rightarrow \operatorname{rg}(A)=3
+\]
+</div>
+  </section>
+
+  <section class="card">
+    <h2>Errores típicos</h2>
+    <ul>
+      <li>Confundir rango con determinante (solo matrices cuadradas).</li><li>Olvidar que operaciones elementales por filas no cambian el rango.</li><li>En matrices con parámetro, olvidar estudiar los valores que anulan los menores/determinantes.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+if(window.renderMathInElement){
+renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
+}});
+</script>
+
+</body>
+</html>

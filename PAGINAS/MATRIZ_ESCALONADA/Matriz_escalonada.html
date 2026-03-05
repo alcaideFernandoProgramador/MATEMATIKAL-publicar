@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Matriz escalonada</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="stylesheet" href="/common.css?v=0503263"/>
+<link rel="stylesheet" href="../MATRIZ_ESCALONADA/CSS/Hoja_estilo_matriz_escalonada.css?v=0503263" type="text/css"/>
+<meta content="Fernando Alcaide Guindo" name="author"/>
+<meta content="Matriz escalonada equivalente por filas: guía rápida, mini-ejemplo y acceso a la página de trabajo." name="description"/>
+
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=0503263"></script>
+
+<style>
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}
+.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
+.heroTop{display:flex;align-items:center;gap:14px}
+.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
+.heroTop .trabajoBtn{margin-left:auto}
+.muted{opacity:.82;margin:8px 0 0}
+.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
+.card h2{margin:0 0 10px;font-size:20px}
+.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
+ul{margin:10px 0 0;padding-left:18px}
+li{margin:6px 0}
+</style>
+</head>
+
+<body>
+<div class="introWrap">
+  <section class="hero">
+    <div class="heroTop">
+      <h1>Matriz escalonada</h1>
+      <a class="trabajoBtn" href="Calculo_matriz_escalonada.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
+    </div>
+    <p class="muted">Esta herramienta obtiene una <strong>matriz escalonada equivalente por filas</strong> usando eliminación gaussiana (operaciones elementales por filas).</p>
+  </section>
+
+  <section class="card">
+    <h2>Cómo se usa</h2>
+    <ul>
+      <li>Introduce el número de filas y columnas.</li>
+      <li>Rellena los elementos de la matriz (enteros, decimales o fracciones).</li>
+      <li>Pulsa calcular para obtener una matriz escalonada equivalente por filas.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Ejemplo rápido (3×4)</h2>
+    <p class="muted">Se aplican operaciones por filas para anular los elementos bajo los pivotes.</p>
+    <div class="k">
+      \[
+      \begin{aligned}
+      \begin{bmatrix}
+      1&2&-1&3\\
+      2&1&1&4\\
+      -1&1&2&-1
+      \end{bmatrix}
+      &\sim
+      \begin{bmatrix}
+      1&2&-1&3\\
+      0&-3&3&-2\\
+      0&3&1&2
+      \end{bmatrix}
+      \quad (R_2\leftarrow R_2-2R_1,\; R_3\leftarrow R_3+R_1)\\[6pt]
+      &\sim
+      \begin{bmatrix}
+      1&2&-1&3\\
+      0&-3&3&-2\\
+      0&0&4&0
+      \end{bmatrix}
+      \quad (R_3\leftarrow R_3+R_2)
+      \end{aligned}
+      \]
+    </div>
+    <p class="muted">La matriz final es escalonada: los pivotes aparecen cada vez más a la derecha y las filas nulas (si las hubiera) quedan abajo.</p>
+  </section>
+
+  <section class="card">
+    <h2>Errores típicos</h2>
+    <ul>
+      <li>No validar algún dato (ENTER/TAB) y dejar una celda sin guardar.</li>
+      <li>Confundir “escalonada” con “reducida”: aquí no es obligatorio que los pivotes sean 1.</li>
+      <li>Perder un signo al aplicar operaciones del tipo \(R_i\leftarrow R_i+kR_j\).</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+if(window.renderMathInElement){
+renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
+}});
+</script>
+</body>
+</html>
