@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/common.css?v=0503263"/>
 <link rel="stylesheet" href="../MATRIZ_ESCALONADA/CSS/Hoja_estilo_matriz_escalonada.css?v=0503263" type="text/css"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Matriz escalonada equivalente por filas: guía rápida, mini-ejemplo y acceso a la página de trabajo." name="description"/>
+<meta content="Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y acceso a la página de trabajo." name="description"/>
 
 <link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
 <script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
@@ -25,6 +25,20 @@
 .k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
 ul{margin:10px 0 0;padding-left:18px}
 li{margin:6px 0}
+
+.ops{list-style:none;padding-left:0;margin-top:12px}
+.ops li{position:relative;padding-left:100px;margin:10px 0}
+.ops li::before{
+content:"•";
+position:absolute;
+left:78px;
+top:50%;
+transform:translateY(-50%);
+font-weight:700;
+font-size:1.15em;
+line-height:1;
+}
+.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 </style>
 </head>
 
@@ -32,10 +46,18 @@ li{margin:6px 0}
 <div class="introWrap">
   <section class="hero">
     <div class="heroTop">
+      <a class="volverBtn" href="/index.html?v=0503263">VOLVER</a>
       <h1>Matriz escalonada</h1>
       <a class="trabajoBtn" href="Calculo_matriz_escalonada.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
     </div>
-    <p class="muted">Esta herramienta obtiene una <strong>matriz escalonada equivalente por filas</strong> usando eliminación gaussiana (operaciones elementales por filas).</p>
+    <p class="muted">Esta herramienta permite obtener una <strong>matriz escalonada equivalente a otra dada por filas</strong> usando eliminación gaussiana. Es decir, 
+      aplicando las operaciones elementales por filas. Estas operaciones elementales son:</p>
+    <ul class="ops">
+      <li>Permutar el orden de dos filas \((F_i \leftrightarrow F_j)\)</li>
+      <li>Reordenar las filas dejando abajo las que más ceros tengan a la izquierda \((F\downarrow)\)</li>
+      <li>Simplificar los elementos de una fila dividiéndolos por un mismo número \((F_a\to \frac{1}{m}F_a)\)</li>
+      <li>Cambiar una fila por una combinación lineal de ella y de otras filas \((F_i\to aF_i+bF_j+cF_k)\)</li>
+    </ul>
   </section>
 
   <section class="card">
@@ -43,7 +65,8 @@ li{margin:6px 0}
     <ul>
       <li>Introduce el número de filas y columnas.</li>
       <li>Rellena los elementos de la matriz (enteros, decimales o fracciones).</li>
-      <li>Pulsa calcular para obtener una matriz escalonada equivalente por filas.</li>
+      <li>Realiza las operaciones que consideres adecuadas de entre las opciones propuestas hasta que obtengas una matriz escalonada.</li>
+      <li>Alternativamente, pero no recomendado, pulsa solución automática para obtener una de las posibles soluciones. En este caso, aparecerán los pasos intermedios utilizados.</li>
     </ul>
   </section>
 
@@ -52,27 +75,23 @@ li{margin:6px 0}
     <p class="muted">Se aplican operaciones por filas para anular los elementos bajo los pivotes.</p>
     <div class="k">
       \[
-      \begin{aligned}
-      \begin{bmatrix}
-      1&2&-1&3\\
-      2&1&1&4\\
-      -1&1&2&-1
-      \end{bmatrix}
-      &\sim
-      \begin{bmatrix}
-      1&2&-1&3\\
-      0&-3&3&-2\\
-      0&3&1&2
-      \end{bmatrix}
-      \quad (R_2\leftarrow R_2-2R_1,\; R_3\leftarrow R_3+R_1)\\[6pt]
-      &\sim
-      \begin{bmatrix}
-      1&2&-1&3\\
-      0&-3&3&-2\\
-      0&0&4&0
-      \end{bmatrix}
-      \quad (R_3\leftarrow R_3+R_2)
-      \end{aligned}
+      \left( \begin{matrix}
+      1 & 2 & -1 & 3 \\
+      2 & 4 & 1 & 7 \\
+      -1 & 1 & 2 & 0 \\
+      \end{matrix} \right)\underset{{{F}_{2}}\to {{F}_{2}}-2{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
+      1 & 2 & -1 & 3 \\
+      0 & 0 & 3 & 1 \\
+      -1 & 1 & 2 & 0 \\
+      \end{matrix} \right)\underset{{{F}_{3}}\to {{F}_{3}}+{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
+      1 & 2 & -1 & 3 \\
+      0 & 0 & 3 & 1 \\
+      0 & 3 & 1 & 3 \\
+      \end{matrix} \right)\underset{\downarrow }{\mathop{\sim }}\,\left( \begin{matrix}
+      1 & 2 & -1 & 3 \\
+      0 & 3 & 1 & 3 \\
+      0 & 0 & 3 & 1 \\
+      \end{matrix} \right)
       \]
     </div>
     <p class="muted">La matriz final es escalonada: los pivotes aparecen cada vez más a la derecha y las filas nulas (si las hubiera) quedan abajo.</p>
@@ -83,7 +102,7 @@ li{margin:6px 0}
     <ul>
       <li>No validar algún dato (ENTER/TAB) y dejar una celda sin guardar.</li>
       <li>Confundir “escalonada” con “reducida”: aquí no es obligatorio que los pivotes sean 1.</li>
-      <li>Perder un signo al aplicar operaciones del tipo \(R_i\leftarrow R_i+kR_j\).</li>
+      <li>Perder un signo al aplicar operaciones del tipo \((F_i\leftarrow F_i+kF_j)\).</li>
     </ul>
   </section>
 </div>
