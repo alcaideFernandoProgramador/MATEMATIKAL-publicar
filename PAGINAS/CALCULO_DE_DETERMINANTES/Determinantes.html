@@ -4,14 +4,13 @@
 <meta charset="utf-8"/>
 <title>Determinantes</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="stylesheet" href="/common.css?v=0503263"/>
+<link rel="stylesheet" href="/common.css?v=1003263"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Cálculo de determinantes numéricos y algebraicos, con resultados y (según el caso) pasos intermedios." name="description"/>
+<meta content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios." name="description"/>
 
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=0503263"></script>
-
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1003263">
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1003263"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1003263"></script>
 
 <style>
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}
@@ -24,48 +23,86 @@
 .card h2{margin:0 0 10px;font-size:20px}
 .k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
 ul{margin:10px 0 0;padding-left:18px}
-li{margin:6px 0}
-.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+li{margin:8px 0}
+.pasos,.errores{list-style:none;padding-left:0;margin-top:12px}
+.pasos li,.errores li{position:relative;padding-left:38px;margin:12px 0}
+.pasos li::before,.errores li::before{
+content:"•";
+position:absolute;
+left:12px;
+top:50%;
+transform:translateY(-50%);
+font-weight:700;
+font-size:1.15em;
+line-height:1;
+}
+.subnota{display:block;margin-top:4px;opacity:.82}
+.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}
+.volverBtn:hover{transform:translateY(-1px)}
+.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 </style>
-
 </head>
 <body>
 <div class="introWrap">
   <section class="hero">
     <div class="heroTop">
-      <a class="volverBtn" href="/index.html?v=0503263">VOLVER</a>
+      <a class="volverBtn" href="/index.html?v=1003263">VOLVER</a>
       <h1>Determinantes</h1>
-      <a class="trabajoBtn" href="Calculo_determinantes.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
+      <a class="trabajoBtn" href="Calculo_determinantes.html?v=1003263">IR A LA PÁGINA DE TRABAJO</a>
     </div>
-    <p class="muted">Cálculo de determinantes numéricos y algebraicos, con resultados y (según el caso) pasos intermedios.</p>
-<p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
-<p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
+    <p class="muted">Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios.</p>
+    <p class="muted">El cálculo del determinante se realizará siguiendo los siguientes pasos:</p>
+    <ul class="pasos">
+      <li>Se realizan las operaciones de filas o columnas adecuadas hasta llegar a una línea formada por todos ceros excepto uno de sus elementos.</li>
+      <li>Se reduce dicho determinante a otro de orden inferior utilizando la línea hallada en el apartado anterior.</li>
+      <li>Se realizan los dos pasos anteriores hasta llegar a un determinante de orden 3.</li>
+      <li>Se desarrolla el determinante de orden 3 hasta obtener el valor final.</li>
+    </ul>
   </section>
 
   <section class="card">
     <h2>Cómo se usa</h2>
     <ul>
-      <li>Elige el tamaño del determinante.</li><li>Introduce los elementos (enteros, decimales o fracciones).</li><li>Pulsa calcular para obtener el determinante.</li>
+      <li>Elige el tamaño del determinante.</li>
+      <li>Introduce los elementos (enteros, decimales o fracciones).</li>
+      <li>Consejo: si introduces fracciones, mantén una notación consistente \((a/b)\) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</li>
     </ul>
   </section>
 
   <section class="card">
     <h2>Ejemplo rápido</h2>
-    <div class="k">\[
-\begin{aligned}
-\det\!\begin{bmatrix}1&2&3\\0&-1&4\\2&1&0\end{bmatrix}
-&=1\det\!\begin{bmatrix}-1&4\\1&0\end{bmatrix}-2\det\!\begin{bmatrix}0&4\\2&0\end{bmatrix}+3\det\!\begin{bmatrix}0&-1\\2&1\end{bmatrix}\\
-&=1(-4)-2(-8)+3(2)\\
-&=18
-\end{aligned}
+    <div class="k">
+\[
+\left| \begin{matrix}
+2 & -1 & 3 & 1 \\
+2 & 4 & 3 & 1 \\
+1 & 2 & 4 & 3 \\
+3 & -1 & -1 & 0
+\end{matrix} \right|
+\underset{{F}_{2}\to {F}_{2}-{F}_{1}}{\mathop{=}}\,\left| \begin{matrix}
+2 & -1 & 3 & 1 \\
+0 & 5 & 0 & 0 \\
+1 & 2 & 4 & 3 \\
+3 & -1 & -1 & 0
+\end{matrix} \right|
+\underset{\operatorname{Red}F_{2}}{\mathop{=}}\,5\left| \begin{matrix}
+2 & 3 & 1 \\
+1 & 4 & 3 \\
+3 & -1 & 0
+\end{matrix} \right|
+=5\left( -1+27-12-(-6) \right)=5\cdot 20=100
 \]
-</div>
+    </div>
   </section>
 
   <section class="card">
     <h2>Errores típicos</h2>
-    <ul>
-      <li>Confundir desarrollo por cofactores con operaciones por filas sin ajustar el determinante.</li><li>Perder signos en cofactores \((-1)^{i+j}\).</li><li>No validar una celda y dejar un valor sin guardar.</li>
+    <ul class="errores">
+      <li>Realizar operaciones por filas o columnas sin tener en cuenta cómo afectan al valor del determinante.<span class="subnota">(El coeficiente de la línea que se cambia con la combinación lineal modifica el valor del determinante).</span></li>
+      <li>Olvidar extraer factor común cuando una fila o columna tiene todos sus elementos divisibles por un mismo número.<span class="subnota">(No es un error, pero ayuda bastante).</span></li>
+      <li>Reducir el determinante usando una fila o columna que no está formada por todos ceros excepto uno de sus elementos.</li>
+      <li>Perder signos al desarrollar un determinante de orden 3.</li>
+      <li>No validar una celda y dejar un valor sin guardar.</li>
     </ul>
   </section>
 </div>
@@ -76,6 +113,5 @@ if(window.renderMathInElement){
 renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
 }});
 </script>
-
 </body>
 </html>
