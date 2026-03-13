@@ -1,20 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543" crossorigin="anonymous"></script>
-
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
-<title>Sistemas lineales por Gauss</title>
+<title>Sistemas de ecuaciones por Gauss: teoría y ejemplos | Matematikal</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="stylesheet" href="/common.css?v=0503263"/>
+<link href="/common.css?v=1303262" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución (única, infinitas o ninguna)." name="description"/>
-
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=0503263">
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=0503263"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=0503263"></script>
-
-
+<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1303262" rel="stylesheet"/>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1303262"></script>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1303262"></script>
 <style>
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}
 .hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
@@ -29,60 +26,54 @@ ul{margin:10px 0 0;padding-left:18px}
 li{margin:6px 0}
 .volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 </style>
-
 </head>
 <body>
 <div class="introWrap">
-  <section class="hero">
-    <div class="heroTop">
-      <a class="volverBtn" href="/index.html?v=0503263">VOLVER</a>
-      <h1>Sistemas lineales por Gauss</h1>
-      <a class="trabajoBtn" href="Sistemas_gauss.html?v=0503263">IR A LA PÁGINA DE TRABAJO</a>
-    </div>
-    <p class="muted">Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución (única, infinitas o ninguna).</p>
+<section class="hero">
+<div class="heroTop">
+<a class="volverBtn" href="/index.html?v=1303262">VOLVER</a>
+<h1>Sistemas lineales por Gauss</h1>
+<a class="trabajoBtn" href="Sistemas_gauss.html?v=1303262">IR A LA PÁGINA DE TRABAJO</a>
+</div>
+<p class="muted">Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución (única, infinitas o ninguna).</p>
 <p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
 <p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
-  </section>
-
-  <section class="card">
-    <h2>Cómo se usa</h2>
-    <ul>
-      <li>Indica el número de ecuaciones y de incógnitas.</li><li>Introduce la matriz ampliada (coeficientes y términos independientes).</li><li>Pulsa calcular para ver el escalonamiento y la solución.</li>
-    </ul>
-  </section>
-
-  <section class="card">
-    <h2>Ejemplo rápido</h2>
-    <div class="k">\[
+</section>
+<section class="card">
+<h2>Cómo se usa</h2>
+<ul>
+<li>Indica el número de ecuaciones y de incógnitas.</li><li>Introduce la matriz ampliada (coeficientes y términos independientes).</li><li>Pulsa calcular para ver el escalonamiento y la solución.</li>
+</ul>
+</section>
+<section class="card">
+<h2>Ejemplo rápido</h2>
+<div class="k">\[
 \left\{\begin{aligned}
-x+y+z&=1\\
-2x-y+z&=3\\
-x+2y-z&=-1
+x+y+z&amp;=1\\
+2x-y+z&amp;=3\\
+x+2y-z&amp;=-1
 \end{aligned}\right.
 \Rightarrow
 \begin{aligned}
-x&=1\\
-y&=-1\\
-z&=1
+x&amp;=1\\
+y&amp;=-1\\
+z&amp;=1
 \end{aligned}
 \]
 </div>
-  </section>
-
-  <section class="card">
-    <h2>Errores típicos</h2>
-    <ul>
-      <li>No balancear bien la matriz ampliada (mezclar términos independientes).</li><li>Olvidar que un pivote nulo requiere permutar filas.</li><li>En sistemas con parámetro, no separar casos según el valor del parámetro.</li>
-    </ul>
-  </section>
+</section>
+<section class="card">
+<h2>Errores típicos</h2>
+<ul>
+<li>No balancear bien la matriz ampliada (mezclar términos independientes).</li><li>Olvidar que un pivote nulo requiere permutar filas.</li><li>En sistemas con parámetro, no separar casos según el valor del parámetro.</li>
+</ul>
+</section>
 </div>
-
 <script>
 document.addEventListener("DOMContentLoaded",function(){
 if(window.renderMathInElement){
 renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
 }});
 </script>
-
 </body>
 </html>
