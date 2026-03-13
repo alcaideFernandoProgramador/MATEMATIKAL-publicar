@@ -1,113 +1,122 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Determinantes: teoría, ejemplos y calculadora online | Matematikal</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="/common.css?v=1303263" rel="stylesheet"/>
-<meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios." name="description"/>
-<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1303263" rel="stylesheet"/>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1303263"></script>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1303263"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="/common.css?v=1203267"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1203267"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1203267"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1203267"></script>
 <style>
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
-.heroTop{display:flex;align-items:center;gap:14px}
-.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
-.heroTop .trabajoBtn{margin-left:auto}
-.muted{opacity:.82;margin:8px 0 0}
-.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
-.card h2{margin:0 0 10px;font-size:20px}
-.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
-ul{margin:10px 0 0;padding-left:18px}
-li{margin:8px 0}
-.pasos,.errores{list-style:none;padding-left:0;margin-top:12px}
-.pasos li,.errores li{position:relative;padding-left:38px;margin:12px 0}
-.pasos li::before,.errores li::before{
-content:"•";
-position:absolute;
-left:12px;
-top:50%;
-transform:translateY(-50%);
-font-weight:700;
-font-size:1.15em;
-line-height:1;
-}
-.subnota{display:block;margin-top:4px;opacity:.82}
-.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}
-.volverBtn:hover{transform:translateY(-1px)}
-.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+body{font-family:'Inter',system-ui,Arial,sans-serif}
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;flex:1;min-width:220px}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.stepsList,.notesList,.errorsList,.propsList{margin:0;padding-left:20px}.stepsList li,.notesList li,.errorsList li,.propsList li{margin:8px 0;line-height:1.62}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoDet{margin-top:14px;display:flex;justify-content:center}.resultadoDet span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.trabajoBtn{margin-left:0}}
 </style>
 </head>
 <body>
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
-<a class="volverBtn" href="/index.html?v=1303263">VOLVER</a>
+<a class="volverBtn" href="/index.html?v=1203267">VOLVER</a>
 <h1>Determinantes</h1>
-<a class="trabajoBtn" href="Calculo_determinantes.html?v=1303263">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="Calculo_determinantes.html?v=1203267">IR A LA PÁGINA DE TRABAJO</a>
 </div>
-<p class="muted">Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios.</p>
-<p class="muted">El cálculo del determinante se realizará siguiendo los siguientes pasos:</p>
-<ul class="pasos">
+<p class="heroLead">El determinante es un número asociado a una matriz cuadrada. Permite estudiar propiedades importantes como la invertibilidad de la matriz y simplificar muchos cálculos de álgebra lineal.</p>
+<div class="pillRow"><span class="pill">Matrices cuadradas</span><span class="pill">Operaciones por filas y columnas</span><span class="pill">Reducción por líneas</span></div>
+</section>
+<div class="grid">
+<section class="accentCard span8">
+<p class="miniTitle">Idea clave</p>
+<h2>¿Qué información da un determinante?</h2>
+<p>El valor del determinante permite decidir, por ejemplo, si una matriz cuadrada es invertible. Si el determinante es distinto de cero, la matriz es <strong>invertible</strong>. Si el determinante es cero, la matriz <strong>no es invertible</strong>.</p>
+<p>En esta página, el cálculo se realiza simplificando el determinante mediante operaciones adecuadas hasta reducirlo a determinantes de orden inferior, conservando siempre el control sobre cómo afectan dichas operaciones al valor final.</p>
+</section>
+<section class="card span4">
+<p class="miniTitle">Notas</p>
+<h2>Antes de empezar</h2>
+<ul class="notesList">
+<li>Solo tiene sentido hablar de determinante en <strong>matrices cuadradas</strong>.</li>
+<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
+<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
+</ul>
+</section>
+<section class="card span6">
+<p class="miniTitle">Cómo se calcula</p>
+<h2>Esquema general</h2>
+<ol class="stepsList">
 <li>Se realizan las operaciones de filas o columnas adecuadas hasta llegar a una línea formada por todos ceros excepto uno de sus elementos.</li>
 <li>Se reduce dicho determinante a otro de orden inferior utilizando la línea hallada en el apartado anterior.</li>
-<li>Se realizan los dos pasos anteriores hasta llegar a un determinante de orden 3.</li>
+<li>Se repiten los dos pasos anteriores hasta llegar a un determinante de orden 3.</li>
 <li>Se desarrolla el determinante de orden 3 hasta obtener el valor final.</li>
+</ol>
+</section>
+<section class="card span6">
+<p class="miniTitle">Propiedades útiles</p>
+<h2>Conviene recordarlas</h2>
+<ul class="propsList">
+<li>Intercambiar dos filas o dos columnas cambia el signo del determinante.</li>
+<li>Sacar factor común de una fila o columna multiplica el determinante por ese factor.</li>
+<li>Sumar a una fila o columna un múltiplo de otra no cambia el valor del determinante.</li>
 </ul>
 </section>
-<section class="card">
-<h2>Cómo se usa</h2>
-<ul>
+<section class="card span6">
+<p class="miniTitle">Cómo se usa</p>
+<h2>Paso a paso</h2>
+<ol class="stepsList">
 <li>Elige el tamaño del determinante.</li>
-<li>Introduce los elementos (enteros, decimales o fracciones).</li>
-<li>Consejo: si introduces fracciones, mantén una notación consistente \((a/b)\) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</li>
-</ul>
+<li>Introduce los elementos y valida cada celda con ENTER o TAB.</li>
+<li>Selecciona las operaciones necesarias para simplificar el cálculo.</li>
+<li>También puedes usar la solución automática para ver el desarrollo completo.</li>
+</ol>
 </section>
-<section class="card">
-<h2>Ejemplo rápido</h2>
-<div class="k">
-\[
-\left| \begin{matrix}
-2 &amp; -1 &amp; 3 &amp; 1 \\
-2 &amp; 4 &amp; 3 &amp; 1 \\
-1 &amp; 2 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; -1 &amp; 0
-\end{matrix} \right|
-\underset{{F}_{2}\to {F}_{2}-{F}_{1}}{\mathop{=}}\,\left| \begin{matrix}
-2 &amp; -1 &amp; 3 &amp; 1 \\
-0 &amp; 5 &amp; 0 &amp; 0 \\
-1 &amp; 2 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; -1 &amp; 0
-\end{matrix} \right|
-\underset{\operatorname{Red}F_{2}}{\mathop{=}}\,5\left| \begin{matrix}
-2 &amp; 3 &amp; 1 \\
-1 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; 0
-\end{matrix} \right|
-=5\left( -1+27-12-(-6) \right)=5\cdot 20=100
-\]
-    </div>
-</section>
-<section class="card">
-<h2>Errores típicos</h2>
-<ul class="errores">
-<li>Realizar operaciones por filas o columnas sin tener en cuenta cómo afectan al valor del determinante.<span class="subnota">(El coeficiente de la línea que se cambia con la combinación lineal modifica el valor del determinante).</span></li>
-<li>Olvidar extraer factor común cuando una fila o columna tiene todos sus elementos divisibles por un mismo número.<span class="subnota">(No es un error, pero ayuda bastante).</span></li>
+<section class="card span6">
+<p class="miniTitle">Errores típicos</p>
+<h2>Conviene vigilarlos</h2>
+<ul class="errorsList">
+<li>Realizar operaciones por filas o columnas sin tener en cuenta cómo afectan al valor del determinante.</li>
+<li>Olvidar extraer factor común cuando una fila o columna tiene todos sus elementos divisibles por un mismo número.</li>
 <li>Reducir el determinante usando una fila o columna que no está formada por todos ceros excepto uno de sus elementos.</li>
 <li>Perder signos al desarrollar un determinante de orden 3.</li>
-<li>No validar una celda y dejar un valor sin guardar.</li>
 </ul>
 </section>
+<section class="card span12">
+<p class="miniTitle">Ejemplo rápido</p>
+<h2>Aplicación del método</h2>
+<div class="k">\[
+\left| \begin{matrix}
+2 & -1 & 3 & 1 \\
+2 & 4 & 3 & 1 \\
+1 & 2 & 4 & 3 \\
+3 & -1 & -1 & 0
+\end{matrix} \right|
+\underset{{F}_{2}\to {F}_{2}-{F}_{1}}{\mathop{=}}\,
+\left| \begin{matrix}
+2 & -1 & 3 & 1 \\
+0 & 5 & 0 & 0 \\
+1 & 2 & 4 & 3 \\
+3 & -1 & -1 & 0
+\end{matrix} \right|
+\underset{\operatorname{Red}F_{2}}{\mathop{=}}\,
+5\left| \begin{matrix}
+2 & 3 & 1 \\
+1 & 4 & 3 \\
+3 & -1 & 0
+\end{matrix} \right|
+=5\left( -1+27-12-(-6) \right)=5\cdot 20=100
+\]</div>
+<p class="muted" style="margin-top:14px">El valor final del determinante es 100.</p>
+<div class="resultadoDet"><span>det(A)=100</span></div>
+</section>
+</div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-if(window.renderMathInElement){
-renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
-}});
+document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
 </body>
 </html>
