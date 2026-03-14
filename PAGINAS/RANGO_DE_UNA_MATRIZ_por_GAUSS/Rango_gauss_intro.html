@@ -5,15 +5,15 @@
 <meta charset="utf-8"/>
 <title>Rango de una matriz por Gauss: teoría y ejemplos | Matematikal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="/common.css?v=1203267"/>
+<link rel="stylesheet" href="/common.css?v=1403261"/>
 <meta name="author" content="Fernando Alcaide Guindo"/>
 <meta name="description" content="Calcula el rango de una matriz usando el método de Gauss y comprueba el resultado con un ejemplo."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1203267"/>
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1203267"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1203267"></script>
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403261"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403261"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403261"></script>
 <style>
 body{font-family:'Inter',system-ui,Arial,sans-serif}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;flex:1;min-width:220px}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.ops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.op{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.9)}.op strong{display:block;margin-bottom:6px}.notesList,.stepsList,.errorsList{margin:0;padding-left:20px}.notesList li,.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:14px;display:flex;justify-content:center}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.ops{grid-template-columns:1fr}.trabajoBtn{margin-left:0}}
@@ -23,9 +23,9 @@ body{font-family:'Inter',system-ui,Arial,sans-serif}
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
-<a class="volverBtn" href="/index.html?v=1203267">VOLVER</a>
+<a class="volverBtn" href="/index.html?v=1403261">VOLVER</a>
 <h1>Rango de una matriz por Gauss</h1>
-<a class="trabajoBtn" href="Rango_gauss.html?v=1203267">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="Rango_gauss.html?v=1403261">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 <p class="heroLead">Calcula el rango de una matriz usando el método de Gauss. El rango de una matriz es el número de filas no nulas que quedan después de aplicar transformaciones elementales por filas hasta obtener una matriz escalonada.</p>
 <div class="pillRow"><span class="pill">Matriz equivalente por filas</span><span class="pill">Pivotes</span><span class="pill">Eliminación de Gauss</span></div>

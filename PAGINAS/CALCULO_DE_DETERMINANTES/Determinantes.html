@@ -5,15 +5,15 @@
 <meta charset="utf-8"/>
 <title>Determinantes: teoría, ejemplos y calculadora online | Matematikal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="/common.css?v=1203267"/>
+<link rel="stylesheet" href="/common.css?v=1403261"/>
 <meta name="author" content="Fernando Alcaide Guindo"/>
 <meta name="description" content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1203267"/>
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1203267"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1203267"></script>
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403261"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403261"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403261"></script>
 <style>
 body{font-family:'Inter',system-ui,Arial,sans-serif}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;flex:1;min-width:220px}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.stepsList,.notesList,.errorsList,.propsList{margin:0;padding-left:20px}.stepsList li,.notesList li,.errorsList li,.propsList li{margin:8px 0;line-height:1.62}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoDet{margin-top:14px;display:flex;justify-content:center}.resultadoDet span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.trabajoBtn{margin-left:0}}
@@ -23,9 +23,9 @@ body{font-family:'Inter',system-ui,Arial,sans-serif}
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
-<a class="volverBtn" href="/index.html?v=1203267">VOLVER</a>
+<a class="volverBtn" href="/index.html?v=1403261">VOLVER</a>
 <h1>Determinantes</h1>
-<a class="trabajoBtn" href="Calculo_determinantes.html?v=1203267">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="Calculo_determinantes.html?v=1403261">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 <p class="heroLead">El determinante es un número asociado a una matriz cuadrada. Permite estudiar propiedades importantes como la invertibilidad de la matriz y simplificar muchos cálculos de álgebra lineal.</p>
 <div class="pillRow"><span class="pill">Matrices cuadradas</span><span class="pill">Operaciones por filas y columnas</span><span class="pill">Reducción por líneas</span></div>
@@ -79,10 +79,10 @@ body{font-family:'Inter',system-ui,Arial,sans-serif}
 <p class="miniTitle">Errores típicos</p>
 <h2>Conviene vigilarlos</h2>
 <ul class="errorsList">
-<li>Realizar operaciones por filas o columnas sin tener en cuenta cómo afectan al valor del determinante.</li>
-<li>Olvidar extraer factor común cuando una fila o columna tiene todos sus elementos divisibles por un mismo número.</li>
-<li>Reducir el determinante usando una fila o columna que no está formada por todos ceros excepto uno de sus elementos.</li>
-<li>Perder signos al desarrollar un determinante de orden 3.</li>
+<li>Confundir determinante con rango.</li>
+<li>Pensar que al multiplicar una fila o una columna por un número el valor del determinante no cambia.</li>
+<li>Pensar que al permutar el orden de dos filas o dos columnas el valor del determinante no cambia.</li>
+<li>Olvidar extraer factor común cuando una fila o columna tiene todos sus elementos divisibles por un mismo número <em>(aunque en realidad no es un error, ya que el determinante se puede calcular igualmente; extraer el factor común simplemente ayuda a simplificar el cálculo)</em>.</li>
 </ul>
 </section>
 <section class="card span12">
