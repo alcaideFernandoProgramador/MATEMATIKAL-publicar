@@ -1,74 +1,123 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Rango de una matriz por menores: teoría y ejemplos | Matematikal</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="/common.css?v=1403261" rel="stylesheet"/>
-<meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Calcula el rango de una matriz usando rango por menores y comprueba el resultado con un ejemplo." name="description"/>
-<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403261" rel="stylesheet"/>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403261"></script>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403261"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="/common.css?v=1403262"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Calcula el rango de una matriz usando el método de los menores y comprueba el resultado con un ejemplo."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403262"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403262"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403262"></script>
 <style>
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
-.heroTop{display:flex;align-items:center;gap:14px}
-.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
-.heroTop .trabajoBtn{margin-left:auto}
-.muted{opacity:.82;margin:8px 0 0}
-.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
-.card h2{margin:0 0 10px;font-size:20px}
-.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
-ul{margin:10px 0 0;padding-left:18px}
-li{margin:6px 0}
-.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+body{font-family:'Inter',system-ui,Arial,sans-serif}
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;flex:1;min-width:220px}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.stepsList,.errorsList{margin:0;padding-left:20px}.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.stepBlocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.stepBlock{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.92)}.stepBlock strong{display:block;margin-bottom:6px}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:14px;display:flex;justify-content:center}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.stepBlocks{grid-template-columns:1fr}.trabajoBtn{margin-left:0}}
 </style>
 </head>
 <body>
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
-<a class="volverBtn" href="/index.html?v=1403261">VOLVER</a>
-<h1>Rango por menores</h1>
-<a class="trabajoBtn" href="Rango_menores.html?v=1403261">IR A LA PÁGINA DE TRABAJO</a>
+<a class="volverBtn" href="/index.html?v=1403262">VOLVER</a>
+<h1>Rango de una matriz por menores</h1>
+<a class="trabajoBtn" href="Rango_menores.html?v=1403262">IR A LA PÁGINA DE TRABAJO</a>
 </div>
-<p class="muted">Calcula el rango de una matriz usando rango por menores y comprueba el resultado con un ejemplo.</p>
-<p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
-<p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
+<p class="heroLead">Calcula el rango de una matriz usando el método de los menores. El rango de una matriz es el orden del mayor menor diferente de cero de dicha matriz.</p>
+<div class="pillRow"><span class="pill">Menores de orden 2</span><span class="pill">Ampliación de menores</span><span class="pill">Búsqueda del mayor menor no nulo</span></div>
 </section>
-<section class="card">
-<h2>Cómo se usa</h2>
-<ul>
-<li>Introduce las dimensiones de la matriz.</li><li>Rellena los elementos y valida con ENTER/TAB.</li><li>Pulsa calcular para obtener el rango y, según la página, los pasos.</li>
+<div class="grid">
+<section class="accentCard span8">
+<p class="miniTitle">Idea clave</p>
+<h2>¿Qué se hace exactamente?</h2>
+<p>Para calcular el rango mediante el método de los menores se parte de menores de orden 2 y se busca uno cuyo valor sea no nulo. A partir de ese menor se va ampliando con una fila y una columna más, de todas las formas posibles, hasta encontrar un menor de orden superior que también sea no nulo.</p>
+<p>Cuando ya no se puede ampliar o no existe ningún menor ampliado no nulo, el proceso termina. Entonces el rango de la matriz coincide con el <strong>orden del mayor menor no nulo</strong> encontrado.</p>
+<p class="muted">Este procedimiento es conocido como <strong>método de los menores</strong> y es uno de los más utilizados para calcular el rango de una matriz.</p>
+</section>
+<section class="card span4">
+<p class="miniTitle">Notas</p>
+<h2>Antes de empezar</h2>
+<ul class="stepsList">
+<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
+<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
 </ul>
 </section>
-<section class="card">
-<h2>Ejemplo rápido</h2>
+<section class="card span12">
+<p class="miniTitle">Método de los menores</p>
+<h2>Pasos fundamentales</h2>
+<div class="stepBlocks">
+<div class="stepBlock"><strong>Paso 1</strong><span>Se obtienen todos los menores de orden 2. Se elige uno de ellos cuyo valor sea no nulo. Si no existe ninguno, el rango de la matriz es 1, salvo que se trate de la matriz nula, en cuyo caso el rango es 0.</span></div>
+<div class="stepBlock"><strong>Paso 2</strong><span>Se amplía el menor elegido con una fila y una columna más, de todas las formas posibles, hasta encontrar un menor de orden 3 no nulo. Si no hay posibilidad de ampliar o no existe ningún menor no nulo, el rango es 2.</span></div>
+<div class="stepBlock"><strong>Paso 3</strong><span>Se repite de la misma forma el paso 2 hasta que ya no se pueda ampliar o no exista ningún menor ampliado no nulo. De esta forma se obtiene la solución final.</span></div>
+</div>
+</section>
+<section class="card span6">
+<p class="miniTitle">Cómo se usa</p>
+<h2>Paso a paso en la página</h2>
+<ol class="stepsList">
+<li>Introduce las dimensiones de la matriz. Rellena los elementos y valida con ENTER o TAB.</li>
+<li>Si introduces fracciones, mantén una notación consistente \((a/b)\).</li>
+<li>Elige los pasos en el orden adecuado.</li>
+<li>También puedes utilizar <strong>Solución automática</strong> (aunque no es recomendable) para obtener la solución del ejercicio incluyendo los pasos intermedios realizados.</li>
+</ol>
+</section>
+<section class="card span6">
+<p class="miniTitle">Errores típicos</p>
+<h2>Conviene vigilarlos</h2>
+<ul class="errorsList">
+<li>Confundir rango con determinante (el determinante es solo para matrices cuadradas).</li>
+<li>Formar menores de forma que los elementos en la matriz no formen una rejilla rectangular.</li>
+<li>Intentar buscar un menor no nulo si todos los menores de un orden inferior son nulos.</li>
+<li>Ampliar un menor tomando como base un menor diferente del elegido en el paso anterior.</li>
+</ul>
+</section>
+<section class="card span12">
+<p class="miniTitle">Ejemplo rápido</p>
+<h2>Aplicación del método</h2>
 <div class="k">\[
-A=\begin{bmatrix}
-1&amp;2&amp;0\\
-0&amp;1&amp;3\\
-2&amp;1&amp;1
-\end{bmatrix},\quad
-\det(A)=1\neq0\Rightarrow \operatorname{rg}(A)=3
+A=\left( egin{matrix}
+2 & -3 & 2 & 1 \
+1 & 2 & -4 & 0 \
+3 & -1 & -2 & 2
+\end{matrix} ight)
 \]
+\[
+egin{aligned}
+&A=\left( egin{matrix}
+2 & -3 & 2 & 1 \
+1 & 2 & -4 & 0 \
+3 & -1 & -2 & 2
+\end{matrix} ight) \
+&	ext{Menor de orden 2 no nulo elegido: }\left| egin{matrix}
+2 & -3 \
+1 & 2
+\end{matrix} ight|=4+3=7
+e 0 \
+&	ext{Menor ampliado de orden 3 (se amplía con la fila 3 y la columna 3): }\left| egin{matrix}
+2 & -3 & 2 \
+1 & 2 & -4 \
+3 & -1 & -2
+\end{matrix} ight|=-8-2+36-12-8-6=0\quad 	ext{No vale} \
+&	ext{Menor ampliado de orden 3 (se amplía con la fila 3 y la columna 4): }\left| egin{matrix}
+2 & -3 & 1 \
+1 & 2 & 0 \
+3 & -1 & 2
+\end{matrix} ight|=8-1-6+6=7
+e 0 \
+&	ext{Como no se puede seguir ampliando a orden 4, el rango es 3. }\operatorname{rg}(A)=3
+\end{aligned}
+\]</div>
+<p class="muted" style="margin-top:14px">El mayor menor no nulo encontrado es de orden 3, por tanto el rango de la matriz es 3.</p>
+<div class="resultadoRango"><span>rg(A)=3</span></div>
+</section>
 </div>
-</section>
-<section class="card">
-<h2>Errores típicos</h2>
-<ul>
-<li>Confundir rango con determinante (solo matrices cuadradas).</li><li>Olvidar que operaciones elementales por filas no cambian el rango.</li><li>En matrices con parámetro, olvidar estudiar los valores que anulan los menores/determinantes.</li>
-</ul>
-</section>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-if(window.renderMathInElement){
-renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
-}});
+document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\[",right:"\]",display:true},{left:"\(",right:"\)",display:false}],throwOnError:false});}});
 </script>
 </body>
 </html>
