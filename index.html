@@ -1,114 +1,236 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
-<meta content="Herramientas y recursos para estudiar matemáticas: determinantes, matrices, rango y sistemas lineales con explicación y cálculo automático." name="description"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="/common.css?v=1403262" rel="stylesheet"/>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Herramientas matemáticas online para Bachillerato: matrices, matriz escalonada, determinantes, rango y sistemas de ecuaciones lineales con práctica guiada y resolución paso a paso.">
 <title>Herramientas matemáticas online: matrices, determinantes y sistemas | Matematikal</title>
+<link rel="stylesheet" href="/common.css?v=1403262">
 <style>
-    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;color:#222;background:#f5f5f5}
-    body{margin:0}
-    .cabecera{background:#283593;color:#fff;padding:2.8rem 1.45rem;margin-bottom:.75rem}
-    .cabecera h1{margin:0;font-size:2.05rem;line-height:1.15}
-    .cabecera p{margin:.35rem 0 0;font-size:.98rem;max-width:44rem;opacity:.92}
-    .contenedor{max-width:1200px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;gap:1.15rem;align-items:flex-start}
-    .menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:260px}
-    .menu-lateral h2{margin:.25rem 0 .5rem;font-size:1.25rem}
-    .subtitulo-paginas{margin:0 0 .75rem;font-size:.9rem;color:#555}
-    .menu-lateral ul{list-style:none;padding:0;margin:0}
-    .menu-lateral li{padding-left:15pt}         /* sangrado de 15 puntos */
-    .menu-lateral li+li{margin-top:.35rem}
-    .menu-lateral a{text-decoration:none;color:#283593;font-size:.95rem}
-    .menu-lateral a:hover{text-decoration:underline}
-    .contenido{flex:1;background:#fff;border-radius:.75rem;padding:1.5rem 1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-    .contenido h2{margin-top:0}
-    .lista-materias{margin:.5rem 0 1rem 1.25rem}
-    .lista-materias li{margin:.15rem 0}
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;color:#222;background:#f5f5f5}
+body{margin:0}
+html,body{max-width:100%;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
 
-    /* Responsive (tablet y móvil) */
-    @media (max-width:980px){
-      .cabecera{padding:1.4rem 1.25rem;margin-bottom:1.1rem}
-      .cabecera h1{font-size:1.9rem}
-      .contenedor{padding:0 1rem}
-    }
-    @media (max-width:900px){
-      .contenedor{flex-direction:column;align-items:stretch}
-      .menu-lateral{min-width:0;width:100%;padding:1.1rem 1.15rem}
-      .contenido{width:100%;padding:1.2rem 1.25rem}
-      .menu-lateral li{padding-left:0}
-    }
-    @media (max-width:480px){
-      .cabecera{padding:1.15rem .95rem}
-      .cabecera h1{font-size:1.65rem}
-      .cabecera p{font-size:.95rem}
-      .contenedor{padding:0 .85rem}
-      .menu-lateral a{font-size:1rem}
-      .lista-materias{margin-left:1.05rem}
-    }
-    html,body{max-width:100%;overflow-x:hidden}
-    *,*::before,*::after{box-sizing:border-box}
+.cabecera{background:#283593;color:#fff;padding:2.8rem 1.45rem;margin-bottom:.75rem}
+.cabecera h1{margin:0;font-size:2.05rem;line-height:1.15}
+.cabecera p{margin:.45rem 0 0;font-size:1rem;max-width:60rem;opacity:.94}
 
-    /* Tablet (iPad incluido) */
-    @media (max-width:1024px){
-      body{padding:0;max-width:100%;margin:0 auto}
-    }
+.contenedor{max-width:1200px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;gap:1.15rem;align-items:flex-start}
+.menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:280px;position:sticky;top:1rem}
+.menu-lateral h2{margin:.25rem 0 .5rem;font-size:1.25rem}
+.subtitulo-paginas{margin:0 0 .75rem;font-size:.9rem;color:#555}
+.menu-lateral ul{list-style:none;padding:0;margin:0}
+.menu-lateral li{padding-left:15pt}
+.menu-lateral li+li{margin-top:.42rem}
+.menu-lateral a{text-decoration:none;color:#283593;font-size:.95rem}
+.menu-lateral a:hover{text-decoration:underline}
 
-    /* Móvil */
-    @media (max-width:480px){
-      body{padding:0;max-width:100%;margin:0 auto}
-      .menu-lateral,.contenido{width:100%;max-width:100%}
-    }
+.contenido{flex:1;background:#fff;border-radius:.75rem;padding:1.5rem 1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.contenido h2{margin:0 0 .7rem;font-size:1.55rem;color:#1d275f}
+.contenido h3{margin:0 0 .55rem;font-size:1.14rem;color:#283593}
+.contenido section+section{margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid #ececf3}
+.contenido p{margin:.55rem 0}
+.lista-materias,.lista-beneficios,.lista-faq{margin:.55rem 0 0 1.2rem}
+.lista-materias li,.lista-beneficios li,.lista-faq li{margin:.2rem 0}
+.materiasBox{margin:.45rem 0 .8rem;display:flex;flex-direction:column;gap:.2rem}
+.materiasRow{font-weight:800;margin:0;padding:0;color:#222}
 
-  
-    .materiasBox{margin:.45rem 0 .7rem;display:flex;flex-direction:column;gap:.25rem}
-    .materiasRow{font-weight:800;margin:0;padding:0;color:#222}
+.bloque-destacados{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:.95rem}
+.tarjeta{background:#fafafe;border:1px solid #e7e9f6;border-radius:.8rem;padding:1rem 1rem .95rem}
+.tarjeta h3{margin-top:0}
+.tarjeta p{margin:.35rem 0 .7rem}
+.tarjeta a{color:#283593;font-weight:700;text-decoration:none}
+.tarjeta a:hover{text-decoration:underline}
+
+.bloque-publico{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.publicoBox{background:#fafafe;border:1px solid #e7e9f6;border-radius:.8rem;padding:1rem}
+.publicoBox h3{margin-top:0}
+
+.avisoHome{background:#eef2ff;border:1px solid #dbe3ff;border-radius:.8rem;padding:1rem 1rem .95rem;margin-top:.9rem}
+.avisoHome p{margin:.2rem 0}
+
+.enlaces-texto a{color:#283593;font-weight:700;text-decoration:none}
+.enlaces-texto a:hover{text-decoration:underline}
+
+@media (max-width:1024px){
+  body{padding:0;max-width:100%;margin:0 auto}
+  .cabecera{padding:1.5rem 1.25rem;margin-bottom:1rem}
+  .cabecera h1{font-size:1.95rem}
+  .contenedor{padding:0 1rem}
+  .menu-lateral{position:static}
+}
+@media (max-width:900px){
+  .contenedor{flex-direction:column;align-items:stretch}
+  .menu-lateral{min-width:0;width:100%;padding:1.1rem 1.15rem}
+  .contenido{width:100%;padding:1.2rem 1.25rem}
+  .menu-lateral li{padding-left:0}
+  .bloque-destacados,.bloque-publico{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  body{padding:0;max-width:100%;margin:0 auto}
+  .cabecera{padding:1.15rem .95rem}
+  .cabecera h1{font-size:1.65rem}
+  .cabecera p{font-size:.95rem}
+  .contenedor{padding:0 .85rem}
+  .menu-lateral,.contenido{width:100%;max-width:100%}
+  .menu-lateral a{font-size:1rem}
+  .lista-materias,.lista-beneficios,.lista-faq{margin-left:1.05rem}
+}
 </style>
 </head>
 <body>
 <header class="cabecera">
 <h1>Matematikal</h1>
-<p>Herramientas interactivas para aprender y practicar matemáticas de Bachillerato.</p>
+<p>Herramientas matemáticas online para Bachillerato y práctica de álgebra lineal: matrices, matriz escalonada, determinantes, rango y sistemas de ecuaciones lineales con trabajo guiado y resolución paso a paso.</p>
 </header>
+
 <div class="contenedor">
 <nav class="menu-lateral">
 <h2>Páginas</h2>
 <p class="subtitulo-paginas">ÁLGEBRA LINEAL: matrices, determinantes y sistemas de ecuaciones lineales</p>
 <ul>
-<li><a href="PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html?v=1403262">Operaciones con matrices</a></li>
-<li><a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html?v=1403262">Matriz escalonada</a></li>
-<li><a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html?v=1403262">Cálculo de determinantes</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html?v=1403262">Rango de una matriz numérica (Método de Gauss)</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html?v=1403262">Rango de una matriz numérica (Método de los menores)</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html?v=1403262">Rango de una matriz con un parámetro (Método de Gauss)</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html?v=1403262">Rango de una matriz con un parámetro (Método de los menores)</a></li>
-<li><a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html?v=1403262">Sistemas de ecuaciones lineales (Método de Gauss)</a></li>
-<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html?v=1403262">Sistemas de ecuaciones lineales con un parámetro (Método de Gauss)</a></li>
+<li><a href="PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html">Operaciones con matrices</a></li>
+<li><a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">Matriz escalonada</a></li>
+<li><a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">Cálculo de determinantes</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">Rango de una matriz numérica (Método de Gauss)</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">Rango de una matriz numérica (Método de los menores)</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html">Rango de una matriz con un parámetro (Método de Gauss)</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html">Rango de una matriz con un parámetro (Método de los menores)</a></li>
+<li><a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">Sistemas de ecuaciones lineales (Método de Gauss)</a></li>
+<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Sistemas de ecuaciones lineales con un parámetro (Método de Gauss)</a></li>
 </ul>
 </nav>
+
 <main class="contenido">
 <section class="presentacion">
-<h2>Matemáticas de Bachillerato</h2>
-<p>En este sitio web encontrarás diferentes páginas que te ayudan a estudiar algunos temas específicos de las siguientes materias de Bachillerato:</p>
+<h2>Matemáticas de Bachillerato con práctica guiada</h2>
+<p>Matematikal es un sitio web educativo centrado en herramientas interactivas para estudiar contenidos de álgebra lineal presentes en Bachillerato. Aquí puedes trabajar con matrices, calcular determinantes, obtener el rango de una matriz y resolver sistemas de ecuaciones lineales de forma ordenada, visual y práctica.</p>
+<p>El objetivo no es solo obtener un resultado final. La idea principal de la web es ayudarte a comprender el procedimiento seguido en cada ejercicio. Por eso, en muchas páginas puedes ir introduciendo datos, elegir transformaciones, comprobar operaciones y avanzar paso a paso antes de recurrir a una resolución automática.</p>
+<p>En este sitio web encontrarás recursos especialmente pensados para estudiar temas específicos de las siguientes materias:</p>
 <div class="materiasBox">
 <div class="materiasRow">Matemáticas I y II</div>
 <div class="materiasRow">Matemáticas Aplicadas a las Ciencias Sociales I y II</div>
 </div>
-<p>Son páginas eminentemente prácticas, pensadas para ayudarte en la resolución de los distintos tipos de ejercicios y problemas incluidos en los currículos oficiales de estas materias.</p>
-<p>La mayoría de las páginas se organizan en tres secciones principales:</p>
+<p>Son páginas eminentemente prácticas, diseñadas para apoyar la resolución de ejercicios y problemas habituales de los currículos oficiales. Esto hace que la web resulte útil tanto para practicar antes de un examen como para revisar un procedimiento ya visto en clase o comprobar un resultado obtenido por otros medios.</p>
+</section>
+
+<section>
+<h2>Qué puedes hacer en Matematikal</h2>
+<p>La web reúne varias herramientas matemáticas online relacionadas entre sí. No se trata de una colección aislada de calculadoras, sino de un conjunto de recursos conectados que permiten practicar operaciones con matrices, estudiar la forma escalonada, trabajar con determinantes y analizar sistemas lineales numéricos o con parámetros.</p>
+<ul class="lista-beneficios">
+<li>Realizar operaciones con matrices de forma clara y estructurada.</li>
+<li>Obtener una matriz escalonada aplicando transformaciones elementales por filas.</li>
+<li>Calcular determinantes y utilizarlos en distintos contextos de álgebra lineal.</li>
+<li>Estudiar el rango de una matriz numérica por Gauss o por el método de los menores.</li>
+<li>Analizar matrices con un parámetro y estudiar cómo cambia su rango.</li>
+<li>Resolver sistemas de ecuaciones lineales, incluyendo sistemas con parámetro.</li>
+</ul>
+<div class="avisoHome">
+<p><strong>Enfoque práctico:</strong> la mayor parte de las herramientas están pensadas para que participes activamente en la resolución del ejercicio, en lugar de recibir directamente la respuesta sin contexto.</p>
+</div>
+</section>
+
+<section>
+<h2>Cómo funciona la web</h2>
+<p>La mayoría de las páginas se organizan en tres secciones principales, lo que facilita seguir el proceso con orden y entender qué se está haciendo en cada momento:</p>
 <ul class="lista-materias">
 <li><strong>Introducción de datos</strong></li>
 <li><strong>Trabajos y pasos realizados por el usuario</strong></li>
 <li><strong>Resolución automática</strong></li>
 </ul>
-<p>Por defecto, las páginas no te dan el problema resuelto directamente. Tú debes ir indicando los pasos que se han de realizar: después de introducir los datos necesarios, puedes ir resolviendo la situación paso a paso, escogiendo en cada momento la operación o transformación que quieras aplicar.</p>
-<p>Solo si así lo quieres, puedes solicitar la «resolución automática» del ejercicio. En ese caso, se muestran todos los pasos que podrían haberse seguido para llegar al resultado final. La página ofrece una solución posible, que no tiene por qué ser la única ni, necesariamente, la más rápida o eficiente.</p>
+<p>Por defecto, las páginas no te dan el problema resuelto directamente. Después de introducir los datos necesarios, puedes ir resolviendo la situación paso a paso, escogiendo la operación o transformación que quieras aplicar. Este enfoque resulta especialmente útil para consolidar procedimientos y detectar errores propios antes de ver una solución completa.</p>
+<p>Solo si así lo quieres, puedes solicitar la <strong>resolución automática</strong> del ejercicio. En ese caso, se muestran todos los pasos que podrían haberse seguido para llegar al resultado final. La página ofrece una solución posible, que no tiene por qué ser la única ni, necesariamente, la más rápida o eficiente.</p>
+<p>De este modo, Matematikal puede servir tanto como herramienta de práctica activa como recurso de apoyo para comprobar resultados, revisar algoritmos y entender mejor técnicas habituales del álgebra lineal en Bachillerato.</p>
+</section>
+
+<section>
+<h2>Herramientas destacadas</h2>
+<p>Estas son algunas de las páginas principales del sitio, con acceso directo y una breve explicación de para qué sirve cada una.</p>
+<div class="bloque-destacados">
+<article class="tarjeta">
+<h3>Operaciones con matrices</h3>
+<p>Permite trabajar con matrices y practicar operaciones habituales de forma ordenada. Es un buen punto de partida para familiarizarse con la estructura y manipulación básica de matrices.</p>
+<a href="PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html">Ir a operaciones con matrices</a>
+</article>
+
+<article class="tarjeta">
+<h3>Matriz escalonada</h3>
+<p>Herramienta pensada para escalonar matrices mediante transformaciones elementales. Resulta especialmente útil para estudiar procedimientos de Gauss paso a paso.</p>
+<a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">Ir a matriz escalonada</a>
+</article>
+
+<article class="tarjeta">
+<h3>Cálculo de determinantes</h3>
+<p>Página orientada al trabajo con determinantes de matrices cuadradas. Puede servir como práctica, comprobación de resultados y apoyo para ejercicios de examen.</p>
+<a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">Ir a cálculo de determinantes</a>
+</article>
+
+<article class="tarjeta">
+<h3>Rango de una matriz</h3>
+<p>Incluye recursos para calcular el rango de una matriz numérica por el método de Gauss o por el método de los menores, así como casos con parámetro.</p>
+<a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">Ir a rango por Gauss</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas lineales</h3>
+<p>Permite resolver sistemas de ecuaciones lineales mediante el método de Gauss y estudiar también sistemas dependientes de un parámetro.</p>
+<a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">Ir a sistemas lineales</a>
+</article>
+
+<article class="tarjeta">
+<h3>Casos con parámetro</h3>
+<p>Las páginas dedicadas a matrices y sistemas con parámetro ayudan a estudiar cómo cambian el rango o la compatibilidad según el valor del parámetro.</p>
+<a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Ir a sistemas con parámetro</a>
+</article>
+</div>
+</section>
+
+<section>
+<h2>Para quién está pensada esta web</h2>
+<div class="bloque-publico">
+<div class="publicoBox">
+<h3>Estudiantes de Bachillerato</h3>
+<p>Si estás preparando ejercicios de matrices, determinantes, rango o sistemas lineales, la web puede servirte para practicar, comprobar resultados y afianzar procedimientos antes de un examen.</p>
+</div>
+<div class="publicoBox">
+<h3>Profesorado y apoyo al estudio</h3>
+<p>También puede utilizarse como recurso complementario para mostrar procesos, proponer práctica guiada o revisar pasos intermedios en problemas habituales de álgebra lineal.</p>
+</div>
+</div>
+<p>El valor principal de Matematikal está en que combina explicación operativa, práctica guiada y cálculo automático opcional. Eso permite adaptarse a distintos ritmos de aprendizaje: desde quien necesita entender cada paso hasta quien solo quiere verificar un resultado concreto.</p>
+</section>
+
+<section class="enlaces-texto">
+<h2>Temas principales del sitio</h2>
+<p>En Matematikal puedes encontrar recursos relacionados con <a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">matriz escalonada</a>, <a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">cálculo de determinantes</a>, <a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">rango de una matriz por Gauss</a>, <a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">rango por el método de los menores</a> y <a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">sistemas de ecuaciones lineales</a>. Esta organización temática facilita que cada página tenga un propósito claro y que el usuario llegue rápidamente al tipo de práctica que necesita.</p>
+<p>Además, las secciones introductorias de varias páginas permiten contextualizar cada procedimiento antes de usar la herramienta correspondiente. Ese enfoque es especialmente útil cuando se estudian técnicas como la eliminación de Gauss, el cálculo del rango o la discusión de sistemas con parámetros.</p>
+</section>
+
+<section>
+<h2>Preguntas frecuentes</h2>
+<ul class="lista-faq">
+<li><strong>¿Las herramientas resuelven los ejercicios paso a paso?</strong> En muchas páginas sí, ya sea mediante trabajo guiado por el usuario o mediante resolución automática.</li>
+<li><strong>¿Hace falta conocer previamente el procedimiento?</strong> Conviene tener una base teórica, pero la estructura de la web ayuda a seguir los pasos con más claridad.</li>
+<li><strong>¿La resolución automática sustituye al trabajo manual?</strong> No. Está pensada como apoyo, comprobación o referencia, no como único modo de uso.</li>
+<li><strong>¿Qué temas se trabajan principalmente?</strong> Matrices, determinantes, rango y sistemas de ecuaciones lineales, incluyendo algunos casos con parámetro.</li>
+<li><strong>¿Está orientada a Bachillerato?</strong> Sí, especialmente a contenidos habituales de Matemáticas I y II y Matemáticas Aplicadas a las Ciencias Sociales I y II.</li>
+</ul>
 </section>
 </main>
 </div>
-<footer class="siteFooter"><div class="footerInner"><a href="/about.html?v=1403262">Acerca de</a><a href="/contacto.html?v=1403262">Contacto</a><a href="/privacy.html?v=1403262">Privacidad</a><a href="/cookies.html?v=1403262">Cookies</a>
-<a href="aviso_legal.html?v=1403262">Aviso legal</a></div></footer>
-<script src="/common.js?v=1403262"></script></body>
+
+<footer class="siteFooter">
+<div class="footerInner">
+<a href="/about.html">Acerca de</a>
+<a href="/contacto.html">Contacto</a>
+<a href="/privacy.html">Privacidad</a>
+<a href="/cookies.html">Cookies</a>
+<a href="/aviso_legal.html">Aviso legal</a>
+</div>
+</footer>
+
+<script src="/common.js?v=1403262"></script>
+</body>
 </html>
