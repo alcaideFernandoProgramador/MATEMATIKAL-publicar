@@ -1,54 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Sistemas de ecuaciones por Gauss: teoría y ejemplos | Matematikal</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="/common.css" rel="stylesheet"/>
-<meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución (única, infinitas o ninguna)." name="description"/>
-<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet"/>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
-<style>
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
-.heroTop{display:flex;align-items:center;gap:14px}
-.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
-.heroTop .trabajoBtn{margin-left:auto}
-.muted{opacity:.82;margin:8px 0 0}
-.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
-.card h2{margin:0 0 10px;font-size:20px}
-.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
-ul{margin:10px 0 0;padding-left:18px}
-li{margin:6px 0}
-.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="/common.css"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución: única, infinita o ninguna."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style id="app-intro-unified">
-body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;background:linear-gradient(180deg,#f6f8ff 0%,#fbfcff 38%,#ffffff 100%)}
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(245,247,255,.94));border:1px solid rgba(66,71,112,.12)!important;border-radius:24px;box-shadow:0 18px 40px rgba(60,72,120,.12)!important;padding:22px!important}
-.heroTop,.heroHeader{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;gap:12px 16px;align-items:start;margin:0!important}
-.heroTop h1,.heroHeader h1,.heroTitle{margin:0!important;font-size:clamp(1.7rem,3vw,2.5rem)!important;letter-spacing:-.045em!important;line-height:1.05;min-width:0}
-.heroLead,.heroDesc p,.hero p,.muted{font-size:1.02rem;line-height:1.75}
-.volverBtn,.trabajoBtn{display:inline-flex!important;align-items:center;justify-content:center;padding:12px 18px!important;border-radius:999px!important;border:1px solid rgba(57,63,102,.13)!important;text-decoration:none!important;font-weight:800!important;letter-spacing:.02em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,color .16s ease;white-space:nowrap}
-.volverBtn{background:#fff!important;color:#1f2540!important;box-shadow:0 10px 24px rgba(39,48,92,.08)!important}
-.trabajoBtn{background:linear-gradient(135deg,#4f46e5,#2563eb)!important;color:#fff!important;box-shadow:0 16px 30px rgba(55,78,210,.24)!important}
-.volverBtn:hover,.trabajoBtn:hover{transform:translateY(-1px)}
-.card,.accentCard,.modeCard,.infoCard,.optCard,.miniCard,.op{background:rgba(255,255,255,.96)!important;border:1px solid rgba(66,71,112,.10)!important;border-radius:20px!important;box-shadow:0 12px 26px rgba(60,72,120,.08)!important}
-.card,.accentCard{padding:22px!important}
-.card h2,.accentCard h2{font-size:1.28rem!important;letter-spacing:-.02em}
-.miniTitle{font-size:.84rem!important;font-weight:800!important;text-transform:uppercase;letter-spacing:.11em;opacity:.62}
-.pill{background:rgba(79,70,229,.08)!important;border:1px solid rgba(79,70,229,.14)!important;color:#312e81}
-.k{background:linear-gradient(180deg,rgba(246,248,255,.98),rgba(255,255,255,.98))!important;border:1px solid rgba(66,71,112,.08)!important;border-radius:18px!important;padding:16px!important}
-.btnRow,.pillRow{display:flex;flex-wrap:wrap;gap:12px}
-@media (max-width:900px){.heroTop,.heroHeader{grid-template-columns:1fr!important}.trabajoBtn,.volverBtn{justify-self:start}.introWrap{padding:16px}}
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+<style>
+body{font-family:'Inter',system-ui,Arial,sans-serif}
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;flex:1;min-width:220px}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.notesList,.stepsList,.errorsList{margin:0;padding-left:20px}.notesList li,.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultado{margin-top:14px;display:flex;justify-content:center}.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.trabajoBtn{margin-left:0}}
 </style>
 </head>
 <body>
@@ -59,45 +27,130 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <h1>Sistemas lineales por Gauss</h1>
 <a class="trabajoBtn" href="Sistemas_gauss.html">IR A LA PÁGINA DE TRABAJO</a>
 </div>
-<p class="muted">Resuelve sistemas lineales mediante eliminación gaussiana y obtén el tipo de solución (única, infinitas o ninguna).</p>
-<p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
-<p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
+<p class="heroLead">Resuelve sistemas de ecuaciones lineales con eliminación de Gauss. La herramienta transforma la matriz ampliada en una matriz escalonada equivalente y, a partir de ella, determina si el sistema tiene solución única, infinitas soluciones o ninguna.</p>
+<div class="pillRow"><span class="pill">Matriz ampliada</span><span class="pill">Escalonamiento</span><span class="pill">Compatibilidad</span></div>
 </section>
-<section class="card">
-<h2>Cómo se usa</h2>
-<ul>
-<li>Indica el número de ecuaciones y de incógnitas.</li><li>Introduce la matriz ampliada (coeficientes y términos independientes).</li><li>Pulsa calcular para ver el escalonamiento y la solución.</li>
+<div class="grid">
+<section class="accentCard span8">
+<p class="miniTitle">Idea clave</p>
+<h2>¿Qué hace el método de Gauss?</h2>
+<p>Se parte de la matriz ampliada del sistema y se aplican operaciones elementales por filas hasta obtener una <strong>matriz escalonada equivalente</strong>. A partir de esa matriz se estudia el número de pivotes, el número de filas no nulas y la relación entre ecuaciones e incógnitas.</p>
+<p>Con esa información se decide si el sistema es <strong>compatible determinado</strong>, <strong>compatible indeterminado</strong> o <strong>incompatible</strong>. Cuando existe solución, esta se obtiene por sustitución regresiva a partir del sistema escalonado final.</p>
+<p class="muted">Es uno de los procedimientos fundamentales para resolver sistemas lineales de forma sistemática y clara.</p>
+</section>
+<section class="card span4">
+<p class="miniTitle">Notas</p>
+<h2>Antes de empezar</h2>
+<ul class="notesList">
+<li>Indica bien el número de ecuaciones y de incógnitas antes de rellenar la matriz.</li>
+<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
+<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
 </ul>
 </section>
-<section class="card">
-<h2>Ejemplo rápido</h2>
+<section class="card span6">
+<p class="miniTitle">Cómo se usa</p>
+<h2>Paso a paso</h2>
+<ol class="stepsList">
+<li>Introduce las dimensiones del sistema y completa la matriz ampliada.</li>
+<li>Comprueba que cada ecuación esté bien trasladada a coeficientes y términos independientes.</li>
+<li>Pulsa calcular para ver el proceso de escalonamiento y la clasificación del sistema.</li>
+<li>Lee la solución final o, si procede, la descripción de los parámetros libres.</li>
+</ol>
+</section>
+<section class="card span6">
+<p class="miniTitle">Errores típicos</p>
+<h2>Conviene vigilarlos</h2>
+<ul class="errorsList">
+<li>Mezclar el orden de las incógnitas al construir la matriz ampliada.</li>
+<li>Olvidar cambiar también el término independiente al operar con filas.</li>
+<li>Interpretar mal una fila nula o una fila incompatible del tipo \\(0\;0\;0\mid b)\\ con \\(b\neq 0\\).</li>
+</ul>
+</section>
+<section class="card span12">
+<p class="miniTitle">Ejemplo</p>
+<h2>Resolución completa</h2>
 <div class="k">\[
-\left\{\begin{aligned}
-x+y+z&amp;=1\\
-2x-y+z&amp;=3\\
-x+2y-z&amp;=-1
-\end{aligned}\right.
-\Rightarrow
+\text{Resuelve el sistema por el método de Gauss: }\left\{
 \begin{aligned}
-x&amp;=1\\
-y&amp;=-1\\
-z&amp;=1
+& x_{1}+x_{2}+x_{3}=1 \\
+& 2x_{1}-x_{2}+x_{3}=3 \\
+& 3x_{1}-x_{2}-4x_{3}=1
+\end{aligned}
+\right.
+\]
+\[
+1)\ \text{Se escribe la matriz de Gauss del sistema y se realizan las transformaciones correspondientes hasta obtener una matriz escalonada equivalente:}
+\]
+\[
+\begin{aligned}
+& \left( \begin{matrix}
+1 & 1 & 1 \\
+2 & -1 & 1 \\
+3 & -1 & -4
+\end{matrix}\,\left|\,\begin{matrix}
+1 \\
+3 \\
+1
+\end{matrix} \right. \right)\underset{F_{2}\to F_{2}-2F_{1}}{\sim}\,\left( \begin{matrix}
+1 & 1 & 1 \\
+0 & -3 & -1 \\
+3 & -1 & -4
+\end{matrix}\,\left|\,\begin{matrix}
+1 \\
+1 \\
+1
+\end{matrix} \right. \right)\underset{F_{3}\to F_{3}-3F_{1}}{\sim}\,\left( \begin{matrix}
+1 & 1 & 1 \\
+0 & -3 & -1 \\
+0 & -4 & -7
+\end{matrix}\,\left|\,\begin{matrix}
+1 \\
+1 \\
+-2
+\end{matrix} \right. \right) \\
+& \underset{F_{3}\to -3F_{3}+4F_{2}}{\sim}\,\left( \begin{matrix}
+1 & 1 & 1 \\
+0 & -3 & -1 \\
+0 & 0 & 17
+\end{matrix}\,\left|\,\begin{matrix}
+1 \\
+1 \\
+10
+\end{matrix} \right. \right)
 \end{aligned}
 \]
+\[
+2)\ \text{Como el número de filas no nulas de la matriz escalonada es 3 y el número de incógnitas es 3, el sistema es compatible determinado; es decir, tiene solución única que se obtiene utilizando el sistema escalonado determinado por la última matriz:}
+\]
+\[
+\begin{aligned}
+& \left\{
+\begin{aligned}
+& x_{1}+x_{2}+x_{3}=1 \\
+& -3x_{2}-x_{3}=1 \\
+& 17x_{3}=10
+\end{aligned}
+\right.
+\Rightarrow
+\left\{
+\begin{aligned}
+& x_{3}=\frac{10}{17} \\
+& -3x_{2}-\frac{10}{17}=1\Rightarrow x_{2}=-\frac{9}{17} \\
+& x_{1}-\frac{9}{17}+\frac{10}{17}=1\Rightarrow x_{1}=\frac{16}{17}
+\end{aligned}
+\right.
+\\
+& \Rightarrow \text{Sistema compatible determinado. Solución única }\left[ \begin{matrix}
+x_{1}=\frac{16}{17}, & x_{2}=-\frac{9}{17}, & x_{3}=\frac{10}{17}
+\end{matrix} \right]
+\end{aligned}
+\]</div></div>
+<div class="resultado"><span>Solución única</span></div>
+</section>
 </div>
-</section>
-<section class="card">
-<h2>Errores típicos</h2>
-<ul>
-<li>No balancear bien la matriz ampliada (mezclar términos independientes).</li><li>Olvidar que un pivote nulo requiere permutar filas.</li><li>En sistemas con parámetro, no separar casos según el valor del parámetro.</li>
-</ul>
-</section>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-if(window.renderMathInElement){
-renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
-}});
+document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
 </body>
 </html>
