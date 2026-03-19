@@ -1,117 +1,139 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async crossorigin="anonymous"
-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
-
-<meta charset="utf-8">
-<title>Rango de una matriz con parámetro por Gauss | Matematikal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="/common.css?v=1403262">
-
-<meta name="author" content="Fernando Alcaide Guindo">
-<meta name="description"
-content="Calcula el rango de una matriz con parámetro mediante el método de Gauss.">
-
-<link rel="stylesheet"
-href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403262">
-
-<script defer
-src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403262"></script>
-
-<script defer
-src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403262"></script>
-
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8"/>
+<title>Rango de una matriz con parámetro por Gauss: teoría y ejemplos | Matematikal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="/common.css?v=1403262"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403262"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403262"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403262"></script>
 <style>
-
-.introWrap{
-max-width:1150px;
-margin:0 auto;
-padding:20px
-}
-
-.hero{
-margin-top:10px;
-background:rgba(0,0,0,.03);
-border:1px solid rgba(0,0,0,.08);
-border-radius:18px;
-box-shadow:0 10px 22px rgba(0,0,0,.08);
-padding:18px
-}
-
-.heroTop{
-display:flex;
-align-items:center;
-gap:14px
-}
-
-.heroTop h1{
-margin:0;
-font-size:34px
-}
-
+body{font-family:'Inter',system-ui,Arial,sans-serif}
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:start}.heroTop h1{margin:0;font-size:clamp(1.02rem,2vw,1.82rem);letter-spacing:-.04em;min-width:0;white-space:nowrap}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.ops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.op{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.9)}.op strong{display:block;margin-bottom:6px}.notesList,.stepsList,.errorsList{margin:0;padding-left:20px}.notesList li,.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{grid-column:2;justify-self:end;margin-top:2px}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.ops{grid-template-columns:1fr}.heroTop{grid-template-columns:1fr}.heroTop h1{white-space:normal}.trabajoBtn{grid-column:1;justify-self:start}}
 </style>
 </head>
-
 <body>
-
 <div class="introWrap">
-
 <section class="hero">
-
 <div class="heroTop">
-<h1>Rango con parámetro (Gauss)</h1>
+<a class="volverBtn" href="/index.html">VOLVER</a>
+<h1>Rango de una matriz con parámetro (método de Gauss)</h1>
+<a class="trabajoBtn" href="Rango_parametro_Gauss.html">IR A LA PÁGINA DE TRABAJO</a>
 </div>
-
-<p>
-En algunas matrices los elementos dependen de un parámetro. En estos
-casos el rango de la matriz puede cambiar según el valor que tome
-dicho parámetro. Para estudiar esta situación se utiliza el método
-de eliminación de Gauss, analizando en qué casos aparece un pivote
-nulo o no nulo.
-</p>
-
-<p>
-Durante el proceso de escalonamiento pueden aparecer expresiones que
-dependen del parámetro. Cuando una de estas expresiones puede
-anularse, es necesario estudiar los distintos valores del parámetro
-para los cuales el rango de la matriz cambia.
-</p>
-
-<div style="
-margin-top:22px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-max-width:600px">
-
-<a class="trabajoBtn"
-href="../MATRIZ_ESCALONADA/Matriz_escalonada.html?v=1403262">
-Matriz escalonada
-</a>
-
-<a class="trabajoBtn"
-href="../RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html?v=1403262">
-Rango de una matriz
-</a>
-
-<a class="trabajoBtn"
-href="../SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html?v=1403262">
-Sistemas lineales
-</a>
-
-<a class="trabajoBtn"
-href="../SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html?v=1403262">
-Sistemas lineales con un parámetro
-</a>
-
-</div>
-
+<p class="heroLead">Calcula el rango de una matriz con un parámetro usando el método de Gauss. La idea es escalonar la matriz y estudiar los valores del parámetro que anulan algún pivote y/o convierten una fila en nula. Un pivote de una fila es el primer elemento no nulo de dicha fila.</p>
+<div class="pillRow"><span class="pill">Estudio por casos</span><span class="pill">Parámetros</span><span class="pill">Eliminación de Gauss</span></div>
 </section>
-
+<div class="grid">
+<section class="accentCard span8">
+<p class="miniTitle">Idea clave</p>
+<h2>¿Qué se hace exactamente?</h2>
+<p>Cuando una matriz contiene un parámetro, su rango puede variar según el valor que tome dicho parámetro. Por eso no basta con escalonar sin más: hay que observar en qué momento aparece una expresión que puede anularse y, a partir de ahí, separar el estudio en casos.</p>
+<p>El procedimiento consiste en realizar operaciones elementales por filas o columnas hasta obtener una <strong>matriz escalonada</strong>. Después se identifican los valores del parámetro que hacen nulo algún pivote o toda una fila, y finalmente se calcula el rango en cada caso particular y en el caso general.</p>
+<p class="muted">En resumen: primero se simplifica la matriz y después se hace un <strong>estudio por casos</strong> para decidir cuántas filas no nulas quedan en cada situación.</p>
+</section>
+<section class="card span4">
+<p class="miniTitle">Notas</p>
+<h2>Antes de empezar</h2>
+<ul class="notesList">
+<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
+<li>Escribe siempre el parámetro con la misma letra en toda la matriz.</li>
+<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
+</ul>
+</section>
+<section class="card span12">
+<p class="miniTitle">Operaciones elementales</p>
+<h2>Las que puedes aplicar</h2>
+<div class="ops">
+<div class="op"><strong>Opción 1</strong><span>Permutar el orden de dos filas o dos columnas.</span></div>
+<div class="op"><strong>Opción 2</strong><span>Reordenar para colocar antes la fila o columna más conveniente.</span></div>
+<div class="op"><strong>Opción 3</strong><span>Multiplicar o dividir una fila por un número distinto de 0.</span></div>
+<div class="op"><strong>Opción 4</strong><span>Sustituir una fila por una combinación lineal de varias filas.</span></div>
 </div>
-
+</section>
+<section class="card span6">
+<p class="miniTitle">Cómo se usa</p>
+<h2>Paso a paso</h2>
+<ol class="stepsList">
+<li>Introduce las dimensiones de la matriz. Rellena los elementos y valida con ENTER o TAB.</li>
+<li>Aplica operaciones elementales hasta obtener una matriz escalonada.</li>
+<li>Observa qué valores del parámetro anulan algún pivote y/o hacen alguna fila nula.</li>
+<li>Estudia los casos particulares y, por último, el caso general.</li>
+</ol>
+</section>
+<section class="card span6">
+<p class="miniTitle">Errores típicos</p>
+<h2>Conviene vigilarlos</h2>
+<ul class="errorsList">
+<li>Olvidar estudiar los valores del parámetro que anulan un pivote.</li>
+<li>Concluir el rango antes de analizar si una fila puede hacerse nula.</li>
+<li>Perder el control de los signos al operar con expresiones algebraicas.</li>
+<li>Confundir un caso particular con el caso general.</li>
+</ul>
+</section>
+<section class="card span12">
+<p class="miniTitle">Ejemplo rápido</p>
+<h2>Aplicación del método</h2>
+<p><strong>Estudia el rango de la matriz A según los valores del parámetro a</strong></p>
+<div class="k">\[
+A=\left( \begin{matrix}
+2 & 1 & 0 & 1\\
+ a-1 & 2 & -1 & 0\\
+1 & -2 & a+1 & 8
+\end{matrix} \right)
+\]</div>
+<p style="margin-top:14px"><strong>1)</strong> Se realizan las transformaciones hasta encontrar una matriz escalonada</p>
+<div class="k">\[
+\begin{aligned}
+&\left( \begin{matrix}
+2 & 1 & 0 & 1\\
+ a-1 & 2 & -1 & 0\\
+1 & -2 & a+1 & 8
+\end{matrix} \right)\underset{{{C}_{1}}\leftrightarrow {{C}_{4}}}{\mathop{\sim }}\,\left( \begin{matrix}
+1 & 1 & 0 & 2\\
+0 & 2 & -1 & a-1\\
+8 & -2 & a+1 & 1
+\end{matrix} \right)\\[6pt]
+&\underset{{{F}_{3}}\to {{F}_{3}}-8{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
+1 & 1 & 0 & 2\\
+0 & 2 & -1 & a-1\\
+0 & -10 & a+1 & -15
+\end{matrix} \right)\underset{{{F}_{3}}\to {{F}_{3}}+5{{F}_{2}}}{\mathop{\sim }}\,\left( \begin{matrix}
+1 & 1 & 0 & 2\\
+0 & 2 & -1 & a-1\\
+0 & 0 & a-4 & 5a-20
+\end{matrix} \right)
+\end{aligned}
+\]</div>
+<p style="margin-top:14px"><strong>2)</strong> Se observan los valores de <strong>a</strong> que hacen que alguna de las filas sea nula. En este caso, se observa que para <strong>a=4</strong> la tercera fila es nula.</p>
+<p><strong>3)</strong> Se estudian los casos particulares:</p>
+<div class="k">\[
+\text{Para }a=4\Rightarrow \left( \begin{matrix}
+1 & 1 & 0 & 2\\
+0 & 2 & -1 & 3\\
+0 & 0 & 0 & 0
+\end{matrix} \right)\Rightarrow \text{nº de filas no nulas es 2}\Rightarrow rg(A)=2
+\]</div>
+<p style="margin-top:14px"><strong>4)</strong> Se estudia el caso general:</p>
+<div class="k">\[
+\text{Para }a\neq 4\Rightarrow \left( \begin{matrix}
+1 & 1 & 0 & 2\\
+0 & 2 & -1 & a-1\\
+0 & 0 & a-4 & 5a-20
+\end{matrix} \right)\Rightarrow \text{nº de filas no nulas es 3}\Rightarrow rg(A)=3
+\]</div>
+<div class="resultadoRango"><span>Si a=4, rg(A)=2</span><span>Si a≠4, rg(A)=3</span></div>
+</section>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
+</script>
 </body>
 </html>

@@ -1,30 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Rango de una matriz con parámetro por menores | Matematikal</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="/common.css?v=1403262" rel="stylesheet"/>
-<meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Calcula el rango de una matriz usando rango con parámetro (menores) y comprueba el resultado con un ejemplo." name="description"/>
-<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403262" rel="stylesheet"/>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403262"></script>
-<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403262"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="/common.css?v=1403262"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css?v=1403262"/>
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js?v=1403262"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js?v=1403262"></script>
 <style>
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:18px}
-.heroTop{display:flex;align-items:center;gap:14px}
-.heroTop h1{margin:0;font-size:34px;letter-spacing:-.3px;flex:1}
-.heroTop .trabajoBtn{margin-left:auto}
-.muted{opacity:.82;margin:8px 0 0}
-.card{margin-top:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;box-shadow:0 6px 14px rgba(0,0,0,.06);padding:18px}
-.card h2{margin:0 0 10px;font-size:20px}
-.k{display:block;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 14px;overflow:auto}
-ul{margin:10px 0 0;padding-left:18px}
-li{margin:6px 0}
-.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+body{font-family:'Inter',system-ui,Arial,sans-serif}
+.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(1.9rem,3.4vw,2.65rem);letter-spacing:-.04em;flex:1;min-width:320px;line-height:1.08}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.stepsList,.errorsList{margin:0;padding-left:20px}.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.stepBlocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.stepBlock{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.92)}.stepBlock strong{display:block;margin-bottom:6px}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:12px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto;margin-top:8px}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.stepBlocks{grid-template-columns:1fr}.trabajoBtn{margin-left:0}.heroTop h1{min-width:unset}}
 </style>
 </head>
 <body>
@@ -32,43 +24,99 @@ li{margin:6px 0}
 <section class="hero">
 <div class="heroTop">
 <a class="volverBtn" href="/index.html">VOLVER</a>
-<h1>Rango con parámetro (menores)</h1>
+<h1>Rango de una matriz con parámetro por menores</h1>
 <a class="trabajoBtn" href="Rango_parametro_menores.html">IR A LA PÁGINA DE TRABAJO</a>
 </div>
-<p class="muted">Calcula el rango de una matriz usando rango con parámetro (menores) y comprueba el resultado con un ejemplo.</p>
-<p class="muted">Interpretación: el resultado debe leerse en el contexto del ejercicio. Por ejemplo, en rango y sistemas, el rango informa sobre independencia lineal y compatibilidad del sistema. En determinantes, un determinante distinto de cero indica invertibilidad.</p>
-<p class="muted">Consejo: si introduces fracciones, mantén una notación consistente (a/b) y valida cada celda con ENTER o TAB para evitar valores sin registrar.</p>
+<p class="heroLead">Calcula el rango de una matriz con un parámetro usando el método de los menores. La idea es encontrar un menor no nulo de cierto orden y estudiar qué valores del parámetro anulan los menores ampliados para decidir si el rango cambia según los casos.</p>
+<div class="pillRow"><span class="pill">Menores no nulos</span><span class="pill">Ampliación de menores</span><span class="pill">Estudio por casos</span></div>
 </section>
-<section class="card">
-<h2>Cómo se usa</h2>
-<ul>
-<li>Introduce las dimensiones de la matriz.</li><li>Rellena los elementos y valida con ENTER/TAB.</li><li>Pulsa calcular para obtener el rango y, según la página, los pasos.</li>
+<div class="grid">
+<section class="accentCard span8">
+<p class="miniTitle">Idea clave</p>
+<h2>¿Qué se hace exactamente?</h2>
+<p>Cuando una matriz contiene un parámetro, su rango puede variar según el valor que tome dicho parámetro. Por eso no basta con encontrar un menor no nulo sin más: después hay que ampliar ese menor y estudiar para qué valores del parámetro los menores de orden superior se anulan.</p>
+<p>El procedimiento consiste en buscar un <strong>menor no nulo</strong> de orden pequeño. Eso garantiza que el rango es al menos dicho orden. A continuación se amplía con filas y columnas adicionales para formar menores de orden superior. Después se determinan los valores del parámetro que hacen nulos esos menores y, a partir de ahí, se separa el estudio en casos.</p>
+<p class="muted">En resumen: primero se garantiza un rango mínimo, después se analizan los menores de orden máximo que pueden aparecer y finalmente se decide el rango en cada caso particular y en el caso general.</p>
+</section>
+<section class="card span4">
+<p class="miniTitle">Notas</p>
+<h2>Antes de empezar</h2>
+<ul class="stepsList">
+<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
+<li>Escribe siempre el parámetro con la misma letra en toda la matriz.</li>
+<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
 </ul>
 </section>
-<section class="card">
-<h2>Ejemplo rápido</h2>
-<div class="k">\[
-A(a)=\begin{bmatrix}
-1&amp;a&amp;0\\
-0&amp;1&amp;1\\
-1&amp;a&amp;1
-\end{bmatrix}
-\]
-\[\det(A(a))=1\Rightarrow \operatorname{rg}(A(a))=3\ \ (\text{para todo }a)\]
+<section class="card span12">
+<p class="miniTitle">Método de los menores</p>
+<h2>Pasos fundamentales</h2>
+<div class="stepBlocks">
+<div class="stepBlock"><strong>Paso 1</strong><span>Se busca un menor no nulo de orden pequeño. Eso garantiza que el rango es al menos dicho orden.</span></div>
+<div class="stepBlock"><strong>Paso 2</strong><span>Se amplía ese menor para formar menores de orden superior, normalmente de orden máximo posible.</span></div>
+<div class="stepBlock"><strong>Paso 3</strong><span>Se estudian los valores del parámetro que anulan simultáneamente esos menores. Con ello se obtienen los casos particulares y el caso general.</span></div>
 </div>
 </section>
-<section class="card">
-<h2>Errores típicos</h2>
-<ul>
-<li>Confundir rango con determinante (solo matrices cuadradas).</li><li>Olvidar que operaciones elementales por filas no cambian el rango.</li><li>En matrices con parámetro, olvidar estudiar los valores que anulan los menores/determinantes.</li>
+<section class="card span6">
+<p class="miniTitle">Cómo se usa</p>
+<h2>Paso a paso en la página</h2>
+<ol class="stepsList">
+<li>Introduce las dimensiones de la matriz. Rellena los elementos y valida con ENTER o TAB.</li>
+<li>Busca primero un menor de orden 2 que sea no nulo.</li>
+<li>Amplía ese menor con nuevas filas y columnas para obtener menores de orden superior.</li>
+<li>Observa qué valores del parámetro anulan todos los menores ampliados que estás usando.</li>
+<li>También puedes utilizar <strong>Solución automática</strong> para obtener la resolución completa con los casos intermedios.</li>
+</ol>
+</section>
+<section class="card span6">
+<p class="miniTitle">Errores típicos</p>
+<h2>Conviene vigilarlos</h2>
+<ul class="errorsList">
+<li>Elegir un menor inicial nulo y sacar conclusiones a partir de él.</li>
+<li>Ampliar el menor cambiando la base del estudio en mitad del proceso.</li>
+<li>Olvidar estudiar los valores del parámetro que anulan a la vez los menores de orden superior.</li>
+<li>Concluir un rango incorrecto cuando existe al menos un menor ampliado no nulo.</li>
 </ul>
 </section>
+<section class="card span12">
+<p class="miniTitle">Ejemplo rápido</p>
+<h2>Aplicación del método</h2>
+<div class="k">
+\[
+\begin{aligned}
+&\text{Dada la matriz }A=\left( \begin{matrix}
+   t & 1 & 0 & t-1  \\
+   2 & 1 & 1 & 2  \\
+   0 & 3 & t & 2  \\
+\end{matrix} \right)\text{, estudia su rango según los valores del parámetro }t \\
+&1)\ \text{Se observa que el menor }\left| \begin{matrix}
+   1 & 0  \\
+   1 & 1  \\
+\end{matrix} \right|=1\ne 0.\ \text{Por lo tanto, el rango siempre es superior o igual a 2.} \\
+&2)\ \text{Se obtienen los menores de orden máximo }(3)\text{ que se pueden formar ampliando el menor de orden 2 anterior:} \\
+&\left| \begin{matrix}
+   t & 1 & 0  \\
+   2 & 1 & 1  \\
+   0 & 3 & t  \\
+\end{matrix} \right|=t^2-5t \qquad \left| \begin{matrix}
+   1 & 0 & t-1  \\
+   1 & 1 & 2  \\
+   3 & t & 2  \\
+\end{matrix} \right|=2+t^2-t-3t+3-2t=t^2-6t+5 \\
+&3)\ \text{Se obtienen los valores de }t\text{ que anulan estos menores:} \\
+&t^2-5t=0\Rightarrow t=0,\ t=5 \qquad t^2-6t+5=0\Rightarrow t=1,\ t=5 \\
+&\text{El único valor de }t\text{ que anula los dos menores a la vez es }t=5.\ \text{Por tanto, se deben estudiar los casos }t=5\text{ y }t\ne 5. \\
+&4)\ \text{Para }t=5\text{, los dos menores de orden 3 son nulos y, por tanto, el orden del mayor menor no nulo es 2. }\operatorname{rg}(A)=2 \\
+&5)\ \text{Para }t\ne 5\text{, hay por lo menos un menor de orden 3 no nulo y, por tanto, }\operatorname{rg}(A)=3
+\end{aligned}
+\]
+</div>
+<p class="muted" style="margin-top:14px">En este ejemplo, el rango baja a 2 únicamente cuando \(t=5\). En el resto de los casos existe al menos un menor de orden 3 no nulo, así que el rango es 3.</p>
+<div class="resultadoRango"><span>Si t=5, rg(A)=2</span><span>Si t≠5, rg(A)=3</span></div>
+</section>
+</div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-if(window.renderMathInElement){
-renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
-}});
+document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
 </body>
 </html>
