@@ -1,24 +1,24 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Rango de una matriz con parámetro por menores | Matematikal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="/common.css"/>
-<meta name="author" content="Fernando Alcaide Guindo"/>
-<meta name="description" content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo."/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css"/>
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/common.css" rel="stylesheet"/>
+<meta content="Fernando Alcaide Guindo" name="author"/>
+<meta content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
 <style>
 body{font-family:'Inter',system-ui,Arial,sans-serif}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}.heroTop h1{margin:0;font-size:clamp(1.9rem,3.4vw,2.65rem);letter-spacing:-.04em;flex:1;min-width:320px;line-height:1.08}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.stepsList,.errorsList{margin:0;padding-left:20px}.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.stepBlocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.stepBlock{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.92)}.stepBlock strong{display:block;margin-bottom:6px}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:12px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{margin-left:auto;margin-top:8px}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.stepBlocks{grid-template-columns:1fr}.trabajoBtn{margin-left:0}.heroTop h1{min-width:unset}}
 </style>
-
 <style id="app-intro-unified">
 body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;background:linear-gradient(180deg,#f6f8ff 0%,#fbfcff 38%,#ffffff 100%)}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}
@@ -39,14 +39,14 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .btnRow,.pillRow{display:flex;flex-wrap:wrap;gap:12px}
 @media (max-width:900px){.heroTop,.heroHeader{grid-template-columns:1fr!important}.trabajoBtn,.volverBtn{justify-self:start}.introWrap{padding:16px}}
 </style>
-</head>
-<body>
+</link><link href="CSS/Hoja_estilo_rango_parametro_menores.css" rel="stylesheet"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js"></script><script defer="" src="JavaScript/Rango_parametro_menores.js"></script><style>.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}</style></head>
+<body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
 <a class="volverBtn" href="/index.html">VOLVER</a>
 <h1>Rango de una matriz con parámetro por menores</h1>
-<a class="trabajoBtn" href="Rango_parametro_menores.html">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 <p class="heroLead">Calcula el rango de una matriz con un parámetro usando el método de los menores. La idea es encontrar un menor no nulo de cierto orden y estudiar qué valores del parámetro anulan los menores ampliados para decidir si el rango cambia según los casos.</p>
 <div class="pillRow"><span class="pill">Menores no nulos</span><span class="pill">Ampliación de menores</span><span class="pill">Estudio por casos</span></div>
@@ -104,30 +104,30 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <div class="k">
 \[
 \begin{aligned}
-&\text{Dada la matriz }A=\left( \begin{matrix}
-   t & 1 & 0 & t-1  \\
-   2 & 1 & 1 & 2  \\
-   0 & 3 & t & 2  \\
+&amp;\text{Dada la matriz }A=\left( \begin{matrix}
+   t &amp; 1 &amp; 0 &amp; t-1  \\
+   2 &amp; 1 &amp; 1 &amp; 2  \\
+   0 &amp; 3 &amp; t &amp; 2  \\
 \end{matrix} \right)\text{, estudia su rango según los valores del parámetro }t \\
-&1)\ \text{Se observa que el menor }\left| \begin{matrix}
-   1 & 0  \\
-   1 & 1  \\
+&amp;1)\ \text{Se observa que el menor }\left| \begin{matrix}
+   1 &amp; 0  \\
+   1 &amp; 1  \\
 \end{matrix} \right|=1\ne 0.\ \text{Por lo tanto, el rango siempre es superior o igual a 2.} \\
-&2)\ \text{Se obtienen los menores de orden máximo }(3)\text{ que se pueden formar ampliando el menor de orden 2 anterior:} \\
-&\left| \begin{matrix}
-   t & 1 & 0  \\
-   2 & 1 & 1  \\
-   0 & 3 & t  \\
+&amp;2)\ \text{Se obtienen los menores de orden máximo }(3)\text{ que se pueden formar ampliando el menor de orden 2 anterior:} \\
+&amp;\left| \begin{matrix}
+   t &amp; 1 &amp; 0  \\
+   2 &amp; 1 &amp; 1  \\
+   0 &amp; 3 &amp; t  \\
 \end{matrix} \right|=t^2-5t \qquad \left| \begin{matrix}
-   1 & 0 & t-1  \\
-   1 & 1 & 2  \\
-   3 & t & 2  \\
+   1 &amp; 0 &amp; t-1  \\
+   1 &amp; 1 &amp; 2  \\
+   3 &amp; t &amp; 2  \\
 \end{matrix} \right|=2+t^2-t-3t+3-2t=t^2-6t+5 \\
-&3)\ \text{Se obtienen los valores de }t\text{ que anulan estos menores:} \\
-&t^2-5t=0\Rightarrow t=0,\ t=5 \qquad t^2-6t+5=0\Rightarrow t=1,\ t=5 \\
-&\text{El único valor de }t\text{ que anula los dos menores a la vez es }t=5.\ \text{Por tanto, se deben estudiar los casos }t=5\text{ y }t\ne 5. \\
-&4)\ \text{Para }t=5\text{, los dos menores de orden 3 son nulos y, por tanto, el orden del mayor menor no nulo es 2. }\operatorname{rg}(A)=2 \\
-&5)\ \text{Para }t\ne 5\text{, hay por lo menos un menor de orden 3 no nulo y, por tanto, }\operatorname{rg}(A)=3
+&amp;3)\ \text{Se obtienen los valores de }t\text{ que anulan estos menores:} \\
+&amp;t^2-5t=0\Rightarrow t=0,\ t=5 \qquad t^2-6t+5=0\Rightarrow t=1,\ t=5 \\
+&amp;\text{El único valor de }t\text{ que anula los dos menores a la vez es }t=5.\ \text{Por tanto, se deben estudiar los casos }t=5\text{ y }t\ne 5. \\
+&amp;4)\ \text{Para }t=5\text{, los dos menores de orden 3 son nulos y, por tanto, el orden del mayor menor no nulo es 2. }\operatorname{rg}(A)=2 \\
+&amp;5)\ \text{Para }t\ne 5\text{, hay por lo menos un menor de orden 3 no nulo y, por tanto, }\operatorname{rg}(A)=3
 \end{aligned}
 \]
 </div>
@@ -139,5 +139,70 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
-</body>
+</div><div id="calculadora" style="display:none">
+<div id="tituloinicial">
+<h1>RANGO DE UNA MATRIZ CON UN PARÁMETRO (método de los menores)</h1>
+<div id="controlesTop">
+<a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
+<a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18">
+<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
+</svg>
+<span>VOLVER</span>
+</a>
+</div>
+<div class="ventana" id="ventana1">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana1">×</span>
+<h2>Instrucciones</h2>
+<iframe height="500px" id="pdf1" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+<div id="contenedor">
+<div id="caja1">
+<div id="tituloCaja1">
+        INTRODUCCIÓN DE DATOS
+        <div id="caja111"></div>
+</div>
+<div class="ventana" id="ventana2">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana2">×</span>
+<h2>Instrucciones</h2>
+<iframe height="500px" id="pdf2" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+<div id="caja2">
+<h4 id="letreroUsuario">ESPACIO DE OPERACIONES PROPUESTAS Y EFECTUADAS POR EL USUARIO</h4>
+<div id="caja21"></div>
+<div class="ventana" id="ventana3">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana3">×</span>
+<h2>Instrucciones</h2>
+<iframe height="500px" id="pdf3" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+</div>
+<footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
+<script src="/common.js"></script></div><script>
+document.addEventListener('DOMContentLoaded',function(){
+  var intro=document.getElementById('introPrincipal'), calc=document.getElementById('calculadora');
+  function enfocarPrimerInput(){
+    if(!calc) return;
+    var campo=calc.querySelector("input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])");
+    if(!campo) return;
+    requestAnimationFrame(function(){
+      try{ campo.focus({preventScroll:true}); }catch(e){ campo.focus(); }
+      if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
+    });
+  }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
+  var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
+  if(location.hash==='calculadora') mostrarCalc();
+});
+</script></body>
 </html>

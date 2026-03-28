@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-4871505410372543"></script>
-<meta charset="utf-8">
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8"/>
 <title>Operaciones con matrices: teoría, propiedades y ejemplos | Matematikal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Fernando Alcaide Guindo">
-<meta name="description" content="Operaciones con matrices: teoría, propiedades, ejemplos y guía de uso de la herramienta para sumar, restar, multiplicar matrices, obtener traspuestas, inversas y potencias.">
-<link rel="stylesheet" href="/common.css">
-<link rel="stylesheet" type="text/css" href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css">
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css">
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Fernando Alcaide Guindo" name="author"/>
+<meta content="Operaciones con matrices: teoría, propiedades, ejemplos y guía de uso de la herramienta para sumar, restar, multiplicar matrices, obtener traspuestas, inversas y potencias." name="description"/>
+<link href="/common.css" rel="stylesheet"/>
+<link href="CSS/Hoja_Estilo_Operaciones_Con_Matrices.css" rel="stylesheet" type="text/css"/>
+<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet"/>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
 <style>
 .introWrap{max-width:1100px;margin:0 auto;padding:20px}
 .hero{margin:6px 0 18px;padding:18px 18px 16px;border-radius:18px;border:1px solid rgba(0,0,0,.08);background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,0));box-shadow:0 10px 22px rgba(0,0,0,.08)}
@@ -54,10 +55,9 @@ code{padding:2px 6px;border-radius:6px;background:rgba(0,0,0,.06)}
 .infoCard h3{margin-top:0}
 body{line-height:1.6}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style id="app-intro-unified">
 body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;background:linear-gradient(180deg,#f6f8ff 0%,#fbfcff 38%,#ffffff 100%)}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}
@@ -78,14 +78,14 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .btnRow,.pillRow{display:flex;flex-wrap:wrap;gap:12px}
 @media (max-width:900px){.heroTop,.heroHeader{grid-template-columns:1fr!important}.trabajoBtn,.volverBtn{justify-self:start}.introWrap{padding:16px}}
 </style>
-</head>
-<body>
+<link href="../../CARPETAS_AUXILIARES/katex/katex.css" rel="stylesheet"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js"></script><script defer="" src="JavaScript/Operaciones_Con_matrices.js"></script><style>.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}</style></head>
+<body><div id="introPrincipal">
 <div class="introWrap">
 <header class="hero">
 <div class="heroHeader">
 <a class="volverBtn" href="/index.html">VOLVER</a>
 <h1 class="heroTitle">Operaciones con matrices</h1>
-<a class="trabajoBtn" href="Operaciones_con_matrices_trabajo.html">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 <div class="heroDesc">
 <p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos matriciales de dos formas principales:</p>
@@ -101,7 +101,6 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 </div>
 </div>
 </header>
-
 <section class="card">
 <h2>Qué son las operaciones con matrices</h2>
 <p>Las operaciones con matrices permiten trabajar de forma ordenada con tablas rectangulares de números o expresiones. En álgebra lineal son fundamentales para estudiar sistemas de ecuaciones lineales, transformaciones lineales, determinantes, rangos y muchos otros contenidos habituales en Bachillerato y en cursos iniciales de universidad.</p>
@@ -118,7 +117,6 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 </div>
 </div>
 </section>
-
 <section class="card callout">
 <h2>Propiedades básicas de las operaciones con matrices</h2>
 <ul class="bullets">
@@ -132,35 +130,30 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <li>En expresiones con varias matrices, el uso correcto de <strong>paréntesis</strong> y el orden de las operaciones puede cambiar completamente el resultado.</li>
 </ul>
 </section>
-
 <section class="card" id="miniEjemplo">
 <h2>Ejemplos rápidos</h2>
 <h3>Suma de matrices</h3>
-<p class="muted">Sean \(A=\begin{bmatrix}2 & 1 & -1\\ 1 & 0 & -3\\ 2 & 1 & -3\end{bmatrix}\) y \(B=\begin{bmatrix}1 & -2 & -2\\ 3 & 1 & -1\\ 0 & -1 & 0\end{bmatrix}\). La suma se obtiene sumando elemento a elemento.</p>
+<p class="muted">Sean \(A=\begin{bmatrix}2 &amp; 1 &amp; -1\\ 1 &amp; 0 &amp; -3\\ 2 &amp; 1 &amp; -3\end{bmatrix}\) y \(B=\begin{bmatrix}1 &amp; -2 &amp; -2\\ 3 &amp; 1 &amp; -1\\ 0 &amp; -1 &amp; 0\end{bmatrix}\). La suma se obtiene sumando elemento a elemento.</p>
 <div class="k">\[
-A+B=\begin{bmatrix}2+1&1-2&-1-2\\1+3&0+1&-3-1\\2+0&1-1&-3+0\end{bmatrix}
-=\begin{bmatrix}3&-1&-3\\4&1&-4\\2&0&-3\end{bmatrix}
+A+B=\begin{bmatrix}2+1&amp;1-2&amp;-1-2\\1+3&amp;0+1&amp;-3-1\\2+0&amp;1-1&amp;-3+0\end{bmatrix}
+=\begin{bmatrix}3&amp;-1&amp;-3\\4&amp;1&amp;-4\\2&amp;0&amp;-3\end{bmatrix}
 \]</div>
-
 <h3 style="margin-top:18px">Producto de matrices</h3>
-<p class="muted">Si \(C=\begin{bmatrix}1&2\\3&4\end{bmatrix}\) y \(D=\begin{bmatrix}0&1\\-1&2\end{bmatrix}\), entonces el producto \(CD\) se calcula combinando filas de la primera matriz con columnas de la segunda.</p>
+<p class="muted">Si \(C=\begin{bmatrix}1&amp;2\\3&amp;4\end{bmatrix}\) y \(D=\begin{bmatrix}0&amp;1\\-1&amp;2\end{bmatrix}\), entonces el producto \(CD\) se calcula combinando filas de la primera matriz con columnas de la segunda.</p>
 <div class="k">\[
-CD=\begin{bmatrix}1&2\\3&4\end{bmatrix}\begin{bmatrix}0&1\\-1&2\end{bmatrix}
-=\begin{bmatrix}1\cdot0+2\cdot(-1)&1\cdot1+2\cdot2\\3\cdot0+4\cdot(-1)&3\cdot1+4\cdot2\end{bmatrix}
-=\begin{bmatrix}-2&5\\-4&11\end{bmatrix}
+CD=\begin{bmatrix}1&amp;2\\3&amp;4\end{bmatrix}\begin{bmatrix}0&amp;1\\-1&amp;2\end{bmatrix}
+=\begin{bmatrix}1\cdot0+2\cdot(-1)&amp;1\cdot1+2\cdot2\\3\cdot0+4\cdot(-1)&amp;3\cdot1+4\cdot2\end{bmatrix}
+=\begin{bmatrix}-2&amp;5\\-4&amp;11\end{bmatrix}
 \]</div>
-
 <h3 style="margin-top:18px">Traspuesta de una matriz</h3>
-<p class="muted">Si \(E=\begin{bmatrix}1&0&2\\-1&3&4\end{bmatrix}\), su traspuesta se obtiene cambiando filas por columnas.</p>
+<p class="muted">Si \(E=\begin{bmatrix}1&amp;0&amp;2\\-1&amp;3&amp;4\end{bmatrix}\), su traspuesta se obtiene cambiando filas por columnas.</p>
 <div class="k">\[
-E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
+E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 \]</div>
-
 <div class="btnRow">
-<a class="trabajoBtn" href="ejemplo_operaciones_matrices.html">Ver ejemplo resuelto completo</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ver ejemplo resuelto completo</a>
 </div>
 </section>
-
 <section class="card">
 <h2>Cómo se usa</h2>
 <ol class="steps">
@@ -171,7 +164,6 @@ E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
 <li>En algunas operaciones combinadas se puede optar entre mostrar directamente el resultado o ir viendo pasos intermedios.</li>
 </ol>
 </section>
-
 <section class="card callout">
 <h2>Opciones disponibles</h2>
 <div class="optGrid">
@@ -187,7 +179,6 @@ E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
 <div class="optCard"><div class="optNum">Opción 10</div><div class="optTxt">Operaciones combinadas: mediante pasos realizados por el usuario.</div></div>
 </div>
 </section>
-
 <section class="grid2">
 <div class="card">
 <h2>Formatos admitidos</h2>
@@ -199,7 +190,6 @@ E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
 </ul>
 <p class="muted">Conviene mantener una notación consistente al introducir los datos para evitar errores en la interpretación de la expresión.</p>
 </div>
-
 <div class="card">
 <h2>Estructura de la página de trabajo</h2>
 <div class="miniCard">
@@ -216,7 +206,6 @@ E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
 </div>
 </div>
 </section>
-
 <section class="card mutedBox">
 <h2>Errores típicos</h2>
 <ul class="bullets">
@@ -231,16 +220,14 @@ E^t=\begin{bmatrix}1&-1\\0&3\\2&4\end{bmatrix}
 <li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
 </ul>
 </section>
-
 <section class="card">
 <h2>Practicar operaciones con matrices</h2>
 <p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres trabajar directamente con matrices, introducir tus propios datos y realizar operaciones paso a paso o de forma automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
 <div class="btnRow">
-<a class="trabajoBtn" href="Operaciones_con_matrices_trabajo.html">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </section>
 </div>
-
 <script>
 window.addEventListener('DOMContentLoaded',function(){
   if(window.renderMathInElement){
@@ -254,5 +241,56 @@ window.addEventListener('DOMContentLoaded',function(){
   }
 });
 </script>
-</body>
+</div><div id="calculadora" style="display:none">
+<div id="tituloinicial">
+<h1>OPERACIONES CON MATRICES</h1>
+<div id="controlesTop">
+<a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
+<a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
+<svg aria-hidden="true" height="18" style="display:block;fill:#111827;" viewbox="0 0 24 24" width="18">
+<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
+</svg>
+<span>VOLVER</span>
+</a>
+</div>
+<div class="ventana" id="ventana1">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana1">×</span>
+<h2>Instrucciones</h2>
+<iframe height="500px" id="pdf1" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+<div id="contenedor">
+<div id="caja1">
+<div id="tituloCaja1">
+<span>INTRODUCCIÓN DE DATOS</span>
+<span id="caja111"></span>
+</div>
+</div>
+<div id="caja2">
+<h4 id="letreroUsuario">ESPACIO DE OPERACIONES PROPUESTAS Y EFECTUADAS POR EL USUARIO/A</h4>
+<div id="caja21"></div>
+</div>
+</div>
+<footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
+<script src="/common.js"></script></div><script>
+document.addEventListener('DOMContentLoaded',function(){
+  var intro=document.getElementById('introPrincipal'), calc=document.getElementById('calculadora');
+  function enfocarPrimerInput(){
+    if(!calc) return;
+    var campo=calc.querySelector("input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])");
+    if(!campo) return;
+    requestAnimationFrame(function(){
+      try{ campo.focus({preventScroll:true}); }catch(e){ campo.focus(); }
+      if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
+    });
+  }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
+  var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
+  if(location.hash==='calculadora') mostrarCalc();
+});
+</script></body>
 </html>

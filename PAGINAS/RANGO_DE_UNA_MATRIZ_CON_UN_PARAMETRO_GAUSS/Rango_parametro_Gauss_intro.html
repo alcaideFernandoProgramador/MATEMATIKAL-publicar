@@ -1,24 +1,24 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <title>Rango de una matriz con parámetro por Gauss: teoría y ejemplos | Matematikal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="/common.css"/>
-<meta name="author" content="Fernando Alcaide Guindo"/>
-<meta name="description" content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos."/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../CARPETAS_AUXILIARES/katex/katex.min.css"/>
-<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
-<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/common.css" rel="stylesheet"/>
+<meta content="Fernando Alcaide Guindo" name="author"/>
+<meta content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
 <style>
 body{font-family:'Inter',system-ui,Arial,sans-serif}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:start}.heroTop h1{margin:0;font-size:clamp(1.02rem,2vw,1.82rem);letter-spacing:-.04em;min-width:0;white-space:nowrap}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.ops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.op{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.9)}.op strong{display:block;margin-bottom:6px}.notesList,.stepsList,.errorsList{margin:0;padding-left:20px}.notesList li,.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{grid-column:2;justify-self:end;margin-top:2px}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.ops{grid-template-columns:1fr}.heroTop{grid-template-columns:1fr}.heroTop h1{white-space:normal}.trabajoBtn{grid-column:1;justify-self:start}}
 </style>
-
 <style id="app-intro-unified">
 body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;background:linear-gradient(180deg,#f6f8ff 0%,#fbfcff 38%,#ffffff 100%)}
 .introWrap{max-width:1150px;margin:0 auto;padding:20px}
@@ -39,14 +39,14 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .btnRow,.pillRow{display:flex;flex-wrap:wrap;gap:12px}
 @media (max-width:900px){.heroTop,.heroHeader{grid-template-columns:1fr!important}.trabajoBtn,.volverBtn{justify-self:start}.introWrap{padding:16px}}
 </style>
-</head>
-<body>
+</link><script defer="" src="JavaScript/Rango_parametro_gauss.js" type="text/javascript"></script><link href="CSS/Hoja_estilo_rango_parametro_gauss.css" rel="stylesheet" type="text/css"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><style>.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}</style></head>
+<body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
 <a class="volverBtn" href="/index.html">VOLVER</a>
 <h1>Rango de una matriz con parámetro (método de Gauss)</h1>
-<a class="trabajoBtn" href="Rango_parametro_Gauss.html">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 <p class="heroLead">Calcula el rango de una matriz con un parámetro usando el método de Gauss. La idea es escalonar la matriz y estudiar los valores del parámetro que anulan algún pivote y/o convierten una fila en nula. Un pivote de una fila es el primer elemento no nulo de dicha fila.</p>
 <div class="pillRow"><span class="pill">Estudio por casos</span><span class="pill">Parámetros</span><span class="pill">Eliminación de Gauss</span></div>
@@ -104,31 +104,31 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <p><strong>Estudia el rango de la matriz A según los valores del parámetro a</strong></p>
 <div class="k">\[
 A=\left( \begin{matrix}
-2 & 1 & 0 & 1\\
- a-1 & 2 & -1 & 0\\
-1 & -2 & a+1 & 8
+2 &amp; 1 &amp; 0 &amp; 1\\
+ a-1 &amp; 2 &amp; -1 &amp; 0\\
+1 &amp; -2 &amp; a+1 &amp; 8
 \end{matrix} \right)
 \]</div>
 <p style="margin-top:14px"><strong>1)</strong> Se realizan las transformaciones hasta encontrar una matriz escalonada</p>
 <div class="k">\[
 \begin{aligned}
-&\left( \begin{matrix}
-2 & 1 & 0 & 1\\
- a-1 & 2 & -1 & 0\\
-1 & -2 & a+1 & 8
+&amp;\left( \begin{matrix}
+2 &amp; 1 &amp; 0 &amp; 1\\
+ a-1 &amp; 2 &amp; -1 &amp; 0\\
+1 &amp; -2 &amp; a+1 &amp; 8
 \end{matrix} \right)\underset{{{C}_{1}}\leftrightarrow {{C}_{4}}}{\mathop{\sim }}\,\left( \begin{matrix}
-1 & 1 & 0 & 2\\
-0 & 2 & -1 & a-1\\
-8 & -2 & a+1 & 1
+1 &amp; 1 &amp; 0 &amp; 2\\
+0 &amp; 2 &amp; -1 &amp; a-1\\
+8 &amp; -2 &amp; a+1 &amp; 1
 \end{matrix} \right)\\[6pt]
-&\underset{{{F}_{3}}\to {{F}_{3}}-8{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
-1 & 1 & 0 & 2\\
-0 & 2 & -1 & a-1\\
-0 & -10 & a+1 & -15
+&amp;\underset{{{F}_{3}}\to {{F}_{3}}-8{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
+1 &amp; 1 &amp; 0 &amp; 2\\
+0 &amp; 2 &amp; -1 &amp; a-1\\
+0 &amp; -10 &amp; a+1 &amp; -15
 \end{matrix} \right)\underset{{{F}_{3}}\to {{F}_{3}}+5{{F}_{2}}}{\mathop{\sim }}\,\left( \begin{matrix}
-1 & 1 & 0 & 2\\
-0 & 2 & -1 & a-1\\
-0 & 0 & a-4 & 5a-20
+1 &amp; 1 &amp; 0 &amp; 2\\
+0 &amp; 2 &amp; -1 &amp; a-1\\
+0 &amp; 0 &amp; a-4 &amp; 5a-20
 \end{matrix} \right)
 \end{aligned}
 \]</div>
@@ -136,17 +136,17 @@ A=\left( \begin{matrix}
 <p><strong>3)</strong> Se estudian los casos particulares:</p>
 <div class="k">\[
 \text{Para }a=4\Rightarrow \left( \begin{matrix}
-1 & 1 & 0 & 2\\
-0 & 2 & -1 & 3\\
-0 & 0 & 0 & 0
+1 &amp; 1 &amp; 0 &amp; 2\\
+0 &amp; 2 &amp; -1 &amp; 3\\
+0 &amp; 0 &amp; 0 &amp; 0
 \end{matrix} \right)\Rightarrow \text{nº de filas no nulas es 2}\Rightarrow rg(A)=2
 \]</div>
 <p style="margin-top:14px"><strong>4)</strong> Se estudia el caso general:</p>
 <div class="k">\[
 \text{Para }a\neq 4\Rightarrow \left( \begin{matrix}
-1 & 1 & 0 & 2\\
-0 & 2 & -1 & a-1\\
-0 & 0 & a-4 & 5a-20
+1 &amp; 1 &amp; 0 &amp; 2\\
+0 &amp; 2 &amp; -1 &amp; a-1\\
+0 &amp; 0 &amp; a-4 &amp; 5a-20
 \end{matrix} \right)\Rightarrow \text{nº de filas no nulas es 3}\Rightarrow rg(A)=3
 \]</div>
 <div class="resultadoRango"><span>Si a=4, rg(A)=2</span><span>Si a≠4, rg(A)=3</span></div>
@@ -156,5 +156,50 @@ A=\left( \begin{matrix}
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
-</body>
+</div><div id="calculadora" style="display:none">
+<div id="tituloinicial">
+<h1>RANGO DE UNA MATRIZ según los valores de un parámetro<br/>MÉTODO DE GAUSS</h1>
+<div id="controlesTop">
+<a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
+<a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18">
+<path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
+</svg>
+<span>VOLVER</span>
+</a>
+</div>
+<div class="ventana" id="ventana1">
+<div class="contenidoVentana">
+<span class="cierraVentana" id="cierraVentana1">×</span>
+<h2>AYUDA</h2>
+<iframe height="500px" id="pdf1" src="" width="100%"></iframe>
+</div>
+</div>
+</div>
+<p id="notaParametro"><span id="span1">(El parámetro solo puede tomar valores enteros o racionales)</span></p>
+<div id="contenedor">
+<div id="caja1"></div>
+<div id="caja2"></div>
+<div id="contenedorCaja3"></div>
+</div>
+<footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
+<script src="/common.js"></script></div><script>
+document.addEventListener('DOMContentLoaded',function(){
+  var intro=document.getElementById('introPrincipal'), calc=document.getElementById('calculadora');
+  function enfocarPrimerInput(){
+    if(!calc) return;
+    var campo=calc.querySelector("input:not([type='hidden']):not([disabled]), textarea:not([disabled]), select:not([disabled])");
+    if(!campo) return;
+    requestAnimationFrame(function(){
+      try{ campo.focus({preventScroll:true}); }catch(e){ campo.focus(); }
+      if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
+    });
+  }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
+  var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
+  if(location.hash==='calculadora') mostrarCalc();
+});
+</script></body>
 </html>
