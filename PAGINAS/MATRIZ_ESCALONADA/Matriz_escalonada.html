@@ -103,6 +103,27 @@ sistemas de ecuaciones lineales mediante el método de Gauss.
 </ul>
 </section>
 <section class="card">
+<h2>Definición formal de matriz escalonada</h2>
+<p>Una matriz \(A\) de orden \(m \times n\) se dice que está en <strong>forma escalonada por filas</strong> si cumple simultáneamente las dos condiciones siguientes:</p>
+<ul>
+<li>Todas las filas nulas (si las hay) están situadas en los últimos lugares, debajo de todas las filas no nulas.</li>
+<li>El <strong>pivote</strong> de cada fila no nula —es decir, su primer elemento distinto de cero— está situado estrictamente más a la derecha que el pivote de la fila inmediatamente anterior.</li>
+</ul>
+<p>Esta definición implica que por debajo de cada pivote solo pueden aparecer ceros. Los pivotes no tienen por qué ser iguales a 1; basta con que sean distintos de cero. Cuando además todos los pivotes valen 1 y por encima de cada pivote también hay ceros, se habla de <strong>forma escalonada reducida</strong>, que es un caso más estricto y no es el objetivo de esta herramienta.</p>
+</section>
+
+<section class="card">
+<h2>Operaciones elementales por filas</h2>
+<p>La forma escalonada se obtiene aplicando <strong>operaciones elementales por filas</strong>, que son transformaciones que no alteran el rango de la matriz ni el conjunto de soluciones de un sistema asociado. Existen tres tipos:</p>
+<ul>
+<li><strong>Permutación de filas</strong> \((F_i \leftrightarrow F_j)\): intercambiar dos filas completas. Resulta útil cuando el pivote de una fila es cero y conviene buscar una fila con un elemento no nulo en esa posición.</li>
+<li><strong>Multiplicación de una fila por un escalar no nulo</strong> \((F_i \to k \cdot F_i,\ k \neq 0)\): multiplicar o dividir todos los elementos de una fila por un mismo número. Se usa habitualmente para simplificar fracciones o para hacer que el pivote valga 1.</li>
+<li><strong>Combinación lineal de filas</strong> \((F_i \to F_i + k \cdot F_j)\): reemplazar una fila por la suma de ella misma más un múltiplo de otra fila. Es la operación clave para introducir ceros debajo de los pivotes.</li>
+</ul>
+<p>Cualquier secuencia de operaciones elementales por filas conduce a una matriz equivalente por filas a la original. La forma escalonada resultante no es única (puede haber varias secuencias de operaciones que lleven a formas escalonadas distintas pero equivalentes), aunque el número de pivotes —y por tanto el rango— sí es único.</p>
+</section>
+
+<section class="card">
 <h2>Cómo se usa</h2>
 <ul>
 <li>Introduce el número de filas y columnas.</li>
@@ -111,38 +132,113 @@ sistemas de ecuaciones lineales mediante el método de Gauss.
 <li>Alternativamente, pero no recomendado, puedes pulsar "solución automática" para obtener una de las posibles soluciones. En este caso, aparecerán también los pasos intermedios utilizados.</li>
 </ul>
 </section>
+
 <section class="card">
-<h2>Ejemplo rápido (3×4)</h2>
-<p class="muted">Se aplican operaciones por filas para anular los elementos bajo los pivotes.</p>
+<h2>Ejemplo resuelto paso a paso (3×4)</h2>
+<p class="muted">Se parte de una matriz 3×4 y se aplican operaciones elementales por filas hasta obtener la forma escalonada.</p>
+<p><strong>Matriz inicial:</strong></p>
 <div class="k">
-      \[
-      \left( \begin{matrix}
-      1 &amp; 2 &amp; -1 &amp; 3 \\
-      2 &amp; 4 &amp; 1 &amp; 7 \\
-      -1 &amp; 1 &amp; 2 &amp; 0 \\
-      \end{matrix} \right)\underset{{{F}_{2}}\to {{F}_{2}}-2{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
-      1 &amp; 2 &amp; -1 &amp; 3 \\
-      0 &amp; 0 &amp; 3 &amp; 1 \\
-      -1 &amp; 1 &amp; 2 &amp; 0 \\
-      \end{matrix} \right)\underset{{{F}_{3}}\to {{F}_{3}}+{{F}_{1}}}{\mathop{\sim }}\,\left( \begin{matrix}
-      1 &amp; 2 &amp; -1 &amp; 3 \\
-      0 &amp; 0 &amp; 3 &amp; 1 \\
-      0 &amp; 3 &amp; 1 &amp; 3 \\
-      \end{matrix} \right)\underset{F\downarrow }{\mathop{\sim }}\,\left( \begin{matrix}
-      1 &amp; 2 &amp; -1 &amp; 3 \\
-      0 &amp; 3 &amp; 1 &amp; 3 \\
-      0 &amp; 0 &amp; 3 &amp; 1 \\
-      \end{matrix} \right)
-      \]
-    </div>
-<p class="muted">La matriz final es escalonada: los pivotes aparecen cada vez más a la derecha y las filas nulas (si las hubiera) quedan abajo.</p>
+\[
+A = \left( \begin{matrix}
+1 &amp; 2 &amp; -1 &amp; 3 \\
+2 &amp; 4 &amp; 1 &amp; 7 \\
+-1 &amp; 1 &amp; 2 &amp; 0 \\
+\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 1:</strong> Se elige \(a_{11} = 1\) como pivote de la primera fila. Se aplica \(F_2 \to F_2 - 2F_1\) para introducir un cero en la posición (2,1):</p>
+<div class="k">
+\[
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\2 &amp; 4 &amp; 1 &amp; 7 \\-1 &amp; 1 &amp; 2 &amp; 0\end{matrix} \right)
+\underset{F_2 \to F_2 - 2F_1}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\0 &amp; 0 &amp; 3 &amp; 1 \\-1 &amp; 1 &amp; 2 &amp; 0\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 2:</strong> Se aplica \(F_3 \to F_3 + F_1\) para introducir un cero en la posición (3,1):</p>
+<div class="k">
+\[
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\0 &amp; 0 &amp; 3 &amp; 1 \\-1 &amp; 1 &amp; 2 &amp; 0\end{matrix} \right)
+\underset{F_3 \to F_3 + F_1}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\0 &amp; 0 &amp; 3 &amp; 1 \\0 &amp; 3 &amp; 1 &amp; 3\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 3:</strong> El pivote natural de la segunda fila sería \(a_{22}\), pero es 0. Se reordenan las filas \((F \downarrow)\) para que el pivote quede más a la izquierda:</p>
+<div class="k">
+\[
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\0 &amp; 0 &amp; 3 &amp; 1 \\0 &amp; 3 &amp; 1 &amp; 3\end{matrix} \right)
+\underset{F\downarrow}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 2 &amp; -1 &amp; 3 \\0 &amp; 3 &amp; 1 &amp; 3 \\0 &amp; 0 &amp; 3 &amp; 1\end{matrix} \right)
+\]
+</div>
+<p class="muted">La matriz final es escalonada: los tres pivotes (1, 3 y 3) aparecen cada vez más a la derecha, y por debajo de cada uno solo hay ceros. El rango de esta matriz es 3, ya que hay tres filas no nulas.</p>
 </section>
+
+<section class="card">
+<h2>Segundo ejemplo: matriz con fila nula (3×3)</h2>
+<p class="muted">Este ejemplo ilustra el caso en que la forma escalonada tiene una fila nula, lo que indica que el rango es menor que el número de filas.</p>
+<p><strong>Matriz inicial:</strong></p>
+<div class="k">
+\[
+B = \left( \begin{matrix}
+2 &amp; -1 &amp; 3 \\
+4 &amp; -2 &amp; 6 \\
+1 &amp; 0 &amp; 2
+\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 1:</strong> Se reordenan las filas para situar el pivote más conveniente arriba \((F_1 \leftrightarrow F_3)\):</p>
+<div class="k">
+\[
+\underset{F_1 \leftrightarrow F_3}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 0 &amp; 2 \\4 &amp; -2 &amp; 6 \\2 &amp; -1 &amp; 3\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 2:</strong> Se aplica \(F_2 \to F_2 - 4F_1\) y \(F_3 \to F_3 - 2F_1\):</p>
+<div class="k">
+\[
+\underset{\substack{F_2 \to F_2 - 4F_1 \\ F_3 \to F_3 - 2F_1}}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; -1 &amp; -1\end{matrix} \right)
+\]
+</div>
+<p><strong>Paso 3:</strong> Se aplica \(F_3 \to F_3 - \frac{1}{2}F_2\):</p>
+<div class="k">
+\[
+\underset{F_3 \to F_3 - \frac{1}{2}F_2}{\mathop{\sim}}\,
+\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; 0 &amp; 0\end{matrix} \right)
+\]
+</div>
+<p class="muted">La tercera fila es nula, lo que indica que las filas de la matriz original eran linealmente dependientes. El rango de \(B\) es 2.</p>
+</section>
+
+<section class="card">
+<h2>Relación con otros conceptos de álgebra lineal</h2>
+<p>La forma escalonada no es un fin en sí misma, sino una herramienta que facilita el estudio de otros conceptos fundamentales:</p>
+<ul>
+<li><strong>Rango de una matriz:</strong> el rango coincide con el número de filas no nulas de la forma escalonada. Si la forma escalonada tiene \(r\) pivotes, entonces \(\text{rg}(A) = r\).</li>
+<li><strong>Sistemas de ecuaciones lineales:</strong> escalonar la matriz ampliada de un sistema permite determinar si es compatible (determinado o indeterminado) o incompatible, y en caso de ser compatible, obtener la solución.</li>
+<li><strong>Dependencia lineal:</strong> si alguna fila se convierte en nula durante el escalonamiento, indica que esa fila era combinación lineal de las demás, es decir, que las filas son linealmente dependientes.</li>
+<li><strong>Determinantes:</strong> aunque el escalonamiento no se usa directamente para calcular determinantes, la relación entre matrices equivalentes por filas y el determinante (cada permutación cambia el signo, cada multiplicación escala el valor) está presente en muchos métodos de cálculo.</li>
+</ul>
+</section>
+
 <section class="card">
 <h2>Errores típicos</h2>
 <ul>
 <li>No validar algún dato (ENTER/TAB) y dejar una celda sin guardar.</li>
-<li>Confundir “escalonada” con “reducida”: aquí no es obligatorio que los pivotes sean 1 (es suficiente con que no sean nulos)</li>
-<li>Se debe tener cuidado con los signos de los coeficientes en los cambios de filas mediante combinaciones lineales.</li>
+<li>Confundir "escalonada" con "reducida": aquí no es obligatorio que los pivotes sean 1 (es suficiente con que no sean nulos).</li>
+<li>Tener especial cuidado con los signos de los coeficientes en los cambios de filas mediante combinaciones lineales.</li>
+<li>Olvidar reordenar las filas cuando el pivote natural de una posición es cero: en ese caso hay que buscar una fila inferior con un elemento no nulo en esa columna e intercambiarlas.</li>
+<li>Pensar que la forma escalonada es única: pueden existir varias formas escalonadas equivalentes a una misma matriz, aunque todas tendrán el mismo número de pivotes.</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>Preguntas frecuentes</h2>
+<ul>
+<li><strong>¿Es obligatorio que los pivotes sean 1?</strong> No. En la forma escalonada ordinaria los pivotes pueden ser cualquier número distinto de cero. Solo en la forma escalonada reducida se exige que los pivotes sean 1.</li>
+<li><strong>¿Puede haber más de una forma escalonada equivalente a una matriz?</strong> Sí. La secuencia de operaciones no es única y puede dar lugar a distintas formas escalonadas, pero todas tendrán el mismo número de pivotes y, por tanto, el mismo rango.</li>
+<li><strong>¿Qué ocurre si la matriz ya es escalonada?</strong> No es necesario realizar ninguna operación. La herramienta lo detectará y no propondrá transformaciones adicionales.</li>
+<li><strong>¿Se puede usar con matrices que tengan fracciones?</strong> Sí. La herramienta admite fracciones en los elementos, lo que es habitual cuando se aplica la operación de simplificación de una fila dividiéndola por su pivote.</li>
 </ul>
 </section>
 </div>
