@@ -9,47 +9,111 @@
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos." name="description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+
 <link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
-<style>
-body{font-family:'Inter',system-ui,Arial,sans-serif}
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,247,255,.92));border:1px solid rgba(0,0,0,.08);border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.08);padding:22px}.heroTop{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:start}.heroTop h1{margin:0;font-size:clamp(1.02rem,2vw,1.82rem);letter-spacing:-.04em;min-width:0;white-space:nowrap}.heroLead{margin:14px 0 0;font-size:1.04rem;line-height:1.7;opacity:.9}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}.card,.accentCard{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.06);padding:20px}.accentCard{background:linear-gradient(180deg,rgba(247,248,255,.96),rgba(255,255,255,.98))}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h2,.accentCard h2{margin:0 0 12px;font-size:1.28rem;letter-spacing:-.02em}.card p,.accentCard p{margin:0 0 10px;line-height:1.72}.muted{opacity:.84}.miniTitle{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.68;margin:0 0 10px}.pillRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;background:rgba(80,70,210,.08);border:1px solid rgba(80,70,210,.12);font-weight:700;font-size:.94rem}.ops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.op{border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 15px;background:rgba(250,250,255,.9)}.op strong{display:block;margin-bottom:6px}.notesList,.stepsList,.errorsList{margin:0;padding-left:20px}.notesList li,.stepsList li,.errorsList li{margin:8px 0;line-height:1.6}.k{display:block;background:linear-gradient(180deg,rgba(247,247,252,.95),rgba(255,255,255,.98));border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 16px;overflow:auto}.resultadoRango{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.resultadoRango span{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;background:rgba(74,58,255,.08);border:1px solid rgba(74,58,255,.14);font-size:1.08rem;font-weight:700;letter-spacing:-.01em}.trabajoBtn,.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.1);background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.06);font-weight:800;letter-spacing:.02em}.trabajoBtn{grid-column:2;justify-self:end;margin-top:2px}.trabajoBtn:hover,.volverBtn:hover{transform:translateY(-1px)}@media (max-width:900px){.span8,.span6,.span4,.span12{grid-column:span 12}.ops{grid-template-columns:1fr}.heroTop{grid-template-columns:1fr}.heroTop h1{white-space:normal}.trabajoBtn{grid-column:1;justify-self:start}}
+
+
+</link><script defer="" src="JavaScript/Rango_parametro_gauss.js" type="text/javascript"></script><link href="CSS/Hoja_estilo_rango_parametro_gauss.css" rel="stylesheet" type="text/css"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style id="mk-design-v2">
+:root{
+  --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
+  --blue-light:#e8eeff;--blue-glow:rgba(59,110,248,.18);
+  --text-primary:#0f1629;--text-secondary:#4a5270;--text-muted:#7b839e;
+  --bg-page:#f4f6fd;--bg-card:#ffffff;--border-card:rgba(30,50,150,.08);
+  --radius-card:20px;
+  --shadow-card:0 4px 24px rgba(20,40,120,.07),0 1px 4px rgba(20,40,120,.04);
+  --shadow-btn:0 8px 28px rgba(43,79,170,.28);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0}
+.introWrap{max-width:1100px;margin:0 auto;padding:28px 24px 56px}
+.hero{position:relative;background:linear-gradient(135deg,var(--blue-deep) 0%,var(--blue-mid) 60%,#3355c8 100%);border-radius:28px;padding:36px 40px 32px;overflow:hidden;box-shadow:0 24px 60px rgba(20,40,130,.28),0 4px 12px rgba(20,40,130,.18);margin-bottom:32px}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.hero::before{width:340px;height:340px;top:-120px;right:-80px}
+.hero::after{width:200px;height:200px;bottom:-80px;left:30px}
+.heroTop{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative;z-index:1}
+.heroTop h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0;flex:1;text-shadow:0 2px 12px rgba(0,0,0,.18)}
+.heroBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;backdrop-filter:blur(8px);margin-bottom:10px;width:fit-content}
+.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:700px}
+.heroDesc ol{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
+.heroDesc ol li,.heroDesc ul li{margin:6px 0}
+.heroDesc ul{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
+.heroLinks{position:relative;z-index:1;margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+.heroLinkBtn{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;font-size:.88rem;font-weight:600;letter-spacing:.01em;backdrop-filter:blur(6px);transition:background .18s,transform .15s,box-shadow .18s}
+.heroLinkBtn:hover{background:rgba(255,255,255,.24);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.heroLinkBtn svg{opacity:.7;flex-shrink:0}
+.heroOps{position:relative;z-index:1;margin-top:24px;padding:18px 20px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(4px)}
+.heroOps p{color:rgba(255,255,255,.7);font-size:.9rem;margin:0 0 12px}
+.heroOps ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.heroOps ul li{display:flex;align-items:baseline;gap:8px;color:rgba(255,255,255,.88);font-size:.9rem;line-height:1.5}
+.heroOps ul li::before{content:'→';color:var(--blue-bright);font-weight:700;flex-shrink:0;opacity:.85}
+.volverBtn{display:inline-flex!important;align-items:center;gap:6px;padding:10px 20px!important;border-radius:999px!important;background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;text-decoration:none!important;font-weight:700!important;font-size:.88rem;letter-spacing:.03em;backdrop-filter:blur(8px);transition:background .18s,transform .15s}
+.volverBtn:hover{background:rgba(255,255,255,.28)!important;transform:translateY(-1px)}
+.trabajoBtn{display:inline-flex!important;align-items:center;padding:11px 24px!important;border-radius:999px!important;background:#fff!important;border:none!important;color:var(--blue-deep)!important;text-decoration:none!important;font-weight:800!important;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn)!important;transition:transform .15s,box-shadow .18s}
+.trabajoBtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(43,79,170,.36)!important}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
+.card,.accentCard{background:var(--bg-card)!important;border:1px solid var(--border-card)!important;border-radius:var(--radius-card)!important;box-shadow:var(--shadow-card)!important;padding:26px 28px!important;transition:box-shadow .2s,transform .2s}
+.card:hover,.accentCard:hover{box-shadow:0 8px 36px rgba(20,40,120,.11),0 2px 6px rgba(20,40,120,.05)!important;transform:translateY(-1px)}
+.card h2,.accentCard h2{font-family:var(--font-display);font-size:1.3rem!important;font-weight:400!important;color:var(--blue-deep);margin:0 0 14px!important;letter-spacing:-.01em}
+.card p,.accentCard p{margin:0 0 10px;line-height:1.72;color:var(--text-secondary)}
+.card p strong,.accentCard p strong{color:var(--text-primary)}
+.card ul,.accentCard ul{margin:0;padding-left:20px}
+.card ul li,.accentCard ul li{margin:8px 0;color:var(--text-secondary);line-height:1.6}
+.card ul li strong,.accentCard ul li strong{color:var(--text-primary)}
+.card ol,.accentCard ol{margin:0;padding-left:20px}
+.card ol li,.accentCard ol li{margin:8px 0;color:var(--text-secondary);line-height:1.6}
+.miniTitle{font-size:.78rem!important;font-weight:700!important;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-bright);margin:0 0 8px!important}
+.muted{color:var(--text-muted)!important;font-size:.94rem;line-height:1.65;margin:10px 0 0!important}
+.k{background:linear-gradient(135deg,var(--blue-light) 0%,#f0f4ff 100%)!important;border:1px solid rgba(59,110,248,.14)!important;border-radius:14px!important;padding:18px 20px!important;overflow-x:auto;margin:12px 0}
+.pill{display:inline-flex;align-items:center;background:rgba(59,110,248,.08)!important;border:1px solid rgba(59,110,248,.16)!important;color:var(--blue-deep)!important;border-radius:999px;padding:6px 14px;font-size:.85rem;font-weight:600}
+.pillRow,.btnRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.ops{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.op{border:1px solid var(--border-card)!important;border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)!important}
+.op strong{display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.88rem;letter-spacing:.03em;text-transform:uppercase}
+.op span{color:var(--text-secondary);font-size:.93rem}
+.notesList,.stepsList,.errorsList,.propsList{margin:0;padding-left:20px}
+.notesList li,.stepsList li,.errorsList li,.propsList li{margin:8px 0;line-height:1.6;color:var(--text-secondary)}
+.notesList li strong,.stepsList li strong{color:var(--text-primary)}
+.stepBlocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.stepBlock{background:linear-gradient(135deg,var(--blue-light),#edf0ff);border:1px solid rgba(59,110,248,.12);border-radius:14px;padding:16px}
+.stepBlock strong{display:block;margin-bottom:8px;color:var(--blue-deep);font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em}
+.stepBlock span{color:var(--text-secondary);font-size:.92rem;line-height:1.55}
+.resultadoRango,.resultadoDet,.resultado{margin-top:16px;display:flex;justify-content:center}
+.resultadoRango span,.resultadoDet span,.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border-radius:999px;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);font-size:1rem;font-weight:700;color:var(--blue-deep);letter-spacing:-.01em}
+.exampleText p{margin:0 0 8px;color:var(--text-secondary)}
+@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
 </style>
-<style id="app-intro-unified">
-body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;background:linear-gradient(180deg,#f6f8ff 0%,#fbfcff 38%,#ffffff 100%)}
-.introWrap{max-width:1150px;margin:0 auto;padding:20px}
-.hero{margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(245,247,255,.94));border:1px solid rgba(66,71,112,.12)!important;border-radius:24px;box-shadow:0 18px 40px rgba(60,72,120,.12)!important;padding:22px!important}
-.heroTop,.heroHeader{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;gap:12px 16px;align-items:start;margin:0!important}
-.heroTop h1,.heroHeader h1,.heroTitle{margin:0!important;font-size:clamp(1.7rem,3vw,2.5rem)!important;letter-spacing:-.045em!important;line-height:1.05;min-width:0}
-.heroLead,.heroDesc p,.hero p,.muted{font-size:1.02rem;line-height:1.75}
-.volverBtn,.trabajoBtn{display:inline-flex!important;align-items:center;justify-content:center;padding:12px 18px!important;border-radius:999px!important;border:1px solid rgba(57,63,102,.13)!important;text-decoration:none!important;font-weight:800!important;letter-spacing:.02em;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,color .16s ease;white-space:nowrap}
-.volverBtn{background:#fff!important;color:#1f2540!important;box-shadow:0 10px 24px rgba(39,48,92,.08)!important}
-.trabajoBtn{background:linear-gradient(135deg,#4f46e5,#2563eb)!important;color:#fff!important;box-shadow:0 16px 30px rgba(55,78,210,.24)!important}
-.volverBtn:hover,.trabajoBtn:hover{transform:translateY(-1px)}
-.card,.accentCard,.modeCard,.infoCard,.optCard,.miniCard,.op{background:rgba(255,255,255,.96)!important;border:1px solid rgba(66,71,112,.10)!important;border-radius:20px!important;box-shadow:0 12px 26px rgba(60,72,120,.08)!important}
-.card,.accentCard{padding:22px!important}
-.card h2,.accentCard h2{font-size:1.28rem!important;letter-spacing:-.02em}
-.miniTitle{font-size:.84rem!important;font-weight:800!important;text-transform:uppercase;letter-spacing:.11em;opacity:.62}
-.pill{background:rgba(79,70,229,.08)!important;border:1px solid rgba(79,70,229,.14)!important;color:#312e81}
-.k{background:linear-gradient(180deg,rgba(246,248,255,.98),rgba(255,255,255,.98))!important;border:1px solid rgba(66,71,112,.08)!important;border-radius:18px!important;padding:16px!important}
-.btnRow,.pillRow{display:flex;flex-wrap:wrap;gap:12px}
-@media (max-width:900px){.heroTop,.heroHeader{grid-template-columns:1fr!important}.trabajoBtn,.volverBtn{justify-self:start}.introWrap{padding:16px}}
-</style>
-</link><script defer="" src="JavaScript/Rango_parametro_gauss.js" type="text/javascript"></script><link href="CSS/Hoja_estilo_rango_parametro_gauss.css" rel="stylesheet" type="text/css"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><style>.volverBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.06);font-weight:800;letter-spacing:.2px}.volverBtn:hover{transform:translateY(-1px)}.topNav{display:flex;align-items:center;gap:12px;margin-bottom:12px}</style></head>
+</head>
 <body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
 <div class="heroTop">
-<a class="volverBtn" href="/index.html">VOLVER</a>
-<h1>Rango de una matriz con parámetro (método de Gauss)</h1>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
+<a class="volverBtn" href="/index.html">← Volver</a>
+<h1>Rango con parámetro (Gauss)</h1>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
 </div>
-<p class="heroLead">Calcula el rango de una matriz con un parámetro usando el método de Gauss. La idea es escalonar la matriz y estudiar los valores del parámetro que anulan algún pivote y/o convierten una fila en nula. Un pivote de una fila es el primer elemento no nulo de dicha fila.</p>
-<div class="pillRow"><span class="pill">Estudio por casos</span><span class="pill">Parámetros</span><span class="pill">Eliminación de Gauss</span></div>
+<div class="heroBadge">
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
+  Álgebra lineal · Bachillerato
+</div>
+<div class="heroDesc"><p>Cuando una matriz contiene un <strong style="color:#fff">parámetro</strong>, su rango puede variar según su valor. Se escalonada la matriz y se estudian los casos en que algún pivote o fila se anula.</p></div>
+<div class="heroLinks"><a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango numérico por Gauss</a>
+<a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango con parámetro (menores)</a>
+<a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Sistemas con parámetro</a></div>
+<div class="heroOps">
+  <p>Operaciones disponibles en la herramienta:</p>
+  <ul><li>Permutar dos filas o dos columnas</li>
+    <li>Reordenar para situar el pivote más conveniente</li>
+    <li>Multiplicar o dividir una fila por un escalar no nulo</li>
+    <li>Combinación lineal de varias filas</li></ul>
+</div>
 </section>
 <div class="grid">
 <section class="accentCard span8">
