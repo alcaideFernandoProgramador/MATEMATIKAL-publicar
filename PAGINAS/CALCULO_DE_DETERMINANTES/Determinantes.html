@@ -135,6 +135,76 @@ body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <div class="resultadoDet"><span>det(A)=100</span></div>
 </section>
 </div>
+<div class="grid" style="margin-top:16px">
+<section class="card span12">
+<h2>Definición y significado del determinante</h2>
+<p>El determinante es una función que asigna a cada matriz cuadrada un número real. Se denota \(\det(A)\) o \(|A|\) y proporciona información esencial sobre la matriz y el sistema de ecuaciones lineales al que puede estar asociada.</p>
+<p>Geométricamente, el valor absoluto del determinante de una matriz \(2\times 2\) representa el área del paralelogramo definido por sus filas, y el del determinante de una matriz \(3\times 3\) representa el volumen del paralelepípedo correspondiente. Cuando el determinante es cero, los vectores son linealmente dependientes y el volumen resulta nulo.</p>
+<p>Desde el punto de vista algebraico, el determinante es cero si y solo si la matriz <strong>no es invertible</strong>. Esto equivale a decir que sus filas son linealmente dependientes, que el rango de la matriz es menor que su orden, y que el sistema homogéneo asociado tiene infinitas soluciones.</p>
+</section>
+<section class="card span6">
+<h2>Propiedades fundamentales del determinante</h2>
+<p>Las propiedades del determinante permiten simplificarlo de forma sistemática sin perder el valor final. Las más importantes son:</p>
+<ul>
+<li><strong>Intercambio de filas o columnas:</strong> si se permutan dos filas (o dos columnas), el determinante cambia de signo. Si una matriz tiene dos filas iguales, su determinante es cero.</li>
+<li><strong>Factor común:</strong> si todos los elementos de una fila o columna tienen un factor común \(k\), puede extraerse fuera del determinante. En sentido inverso, multiplicar todos los elementos de una fila por \(k\) multiplica el determinante por \(k\).</li>
+<li><strong>Combinación lineal de filas:</strong> sumar a una fila un múltiplo de otra no altera el valor del determinante. Esta es la propiedad clave para introducir ceros.</li>
+<li><strong>Determinante de la traspuesta:</strong> \(\det(A^t) = \det(A)\). Las propiedades válidas para filas son igualmente válidas para columnas.</li>
+<li><strong>Determinante del producto:</strong> \(\det(AB) = \det(A)\cdot\det(B)\).</li>
+<li><strong>Matriz triangular:</strong> si la matriz es triangular (superior o inferior), el determinante es el producto de los elementos de la diagonal principal.</li>
+</ul>
+</section>
+<section class="card span6">
+<h2>Métodos de cálculo según el orden</h2>
+<p>El método de cálculo más adecuado depende del orden de la matriz:</p>
+<ul>
+<li><strong>Orden 2:</strong> regla directa: \(\begin{vmatrix}a &amp; b\\c &amp; d\end{vmatrix} = ad - bc\).</li>
+<li><strong>Orden 3:</strong> regla de Sarrus (suma de diagonales principales menos suma de diagonales secundarias) o desarrollo por adjuntos.</li>
+<li><strong>Orden ≥ 4:</strong> operaciones elementales por filas y columnas para introducir ceros y reducir el orden paso a paso hasta llegar a determinantes de orden 3.</li>
+</ul>
+<p>Esta herramienta aplica el método de reducción por operaciones elementales, que es el más sistemático y el que mejor ilustra el uso de las propiedades del determinante.</p>
+</section>
+<section class="card span12">
+<h2>Ejemplo resuelto: determinante de orden 3</h2>
+<p>Se calcula el determinante de la siguiente matriz usando la regla de Sarrus y operaciones elementales.</p>
+<div class="k">\[
+A = \left( \begin{matrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 1 &amp; 2 \\ -1 &amp; 4 &amp; 1 \end{matrix} \right)
+\]</div>
+<p><strong>Método 1 — Regla de Sarrus:</strong></p>
+<div class="k">\[
+\det(A) = (1\cdot1\cdot1 + 2\cdot2\cdot(-1) + (-1)\cdot3\cdot4) - ((-1)\cdot1\cdot(-1) + 1\cdot2\cdot4 + 2\cdot3\cdot1) = (1 - 4 - 12) - (1 + 8 + 6) = -30
+\]</div>
+<p><strong>Método 2 — Reducción por operaciones elementales:</strong></p>
+<div class="k">\[
+\left| \begin{matrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 1 &amp; 2 \\ -1 &amp; 4 &amp; 1 \end{matrix} \right|
+\underset{\substack{F_2 \to F_2 - 3F_1 \\ F_3 \to F_3 + F_1}}{=}
+\left| \begin{matrix} 1 &amp; 2 &amp; -1 \\ 0 &amp; -5 &amp; 5 \\ 0 &amp; 6 &amp; 0 \end{matrix} \right|
+= 1 \cdot \begin{vmatrix} -5 &amp; 5 \\ 6 &amp; 0 \end{vmatrix}
+= (0 - 30) = -30
+\]</div>
+<p class="muted">Ambos métodos dan el mismo resultado: \(\det(A) = -30\).</p>
+</section>
+<section class="card span6">
+<h2>Relación del determinante con otros conceptos</h2>
+<ul>
+<li><strong>Invertibilidad:</strong> una matriz cuadrada es invertible si y solo si su determinante es distinto de cero.</li>
+<li><strong>Rango:</strong> si \(\det(A) \neq 0\), el rango de \(A\) es igual a su orden. Si \(\det(A) = 0\), el rango es menor.</li>
+<li><strong>Regla de Cramer:</strong> cuando \(\det(A) \neq 0\), la solución única del sistema \(Ax = b\) viene dada por \(x_i = \frac{\det(A_i)}{\det(A)}\).</li>
+<li><strong>Sistemas homogéneos:</strong> el sistema \(Ax = 0\) tiene solución no trivial si y solo si \(\det(A) = 0\).</li>
+<li><strong>Valores propios:</strong> los valores propios de \(A\) son las raíces del polinomio característico \(\det(A - \lambda I) = 0\).</li>
+</ul>
+</section>
+<section class="card span6">
+<h2>Preguntas frecuentes</h2>
+<ul>
+<li><strong>¿El determinante de una matriz rectangular está definido?</strong> No. Solo existe el determinante de matrices cuadradas.</li>
+<li><strong>¿Qué ocurre si el determinante es cero?</strong> La matriz no tiene inversa, sus filas son linealmente dependientes y el sistema asociado no tiene solución única.</li>
+<li><strong>¿Se puede calcular el determinante operando solo con columnas?</strong> Sí. Las mismas propiedades que valen para filas son válidas para columnas.</li>
+<li><strong>¿Hay un único camino para calcular un determinante?</strong> No. Diferentes secuencias de operaciones llevan al mismo resultado. La herramienta muestra una posible solución.</li>
+<li><strong>¿Cuánto vale el determinante de la matriz identidad?</strong> Siempre vale 1, ya que es una matriz triangular con unos en la diagonal.</li>
+</ul>
+</section>
+</div>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
