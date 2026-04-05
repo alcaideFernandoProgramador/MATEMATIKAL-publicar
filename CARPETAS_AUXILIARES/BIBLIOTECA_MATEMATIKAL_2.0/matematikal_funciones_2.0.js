@@ -2474,11 +2474,12 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           const finalizar=()=>{if(!inputTemp.value.trim())return;nombreActual=inputTemp.value.trim();spanNombre.textContent=nombreActual;
           nombreC.replaceChild(spanNombre,inputTemp);btnCambiar.textContent="Cambiar nombre";btnCambiar.style.marginLeft="36px";editando=false};
           inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar()});btnCambiar.addEventListener("click",finalizar,{once:true});}});
-      inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
-          try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus()}
-          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.")}}});
+      let _filasOk=false,_colsOk=false;
+      function _procFilas(){if(_filasOk)return;try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);_filasOk=true;inputFilas.disabled=true;inputCols.focus();}catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");}}
+      inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();_procFilas();}});
+      inputFilas.addEventListener("blur",()=>{if(inputFilas.value.trim()&&!_filasOk)_procFilas();});
       inputCols.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
-          try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);inputCols.disabled=true;
+          if(!_colsOk)try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);_colsOk=true;inputCols.disabled=true;
             const tabla=document.createElement("table");tabla.style.borderCollapse="collapse";
             const cont=document.createElement("div");cont.style.display="flex";cont.style.alignItems="center";lugar.appendChild(cont);
             Representar.abrirParentesis(filas*1.25,cont);
@@ -2515,11 +2516,12 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           const finalizar=()=>{if(!inputTemp.value.trim())return;nombreActual=inputTemp.value.trim();spanNombre.textContent=nombreActual;
             nombreC.replaceChild(spanNombre,inputTemp);btnCambiar.textContent="Cambiar nombre";btnCambiar.style.marginLeft="36px";editando=false;};
           inputTemp.addEventListener("keydown",e=>{if(e.key==="Enter")finalizar();});btnCambiar.addEventListener("click",finalizar,{once:true});}});
-        inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
-          try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);inputFilas.disabled=true;inputCols.focus();}
-          catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");}}});
+        let _f2Ok=false,_c2Ok=false;
+        function _pF2(){if(_f2Ok)return;try{filas=Validar.validarEntradaNumeroEnteroPositivo(inputFilas.value);_f2Ok=true;inputFilas.disabled=true;inputCols.focus();}catch{Representar.mostrarError(cajaError,"Entrada de filas inválida.");}}
+        inputFilas.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();_pF2();}});
+        inputFilas.addEventListener("blur",()=>{if(inputFilas.value.trim()&&!_f2Ok)_pF2();});
         inputCols.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();
-          try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);inputCols.disabled=true;
+          if(!_c2Ok)try{columnas=Validar.validarEntradaNumeroEnteroPositivo(inputCols.value);_c2Ok=true;inputCols.disabled=true;
             const tabla=document.createElement("table");tabla.style.borderCollapse="collapse";
             const cont=document.createElement("div");cont.style.display="flex";cont.style.alignItems="center";lugar.appendChild(cont);
             Representar.abrirParentesis(filas*1.25,cont);
