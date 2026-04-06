@@ -57,6 +57,9 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .volverBtn:hover{background:rgba(255,255,255,.28)!important;transform:translateY(-1px)}
 .trabajoBtn{display:inline-flex!important;align-items:center;padding:11px 24px!important;border-radius:999px!important;background:#fff!important;border:none!important;color:var(--blue-deep)!important;text-decoration:none!important;font-weight:800!important;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn)!important;transition:transform .15s,box-shadow .18s}
 .trabajoBtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(43,79,170,.36)!important}
+.heroTopBar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;position:relative;z-index:1}
+.logoMini{display:block;flex-shrink:0}
+
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-bottom:16px}
 .span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
 .card,.accentCard{background:var(--bg-card)!important;border:1px solid var(--border-card)!important;border-radius:var(--radius-card)!important;box-shadow:var(--shadow-card)!important;padding:26px 28px!important;transition:box-shadow .2s,transform .2s}
@@ -94,11 +97,20 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
-<div class="heroTop">
+<div class="heroTopBar">
 <a class="volverBtn" href="/index.html">← Volver</a>
-<h1>Sistemas lineales por Gauss</h1>
+<div style="display:flex;align-items:center;gap:14px">
+<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+<polyline points="7,25 12,25 16,12 21,30 26,18 34,18" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
+<line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
+<text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
+</svg>
 <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
 </div>
+</div>
+<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Sistemas lineales por Gauss</h1>
 <div class="heroBadge">
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
   Álgebra lineal · Bachillerato
