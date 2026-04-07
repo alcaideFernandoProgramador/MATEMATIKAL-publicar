@@ -4,7 +4,6 @@
 <head>
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html"/>
 <title>Rango de una matriz con parámetro por Gauss: teoría y ejemplos | Matematikal</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -257,7 +256,7 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 <p id="notaParametro"><span id="span1">(El parámetro solo puede tomar valores enteros o racionales)</span></p>
 <div id="contenedor">
 <div id="caja1"></div>
-<div id="caja2"></div>
+<div id="caja2"><button id="btnToggleTrabajos" aria-expanded="true">Ocultar trabajos</button></div>
 <div id="contenedorCaja3"></div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
@@ -273,8 +272,20 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); setupToggleTrabajos(); } }
   function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  function setupToggleTrabajos(){
+    var btn=document.getElementById('btnToggleTrabajos');
+    var caja2=document.getElementById('caja2');
+    if(!btn||!caja2) return;
+    btn.onclick=function(){
+      var oculto=btn.getAttribute('aria-expanded')==='false';
+      var hijos=Array.from(caja2.children).filter(function(el){return el!==btn;});
+      hijos.forEach(function(el){el.style.display=oculto?'':'none';});
+      btn.setAttribute('aria-expanded',oculto?'true':'false');
+      btn.textContent=oculto?'Ocultar trabajos':'Mostrar trabajos';
+    };
+  }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
   if(location.hash==='calculadora') mostrarCalc();

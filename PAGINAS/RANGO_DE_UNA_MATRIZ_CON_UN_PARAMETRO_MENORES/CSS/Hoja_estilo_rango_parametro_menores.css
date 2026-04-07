@@ -60,3 +60,7 @@ iframe{border:none}
   min-height:calc(100vh - 76px - var(--footer-h,74px));
   padding-bottom:10px;
 }
+
+/* #calculadora es el contenedor real — debe ser flex column de altura completa */
+#calculadora{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+#calculadora #contenedor{flex:1 1 auto;min-height:0;overflow:hidden;height:auto;}
