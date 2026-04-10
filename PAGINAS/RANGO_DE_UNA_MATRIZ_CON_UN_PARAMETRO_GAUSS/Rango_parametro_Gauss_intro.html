@@ -360,8 +360,8 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); setupToggleTrabajos(); } }
-  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); setupToggleTrabajos(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   function setupToggleTrabajos(){
     var btn=document.getElementById('btnToggleTrabajos');
     var caja2=document.getElementById('caja2');
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded',function(){
   }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora') mostrarCalc();
+  if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; document.body.style.display='block'; }
 });
 </script><script>
 function mkToggle(btn){

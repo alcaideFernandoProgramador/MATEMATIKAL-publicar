@@ -21,6 +21,9 @@
 <link href="../../CARPETAS_AUXILIARES/katex/katex.css" rel="stylesheet"/><script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js"></script><script defer="" src="JavaScript/Operaciones_Con_matrices.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+#introPrincipal{overflow:visible!important}
+</style>
 <style id="mk-design-v2">
 :root{
   --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
@@ -81,15 +84,15 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .pill{display:inline-flex;align-items:center;background:rgba(59,110,248,.08)!important;border:1px solid rgba(59,110,248,.16)!important;color:var(--blue-deep)!important;border-radius:999px;padding:6px 14px;font-size:.85rem;font-weight:600}
 .pillRow,.btnRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .ops{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-.op{border:1px solid var(--border-card)!important;border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)!important}
-.op strong{display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.88rem;letter-spacing:.03em;text-transform:uppercase}
+.op{border:1px solid var(--border-card)!important;border-radius:14px;padding:14px 16px;background:#f4f6fd!important}
+.op strong{display:block;margin-bottom:6px;color:var(--text-primary);font-size:.88rem;letter-spacing:.03em;text-transform:uppercase}
 .op span{color:var(--text-secondary);font-size:.93rem}
 .notesList,.stepsList,.errorsList,.propsList{margin:0;padding-left:20px}
 .notesList li,.stepsList li,.errorsList li,.propsList li{margin:8px 0;line-height:1.6;color:var(--text-secondary)}
 .notesList li strong,.stepsList li strong{color:var(--text-primary)}
 .stepBlocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
-.stepBlock{background:linear-gradient(135deg,var(--blue-light),#edf0ff);border:1px solid rgba(59,110,248,.12);border-radius:14px;padding:16px}
-.stepBlock strong{display:block;margin-bottom:8px;color:var(--blue-deep);font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em}
+.stepBlock{background:#f4f6fd;border:1px solid var(--border-card);border-radius:14px;padding:16px}
+.stepBlock strong{display:block;margin-bottom:8px;color:var(--text-primary);font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em}
 .stepBlock span{color:var(--text-secondary);font-size:.92rem;line-height:1.55}
 .resultadoRango,.resultadoDet,.resultado{margin-top:16px;display:flex;justify-content:center}
 .resultadoRango span,.resultadoDet span,.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border-radius:999px;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);font-size:1rem;font-weight:700;color:var(--blue-deep);letter-spacing:-.01em}
@@ -101,13 +104,13 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .mk-ejercicios>h2{font-family:var(--font-display,inherit);font-size:1.45rem;font-weight:400;color:var(--blue-deep,#1a2b6b);border-left:5px solid var(--blue-bright,#3b6ef8);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
 .mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary,#4a5270);margin-bottom:1.8rem}
 .mk-ejercicio{background:var(--bg-card,#fff);border:1px solid var(--border-card,rgba(30,50,150,.08));border-radius:var(--radius-card,20px);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card,0 4px 24px rgba(20,40,120,.07))}
-.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:var(--blue-light,#e8eeff);border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:#f4f6fd;border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
 .mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep,#1a2b6b);min-width:2rem}
-.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
-.mk-b-det{background:#d4edda;color:#155724}
-.mk-b-ind{background:#fff3cd;color:#856404}
-.mk-b-inc{background:#f8d7da;color:#721c24}
-.mk-b-neu{background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+
+
+
+
 .mk-ej-level{font-size:.78rem;color:var(--text-muted,#7b839e)}
 .mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary,#0f1629);font-size:.96rem;line-height:1.72}
 .mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid,#2d4faa);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
@@ -117,13 +120,13 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page,#f4f6fd);font-size:.94rem;line-height:1.8;color:var(--text-primary,#0f1629)}
 .mk-sol.mk-visible{display:block}
 .mk-sol h4{color:var(--blue-mid,#2d4faa);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem}
-.mk-res-det{background:#d4edda;color:#155724}
-.mk-res-ind{background:#fff3cd;color:#856404}
-.mk-res-inc{background:#f8d7da;color:#721c24}
-.mk-res-neu{background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
-.mk-tip{background:var(--blue-light,#e8eeff);border-left:4px solid var(--blue-bright,#3b6ef8);border-radius:0 8px 8px 0;padding:.55rem .9rem;font-size:.85rem;color:var(--blue-deep,#1a2b6b);margin-top:.9rem;line-height:1.6}
-.mk-tip strong{color:var(--blue-deep,#1a2b6b)}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
+
+
+
+
+
+
 </style>
 </head>
 <body><div id="introPrincipal">
@@ -142,7 +145,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </div>
-<h1 class="heroTitle" style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Operaciones con matrices</h1>
+<h1 class="heroTitle" style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
+  OPERACIONES CON MATRICES<br>
+  <span style="font-size:clamp(1.1rem,2.2vw,1.6rem);letter-spacing:.04em;font-style:italic">Suma, producto, traspuesta, inversa y potencias</span>
+</h1>
 <div class="heroDesc">
 <p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos matriciales de dos formas principales:</p>
 <div class="modeGrid">
@@ -284,58 +290,141 @@ E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 </div>
 </section>
 
+<!-- BLOQUE EXTRA: Operaciones detalladas -->
+<div class="grid" style="margin-bottom:16px">
+<section class="accentCard span12">
+  <p class="miniTitle">Definiciones detalladas</p>
+  <h2>Las operaciones una a una</h2>
+
+  <p style="margin-bottom:14px"><strong>Suma y resta.</strong> Solo están definidas entre matrices del mismo orden \(m\times n\). Se realizan elemento a elemento: \((A\pm B)_{ij}=a_{ij}\pm b_{ij}\). Son operaciones conmutativas y asociativas.</p>
+
+  <p style="margin-bottom:14px"><strong>Producto por un escalar.</strong> Se multiplica cada elemento de la matriz por el número: \((kA)_{ij}=k\cdot a_{ij}\). Distribuye sobre la suma: \(k(A+B)=kA+kB\).</p>
+
+  <p style="margin-bottom:14px"><strong>Producto de matrices.</strong> El producto \(A\cdot B\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\) y su elemento \((i,j)\) es:
+  <div class="k" style="text-align:left">\[(AB)_{ij}=\sum_{k=1}^{p}a_{ik}\cdot b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{ip}b_{pj}\]</div>
+  El producto matricial <strong>no es conmutativo</strong>: en general \(AB\neq BA\).</p>
+
+  <p style="margin-bottom:14px"><strong>Traspuesta.</strong> La traspuesta de una matriz \(A\) de orden \(m\times n\) es la matriz \(A^t\) de orden \(n\times m\) que se obtiene cambiando filas por columnas: \((A^t)_{ij}=a_{ji}\). Propiedades destacadas: \((A^t)^t=A\), \((A+B)^t=A^t+B^t\), \((AB)^t=B^t A^t\).</p>
+
+  <p style="margin-bottom:14px"><strong>Inversa.</strong> Una matriz cuadrada \(A\) tiene inversa \(A^{-1}\) si y solo si \(\det(A)\neq 0\). Verifica \(A\cdot A^{-1}=A^{-1}\cdot A=I\). Propiedades: \((A^{-1})^{-1}=A\), \((AB)^{-1}=B^{-1}A^{-1}\), \((A^t)^{-1}=(A^{-1})^t\).</p>
+
+  <p><strong>Potencias.</strong> Solo tienen sentido para matrices cuadradas: \(A^n=A\cdot A\cdots A\) (\(n\) veces), \(A^0=I\), \(A^{-n}=(A^{-1})^n\). El producto \(A^m\cdot A^n=A^{m+n}\) pero <strong>en general</strong> \((AB)^n\neq A^n B^n\).</p>
+</section>
+</div>
+
+<div class="grid" style="margin-bottom:16px">
+<section class="card span6">
+  <p class="miniTitle">Condiciones de existencia</p>
+  <h2>Cuándo está definida cada operación</h2>
+  <ul class="notesList">
+    <li><strong>Suma / resta:</strong> \(A\) y \(B\) deben ser del mismo orden \(m\times n\).</li>
+    <li><strong>Producto \(A\cdot B\):</strong> columnas de \(A\) = filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\).</li>
+    <li><strong>Traspuesta:</strong> siempre definida para cualquier matriz.</li>
+    <li><strong>Inversa:</strong> solo para matrices cuadradas con \(\det(A)\neq 0\).</li>
+    <li><strong>Potencias:</strong> solo para matrices cuadradas.</li>
+  </ul>
+</section>
+<section class="card span6">
+  <p class="miniTitle">Propiedades clave</p>
+  <h2>Las más importantes</h2>
+  <ul class="notesList">
+    <li>\((AB)^t = B^t A^t\) — se invierte el orden al trasponer un producto.</li>
+    <li>\((AB)^{-1} = B^{-1}A^{-1}\) — también se invierte al calcular la inversa.</li>
+    <li>\(A\cdot B \neq B\cdot A\) en general — el producto no es conmutativo.</li>
+    <li>\(A\cdot(B+C)=AB+AC\) — sí es distributivo.</li>
+    <li>\((A^t)^{-1}=(A^{-1})^t\) — traspuesta e inversa conmutan.</li>
+    <li>Si \(AB=0\), no se puede concluir que \(A=0\) o \(B=0\).</li>
+  </ul>
+</section>
+</div>
+
 <section class="mk-ejercicios">
 <h2>Ejercicios propuestos</h2>
 <p class="mk-subtitulo">Practica las operaciones básicas con matrices. Comprueba los resultados usando la herramienta.</p>
 
+<!-- EJ 1: Suma y combinación lineal -->
 <div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge mk-b-neu">Suma de matrices</span><span class="mk-ej-level">Nivel básico</span></div>
-<div class="mk-enunciado">Calcula \(A+B\) siendo:
-\[A=\left(\begin{matrix}1 &amp; 2\\3 &amp; 4\end{matrix}\right),\quad B=\left(\begin{matrix}5 &amp; -1\\0 &amp; 2\end{matrix}\right)\]</div>
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Suma y resta</span><span class="mk-ej-level">Nivel básico</span></div>
+<div class="mk-enunciado">Dadas las matrices:
+\[A=\left(\begin{matrix}3 & -1 & 2\\0 & 4 & -3\end{matrix}\right),\quad B=\left(\begin{matrix}-2 & 5 & 1\\3 & -1 & 2\end{matrix}\right)\]
+Calcula \(2A - B\).</div>
 <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
 <div class="mk-sol">
-<h4>Suma elemento a elemento</h4>
-\[A+B=\left(\begin{matrix}1+5 &amp; 2+(-1)\\3+0 &amp; 4+2\end{matrix}\right)=\left(\begin{matrix}6 &amp; 1\\3 &amp; 6\end{matrix}\right)\]
-<div class="mk-resultado mk-res-neu">\(A+B = egin{pmatrix}6&1\3&6\end{pmatrix}\)</div>
+<h4>Multiplicación escalar y resta</h4>
+\[2A=\left(\begin{matrix}6 & -2 & 4\\0 & 8 & -6\end{matrix}\right)\]
+\[2A-B=\left(\begin{matrix}6-(-2) & -2-5 & 4-1\\0-3 & 8-(-1) & -6-2\end{matrix}\right)=\left(\begin{matrix}8 & -7 & 3\\-3 & 9 & -8\end{matrix}\right)\]
+<div class="mk-resultado">\(2A-B=\begin{pmatrix}8&-7&3\\-3&9&-8\end{pmatrix}\)</div>
 </div></div>
 
+<!-- EJ 2: Combinación lineal con traspuesta -->
 <div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge mk-b-neu">Producto de matrices</span><span class="mk-ej-level">Nivel medio · no conmutativo</span></div>
-<div class="mk-enunciado">Calcula \(AB\) y \(BA\) y comprueba que \(AB\neq BA\) siendo:
-\[A=\left(\begin{matrix}1 &amp; 2\\0 &amp; 1\end{matrix}\right),\quad B=\left(\begin{matrix}3 &amp; 0\\1 &amp; 2\end{matrix}\right)\]</div>
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Suma y traspuesta</span><span class="mk-ej-level">Nivel medio</span></div>
+<div class="mk-enunciado">Sea \(A=\left(\begin{matrix}1 & 2 & -1\\3 & 0 & 4\end{matrix}\right)\). Calcula \(A + A^t\) si es posible. Si no lo es, explica por qué y calcula \(A^t + A^t\) en su lugar.</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Análisis de dimensiones</h4>
+<p>\(A\) es \(2\times 3\) y \(A^t\) es \(3\times 2\). La suma no está definida porque tienen distinto orden.</p>
+<h4>Cálculo de \(A^t + A^t = 2A^t\)</h4>
+\[A^t=\left(\begin{matrix}1 & 3\\2 & 0\\-1 & 4\end{matrix}\right),\quad 2A^t=\left(\begin{matrix}2 & 6\\4 & 0\\-2 & 8\end{matrix}\right)\]
+<div class="mk-resultado">\(A+A^t\) no está definida. \(2A^t=\begin{pmatrix}2&6\\4&0\\-2&8\end{pmatrix}\)</div>
+</div></div>
+
+<!-- EJ 3: Producto de matrices -->
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Producto de matrices</span><span class="mk-ej-level">Nivel medio</span></div>
+<div class="mk-enunciado">Dadas:
+\[A=\left(\begin{matrix}1 & 2\\-1 & 3\\0 & 1\end{matrix}\right),\quad B=\left(\begin{matrix}2 & -1 & 0\\1 & 3 & -2\end{matrix}\right)\]
+Calcula \(AB\) y \(BA\). ¿Son iguales?</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Producto AB (3×2 · 2×3 = 3×3)</h4>
+\[AB=\left(\begin{matrix}1\cdot2+2\cdot1 & 1\cdot(-1)+2\cdot3 & 1\cdot0+2\cdot(-2)\\(-1)\cdot2+3\cdot1 & (-1)\cdot(-1)+3\cdot3 & (-1)\cdot0+3\cdot(-2)\\0\cdot2+1\cdot1 & 0\cdot(-1)+1\cdot3 & 0\cdot0+1\cdot(-2)\end{matrix}\right)=\left(\begin{matrix}4&5&-4\\1&10&-6\\1&3&-2\end{matrix}\right)\]
+<h4>Producto BA (2×3 · 3×2 = 2×2)</h4>
+\[BA=\left(\begin{matrix}2\cdot1+(-1)\cdot(-1)+0\cdot0 & 2\cdot2+(-1)\cdot3+0\cdot1\\1\cdot1+3\cdot(-1)+(-2)\cdot0 & 1\cdot2+3\cdot3+(-2)\cdot1\end{matrix}\right)=\left(\begin{matrix}3&1\\-2&9\end{matrix}\right)\]
+<div class="mk-resultado">\(AB\) es \(3\times3\) y \(BA\) es \(2\times2\): son distintas incluso en tamaño</div>
+</div></div>
+
+<!-- EJ 4: No conmutatividad -->
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge">Producto · no conmutatividad</span><span class="mk-ej-level">Nivel medio</span></div>
+<div class="mk-enunciado">Sean \(A=\left(\begin{matrix}1 & 1\\0 & 1\end{matrix}\right)\) y \(B=\left(\begin{matrix}1 & 0\\1 & 1\end{matrix}\right)\). Calcula \(AB\), \(BA\) y \(A^2\).</div>
 <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
 <div class="mk-sol">
 <h4>Producto AB</h4>
-\[AB=\left(\begin{matrix}1\cdot3+2\cdot1 &amp; 1\cdot0+2\cdot2\\0\cdot3+1\cdot1 &amp; 0\cdot0+1\cdot2\end{matrix}\right)=\left(\begin{matrix}5 &amp; 4\\1 &amp; 2\end{matrix}\right)\]
+\[AB=\left(\begin{matrix}1+1&0+1\\0+1&0+1\end{matrix}\right)=\left(\begin{matrix}2&1\\1&1\end{matrix}\right)\]
 <h4>Producto BA</h4>
-\[BA=\left(\begin{matrix}3\cdot1+0\cdot0 &amp; 3\cdot2+0\cdot1\\1\cdot1+2\cdot0 &amp; 1\cdot2+2\cdot1\end{matrix}\right)=\left(\begin{matrix}3 &amp; 6\\1 &amp; 4\end{matrix}\right)\]
-<div class="mk-resultado mk-res-neu">AB ≠ BA: el producto matricial no es conmutativo en general</div>
+\[BA=\left(\begin{matrix}1+0&1+0\\1+0&1+1\end{matrix}\right)=\left(\begin{matrix}1&1\\1&2\end{matrix}\right)\]
+<h4>Potencia A²</h4>
+\[A^2=A\cdot A=\left(\begin{matrix}1+0&1+1\\0+0&0+1\end{matrix}\right)=\left(\begin{matrix}1&2\\0&1\end{matrix}\right)\]
+<div class="mk-resultado">\(AB\neq BA\). \(A^2=\begin{pmatrix}1&2\\0&1\end{pmatrix}\)</div>
 </div></div>
 
+<!-- EJ 5: Traspuesta e inversa -->
 <div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge mk-b-neu">Traspuesta de un producto</span><span class="mk-ej-level">Nivel medio · propiedad (AB)ᵀ = BᵀAᵀ</span></div>
-<div class="mk-enunciado">Verifica que \((AB)^T=B^TA^T\) siendo:
-\[A=\left(\begin{matrix}1 &amp; 2\\3 &amp; 0\end{matrix}\right),\quad B=\left(\begin{matrix}1 &amp; 0\\2 &amp; 1\end{matrix}\right)\]</div>
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 5</span><span class="mk-badge">Traspuesta e inversa</span><span class="mk-ej-level">Nivel medio-alto</span></div>
+<div class="mk-enunciado">Sea \(A=\left(\begin{matrix}2 & 1\\5 & 3\end{matrix}\right)\). Calcula \(A^t\) y \(A^{-1}\). Verifica que \(A\cdot A^{-1}=I\).</div>
 <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
 <div class="mk-sol">
-<h4>Cálculo de AB y su traspuesta</h4>
-\[AB=\left(\begin{matrix}5 &amp; 2\\3 &amp; 0\end{matrix}\right)\Rightarrow(AB)^T=\left(\begin{matrix}5 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
-<h4>Cálculo de BᵀAᵀ</h4>
-\[B^T=\left(\begin{matrix}1 &amp; 2\\0 &amp; 1\end{matrix}\right),\quad A^T=\left(\begin{matrix}1 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
-\[B^TA^T=\left(\begin{matrix}1\cdot1+2\cdot2 &amp; 1\cdot3+2\cdot0\\0\cdot1+1\cdot2 &amp; 0\cdot3+1\cdot0\end{matrix}\right)=\left(\begin{matrix}5 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
-<div class="mk-resultado mk-res-neu">(AB)ᵀ = BᵀAᵀ ✓</div>
+<h4>Traspuesta</h4>
+\[A^t=\left(\begin{matrix}2&5\\1&3\end{matrix}\right)\]
+<h4>Inversa (fórmula para 2×2: \(A^{-1}=\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\))</h4>
+\[\det(A)=2\cdot3-1\cdot5=1\neq0 \Rightarrow A^{-1}=\frac{1}{1}\left(\begin{matrix}3&-1\\-5&2\end{matrix}\right)=\left(\begin{matrix}3&-1\\-5&2\end{matrix}\right)\]
+<h4>Verificación</h4>
+\[A\cdot A^{-1}=\left(\begin{matrix}2&1\\5&3\end{matrix}\right)\left(\begin{matrix}3&-1\\-5&2\end{matrix}\right)=\left(\begin{matrix}6-5&-2+2\\15-15&-5+6\end{matrix}\right)=\left(\begin{matrix}1&0\\0&1\end{matrix}\right)=I\checkmark\]
+<div class="mk-resultado">\(A^{-1}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix}\)</div>
 </div></div>
 
+<!-- EJ 6: Propiedad (AB)^t = B^t A^t con inversa -->
 <div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge mk-b-neu">Combinación lineal de matrices</span><span class="mk-ej-level">Nivel básico · 3A + 2B</span></div>
-<div class="mk-enunciado">Calcula \(3A+2B\) siendo:
-\[A=\left(\begin{matrix}2 &amp; 0\\1 &amp; -1\end{matrix}\right),\quad B=\left(\begin{matrix}-1 &amp; 3\\0 &amp; 2\end{matrix}\right)\]</div>
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 6</span><span class="mk-badge">Propiedades combinadas</span><span class="mk-ej-level">Nivel alto</span></div>
+<div class="mk-enunciado">Sea \(A=\left(\begin{matrix}1&2\\3&4\end{matrix}\right)\). Calcula \((A^2)^t\) de dos formas: directamente y usando la propiedad \((AB)^t=B^tA^t\). Verifica que coinciden.</div>
 <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
 <div class="mk-sol">
-<h4>Multiplicación escalar y suma</h4>
-\[3A=\left(\begin{matrix}6 &amp; 0\\3 &amp; -3\end{matrix}\right),\quad 2B=\left(\begin{matrix}-2 &amp; 6\\0 &amp; 4\end{matrix}\right)\]
-\[3A+2B=\left(\begin{matrix}6-2 &amp; 0+6\\3+0 &amp; -3+4\end{matrix}\right)=\left(\begin{matrix}4 &amp; 6\\3 &amp; 1\end{matrix}\right)\]
-<div class="mk-resultado mk-res-neu">\(3A+2B = egin{pmatrix}4&6\3&1\end{pmatrix}\)</div>
+<h4>Método directo</h4>
+\[A^2=\left(\begin{matrix}1+6&2+8\\3+12&6+16\end{matrix}\right)=\left(\begin{matrix}7&10\\15&22\end{matrix}\right)\Rightarrow (A^2)^t=\left(\begin{matrix}7&15\\10&22\end{matrix}\right)\]
+<h4>Usando la propiedad \((A\cdot A)^t=A^t\cdot A^t=(A^t)^2\)</h4>
+\[A^t=\left(\begin{matrix}1&3\\2&4\end{matrix}\right),\quad (A^t)^2=\left(\begin{matrix}1+6&3+12\\2+8&6+16\end{matrix}\right)=\left(\begin{matrix}7&15\\10&22\end{matrix}\right)\checkmark\]
+<div class="mk-resultado">\((A^2)^t=(A^t)^2=\begin{pmatrix}7&15\\10&22\end{pmatrix}\) — ambos métodos coinciden</div>
 </div></div>
 
 </section>
@@ -463,11 +552,11 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
-  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; document.body.style.overflow='hidden'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora') mostrarCalc();
+  if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; }
 });
 </script><script>
 function mkToggle(btn){

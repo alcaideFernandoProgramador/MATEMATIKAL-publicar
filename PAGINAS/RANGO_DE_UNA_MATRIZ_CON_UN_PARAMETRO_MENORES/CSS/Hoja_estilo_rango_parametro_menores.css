@@ -63,4 +63,4 @@ iframe{border:none}
 
 /* #calculadora es el contenedor real — debe ser flex column de altura completa */
 #calculadora{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
-#calculadora #contenedor{flex:1 1 auto;min-height:0;overflow:hidden;height:auto;}
+#calculadora #contenedor{flex:1 1 auto;min-height:0;overflow-y:auto;height:auto;padding-bottom:calc(var(--footer-h,74px) + 10px);}
