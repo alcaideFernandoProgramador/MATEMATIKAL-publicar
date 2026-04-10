@@ -95,6 +95,35 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .exampleText p{margin:0 0 8px;color:var(--text-secondary)}
 @media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
 </style>
+<style id="mk-ejercicios-css">
+.mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}
+.mk-ejercicios>h2{font-family:var(--font-display,inherit);font-size:1.45rem;font-weight:400;color:var(--blue-deep,#1a2b6b);border-left:5px solid var(--blue-bright,#3b6ef8);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary,#4a5270);margin-bottom:1.8rem}
+.mk-ejercicio{background:var(--bg-card,#fff);border:1px solid var(--border-card,rgba(30,50,150,.08));border-radius:var(--radius-card,20px);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card,0 4px 24px rgba(20,40,120,.07))}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:var(--blue-light,#e8eeff);border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep,#1a2b6b);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.mk-b-det{background:#d4edda;color:#155724}
+.mk-b-ind{background:#fff3cd;color:#856404}
+.mk-b-inc{background:#f8d7da;color:#721c24}
+.mk-b-neu{background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted,#7b839e)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary,#0f1629);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid,#2d4faa);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep,#1a2b6b)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page,#f4f6fd);font-size:.94rem;line-height:1.8;color:var(--text-primary,#0f1629)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid,#2d4faa);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem}
+.mk-res-det{background:#d4edda;color:#155724}
+.mk-res-ind{background:#fff3cd;color:#856404}
+.mk-res-inc{background:#f8d7da;color:#721c24}
+.mk-res-neu{background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
+.mk-tip{background:var(--blue-light,#e8eeff);border-left:4px solid var(--blue-bright,#3b6ef8);border-radius:0 8px 8px 0;padding:.55rem .9rem;font-size:.85rem;color:var(--blue-deep,#1a2b6b);margin-top:.9rem;line-height:1.6}
+.mk-tip strong{color:var(--blue-deep,#1a2b6b)}
+</style>
 </head>
 <body><div id="introPrincipal">
 <div class="introWrap">
@@ -205,6 +234,66 @@ A=\left( \begin{matrix}
 <div class="resultadoRango"><span>rg(A)=3</span></div>
 </section>
 </div>
+
+<section class="mk-ejercicios">
+<h2>Ejercicios propuestos</h2>
+<p class="mk-subtitulo">Calcula el rango de cada matriz usando el método de los menores. Busca el mayor menor no nulo.</p>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge mk-b-neu">Matriz 3×3</span><span class="mk-ej-level">Nivel básico · rg = 3</span></div>
+<div class="mk-enunciado">Calcula el rango de la matriz:
+\[A=\left(\begin{matrix}1 &amp; 0 &amp; 2\\2 &amp; 1 &amp; 3\\4 &amp; 1 &amp; 8\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Menor de orden 3 (determinante)</h4>
+\[|A|=1\cdot(1\cdot8-3\cdot1)-0+2\cdot(2\cdot1-1\cdot4)=5+2\cdot(-2)=1\neq 0\]
+<h4>Conclusión</h4>
+Existe un menor de orden 3 no nulo, luego el rango es máximo.
+<div class="mk-resultado mk-res-neu">rg(A) = 3</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge mk-b-neu">Matriz 3×3</span><span class="mk-ej-level">Nivel medio · rg = 2</span></div>
+<div class="mk-enunciado">Calcula el rango de la matriz:
+\[A=\left(\begin{matrix}1 &amp; 2 &amp; 3\\2 &amp; 4 &amp; 6\\1 &amp; 3 &amp; 5\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Menor de orden 3</h4>
+La fila 2 es el doble de la fila 1, por lo que \(|A|=0\). No existe menor de orden 3 no nulo.
+<h4>Búsqueda de menor de orden 2</h4>
+\[\begin{vmatrix}1 &amp; 3\\1 &amp; 5\end{vmatrix}=5-3=2\neq 0\]
+Existe un menor de orden 2 no nulo, así que \(\text{rg}(A)\geq 2\). Como el de orden 3 es nulo, \(\text{rg}(A)&lt;3\).
+<div class="mk-resultado mk-res-neu">rg(A) = 2</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge mk-b-neu">Matriz 2×3</span><span class="mk-ej-level">Nivel básico · rg = 2</span></div>
+<div class="mk-enunciado">Calcula el rango de la matriz:
+\[A=\left(\begin{matrix}1 &amp; 2 &amp; 3\\2 &amp; 5 &amp; 7\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>El máximo rango posible es 2 (número de filas)</h4>
+Buscamos un menor de orden 2 no nulo:
+\[\begin{vmatrix}1 &amp; 2\\2 &amp; 5\end{vmatrix}=5-4=1\neq 0\]
+<div class="mk-resultado mk-res-neu">rg(A) = 2</div>
+<div class="mk-tip"><strong>Recuerda:</strong> El rango nunca puede superar el mínimo entre el número de filas y de columnas.</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge mk-b-neu">Matriz 3×3</span><span class="mk-ej-level">Nivel medio · rg = 1</span></div>
+<div class="mk-enunciado">Calcula el rango de la matriz:
+\[A=\left(\begin{matrix}2 &amp; 4 &amp; 6\\1 &amp; 2 &amp; 3\\3 &amp; 6 &amp; 9\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Menores de orden 3 y orden 2</h4>
+Todas las filas son múltiplos de \((1,2,3)\), por lo que todos los menores de orden 2 son nulos:
+\[\begin{vmatrix}2 &amp; 4\\1 &amp; 2\end{vmatrix}=4-4=0,\quad\begin{vmatrix}4 &amp; 6\\2 &amp; 3\end{vmatrix}=12-12=0,\quad\ldots\]
+<h4>Menor de orden 1</h4>
+Existen elementos no nulos (p.ej. \(a_{11}=2\neq 0\)), así que \(\text{rg}(A)\geq 1\).
+<div class="mk-resultado mk-res-neu">rg(A) = 1</div>
+</div></div>
+
+</section>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
@@ -283,5 +372,13 @@ document.addEventListener('DOMContentLoaded',function(){
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
   if(location.hash==='calculadora') mostrarCalc();
 });
-</script></body>
+</script><script>
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+}
+</script>
+</body>
 </html>

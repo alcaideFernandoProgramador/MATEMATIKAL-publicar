@@ -96,6 +96,35 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .exampleText p{margin:0 0 8px;color:var(--text-secondary)}
 @media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
 </style>
+<style id="mk-ejercicios-css">
+.mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}
+.mk-ejercicios>h2{font-family:var(--font-display,inherit);font-size:1.45rem;font-weight:400;color:var(--blue-deep,#1a2b6b);border-left:5px solid var(--blue-bright,#3b6ef8);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary,#4a5270);margin-bottom:1.8rem}
+.mk-ejercicio{background:var(--bg-card,#fff);border:1px solid var(--border-card,rgba(30,50,150,.08));border-radius:var(--radius-card,20px);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card,0 4px 24px rgba(20,40,120,.07))}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:var(--blue-light,#e8eeff);border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep,#1a2b6b);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.mk-b-det{background:#d4edda;color:#155724}
+.mk-b-ind{background:#fff3cd;color:#856404}
+.mk-b-inc{background:#f8d7da;color:#721c24}
+.mk-b-neu{background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted,#7b839e)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary,#0f1629);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid,#2d4faa);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep,#1a2b6b)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page,#f4f6fd);font-size:.94rem;line-height:1.8;color:var(--text-primary,#0f1629)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid,#2d4faa);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem}
+.mk-res-det{background:#d4edda;color:#155724}
+.mk-res-ind{background:#fff3cd;color:#856404}
+.mk-res-inc{background:#f8d7da;color:#721c24}
+.mk-res-neu{background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
+.mk-tip{background:var(--blue-light,#e8eeff);border-left:4px solid var(--blue-bright,#3b6ef8);border-radius:0 8px 8px 0;padding:.55rem .9rem;font-size:.85rem;color:var(--blue-deep,#1a2b6b);margin-top:.9rem;line-height:1.6}
+.mk-tip strong{color:var(--blue-deep,#1a2b6b)}
+</style>
 </head>
 <body><div id="introPrincipal">
 <div class="introWrap">
@@ -254,6 +283,62 @@ E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </section>
+
+<section class="mk-ejercicios">
+<h2>Ejercicios propuestos</h2>
+<p class="mk-subtitulo">Practica las operaciones básicas con matrices. Comprueba los resultados usando la herramienta.</p>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge mk-b-neu">Suma de matrices</span><span class="mk-ej-level">Nivel básico</span></div>
+<div class="mk-enunciado">Calcula \(A+B\) siendo:
+\[A=\left(\begin{matrix}1 &amp; 2\\3 &amp; 4\end{matrix}\right),\quad B=\left(\begin{matrix}5 &amp; -1\\0 &amp; 2\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Suma elemento a elemento</h4>
+\[A+B=\left(\begin{matrix}1+5 &amp; 2+(-1)\\3+0 &amp; 4+2\end{matrix}\right)=\left(\begin{matrix}6 &amp; 1\\3 &amp; 6\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">\(A+B = egin{pmatrix}6&1\3&6\end{pmatrix}\)</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge mk-b-neu">Producto de matrices</span><span class="mk-ej-level">Nivel medio · no conmutativo</span></div>
+<div class="mk-enunciado">Calcula \(AB\) y \(BA\) y comprueba que \(AB\neq BA\) siendo:
+\[A=\left(\begin{matrix}1 &amp; 2\\0 &amp; 1\end{matrix}\right),\quad B=\left(\begin{matrix}3 &amp; 0\\1 &amp; 2\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Producto AB</h4>
+\[AB=\left(\begin{matrix}1\cdot3+2\cdot1 &amp; 1\cdot0+2\cdot2\\0\cdot3+1\cdot1 &amp; 0\cdot0+1\cdot2\end{matrix}\right)=\left(\begin{matrix}5 &amp; 4\\1 &amp; 2\end{matrix}\right)\]
+<h4>Producto BA</h4>
+\[BA=\left(\begin{matrix}3\cdot1+0\cdot0 &amp; 3\cdot2+0\cdot1\\1\cdot1+2\cdot0 &amp; 1\cdot2+2\cdot1\end{matrix}\right)=\left(\begin{matrix}3 &amp; 6\\1 &amp; 4\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">AB ≠ BA: el producto matricial no es conmutativo en general</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge mk-b-neu">Traspuesta de un producto</span><span class="mk-ej-level">Nivel medio · propiedad (AB)ᵀ = BᵀAᵀ</span></div>
+<div class="mk-enunciado">Verifica que \((AB)^T=B^TA^T\) siendo:
+\[A=\left(\begin{matrix}1 &amp; 2\\3 &amp; 0\end{matrix}\right),\quad B=\left(\begin{matrix}1 &amp; 0\\2 &amp; 1\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Cálculo de AB y su traspuesta</h4>
+\[AB=\left(\begin{matrix}5 &amp; 2\\3 &amp; 0\end{matrix}\right)\Rightarrow(AB)^T=\left(\begin{matrix}5 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
+<h4>Cálculo de BᵀAᵀ</h4>
+\[B^T=\left(\begin{matrix}1 &amp; 2\\0 &amp; 1\end{matrix}\right),\quad A^T=\left(\begin{matrix}1 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
+\[B^TA^T=\left(\begin{matrix}1\cdot1+2\cdot2 &amp; 1\cdot3+2\cdot0\\0\cdot1+1\cdot2 &amp; 0\cdot3+1\cdot0\end{matrix}\right)=\left(\begin{matrix}5 &amp; 3\\2 &amp; 0\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">(AB)ᵀ = BᵀAᵀ ✓</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge mk-b-neu">Combinación lineal de matrices</span><span class="mk-ej-level">Nivel básico · 3A + 2B</span></div>
+<div class="mk-enunciado">Calcula \(3A+2B\) siendo:
+\[A=\left(\begin{matrix}2 &amp; 0\\1 &amp; -1\end{matrix}\right),\quad B=\left(\begin{matrix}-1 &amp; 3\\0 &amp; 2\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Multiplicación escalar y suma</h4>
+\[3A=\left(\begin{matrix}6 &amp; 0\\3 &amp; -3\end{matrix}\right),\quad 2B=\left(\begin{matrix}-2 &amp; 6\\0 &amp; 4\end{matrix}\right)\]
+\[3A+2B=\left(\begin{matrix}6-2 &amp; 0+6\\3+0 &amp; -3+4\end{matrix}\right)=\left(\begin{matrix}4 &amp; 6\\3 &amp; 1\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">\(3A+2B = egin{pmatrix}4&6\3&1\end{pmatrix}\)</div>
+</div></div>
+
+</section>
 </div>
 <script>
 window.addEventListener('DOMContentLoaded',function(){
@@ -384,5 +469,13 @@ document.addEventListener('DOMContentLoaded',function(){
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
   if(location.hash==='calculadora') mostrarCalc();
 });
-</script></body>
+</script><script>
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+}
+</script>
+</body>
 </html>
