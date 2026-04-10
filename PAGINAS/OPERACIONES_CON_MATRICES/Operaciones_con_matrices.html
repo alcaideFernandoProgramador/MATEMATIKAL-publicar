@@ -23,6 +23,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
 #introPrincipal{overflow:visible!important}
+#miniEjemplo .k .katex-display,#miniEjemplo .k .katex-display>.katex{text-align:left!important;margin:0!important}
+#miniEjemplo .k{margin-left:20px!important}
 </style>
 <style id="mk-design-v2">
 :root{
@@ -46,7 +48,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .heroTop{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative;z-index:1}
 .heroTop h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0;flex:1;text-shadow:0 2px 12px rgba(0,0,0,.18)}
 .heroBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;backdrop-filter:blur(8px);margin-bottom:10px;width:fit-content}
-.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:700px}
+.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:900px}
 .heroDesc ol{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
 .heroDesc ol li,.heroDesc ul li{margin:6px 0}
 .heroDesc ul{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
@@ -145,26 +147,27 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </div>
-<h1 class="heroTitle" style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
+<h1 class="heroTitle" style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 28px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center;line-height:0.88">
   OPERACIONES CON MATRICES<br>
   <span style="font-size:clamp(1.1rem,2.2vw,1.6rem);letter-spacing:.04em;font-style:italic">Suma, producto, traspuesta, inversa y potencias</span>
 </h1>
 <div class="heroDesc">
-<p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos matriciales de dos formas principales:</p>
-<div class="modeGrid">
+<p class="heroLead">Esta herramienta permite trabajar con matrices y resolver cálculos de dos formas principales:</p>
+<div class="modeGrid" style="margin-left:20px">
 <div class="modeCard">
 <div class="modeTitle">Operaciones directas</div>
-<div class="modeText">Se introduce la operación y se puede obtener el resultado automáticamente o ir resolviéndolo desde la zona de trabajo del usuario.</div>
+<div class="modeText" style="margin-left:16px">Se introduce la operación y se puede obtener el resultado automáticamente o ir resolviéndolo desde la zona de trabajo del usuario.</div>
 </div>
 <div class="modeCard">
 <div class="modeTitle">Operaciones combinadas</div>
-<div class="modeText">La página puede simplificar y resolver expresiones algebraicas matriciales, mostrando el resultado final o los pasos intermedios.</div>
+<div class="modeText" style="margin-left:16px">La página puede simplificar y resolver expresiones algebraicas matriciales, mostrando el resultado final o los pasos intermedios.</div>
 </div>
 </div>
 </div>
 </header>
 <section class="card">
 <h2>Qué son las operaciones con matrices</h2>
+<div style="margin-left:20px">
 <p>Las operaciones con matrices permiten trabajar de forma ordenada con tablas rectangulares de números o expresiones. En álgebra lineal son fundamentales para estudiar sistemas de ecuaciones lineales, transformaciones lineales, determinantes, rangos y muchos otros contenidos habituales en Bachillerato y en cursos iniciales de universidad.</p>
 <p>No todas las operaciones matriciales se realizan del mismo modo ni están siempre definidas. Algunas, como la suma y la resta, solo pueden hacerse entre matrices del mismo orden. Otras, como el producto de matrices, dependen del número de filas y columnas de las matrices implicadas. También existen operaciones propias de una sola matriz, como la traspuesta, la inversa o el cálculo de potencias.</p>
 <p>Esta página reúne una herramienta para practicar las operaciones más habituales con matrices y, además, ofrece una introducción teórica para recordar qué significa cada operación, en qué casos puede aplicarse y qué precauciones conviene tener al usarla.</p>
@@ -178,9 +181,11 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <p>Producto por un número, traspuesta, inversa y potencias, con sus condiciones de existencia correspondientes.</p>
 </div>
 </div>
+</div>
 </section>
 <section class="card callout">
 <h2>Propiedades básicas de las operaciones con matrices</h2>
+<div style="margin-left:20px">
 <ul class="bullets">
 <li>La <strong>suma</strong> y la <strong>resta</strong> de matrices se realizan elemento a elemento y exigen que ambas matrices tengan el mismo número de filas y de columnas.</li>
 <li>El <strong>producto por un número</strong> se obtiene multiplicando cada elemento de la matriz por ese número.</li>
@@ -191,6 +196,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <li>Las <strong>potencias</strong> de una matriz solo tienen sentido cuando la matriz es cuadrada.</li>
 <li>En expresiones con varias matrices, el uso correcto de <strong>paréntesis</strong> y el orden de las operaciones puede cambiar completamente el resultado.</li>
 </ul>
+</div>
 </section>
 <section class="card" id="miniEjemplo">
 <h2>Ejemplos rápidos</h2>
@@ -212,9 +218,32 @@ CD=\begin{bmatrix}1&amp;2\\3&amp;4\end{bmatrix}\begin{bmatrix}0&amp;1\\-1&amp;2\
 <div class="k">\[
 E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 \]</div>
-<div class="btnRow">
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ver ejemplo resuelto completo</a>
-</div>
+<h3 style="margin-top:18px">Producto de un número por una matriz</h3>
+<p class="muted">Si \(k=3\) y \(A=\begin{bmatrix}1&amp;-2\\0&amp;3\end{bmatrix}\), el producto se obtiene multiplicando cada elemento por \(k\).</p>
+<div class="k">\[
+3A=3\begin{bmatrix}1&amp;-2\\0&amp;3\end{bmatrix}=\begin{bmatrix}3\cdot1&amp;3\cdot(-2)\\3\cdot0&amp;3\cdot3\end{bmatrix}=\begin{bmatrix}3&amp;-6\\0&amp;9\end{bmatrix}
+\]</div>
+<h3 style="margin-top:18px">Inversa de una matriz</h3>
+<p class="muted">Si \(A=\begin{bmatrix}2&amp;1\\5&amp;3\end{bmatrix}\), su determinante es \(\det(A)=2\cdot3-1\cdot5=1\neq0\), por lo que existe la inversa.</p>
+<div class="k">\[
+A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}
+\]</div>
+<h3 style="margin-top:18px">Potencia de una matriz</h3>
+<p class="muted">Si \(A=\begin{bmatrix}2&amp;0\\0&amp;3\end{bmatrix}\), las potencias se calculan multiplicando la matriz por sí misma sucesivamente.</p>
+<div class="k">\[
+A^2=\begin{bmatrix}4&amp;0\\0&amp;9\end{bmatrix},\qquad A^3=\begin{bmatrix}8&amp;0\\0&amp;27\end{bmatrix}
+\]</div>
+<h3 style="margin-top:18px">Operación combinada: \(AB(A+B^t)\)</h3>
+<p class="muted">Sean \(A=\begin{bmatrix}1&amp;2\\0&amp;1\end{bmatrix}\) y \(B=\begin{bmatrix}1&amp;0\\1&amp;1\end{bmatrix}\). Se calcula paso a paso.</p>
+<div class="k">\[
+B^t=\begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix},\qquad A+B^t=\begin{bmatrix}2&amp;3\\0&amp;2\end{bmatrix}
+\]</div>
+<div class="k">\[
+AB=\begin{bmatrix}1&amp;2\\0&amp;1\end{bmatrix}\begin{bmatrix}1&amp;0\\1&amp;1\end{bmatrix}=\begin{bmatrix}1\cdot1+2\cdot1&amp;1\cdot0+2\cdot1\\0\cdot1+1\cdot1&amp;0\cdot0+1\cdot1\end{bmatrix}=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}
+\]</div>
+<div class="k">\[
+AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&amp;2\end{bmatrix}=\begin{bmatrix}3\cdot2+2\cdot0&amp;3\cdot3+2\cdot2\\1\cdot2+1\cdot0&amp;1\cdot3+1\cdot2\end{bmatrix}=\begin{bmatrix}6&amp;13\\2&amp;5\end{bmatrix}
+\]</div>
 </section>
 <section class="card">
 <h2>Cómo se usa</h2>
@@ -286,7 +315,7 @@ E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 <h2>Practicar operaciones con matrices</h2>
 <p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres trabajar directamente con matrices, introducir tus propios datos y realizar operaciones paso a paso o de forma automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
 <div class="btnRow">
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
+<a class="trabajoBtn" href="#calculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </section>
 
@@ -552,11 +581,11 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; document.body.style.overflow='hidden'; window.scrollTo(0,0); enfocarPrimerInput(); } }
-  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; window.scrollTo(0,0);} }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; }
+  if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; document.body.style.display='block'; }
 });
 </script><script>
 function mkToggle(btn){
