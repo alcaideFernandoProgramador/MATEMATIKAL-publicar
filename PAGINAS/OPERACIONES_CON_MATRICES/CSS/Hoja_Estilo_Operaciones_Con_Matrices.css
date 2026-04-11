@@ -218,3 +218,22 @@ footer:not(.siteFooter) a:hover{text-decoration:underline;}
 
 /* Fix: caja1 inicial ajustada al contenido (no estira en grid) */
 #caja1{display:block;align-self:start;height:auto;min-height:0;}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:1100px){
+  /* Sacar los controles del flujo absoluto para que no pisen el título */
+  #tituloinicial{justify-content:space-between;padding:10px 14px;}
+  #controlesTop{position:static;transform:none;flex-shrink:0;}
+  #tituloinicial h1{flex:1;text-align:left;white-space:normal;font-size:15px;overflow:visible;}
+  /* Columnas de la tabla de pasos: soltar anchos fijos */
+  .tpasos{table-layout:auto!important;}
+  .tpasos colgroup col:nth-child(1),
+  .tpasos colgroup col:nth-child(2),
+  .tpasos colgroup col:nth-child(3){width:auto!important;min-width:0!important;max-width:none!important;}
+  /* Área de pasos: scroll horizontal en lugar de desbordamiento */
+  #caja21{overflow-x:auto;}
+}
+@media (max-width:600px){
+  #tituloinicial h1{font-size:13px;}
+  #controlesTop{gap:8px;}
+}

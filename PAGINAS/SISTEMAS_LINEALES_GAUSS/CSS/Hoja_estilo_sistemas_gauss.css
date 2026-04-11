@@ -92,3 +92,18 @@ span.mjx-mtable{padding:0!important;margin:0!important}
 .contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
 .contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
 .cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:1100px){
+  #caja112{flex-direction:column;}
+}
+@media (max-width:700px){
+  #tituloinicial{flex-direction:column;align-items:stretch;padding:8px 12px;}
+  #controlesTop{justify-content:flex-end;}
+  #tituloinicial h1{font-size:15px;text-align:left;justify-content:flex-start;}
+  #caja111{flex-direction:column;}
+  #caja1111{width:100%;min-width:0;}
+  /* Fila de paréntesis+matriz: permitir wrap */
+  #caja11212{flex-wrap:wrap;}
+  #caja1122{flex-wrap:wrap;}
+}

@@ -276,6 +276,13 @@ iframe{border:none}
 @media (max-width: 1100px){
   #caja111{flex-direction:column}
   #caja1112{width:100%}
+  #caja112{flex-direction:column;}
+}
+
+@media (max-width: 700px){
+  #tituloinicial{padding:8px 12px;}
+  #caja1111{width:100%;min-width:0;}
+  #caja1232 input{width:100%;max-width:200px;}
 }
 
 @media (max-width: 520px){

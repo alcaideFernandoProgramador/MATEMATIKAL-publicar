@@ -81,3 +81,16 @@ iframe{border:none}
 
 /* #calculadora es el contenedor real — debe ser flex column de altura completa */
 #calculadora{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:700px){
+  /* Desbloquear scroll de documento en pantallas pequeñas */
+  html,body{overflow:auto!important;height:auto!important;}
+  #calculadora{height:auto!important;min-height:100vh;overflow:visible!important;}
+  #contenedor{overflow:visible!important;height:auto!important;}
+  /* caja3 pasa a altura automática (ya no queda espacio sobrante) */
+  #contenedorCaja3{flex:none;}
+  #caja3{height:auto;min-height:200px;overflow:visible;}
+  /* Cabecera más compacta */
+  #tituloinicial{padding:8px 12px;}
+}

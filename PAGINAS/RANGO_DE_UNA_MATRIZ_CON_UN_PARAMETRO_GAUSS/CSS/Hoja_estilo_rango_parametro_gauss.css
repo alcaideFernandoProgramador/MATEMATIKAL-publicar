@@ -109,3 +109,20 @@ td{vertical-align:middle;}
 .contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
 .contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
 .cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:700px){
+  /* Desbloquear scroll de documento en pantallas pequeñas */
+  html,body{overflow:auto!important;height:auto!important;}
+  #calculadora{height:auto!important;min-height:100vh;overflow:visible!important;}
+  #contenedor{overflow:visible!important;height:auto!important;}
+  #caja1{max-height:none!important;overflow-y:visible!important;}
+  #caja2{max-height:none!important;overflow-y:visible!important;display:block!important;}
+  #contenedorCaja3{min-height:150px;overflow:visible!important;}
+  /* Tarjetas de casos: una por fila */
+  .casosCard{min-width:0!important;flex:1 1 100%!important;}
+  /* Formulario de entrada: sin ancho mínimo fijo */
+  #caja1.layoutContinuar{flex-wrap:wrap!important;}
+  #caja1.layoutContinuar .formAuto{min-width:0!important;width:100%!important;}
+  #caja112{flex-wrap:wrap!important;}
+}

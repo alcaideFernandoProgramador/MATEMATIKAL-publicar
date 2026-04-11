@@ -166,3 +166,12 @@ input[type="text"],input{
   min-height:calc(100vh - 76px - var(--footer-h,74px));
   padding-bottom:10px;
 }
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:700px){
+  /* Anular los flex fijos que sobreescriben la media query de 1100px */
+  #caja1111{flex:none!important;width:100%!important;min-width:0!important;}
+  #caja1112{flex:none!important;width:100%!important;}
+  #caja111{flex-direction:column!important;}
+  #caja112{flex-direction:column;}
+}
