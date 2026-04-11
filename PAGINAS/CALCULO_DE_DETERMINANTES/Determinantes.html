@@ -123,6 +123,8 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .resultadoRango,.resultadoDet,.resultado{margin-top:16px;display:flex;justify-content:center}
 .resultadoRango span,.resultadoDet span,.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border-radius:999px;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);font-size:1rem;font-weight:700;color:var(--blue-deep);letter-spacing:-.01em}
 .exampleText p{margin:0 0 8px;color:var(--text-secondary)}
+.k-left .katex-display{text-align:left!important;margin:0!important}
+.k-left .katex-display>.katex{text-align:left!important}
 @media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
 </style>
 <style id="mk-ejercicios-css">
@@ -193,63 +195,152 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">3. Determinante de orden 3. Regla de Sarrus</h3>
 <p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">La <strong>regla de Sarrus</strong> permite calcular el determinante de una matriz \(3\times3\) de forma directa:</p>
 <div class="k">\[\begin{vmatrix}a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33}\end{vmatrix}=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{13}a_{22}a_{31}-a_{12}a_{21}a_{33}-a_{11}a_{23}a_{32}\]</div>
-<div class="k">\[\text{Por ejemplo:}\qquad\begin{vmatrix}1 &amp; 2 &amp; 0 \\ 3 &amp; -1 &amp; 2 \\ 1 &amp; 0 &amp; 4\end{vmatrix}=(-4+4+0)-(0+0+24)=0-24=-24\]</div>
-<p style="color:var(--text-muted);font-size:.92rem;margin:8px 0 0"><strong>Atención:</strong> la regla de Sarrus no es válida para determinantes de orden superior a 3.</p>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin:12px 0 4px">
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\text{Por ejemplo:}\quad\begin{vmatrix}3&amp;1&amp;-2\\2&amp;-1&amp;4\\1&amp;3&amp;0\end{vmatrix}=(3\cdot(-1)\cdot0+1\cdot4\cdot1+(-2)\cdot2\cdot3)-((-2)\cdot(-1)\cdot1+1\cdot2\cdot0+3\cdot4\cdot3)\\&=(0+4-12)-(2+0+36)=-8-38=\mathbf{-46}\end{aligned}\]</div>
+</div>
 
 <h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">4. Menor complementario y adjunto de un elemento</h3>
 <p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">Sea \(A\) una matriz cuadrada de orden \(n\) y sea \(a_{ij}\) uno de sus elementos:</p>
-<ul style="color:var(--text-secondary);line-height:1.72;padding-left:24px;margin:0 0 8px">
-<li><strong>Menor complementario</strong> \(M_{ij}\): determinante de la submatriz de orden \(n-1\) que se obtiene al suprimir la fila \(i\) y la columna \(j\) de la matriz \(A\).</li>
-<li style="margin-top:8px"><strong>Adjunto</strong> (cofactor) \(A_{ij}\): el menor complementario \(M_{ij}\) precedido del signo que corresponde según la posición del elemento:</li>
-</ul>
+<div style="padding-left:24px">
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 6px"><strong>Menor complementario</strong> \(M_{ij}\): determinante de la submatriz de orden \(n-1\) que se obtiene al suprimir la fila \(i\) y la columna \(j\) de la matriz \(A\).</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 18px">
+<div style="flex:1;min-width:260px;border:1px solid var(--border-card);border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo · Orden 3</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">El menor \(M_{23}\) de \(A=\begin{pmatrix}1&amp;2&amp;-1\\3&amp;0&amp;4\\2&amp;1&amp;3\end{pmatrix}\) se obtiene suprimiendo la fila 2 y la columna 3:</p>
+<div class="k" style="margin:6px 0 0">\[M_{23}=\begin{vmatrix}1&amp;2\\2&amp;1\end{vmatrix}=1-4=-3\]</div>
+</div>
+<div style="flex:1;min-width:260px;border:1px solid var(--border-card);border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo · Orden 4</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">El menor \(M_{13}\) de \(A=\begin{pmatrix}1&amp;0&amp;2&amp;1\\0&amp;3&amp;1&amp;2\\2&amp;1&amp;0&amp;3\\1&amp;2&amp;1&amp;0\end{pmatrix}\) suprime la fila 1 y la columna 3:</p>
+<div class="k" style="margin:6px 0 0">\[M_{13}=\begin{vmatrix}0&amp;3&amp;2\\2&amp;1&amp;3\\1&amp;2&amp;0\end{vmatrix}=15\]</div>
+</div>
+</div>
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 6px"><strong>Adjunto</strong> (cofactor) \(A_{ij}\): el menor complementario \(M_{ij}\) precedido del signo que le corresponde según la posición del elemento:</p>
 <div class="k">\[A_{ij}=(-1)^{i+j}\cdot M_{ij}\]</div>
-<p style="color:var(--text-secondary);line-height:1.72;margin:8px 0 4px">La pauta de signos \((-1)^{i+j}\) sigue el patrón en damero:</p>
-<div class="k">\[\begin{pmatrix}+ &amp; - &amp; + &amp; \cdots \\ - &amp; + &amp; - &amp; \cdots \\ + &amp; - &amp; + &amp; \cdots \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots\end{pmatrix}\]</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 8px">
+<div style="flex:1;min-width:260px;border:1px solid var(--border-card);border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo · Orden 3</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">Con la matriz anterior, \(M_{23}=-3\):</p>
+<div class="k" style="margin:6px 0 0">\[A_{23}=(-1)^{2+3}\cdot(-3)=(-1)\cdot(-3)=3\]</div>
+</div>
+<div style="flex:1;min-width:260px;border:1px solid var(--border-card);border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:6px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo · Orden 4</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">Con la matriz anterior, \(M_{13}=15\):</p>
+<div class="k" style="margin:6px 0 0">\[A_{13}=(-1)^{1+3}\cdot 15=(+1)\cdot 15=15\]</div>
+</div>
+</div>
+</div>
 
 <h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">5. Determinante de orden superior. Desarrollo por adjuntos (Teorema de Laplace)</h3>
 <p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">Para calcular un determinante de orden \(n\geq4\) se utiliza el <strong>teorema de Laplace</strong>: el determinante puede desarrollarse por cualquier fila \(i\) o cualquier columna \(j\), sumando los productos de cada elemento por su adjunto:</p>
 <div class="k">\[\det(A)=\sum_{j=1}^{n}a_{ij}\cdot A_{ij}\qquad\text{(desarrollo por la fila }i\text{)}\]</div>
 <div class="k">\[\det(A)=\sum_{i=1}^{n}a_{ij}\cdot A_{ij}\qquad\text{(desarrollo por la columna }j\text{)}\]</div>
-<p style="color:var(--text-secondary);line-height:1.72;margin:8px 0 0">Conviene elegir la fila o columna que contenga más ceros, ya que cada término con \(a_{ij}=0\) desaparece del desarrollo y simplifica el cálculo. Aplicando el teorema repetidamente el determinante se reduce hasta orden 3, donde se aplica la regla de Sarrus.</p>
+<p style="color:var(--text-secondary);line-height:1.72;margin:8px 0 16px">Conviene elegir la fila o columna que contenga más ceros, ya que cada término con \(a_{ij}=0\) desaparece del desarrollo y simplifica el cálculo. Aplicando el teorema repetidamente el determinante se reduce hasta orden 3, donde se aplica la regla de Sarrus.</p>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin-bottom:12px">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 1 · Desarrollo por la columna 3</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">La columna 3 tiene tres ceros: solo \(a_{33}=1\) es distinto de cero, por lo que el determinante se reduce directamente a uno de orden 3:</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}2&amp;1&amp;0&amp;3\\1&amp;4&amp;0&amp;2\\3&amp;0&amp;1&amp;1\\0&amp;2&amp;0&amp;4\end{vmatrix}=1\cdot(-1)^{3+3}\begin{vmatrix}2&amp;1&amp;3\\1&amp;4&amp;2\\0&amp;2&amp;4\end{vmatrix}=(32+0+6)-(0+4+8)=38-12=\mathbf{26}\]</div>
+</div>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin-bottom:8px">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 2 · Operaciones de fila + desarrollo</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Se introducen ceros en la columna 1 restando múltiplos de \(F_1\) y después se desarrolla por dicha columna:</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\begin{vmatrix}1&amp;0&amp;2&amp;-1\\2&amp;1&amp;3&amp;0\\-1&amp;2&amp;0&amp;3\\0&amp;1&amp;-2&amp;1\end{vmatrix}\underset{F_2\to F_2-2F_1}{=}\begin{vmatrix}1&amp;0&amp;2&amp;-1\\0&amp;1&amp;-1&amp;2\\-1&amp;2&amp;0&amp;3\\0&amp;1&amp;-2&amp;1\end{vmatrix}\underset{F_3\to F_3+F_1}{=}\begin{vmatrix}1&amp;0&amp;2&amp;-1\\0&amp;1&amp;-1&amp;2\\0&amp;2&amp;2&amp;2\\0&amp;1&amp;-2&amp;1\end{vmatrix}\\&=1\cdot(+1)\begin{vmatrix}1&amp;-1&amp;2\\2&amp;2&amp;2\\1&amp;-2&amp;1\end{vmatrix}=(2-2-8)-(4-2-4)=-8+2=\mathbf{-6}\end{aligned}\]</div>
+</div>
 
-<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:24px 0 12px;border-left:4px solid var(--blue-bright);padding-left:10px">6. Ejemplos</h3>
-<div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px">
-<div style="flex:1;min-width:280px;border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
-<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 1 · Orden 2</strong>
-<div class="k" style="margin:0">\[\begin{vmatrix}3 &amp; -2 \\ 1 &amp; 4\end{vmatrix}=3\cdot4-(-2)\cdot1=12+2=14\]</div>
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:24px 0 12px;border-left:4px solid var(--blue-bright);padding-left:10px">6. Más ejemplos</h3>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin-bottom:12px">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 1 · Orden 2</strong>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}3 &amp; -2 \\ 1 &amp; 4\end{vmatrix}=3\cdot4-(-2)\cdot1=12+2=\mathbf{14}\]</div>
 </div>
-<div style="flex:1;min-width:280px;border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
-<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 2 · Orden 3 (Regla de Sarrus)</strong>
-<div class="k" style="margin:0">\[\begin{vmatrix}2 &amp; -1 &amp; 3 \\ 1 &amp; 4 &amp; 2 \\ -2 &amp; 1 &amp; 5\end{vmatrix}=(40+4+3)-(-24+4-5)=47+25=72\]</div>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin-bottom:12px">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 2 · Orden 3 (Regla de Sarrus)</strong>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}2 &amp; -1 &amp; 3 \\ 1 &amp; 4 &amp; 2 \\ -2 &amp; 1 &amp; 5\end{vmatrix}=(40+4+3)-(-24+4-5)=47+25=\mathbf{72}\]</div>
+</div>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff);margin-bottom:12px">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 3 · Orden 4 (Desarrollo por la primera fila)</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Se desarrolla por la primera fila. Como \(a_{12}=0\), ese término desaparece:</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}1 &amp; 0 &amp; 2 &amp; 1 \\ 0 &amp; 3 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 0 &amp; 3 \\ 1 &amp; 2 &amp; 1 &amp; 0\end{vmatrix}=1\cdot A_{11}+0\cdot A_{12}+2\cdot A_{13}+1\cdot A_{14}=1\cdot A_{11}+2\cdot A_{13}+1\cdot A_{14}\]</div>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:8px 0 6px">Se calcula cada adjunto aplicando la regla de Sarrus a los menores de orden 3:</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[A_{11}=(+1)\begin{vmatrix}3 &amp; 1 &amp; 2 \\ 1 &amp; 0 &amp; 3 \\ 2 &amp; 1 &amp; 0\end{vmatrix}=(0+6+2)-(0+9+0)=-1\]</div>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[A_{13}=(+1)\begin{vmatrix}0 &amp; 3 &amp; 2 \\ 2 &amp; 1 &amp; 3 \\ 1 &amp; 2 &amp; 0\end{vmatrix}=(0+9+8)-(2+0+0)=+15\]</div>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[A_{14}=(-1)\begin{vmatrix}0 &amp; 3 &amp; 1 \\ 2 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 1\end{vmatrix}=(-1)\bigl[(0+0+4)-(1+0+6)\bigr]=(-1)(-3)=+3\]</div>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\det(A)=1\cdot(-1)+2\cdot15+1\cdot3=-1+30+3=\mathbf{32}\]</div>
+</div>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:24px 0 12px;border-left:4px solid var(--blue-bright);padding-left:10px">7. Propiedades de los determinantes</h3>
+<div style="padding-left:24px;display:flex;flex-direction:column;gap:12px;margin-bottom:8px">
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">1. Intercambio de dos filas o columnas</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Si se intercambian dos filas (o dos columnas), el determinante cambia de signo.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}2&amp;3\\1&amp;4\end{vmatrix}=8-3=5\qquad\xrightarrow{F_1\leftrightarrow F_2}\qquad\begin{vmatrix}1&amp;4\\2&amp;3\end{vmatrix}=3-8=-5\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">2. Factor común de una fila o columna</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Si todos los elementos de una fila o columna tienen un factor común \(k\), puede extraerse fuera del determinante.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}6&amp;9\\2&amp;5\end{vmatrix}=3\begin{vmatrix}2&amp;3\\2&amp;5\end{vmatrix}=3\cdot(10-6)=3\cdot4=12\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">3. Combinación lineal de filas (o columnas)</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">Se puede cambiar una fila \(F_i\) por una combinación lineal \(a\cdot F_i+b\cdot F_j\), con \(a\neq0\). La única condición es que el coeficiente de la fila que se cambia sea distinto de cero. Si ese coeficiente es distinto de 1, hay que poner como factor el inverso delante del determinante resultante.</p>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;padding-left:20px">
+
+<div style="border:1px solid rgba(59,110,248,.15);border-radius:12px;padding:12px 16px;background:#fff">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 1 · Orden 3 (coeficiente 3)</strong>
+<p style="color:var(--text-secondary);font-size:.88rem;margin:0 0 4px">\(F_2\to 3F_2-6F_1\) — el coeficiente de \(F_2\) es 3, por lo que aparece el factor \(\tfrac{1}{3}\):</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}3&amp;1&amp;2\\6&amp;3&amp;1\\0&amp;2&amp;4\end{vmatrix}\underset{F_2\to 3F_2-6F_1}{=}\tfrac{1}{3}\begin{vmatrix}3&amp;1&amp;2\\0&amp;3&amp;-9\\0&amp;2&amp;4\end{vmatrix}=\tfrac{1}{3}\cdot3\begin{vmatrix}3&amp;-9\\2&amp;4\end{vmatrix}=12+18=\mathbf{30}\]</div>
+</div>
+
+<div style="border:1px solid rgba(59,110,248,.15);border-radius:12px;padding:12px 16px;background:#fff">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 2 · Orden 4 (coeficiente 2)</strong>
+<p style="color:var(--text-secondary);font-size:.88rem;margin:0 0 4px">\(F_2\to 2F_2-F_1\) — el coeficiente de \(F_2\) es 2, por lo que aparece el factor \(\tfrac{1}{2}\):</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}2&amp;4&amp;0&amp;0\\1&amp;3&amp;2&amp;1\\0&amp;1&amp;1&amp;2\\0&amp;2&amp;1&amp;3\end{vmatrix}\underset{F_2\to 2F_2-F_1}{=}\tfrac{1}{2}\begin{vmatrix}2&amp;4&amp;0&amp;0\\0&amp;2&amp;4&amp;2\\0&amp;1&amp;1&amp;2\\0&amp;2&amp;1&amp;3\end{vmatrix}=\tfrac{1}{2}\cdot2\begin{vmatrix}2&amp;4&amp;2\\1&amp;1&amp;2\\2&amp;1&amp;3\end{vmatrix}=2-4-2+\cdots=\mathbf{4}\]</div>
+</div>
+
+<div style="border:1px solid rgba(59,110,248,.15);border-radius:12px;padding:12px 16px;background:#fff">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 3 · Orden 4 (coeficiente 2)</strong>
+<p style="color:var(--text-secondary);font-size:.88rem;margin:0 0 4px">\(F_2\to 2F_2-4F_1\) — el coeficiente de \(F_2\) es 2, por lo que aparece el factor \(\tfrac{1}{2}\):</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\begin{vmatrix}1&amp;0&amp;2&amp;1\\2&amp;3&amp;1&amp;0\\0&amp;1&amp;2&amp;3\\1&amp;2&amp;0&amp;1\end{vmatrix}\underset{F_2\to 2F_2-4F_1}{=}\tfrac{1}{2}\begin{vmatrix}1&amp;0&amp;2&amp;1\\0&amp;6&amp;-6&amp;-4\\0&amp;1&amp;2&amp;3\\1&amp;2&amp;0&amp;1\end{vmatrix}\underset{F_4\to F_4-F_1}{=}\tfrac{1}{2}\begin{vmatrix}1&amp;0&amp;2&amp;1\\0&amp;6&amp;-6&amp;-4\\0&amp;1&amp;2&amp;3\\0&amp;2&amp;-2&amp;0\end{vmatrix}\\&=\tfrac{1}{2}\cdot1\cdot\begin{vmatrix}6&amp;-6&amp;-4\\1&amp;2&amp;3\\2&amp;-2&amp;0\end{vmatrix}=\tfrac{1}{2}(0-36+8-(-16-36+0))=\tfrac{1}{2}\cdot24=\mathbf{12}\end{aligned}\]</div>
+</div>
+
 </div>
 </div>
-<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
-<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 3 · Orden 4 (Desarrollo por la primera fila)</strong>
-<p style="color:var(--text-secondary);font-size:.93rem;margin:0 0 4px">Se desarrolla por la primera fila. Como \(a_{12}=0\), ese término desaparece:</p>
-<div class="k">\[\begin{vmatrix}1 &amp; 0 &amp; 2 &amp; 1 \\ 0 &amp; 3 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 0 &amp; 3 \\ 1 &amp; 2 &amp; 1 &amp; 0\end{vmatrix}=1\cdot A_{11}+0\cdot A_{12}+2\cdot A_{13}+1\cdot A_{14}=1\cdot A_{11}+2\cdot A_{13}+1\cdot A_{14}\]</div>
-<p style="color:var(--text-secondary);font-size:.93rem;margin:8px 0 4px">Se calcula cada adjunto aplicando la regla de Sarrus a los menores de orden 3:</p>
-<div class="k">\[A_{11}=(+1)\begin{vmatrix}3 &amp; 1 &amp; 2 \\ 1 &amp; 0 &amp; 3 \\ 2 &amp; 1 &amp; 0\end{vmatrix}=(+1)(0+6+2-0-9-0)=-1\]</div>
-<div class="k">\[A_{13}=(+1)\begin{vmatrix}0 &amp; 3 &amp; 2 \\ 2 &amp; 1 &amp; 3 \\ 1 &amp; 2 &amp; 0\end{vmatrix}=(+1)(0+9+8-2-0-0)=+15\]</div>
-<div class="k">\[A_{14}=(-1)\begin{vmatrix}0 &amp; 3 &amp; 1 \\ 2 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 1\end{vmatrix}=(-1)(0+0+4-1-0-6)=(-1)(-3)=+3\]</div>
-<div class="k">\[\det(A)=1\cdot(-1)+2\cdot15+1\cdot3=-1+30+3=32\]</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">4. Fila o columna de ceros</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Si una fila o columna tiene todos sus elementos iguales a cero, el determinante vale cero.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}3&amp;-1&amp;2\\0&amp;0&amp;0\\1&amp;4&amp;-3\end{vmatrix}=0\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">5. Filas o columnas proporcionales</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">Si dos filas (o dos columnas) son proporcionales, el determinante es cero.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}1&amp;2&amp;3\\2&amp;4&amp;6\\1&amp;0&amp;-1\end{vmatrix}=0\quad(\text{F}_2=2\cdot\text{F}_1)\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">6. Matriz triangular</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">El determinante de una matriz triangular (superior o inferior) es el producto de los elementos de la diagonal principal.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{vmatrix}3&amp;5&amp;-2\\0&amp;-1&amp;4\\0&amp;0&amp;2\end{vmatrix}=3\cdot(-1)\cdot2=\mathbf{-6}\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">7. Determinante de la traspuesta</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">El determinante de una matriz es igual al de su traspuesta: \(\det(A^t)=\det(A)\). Por ello, todas las propiedades válidas para filas lo son también para columnas.</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[A=\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix}\Rightarrow\det(A)=-2\qquad A^t=\begin{pmatrix}1&amp;3\\2&amp;4\end{pmatrix}\Rightarrow\det(A^t)=-2\]</div>
+</div>
+
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">8. Determinante del producto</strong>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 6px">El determinante del producto de dos matrices es el producto de sus determinantes: \(\det(AB)=\det(A)\cdot\det(B)\).</p>
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[A=\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix},\;B=\begin{pmatrix}2&amp;0\\1&amp;3\end{pmatrix}\Rightarrow\det(A)=-2,\;\det(B)=6\Rightarrow\det(AB)=-2\cdot6=\mathbf{-12}\]</div>
+</div>
+
 </div>
 </div>
 <div class="grid">
-<section class="accentCard span8">
-<p class="miniTitle">Idea clave</p>
-<h2>¿Qué información da un determinante?</h2>
-<p>El valor del determinante permite decidir, por ejemplo, si una matriz cuadrada es invertible. Si el determinante es distinto de cero, la matriz es <strong>invertible</strong>. Si el determinante es cero, la matriz <strong>no es invertible</strong>.</p>
-<p>En esta página, el cálculo se realiza simplificando el determinante mediante operaciones adecuadas hasta reducirlo a determinantes de orden inferior, conservando siempre el control sobre cómo afectan dichas operaciones al valor final.</p>
-</section>
-<section class="card span4">
-<p class="miniTitle">Notas</p>
-<h2>Antes de empezar</h2>
-<ul class="notesList">
-<li>Solo tiene sentido hablar de determinante en <strong>matrices cuadradas</strong>.</li>
-<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
-<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
-</ul>
-</section>
 <section class="card span6">
 <p class="miniTitle">Cómo se calcula</p>
 <h2>Esquema general</h2>
@@ -261,15 +352,6 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 </ol>
 </section>
 <section class="card span6">
-<p class="miniTitle">Propiedades útiles</p>
-<h2>Conviene recordarlas</h2>
-<ul class="propsList">
-<li>Intercambiar dos filas o dos columnas cambia el signo del determinante.</li>
-<li>Sacar factor común de una fila o columna multiplica el determinante por ese factor.</li>
-<li>Sumar a una fila o columna un múltiplo de otra no cambia el valor del determinante.</li>
-</ul>
-</section>
-<section class="card span6">
 <p class="miniTitle">Cómo se usa</p>
 <h2>Paso a paso</h2>
 <ol class="stepsList">
@@ -279,7 +361,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <li>También puedes usar la solución automática para ver el desarrollo completo.</li>
 </ol>
 </section>
-<section class="card span6">
+<section class="card span12">
 <p class="miniTitle">Errores típicos</p>
 <h2>Conviene vigilarlos</h2>
 <ul class="errorsList">
@@ -289,84 +371,8 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <li>Perder signos al desarrollar un determinante de orden 3.</li>
 </ul>
 </section>
-<section class="card span12">
-<p class="miniTitle">Ejemplo rápido</p>
-<h2>Aplicación del método</h2>
-<div class="k">\[
-\left| \begin{matrix}
-2 &amp; -1 &amp; 3 &amp; 1 \\
-2 &amp; 4 &amp; 3 &amp; 1 \\
-1 &amp; 2 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; -1 &amp; 0
-\end{matrix} \right|
-\underset{{F}_{2}\to {F}_{2}-{F}_{1}}{\mathop{=}}\,
-\left| \begin{matrix}
-2 &amp; -1 &amp; 3 &amp; 1 \\
-0 &amp; 5 &amp; 0 &amp; 0 \\
-1 &amp; 2 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; -1 &amp; 0
-\end{matrix} \right|
-\underset{\operatorname{Red}F_{2}}{\mathop{=}}\,
-5\left| \begin{matrix}
-2 &amp; 3 &amp; 1 \\
-1 &amp; 4 &amp; 3 \\
-3 &amp; -1 &amp; 0
-\end{matrix} \right|
-=5\left( -1+27-12-(-6) \right)=5\cdot 20=100
-\]</div>
-<p class="muted" style="margin-top:14px">El valor final del determinante es 100.</p>
-<div class="resultadoDet"><span>det(A)=100</span></div>
-</section>
 </div>
 <div class="grid" style="margin-top:16px">
-<section class="card span12">
-<h2>Definición y significado del determinante</h2>
-<p>El determinante es una función que asigna a cada matriz cuadrada un número real. Se denota \(\det(A)\) o \(|A|\) y proporciona información esencial sobre la matriz y el sistema de ecuaciones lineales al que puede estar asociada.</p>
-<p>Geométricamente, el valor absoluto del determinante de una matriz \(2\times 2\) representa el área del paralelogramo definido por sus filas, y el del determinante de una matriz \(3\times 3\) representa el volumen del paralelepípedo correspondiente. Cuando el determinante es cero, los vectores son linealmente dependientes y el volumen resulta nulo.</p>
-<p>Desde el punto de vista algebraico, el determinante es cero si y solo si la matriz <strong>no es invertible</strong>. Esto equivale a decir que sus filas son linealmente dependientes, que el rango de la matriz es menor que su orden, y que el sistema homogéneo asociado tiene infinitas soluciones.</p>
-</section>
-<section class="card span6">
-<h2>Propiedades fundamentales del determinante</h2>
-<p>Las propiedades del determinante permiten simplificarlo de forma sistemática sin perder el valor final. Las más importantes son:</p>
-<ul>
-<li><strong>Intercambio de filas o columnas:</strong> si se permutan dos filas (o dos columnas), el determinante cambia de signo. Si una matriz tiene dos filas iguales, su determinante es cero.</li>
-<li><strong>Factor común:</strong> si todos los elementos de una fila o columna tienen un factor común \(k\), puede extraerse fuera del determinante. En sentido inverso, multiplicar todos los elementos de una fila por \(k\) multiplica el determinante por \(k\).</li>
-<li><strong>Combinación lineal de filas:</strong> sumar a una fila un múltiplo de otra no altera el valor del determinante. Esta es la propiedad clave para introducir ceros.</li>
-<li><strong>Determinante de la traspuesta:</strong> \(\det(A^t) = \det(A)\). Las propiedades válidas para filas son igualmente válidas para columnas.</li>
-<li><strong>Determinante del producto:</strong> \(\det(AB) = \det(A)\cdot\det(B)\).</li>
-<li><strong>Matriz triangular:</strong> si la matriz es triangular (superior o inferior), el determinante es el producto de los elementos de la diagonal principal.</li>
-</ul>
-</section>
-<section class="card span6">
-<h2>Métodos de cálculo según el orden</h2>
-<p>El método de cálculo más adecuado depende del orden de la matriz:</p>
-<ul>
-<li><strong>Orden 2:</strong> regla directa: \(\begin{vmatrix}a &amp; b\\c &amp; d\end{vmatrix} = ad - bc\).</li>
-<li><strong>Orden 3:</strong> regla de Sarrus (suma de diagonales principales menos suma de diagonales secundarias) o desarrollo por adjuntos.</li>
-<li><strong>Orden ≥ 4:</strong> operaciones elementales por filas y columnas para introducir ceros y reducir el orden paso a paso hasta llegar a determinantes de orden 3.</li>
-</ul>
-<p>Esta herramienta aplica el método de reducción por operaciones elementales, que es el más sistemático y el que mejor ilustra el uso de las propiedades del determinante.</p>
-</section>
-<section class="card span12">
-<h2>Ejemplo resuelto: determinante de orden 3</h2>
-<p>Se calcula el determinante de la siguiente matriz usando la regla de Sarrus y operaciones elementales.</p>
-<div class="k">\[
-A = \left( \begin{matrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 1 &amp; 2 \\ -1 &amp; 4 &amp; 1 \end{matrix} \right)
-\]</div>
-<p><strong>Método 1 — Regla de Sarrus:</strong></p>
-<div class="k">\[
-\det(A) = (1\cdot1\cdot1 + 2\cdot2\cdot(-1) + (-1)\cdot3\cdot4) - ((-1)\cdot1\cdot(-1) + 1\cdot2\cdot4 + 2\cdot3\cdot1) = (1 - 4 - 12) - (1 + 8 + 6) = -30
-\]</div>
-<p><strong>Método 2 — Reducción por operaciones elementales:</strong></p>
-<div class="k">\[
-\left| \begin{matrix} 1 &amp; 2 &amp; -1 \\ 3 &amp; 1 &amp; 2 \\ -1 &amp; 4 &amp; 1 \end{matrix} \right|
-\underset{\substack{F_2 \to F_2 - 3F_1 \\ F_3 \to F_3 + F_1}}{=}
-\left| \begin{matrix} 1 &amp; 2 &amp; -1 \\ 0 &amp; -5 &amp; 5 \\ 0 &amp; 6 &amp; 0 \end{matrix} \right|
-= 1 \cdot \begin{vmatrix} -5 &amp; 5 \\ 6 &amp; 0 \end{vmatrix}
-= (0 - 30) = -30
-\]</div>
-<p class="muted">Ambos métodos dan el mismo resultado: \(\det(A) = -30\).</p>
-</section>
 <section class="card span6">
 <h2>Relación del determinante con otros conceptos</h2>
 <ul>
@@ -441,6 +447,49 @@ En una matriz triangular (superior o inferior), el determinante es el producto d
 \[=2\cdot\left[2(4+1)-3(2+3)+1(1-6)\right]=2\cdot(10-15-5)=2\cdot(-10)=-20\]
 <div class="mk-resultado mk-res-neu">det = −20</div>
 <div class="mk-tip"><strong>Recuerda:</strong> Se puede sacar factor común de una fila o columna multiplicando el determinante por ese factor. Esto reduce los cálculos.</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 5</span><span class="mk-badge mk-b-neu">Matriz 4×4</span><span class="mk-ej-level">Nivel medio · operaciones de fila</span></div>
+<div class="mk-enunciado">Calcula el determinante usando operaciones elementales por filas:
+\[\begin{vmatrix}1&2&-1&0\\2&5&1&3\\-1&1&3&2\\0&2&1&4\end{vmatrix}\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\begin{vmatrix}1&amp;2&amp;-1&amp;0\\2&amp;5&amp;1&amp;3\\-1&amp;1&amp;3&amp;2\\0&amp;2&amp;1&amp;4\end{vmatrix}\underset{F_2\to F_2-2F_1}{=}\begin{vmatrix}1&amp;2&amp;-1&amp;0\\0&amp;1&amp;3&amp;3\\-1&amp;1&amp;3&amp;2\\0&amp;2&amp;1&amp;4\end{vmatrix}\underset{F_3\to F_3+F_1}{=}\begin{vmatrix}1&amp;2&amp;-1&amp;0\\0&amp;1&amp;3&amp;3\\0&amp;3&amp;2&amp;2\\0&amp;2&amp;1&amp;4\end{vmatrix}\\&=1\cdot(+1)\begin{vmatrix}1&amp;3&amp;3\\3&amp;2&amp;2\\2&amp;1&amp;4\end{vmatrix}=(8+12+9)-(12+36+2)=29-50=\mathbf{-21}\end{aligned}\]</div>
+<div class="mk-resultado mk-res-neu">det = −21</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 6</span><span class="mk-badge mk-b-neu">Matriz 4×4</span><span class="mk-ej-level">Nivel medio · columna con ceros</span></div>
+<div class="mk-enunciado">Calcula el determinante aprovechando los ceros de la tercera columna:
+\[\begin{vmatrix}1&3&0&2\\2&1&0&-1\\4&2&3&0\\1&0&0&2\end{vmatrix}\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Desarrollo por la columna 3</h4>
+La columna 3 tiene tres ceros; solo \(a_{33}=3\) es distinto de cero:
+\[=3\cdot(-1)^{3+3}\begin{vmatrix}1&3&2\\2&1&-1\\1&0&2\end{vmatrix}=3\cdot(+1)\cdot[(2-0)-3(4+1)+2(0-1)]\]
+\[=3\cdot[2-15-2]=3\cdot(-15)=\mathbf{-45}\]
+<div class="mk-resultado mk-res-neu">det = −45</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 7</span><span class="mk-badge mk-b-neu">Matriz 4×4</span><span class="mk-ej-level">Nivel medio · factor común + operaciones</span></div>
+<div class="mk-enunciado">Calcula el determinante:
+\[\begin{vmatrix}2&4&6&2\\1&3&1&2\\0&1&2&3\\2&1&0&1\end{vmatrix}\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\begin{vmatrix}2&amp;4&amp;6&amp;2\\1&amp;3&amp;1&amp;2\\0&amp;1&amp;2&amp;3\\2&amp;1&amp;0&amp;1\end{vmatrix}=2\begin{vmatrix}1&amp;2&amp;3&amp;1\\1&amp;3&amp;1&amp;2\\0&amp;1&amp;2&amp;3\\2&amp;1&amp;0&amp;1\end{vmatrix}\underset{\substack{F_2\to F_2-F_1\\F_4\to F_4-2F_1}}{=}2\begin{vmatrix}1&amp;2&amp;3&amp;1\\0&amp;1&amp;-2&amp;1\\0&amp;1&amp;2&amp;3\\0&amp;-3&amp;-6&amp;-1\end{vmatrix}\\&=2\cdot1\cdot\begin{vmatrix}1&amp;-2&amp;1\\1&amp;2&amp;3\\-3&amp;-6&amp;-1\end{vmatrix}=2\cdot[(-2+18-6)-(-6+2-18)]=2\cdot[10+22]=2\cdot32=\mathbf{64}\end{aligned}\]</div>
+<div class="mk-resultado mk-res-neu">det = 64</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 8</span><span class="mk-badge mk-b-neu">Matriz 5×5</span><span class="mk-ej-level">Nivel avanzado · reducción a orden 4</span></div>
+<div class="mk-enunciado">Calcula el determinante:
+\[\begin{vmatrix}1&0&0&2&1\\2&3&0&1&0\\0&0&3&0&0\\0&1&0&2&3\\1&2&0&0&1\end{vmatrix}\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<div class="k k-left" style="font-size:.8rem;overflow-x:hidden">\[\begin{aligned}&\begin{vmatrix}1&amp;0&amp;0&amp;2&amp;1\\2&amp;3&amp;0&amp;1&amp;0\\0&amp;0&amp;3&amp;0&amp;0\\0&amp;1&amp;0&amp;2&amp;3\\1&amp;2&amp;0&amp;0&amp;1\end{vmatrix}=3\cdot(+1)\begin{vmatrix}1&amp;0&amp;2&amp;1\\2&amp;3&amp;1&amp;0\\0&amp;1&amp;2&amp;3\\1&amp;2&amp;0&amp;1\end{vmatrix}\underset{\substack{F_2\to F_2-2F_1\\F_4\to F_4-F_1}}{=}3\begin{vmatrix}1&amp;0&amp;2&amp;1\\0&amp;3&amp;-3&amp;-2\\0&amp;1&amp;2&amp;3\\0&amp;2&amp;-2&amp;0\end{vmatrix}\\&=3\cdot1\cdot\begin{vmatrix}3&amp;-3&amp;-2\\1&amp;2&amp;3\\2&amp;-2&amp;0\end{vmatrix}=3\cdot[(0-18+4)-(-8+0-18)]=3\cdot[-14+26]=3\cdot12=\mathbf{36}\end{aligned}\]</div>
+<div class="mk-resultado mk-res-neu">det = 36</div>
 </div></div>
 
 </section>
