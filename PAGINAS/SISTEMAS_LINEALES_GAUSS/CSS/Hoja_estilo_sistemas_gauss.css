@@ -56,7 +56,12 @@ h1,h2,h3,h4,p{margin:0}
 h4{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:6px 0 4px 0;display:block;}
 #caja21{min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);background:linear-gradient(180deg,#fff,var(--soft));margin:4px 0 10px 0;padding:8px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;overflow-x:auto;}
 #caja22{min-height:42%;border:1px solid var(--border);border-radius:var(--radius-sm);background:linear-gradient(180deg,#fff,var(--soft));padding:8px;display:block;}
-#caja221{height:88%;display:flex;align-items:center;flex-direction:row;flex-wrap:wrap;gap:6px;overflow-x:auto;}
+#caja221{height:auto;display:flex;align-items:center;flex-direction:row;flex-wrap:wrap;gap:10px;overflow-x:auto;}
+/* Los hijos de caja221 (matrices y símbolos) deben dimensionarse por su contenido real,
+   no por la altura mínima que la biblioteca les asigna, para que align-items:center funcione */
+#caja221>div{height:auto!important;margin:0!important;}
+/* Lo mismo para el área de pasos manuales */
+#caja21>div{height:auto!important;margin:0!important;}
 #caja222{height:auto;display:flex;justify-content:flex-end;padding-top:6px}
 
 table{table-layout:auto;border-spacing:4px;font-size:12px;margin:0;padding:0}

@@ -621,7 +621,7 @@ document.addEventListener('DOMContentLoaded',function(){
   function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora, #btnMostrarCalculadora2").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; document.body.style.display='block'; }
+  if(sessionStorage.getItem('irACalculadora')){sessionStorage.removeItem('irACalculadora');mostrarCalc();}else if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; document.body.style.display='block'; }
 });
 </script></body>
 </html>

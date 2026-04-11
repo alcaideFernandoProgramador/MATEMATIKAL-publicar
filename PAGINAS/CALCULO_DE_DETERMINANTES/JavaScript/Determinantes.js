@@ -80,7 +80,7 @@ function insertarBotonOtroDeterminante(){
   let ayuda=document.getElementById("abreVentana1");if(!ayuda||!ayuda.parentNode)return;
   if(document.getElementById("botonOtroDeterminante"))return;
   let b=document.createElement("button");b.type="button";b.id="botonOtroDeterminante";
-  b.innerHTML="Otro determinante";b.addEventListener("click",function(){location.reload();});
+  b.innerHTML="Otro determinante";b.addEventListener("click",function(){sessionStorage.setItem('irACalculadora','1');location.reload();});
   let volver=document.getElementById("volver")||document.getElementById("botonVolver")||
     document.getElementById("volver1")||document.getElementById("enlaceVolver")||
     document.getElementById("btnVolver");

@@ -505,7 +505,7 @@ function rellenarMatriz(tabla){
 function insertarBotonOtraMatriz(){
   let ayuda=$("abreVentana1");if(!ayuda||!ayuda.parentNode)return;if($("otraMatrizBtn"))return;
   let b=document.createElement("button");b.id="otraMatrizBtn";b.innerHTML="Otra matriz";ayuda.parentNode.insertBefore(b,ayuda);
-  b.addEventListener("click",function(e){e.preventDefault();window.location.reload();});
+  b.addEventListener("click",function(e){e.preventDefault();sessionStorage.setItem('irACalculadora','1');window.location.reload();});
 }
 
 document.addEventListener("DOMContentLoaded",function(){

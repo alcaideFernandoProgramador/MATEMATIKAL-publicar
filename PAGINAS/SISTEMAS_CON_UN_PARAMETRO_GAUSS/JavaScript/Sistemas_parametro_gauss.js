@@ -705,7 +705,7 @@ document.addEventListener("DOMContentLoaded",function(){
     if(volver&&volver.parentNode===parent)parent.insertBefore(otroSistema,volver);
     else parent.insertBefore(otroSistema,abreVentana1?abreVentana1.nextSibling:null);
   }else document.body.appendChild(otroSistema);
-  otroSistema.addEventListener("click",function(){window.location.reload();});
+  otroSistema.addEventListener("click",function(){sessionStorage.setItem('irACalculadora','1');window.location.reload();});
   abreVentana1.addEventListener("click",function(event){event.preventDefault();pdf1.src=pdf1URL;ventana.style.display="flex";});
   cierraVentana1.addEventListener("click",function(){ventana.style.display="none";pdf1.src="";});
   window.addEventListener("click",function(event){if(event.target==ventana){ventana.style.display="none";pdf1.src="";}});
