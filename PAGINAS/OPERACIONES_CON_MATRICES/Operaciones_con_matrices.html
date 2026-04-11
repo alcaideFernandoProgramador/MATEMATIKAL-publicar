@@ -198,6 +198,90 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 </ul>
 </div>
 </section>
+<!-- BLOQUE EXTRA: Operaciones detalladas -->
+<div class="grid" style="margin-bottom:16px">
+<section class="accentCard span12">
+  <p class="miniTitle">Definiciones y propiedades detalladas</p>
+  <h2>Operaciones</h2>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Suma.</strong><br>
+    Solo está definida entre matrices del mismo orden \(m\times n\). Se realiza elemento a elemento.<br>
+    <span style="display:block;text-align:center">\((A+B)_{ij}=a_{ij}+b_{ij}\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">1) \(A+B=B+A\)</span>
+    <span style="display:block;padding-left:24px">2) \((A+B)+C=A+(B+C)\)</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Resta.</strong><br>
+    Solo está definida entre matrices del mismo orden \(m\times n\). Se realiza elemento a elemento.<br>
+    <span style="display:block;text-align:center">\((A-B)_{ij}=a_{ij}-b_{ij}\)</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Producto por un escalar.</strong><br>
+    Se multiplica cada elemento de la matriz por el número.<br>
+    <span style="display:block;text-align:center">\((kA)_{ij}=k\cdot a_{ij}\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">\(k(A+B)=kA+kB\)</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Producto de matrices.</strong><br>
+    El producto \(A\cdot B\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\).<br>
+    <span style="display:block;text-align:center">\((AB)_{ij}=\displaystyle\sum_{k=1}^{p}a_{ik}\cdot b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{ip}b_{pj}\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">El producto matricial <strong>no es conmutativo</strong>: en general \(AB\neq BA\).</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Traspuesta.</strong><br>
+    La traspuesta de una matriz \(A\) de orden \(m\times n\) es la matriz \(A^t\) de orden \(n\times m\) que se obtiene cambiando filas por columnas.<br>
+    <span style="display:block;text-align:center">\((A^t)_{ij}=a_{ji}\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">1) \((A^t)^t=A\)</span>
+    <span style="display:block;padding-left:24px">2) \((A+B)^t=A^t+B^t\)</span>
+    <span style="display:block;padding-left:24px">3) \((AB)^t=B^t A^t\)</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Inversa.</strong><br>
+    Una matriz cuadrada \(A\) tiene inversa \(A^{-1}\) si y solo si \(\det(A)\neq 0\).<br>
+    <span style="display:block;text-align:center">\(A\cdot A^{-1}=A^{-1}\cdot A=I\)</span>
+    <span style="display:block;margin-top:6px">La inversa se calcula mediante el determinante y la traspuesta de la matriz de cofactores (adjunta), donde \(|A|\) denota el determinante de \(A\):</span>
+    <span style="display:block;text-align:center">\(A^{-1}=\dfrac{1}{|A|}\cdot \left(\text{Adj}(A)\right)^t\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">1) \((A^{-1})^{-1}=A\)</span>
+    <span style="display:block;padding-left:24px">2) \((AB)^{-1}=B^{-1}A^{-1}\)</span>
+    <span style="display:block;padding-left:24px">3) \((A^t)^{-1}=(A^{-1})^t\)</span>
+  </div>
+
+  <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+    <strong>Potencias.</strong><br>
+    Solo tienen sentido para matrices cuadradas.<br>
+    <span style="display:block;text-align:center">\(A^n=A\cdot A\cdots A\) (\(n\) veces),\(\quad A^0=I\),\(\quad A^{-n}=(A^{-1})^n\)</span>
+    <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
+    <span style="display:block;padding-left:24px">1) \(A^m\cdot A^n=A^{m+n}\)</span>
+    <span style="display:block;padding-left:24px">2) En general \((AB)^n\neq A^n B^n\)</span>
+  </div>
+</section>
+</div>
+
+<div class="grid" style="margin-bottom:16px">
+<section class="card span12">
+  <p class="miniTitle">Condiciones de existencia</p>
+  <h2>Cuándo está definida cada operación</h2>
+  <ul class="notesList">
+    <li><strong>Suma / resta:</strong> \(A\) y \(B\) deben ser del mismo orden \(m\times n\).</li>
+    <li><strong>Producto \(A\cdot B\):</strong> columnas de \(A\) = filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\).</li>
+    <li><strong>Traspuesta:</strong> siempre definida para cualquier matriz.</li>
+    <li><strong>Inversa:</strong> solo para matrices cuadradas con \(\det(A)\neq 0\).</li>
+    <li><strong>Potencias:</strong> solo para matrices cuadradas.</li>
+  </ul>
+</section>
+</div>
+
 <section class="card" id="miniEjemplo">
 <h2>Ejemplos rápidos</h2>
 <h3>Suma de matrices</h3>
@@ -246,7 +330,7 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 \]</div>
 </section>
 <section class="card">
-<h2>Cómo se usa</h2>
+<h2>Cómo se usa la aplicación</h2>
 <ol class="steps">
 <li><strong>Indica cuántas matrices</strong> vas a introducir y valida con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
 <li><strong>Cambia, si lo deseas, el nombre</strong> de las matrices, que inicialmente aparecen como <code>A, B, ...</code>.</li>
@@ -256,19 +340,19 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 </ol>
 </section>
 <section class="card callout">
-<h2>Opciones disponibles</h2>
-<div class="optGrid">
-<div class="optCard"><div class="optNum">Opción 1</div><div class="optTxt">Sumar dos matrices.</div></div>
-<div class="optCard"><div class="optNum">Opción 2</div><div class="optTxt">Restar dos matrices.</div></div>
-<div class="optCard"><div class="optNum">Opción 3</div><div class="optTxt">Multiplicar dos matrices.</div></div>
-<div class="optCard"><div class="optNum">Opción 4</div><div class="optTxt">Multiplicar un número por una matriz.</div></div>
-<div class="optCard"><div class="optNum">Opción 5</div><div class="optTxt">Obtener la traspuesta de una matriz.</div></div>
-<div class="optCard"><div class="optNum">Opción 6</div><div class="optTxt">Obtener la inversa de una matriz.</div></div>
-<div class="optCard"><div class="optNum">Opción 7</div><div class="optTxt">Obtener una potencia de una matriz.</div></div>
-<div class="optCard"><div class="optNum">Opción 8</div><div class="optTxt">Operaciones combinadas: mostrar paso a paso.</div></div>
-<div class="optCard"><div class="optNum">Opción 9</div><div class="optTxt">Operaciones combinadas: mostrar pasos de forma automática.</div></div>
-<div class="optCard"><div class="optNum">Opción 10</div><div class="optTxt">Operaciones combinadas: mediante pasos realizados por el usuario.</div></div>
-</div>
+<h2>Opciones disponibles en la aplicación</h2>
+<ul style="list-style:none;margin:0;padding:0">
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 1</strong> — Sumar dos matrices.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 2</strong> — Restar dos matrices.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 3</strong> — Multiplicar dos matrices.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 4</strong> — Multiplicar un número por una matriz.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 5</strong> — Obtener la traspuesta de una matriz.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 6</strong> — Obtener la inversa de una matriz.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 7</strong> — Obtener una potencia de una matriz.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 8</strong> — Operaciones combinadas: mostrar paso a paso.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 9</strong> — Operaciones combinadas: mostrar pasos de forma automática.</li>
+<li style="padding:6px 0"><strong>Opción 10</strong> — Operaciones combinadas: mediante pasos realizados por el usuario.</li>
+</ul>
 </section>
 <section class="grid2">
 <div class="card">
@@ -297,75 +381,6 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 </div>
 </div>
 </section>
-<section class="card mutedBox">
-<h2>Errores típicos</h2>
-<ul class="bullets">
-<li>Intentar sumar o restar matrices con dimensiones distintas.</li>
-<li>Intentar multiplicar matrices cuando las dimensiones no son compatibles: el número de columnas de la primera matriz debe coincidir con el número de filas de la segunda.</li>
-<li>Olvidar que el producto de matrices no es conmutativo: puede estar definido <code>AB</code> y no estar definido <code>BA</code>, o bien ambos productos pueden existir y ser distintos.</li>
-<li>Confundir la matriz traspuesta con la matriz inversa.</li>
-<li>Pensar que toda matriz cuadrada tiene inversa: para que exista, la matriz debe ser regular.</li>
-<li>Olvidar que las potencias de matrices solo tienen sentido para matrices cuadradas.</li>
-<li>Tener especial cuidado con los paréntesis en expresiones algebraicas matriciales: su posición puede cambiar el resultado final.</li>
-<li>Para introducir una matriz traspuesta se utiliza la notación <code>A^t</code> y para la inversa <code>A^(-1)</code>.</li>
-<li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
-</ul>
-</section>
-<section class="card">
-<h2>Practicar operaciones con matrices</h2>
-<p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres trabajar directamente con matrices, introducir tus propios datos y realizar operaciones paso a paso o de forma automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
-<div class="btnRow">
-<a class="trabajoBtn" href="#calculadora">IR A LA PÁGINA DE TRABAJO</a>
-</div>
-</section>
-
-<!-- BLOQUE EXTRA: Operaciones detalladas -->
-<div class="grid" style="margin-bottom:16px">
-<section class="accentCard span12">
-  <p class="miniTitle">Definiciones detalladas</p>
-  <h2>Las operaciones una a una</h2>
-
-  <p style="margin-bottom:14px"><strong>Suma y resta.</strong> Solo están definidas entre matrices del mismo orden \(m\times n\). Se realizan elemento a elemento: \((A\pm B)_{ij}=a_{ij}\pm b_{ij}\). Son operaciones conmutativas y asociativas.</p>
-
-  <p style="margin-bottom:14px"><strong>Producto por un escalar.</strong> Se multiplica cada elemento de la matriz por el número: \((kA)_{ij}=k\cdot a_{ij}\). Distribuye sobre la suma: \(k(A+B)=kA+kB\).</p>
-
-  <p style="margin-bottom:14px"><strong>Producto de matrices.</strong> El producto \(A\cdot B\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\) y su elemento \((i,j)\) es:
-  <div class="k" style="text-align:left">\[(AB)_{ij}=\sum_{k=1}^{p}a_{ik}\cdot b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{ip}b_{pj}\]</div>
-  El producto matricial <strong>no es conmutativo</strong>: en general \(AB\neq BA\).</p>
-
-  <p style="margin-bottom:14px"><strong>Traspuesta.</strong> La traspuesta de una matriz \(A\) de orden \(m\times n\) es la matriz \(A^t\) de orden \(n\times m\) que se obtiene cambiando filas por columnas: \((A^t)_{ij}=a_{ji}\). Propiedades destacadas: \((A^t)^t=A\), \((A+B)^t=A^t+B^t\), \((AB)^t=B^t A^t\).</p>
-
-  <p style="margin-bottom:14px"><strong>Inversa.</strong> Una matriz cuadrada \(A\) tiene inversa \(A^{-1}\) si y solo si \(\det(A)\neq 0\). Verifica \(A\cdot A^{-1}=A^{-1}\cdot A=I\). Propiedades: \((A^{-1})^{-1}=A\), \((AB)^{-1}=B^{-1}A^{-1}\), \((A^t)^{-1}=(A^{-1})^t\).</p>
-
-  <p><strong>Potencias.</strong> Solo tienen sentido para matrices cuadradas: \(A^n=A\cdot A\cdots A\) (\(n\) veces), \(A^0=I\), \(A^{-n}=(A^{-1})^n\). El producto \(A^m\cdot A^n=A^{m+n}\) pero <strong>en general</strong> \((AB)^n\neq A^n B^n\).</p>
-</section>
-</div>
-
-<div class="grid" style="margin-bottom:16px">
-<section class="card span6">
-  <p class="miniTitle">Condiciones de existencia</p>
-  <h2>Cuándo está definida cada operación</h2>
-  <ul class="notesList">
-    <li><strong>Suma / resta:</strong> \(A\) y \(B\) deben ser del mismo orden \(m\times n\).</li>
-    <li><strong>Producto \(A\cdot B\):</strong> columnas de \(A\) = filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\).</li>
-    <li><strong>Traspuesta:</strong> siempre definida para cualquier matriz.</li>
-    <li><strong>Inversa:</strong> solo para matrices cuadradas con \(\det(A)\neq 0\).</li>
-    <li><strong>Potencias:</strong> solo para matrices cuadradas.</li>
-  </ul>
-</section>
-<section class="card span6">
-  <p class="miniTitle">Propiedades clave</p>
-  <h2>Las más importantes</h2>
-  <ul class="notesList">
-    <li>\((AB)^t = B^t A^t\) — se invierte el orden al trasponer un producto.</li>
-    <li>\((AB)^{-1} = B^{-1}A^{-1}\) — también se invierte al calcular la inversa.</li>
-    <li>\(A\cdot B \neq B\cdot A\) en general — el producto no es conmutativo.</li>
-    <li>\(A\cdot(B+C)=AB+AC\) — sí es distributivo.</li>
-    <li>\((A^t)^{-1}=(A^{-1})^t\) — traspuesta e inversa conmutan.</li>
-    <li>Si \(AB=0\), no se puede concluir que \(A=0\) o \(B=0\).</li>
-  </ul>
-</section>
-</div>
 
 <section class="mk-ejercicios">
 <h2>Ejercicios propuestos</h2>
@@ -504,70 +519,39 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
-<script src="/common.js"></script></div><div class="grid">
-<section class="accentCard span8">
-<p class="miniTitle">Idea clave</p>
-<h2>¿Cuándo están definidas las operaciones?</h2>
-<p>No todas las operaciones matriciales están siempre definidas. La <strong>suma y la resta</strong> solo pueden realizarse entre matrices del mismo orden. El <strong>producto</strong> de \(A\cdot B\) requiere que el número de columnas de \(A\) coincida con el número de filas de \(B\). La <strong>inversa</strong> solo existe para matrices cuadradas con determinante distinto de cero. Las <strong>potencias</strong> únicamente tienen sentido para matrices cuadradas.</p>
-<p>Una propiedad fundamental que conviene recordar: el producto de matrices <strong>no es conmutativo</strong>, es decir, en general \(AB \neq BA\). Incluso cuando ambos productos están definidos, sus resultados pueden ser distintos.</p>
-</section>
-<section class="card span4">
-<p class="miniTitle">Notas</p>
-<h2>Antes de empezar</h2>
-<ul class="notesList">
-<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong>.</li>
-<li>Puedes introducir fracciones del tipo <strong>a/b</strong>.</li>
-<li>Las matrices se nombran automáticamente A, B, C…</li>
-</ul>
-</section>
-<section class="card span6">
-<p class="miniTitle">Propiedades</p>
-<h2>Las más importantes</h2>
-<ul class="propsList">
-<li>La suma y resta se hacen elemento a elemento: \((A+B)_{ij} = a_{ij}+b_{ij}\).</li>
-<li>El producto por escalar multiplica cada elemento: \((kA)_{ij}=k\cdot a_{ij}\).</li>
-<li>La traspuesta intercambia filas por columnas: \((A^t)_{ij}=a_{ji}\).</li>
-<li>\((AB)^t = B^t A^t\) y \((AB)^{-1}=B^{-1}A^{-1}\).</li>
-<li>Una matriz tiene inversa si y solo si su determinante es no nulo.</li>
-</ul>
-</section>
-<section class="card span6">
-<p class="miniTitle">Cómo se usa</p>
-<h2>Paso a paso</h2>
-<ol class="stepsList">
-<li>Indica cuántas matrices vas a introducir y valida con ENTER.</li>
-<li>Asigna dimensiones a cada matriz e introduce sus elementos.</li>
-<li>En opciones, elige la operación deseada.</li>
-<li>Sigue los pasos en la zona de trabajo o solicita la solución automática.</li>
-</ol>
-</section>
-<section class="card span12">
-<p class="miniTitle">Ejemplo resuelto</p>
-<h2>Producto de matrices</h2>
-<p>Sean \(A=\begin{pmatrix}1&2\\3&4\end{pmatrix}\) y \(B=\begin{pmatrix}0&1\\-1&2\end{pmatrix}\). Se calcula \(AB\) multiplicando filas de \(A\) por columnas de \(B\):</p>
-<div class="k">\[AB=\begin{pmatrix}1&2\\3&4\end{pmatrix}\begin{pmatrix}0&1\\-1&2\end{pmatrix}=\begin{pmatrix}1\cdot0+2\cdot(-1)&1\cdot1+2\cdot2\\3\cdot0+4\cdot(-1)&3\cdot1+4\cdot2\end{pmatrix}=\begin{pmatrix}-2&5\\-4&11\end{pmatrix}\]</div>
-<p>Comprobamos que \(BA\neq AB\):</p>
-<div class="k">\[BA=\begin{pmatrix}0&1\\-1&2\end{pmatrix}\begin{pmatrix}1&2\\3&4\end{pmatrix}=\begin{pmatrix}3&4\\5&6\end{pmatrix}\]</div>
-<p class="muted">Esto ilustra que el producto matricial no es conmutativo.</p>
-</section>
-<section class="card span6">
+<script src="/common.js"></script></div><div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
 <h2>Errores típicos</h2>
 <ul class="errorsList">
-<li>Intentar sumar matrices con dimensiones distintas.</li>
-<li>Multiplicar \(A\cdot B\) cuando las columnas de \(A\) no coinciden con las filas de \(B\).</li>
-<li>Asumir que \(AB=BA\): el producto matricial no es conmutativo.</li>
-<li>Calcular la inversa de una matriz singular (determinante cero).</li>
-<li>Confundir la traspuesta con la inversa.</li>
+<li>Intentar sumar o restar matrices con dimensiones distintas.</li>
+<li>Intentar multiplicar matrices cuando las dimensiones no son compatibles: el número de columnas de la primera matriz debe coincidir con el número de filas de la segunda.</li>
+<li>Olvidar que el producto de matrices no es conmutativo: puede estar definido <code>AB</code> y no estar definido <code>BA</code>, o bien ambos productos pueden existir y ser distintos.</li>
+<li>Confundir la matriz traspuesta con la matriz inversa.</li>
+<li>Pensar que toda matriz cuadrada tiene inversa: para que exista, la matriz debe ser regular.</li>
+<li>Olvidar que las potencias de matrices solo tienen sentido para matrices cuadradas.</li>
+<li>Tener especial cuidado con los paréntesis en expresiones algebraicas matriciales: su posición puede cambiar el resultado final.</li>
+<li>Para introducir una matriz traspuesta se utiliza la notación <code>A^t</code> y para la inversa <code>A^(-1)</code>.</li>
+<li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
 </ul>
-</section>
-<section class="card span6">
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
 <h2>Preguntas frecuentes</h2>
 <ul>
 <li><strong>¿Puede calcularse \(A^2\) si \(A\) no es cuadrada?</strong> No. Las potencias solo están definidas para matrices cuadradas.</li>
 <li><strong>¿Qué es la matriz identidad?</strong> Es la matriz cuadrada con unos en la diagonal y ceros en el resto. Cumple \(AI=IA=A\).</li>
-<li><strong>¿Cuándo existe la inversa de una suma?</strong> \((A+B)^{-1}\) no tiene una fórmula simple. No es \(A^{-1}+B^{-1}\).</li>
+<li><strong>¿Cuándo existe la inversa de una suma?</strong> \((A+B)^{-1}\) no tiene una fórmula simple. No es igual a \(A^{-1}+B^{-1}\).</li>
+<li><strong>¿Es siempre posible multiplicar dos matrices?</strong> No. El producto \(AB\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\).</li>
+<li><strong>¿Qué ocurre si el determinante de una matriz es cero?</strong> La matriz no tiene inversa. Se llama matriz singular.</li>
+<li><strong>¿La traspuesta de la traspuesta devuelve la matriz original?</strong> Sí. Se cumple siempre que \((A^t)^t=A\).</li>
+<li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula.</li>
+<li><strong>¿Cómo se introduce la matriz identidad en la aplicación?</strong> Usando la letra <code>I</code>.</li>
 </ul>
-</section>
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Practicar operaciones con matrices</h2>
+<p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres trabajar directamente con matrices, introducir tus propios datos y realizar operaciones paso a paso o de forma automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
+<div class="btnRow">
+<a class="trabajoBtn" href="#calculadora">IR A LA PÁGINA DE TRABAJO</a>
+</div>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
