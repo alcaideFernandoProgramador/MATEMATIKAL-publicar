@@ -12,6 +12,36 @@
 <link href="../MATRIZ_ESCALONADA/CSS/Hoja_estilo_matriz_escalonada.css" rel="stylesheet" type="text/css"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y acceso a la página de trabajo." name="description"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html"/>
+<meta property="og:title" content="Matriz escalonada: teoría, ejemplos y calculadora online | Matematikal"/>
+<meta property="og:description" content="Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y herramienta interactiva para practicar."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Matriz escalonada: teoría, ejemplos y calculadora online",
+  "description": "Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y herramienta interactiva para practicar.",
+  "url": "https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "InteractiveResource",
+  "teaches": "Matriz escalonada por filas",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
 <link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet"/>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
@@ -137,8 +167,8 @@ body{
   position:relative;
   z-index:1;
   margin-top:24px;
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(4,max-content);
   gap:10px;
 }
 
@@ -324,6 +354,7 @@ body{
   .introWrap{padding:16px 16px 40px}
   .heroTop{flex-direction:column;align-items:flex-start}
   .trabajoBtn{align-self:flex-start}
+  .heroLinks{grid-template-columns:repeat(2,max-content)}
 }
 </style>
 <script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><script defer="" src="../MATRIZ_ESCALONADA/JavaScript/Matriz_escalonada.js" type="text/javascript"></script><style id="mk-ejercicios-css">
@@ -369,7 +400,7 @@ body{
 <line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
 <text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
 </svg>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </div>
 <h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Matriz escalonada</h1>
@@ -377,15 +408,6 @@ body{
 <div class="heroBadge">
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
   Álgebra lineal · Bachillerato
-</div>
-
-<div class="heroDesc">
-  <p>Una matriz está en <strong style="color:#fff">forma escalonada</strong> cuando:</p>
-  <ol>
-    <li>Las filas nulas están situadas en los últimos lugares.</li>
-    <li>El pivote de cada fila no nula está situado más a la derecha que el pivote de la fila anterior.</li>
-  </ol>
-  <p style="margin-top:10px">Es la base para calcular el rango de una matriz y para resolver sistemas lineales por el método de Gauss.</p>
 </div>
 
 <div class="heroLinks">
@@ -407,15 +429,6 @@ body{
   </a>
 </div>
 
-<div class="heroOps">
-  <p>Operaciones elementales disponibles en la herramienta:</p>
-  <ul>
-    <li>Permutar el orden de dos filas \((F_i \leftrightarrow F_j)\)</li>
-    <li>Reordenar filas dejando abajo las de más ceros \((F\downarrow)\)</li>
-    <li>Simplificar una fila dividiéndola por un número \((F_a\to \frac{1}{m}F_a)\)</li>
-    <li>Cambiar una fila por combinación lineal de filas \((F_i\to aF_i+bF_j+cF_k)\)</li>
-  </ul>
-</div>
 </section>
 <section class="card">
 <h2>Definición formal de matriz escalonada</h2>
@@ -424,7 +437,55 @@ body{
 <li>Todas las filas nulas (si las hay) están situadas en los últimos lugares, debajo de todas las filas no nulas.</li>
 <li>El <strong>pivote</strong> de cada fila no nula —es decir, su primer elemento distinto de cero— está situado estrictamente más a la derecha que el pivote de la fila inmediatamente anterior.</li>
 </ul>
-<p>Esta definición implica que por debajo de cada pivote solo pueden aparecer ceros. Los pivotes no tienen por qué ser iguales a 1; basta con que sean distintos de cero. Cuando además todos los pivotes valen 1 y por encima de cada pivote también hay ceros, se habla de <strong>forma escalonada reducida</strong>, que es un caso más estricto y no es el objetivo de esta herramienta.</p>
+<p class="miniTitle" style="margin-top:14px">Notas:</p>
+<ul style="margin-left:24px">
+<li>Esta definición implica que por debajo de cada pivote solo pueden aparecer ceros.</li>
+<li>Los pivotes no tienen por qué ser iguales a 1; basta con que sean distintos de cero.</li>
+<li>Cuando además todos los pivotes valen 1 y por encima de cada pivote también hay ceros, se habla de <strong>forma escalonada reducida</strong>, que es un caso más estricto y no es el objetivo de esta herramienta.</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>Ejemplos de matrices escalonadas</h2>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[A=\begin{pmatrix} \mathbf{2} & 5 & -1 \\ 0 & \mathbf{3} & 4 \\ 0 & 0 & \mathbf{7} \end{pmatrix}\]
+    </div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[B=\begin{pmatrix} \mathbf{1} & 2 & 0 & 3 \\ 0 & \mathbf{-4} & 1 & 5 \\ 0 & 0 & 0 & 0 \end{pmatrix}\]
+    </div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[C=\begin{pmatrix} \mathbf{3} & 0 & 1 & -2 \\ 0 & 0 & \mathbf{5} & 1 \end{pmatrix}\]
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:28px">Ejemplos de matrices <em>no</em> escalonadas</h2>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[A=\begin{pmatrix} 0 & \mathbf{1} & 3 \\ \mathbf{2} & 5 & 0 \\ 0 & 0 & 4 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">El pivote de la fila 2 está más a la izquierda que el de la fila 1.</p>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[B=\begin{pmatrix} \mathbf{1} & 2 & 3 \\ 0 & \mathbf{4} & 1 \\ \mathbf{2} & 0 & 5 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">El elemento \(a_{31}\) es no nulo, estando por debajo del pivote de la primera columna.</p>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[C=\begin{pmatrix} \mathbf{3} & 1 & 2 \\ 0 & 0 & 0 \\ 0 & \mathbf{5} & 1 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">La fila nula no está al final: debajo de ella hay una fila no nula.</p>
+  </div>
+</div>
 </section>
 
 <section class="card">
@@ -433,9 +494,13 @@ body{
 <ul>
 <li><strong>Permutación de filas</strong> \((F_i \leftrightarrow F_j)\): intercambiar dos filas completas. Resulta útil cuando el pivote de una fila es cero y conviene buscar una fila con un elemento no nulo en esa posición.</li>
 <li><strong>Multiplicación de una fila por un escalar no nulo</strong> \((F_i \to k \cdot F_i,\ k \neq 0)\): multiplicar o dividir todos los elementos de una fila por un mismo número. Se usa habitualmente para simplificar fracciones o para hacer que el pivote valga 1.</li>
-<li><strong>Combinación lineal de filas</strong> \((F_i \to F_i + k \cdot F_j)\): reemplazar una fila por la suma de ella misma más un múltiplo de otra fila. Es la operación clave para introducir ceros debajo de los pivotes.</li>
+<li><strong>Combinación lineal de filas</strong> \((F_i \to aF_i + bF_j + cF_k)\): reemplazar una fila por una combinación lineal de ella y de otras, con la única condición de que el coeficiente de la fila que se quiere cambiar debe ser no nulo.</li>
 </ul>
-<p>Cualquier secuencia de operaciones elementales por filas conduce a una matriz equivalente por filas a la original. La forma escalonada resultante no es única (puede haber varias secuencias de operaciones que lleven a formas escalonadas distintas pero equivalentes), aunque el número de pivotes —y por tanto el rango— sí es único.</p>
+<p class="miniTitle" style="margin-top:14px">Notas:</p>
+<ul style="margin-left:24px">
+<li>Cualquier secuencia de operaciones elementales por filas conduce a una matriz equivalente por filas a la original y, por tanto, con el mismo rango.</li>
+<li>La forma escalonada resultante no es única. Puede haber varias secuencias de operaciones que lleven a formas escalonadas distintas pero equivalentes. En cualquier caso, el número de pivotes y el rango se conservan.</li>
+</ul>
 </section>
 
 <section class="card">
@@ -491,38 +556,41 @@ A = \left( \begin{matrix}
 <section class="card">
 <h2>Segundo ejemplo: matriz con fila nula (3×3)</h2>
 <p class="muted">Este ejemplo ilustra el caso en que la forma escalonada tiene una fila nula, lo que indica que el rango es menor que el número de filas.</p>
-<p><strong>Matriz inicial:</strong></p>
-<div class="k">
+<style>#ej2chain .katex-display,#ej2chain .katex-display>.katex{text-align:left!important;margin:0!important}</style>
+<div class="k" id="ej2chain">
 \[
-B = \left( \begin{matrix}
-2 &amp; -1 &amp; 3 \\
-4 &amp; -2 &amp; 6 \\
-1 &amp; 0 &amp; 2
-\end{matrix} \right)
-\]
-</div>
-<p><strong>Paso 1:</strong> Se reordenan las filas para situar el pivote más conveniente arriba \((F_1 \leftrightarrow F_3)\):</p>
-<div class="k">
-\[
+B = \left(\begin{matrix}2 &amp; -1 &amp; 3 \\4 &amp; -2 &amp; 6 \\1 &amp; 0 &amp; 2\end{matrix}\right)
 \underset{F_1 \leftrightarrow F_3}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\4 &amp; -2 &amp; 6 \\2 &amp; -1 &amp; 3\end{matrix} \right)
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\4 &amp; -2 &amp; 6 \\2 &amp; -1 &amp; 3\end{matrix}\right)
+\underset{F_2 \to F_2 - 4F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\2 &amp; -1 &amp; 3\end{matrix}\right)
+\underset{F_3 \to F_3 - 2F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; -1 &amp; -1\end{matrix}\right)
 \]
-</div>
-<p><strong>Paso 2:</strong> Se aplica \(F_2 \to F_2 - 4F_1\) y \(F_3 \to F_3 - 2F_1\):</p>
-<div class="k">
-\[
-\underset{\substack{F_2 \to F_2 - 4F_1 \\ F_3 \to F_3 - 2F_1}}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; -1 &amp; -1\end{matrix} \right)
-\]
-</div>
-<p><strong>Paso 3:</strong> Se aplica \(F_3 \to F_3 - \frac{1}{2}F_2\):</p>
-<div class="k">
 \[
 \underset{F_3 \to F_3 - \frac{1}{2}F_2}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; 0 &amp; 0\end{matrix} \right)
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; 0 &amp; 0\end{matrix}\right)
 \]
 </div>
 <p class="muted">La tercera fila es nula, lo que indica que las filas de la matriz original eran linealmente dependientes. El rango de \(B\) es 2.</p>
+</section>
+
+<section class="card">
+<h2>Tercer ejemplo: matriz 3×4 con rango 3</h2>
+<p class="muted">En este ejemplo la matriz tiene más columnas que filas. El escalonamiento requiere reordenar filas para situar el pivote adecuado en cada posición.</p>
+<style>#ej3chain .katex-display,#ej3chain .katex-display>.katex{text-align:left!important;margin:0!important}</style>
+<div class="k" id="ej3chain">
+\[
+C = \left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\4 &amp; 2 &amp; 7 &amp; 1 \\2 &amp; 3 &amp; 5 &amp; 2\end{matrix}\right)
+\underset{F_2 \to F_2 - 2F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 0 &amp; 1 &amp; 1 \\2 &amp; 3 &amp; 5 &amp; 2\end{matrix}\right)
+\underset{F_3 \to F_3 - F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 0 &amp; 1 &amp; 1 \\0 &amp; 2 &amp; 2 &amp; 2\end{matrix}\right)
+\underset{F_2 \leftrightarrow F_3}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 2 &amp; 2 &amp; 2 \\0 &amp; 0 &amp; 1 &amp; 1\end{matrix}\right)
+\]
+</div>
+<p class="muted">La forma escalonada tiene tres pivotes (2, 2 y 1), uno por fila. El intercambio de filas en el último paso fue necesario porque el pivote natural de la segunda fila era cero. El rango de \(C\) es 3.</p>
 </section>
 
 <section class="card">
@@ -623,6 +691,15 @@ Las filas 3 y 4 eran iguales a la fila 2 y quedan nulas.
 </div></div>
 
 </section>
+
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Practicar con la herramienta</h2>
+<p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres trabajar directamente con matrices, aplicar operaciones elementales paso a paso u obtener la solución automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
+<div class="btnRow">
+<a class="trabajoBtn" href="#calculadora">IR A LA PÁGINA DE TRABAJO</a>
+</div>
+</div>
+
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
@@ -655,7 +732,7 @@ renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:t
 <div id="caja11">
 <div id="caja111">
 <div id="caja1111">
-<div id="caja11111">INTODUCCIÓN DE DATOS</div>
+<div id="caja11111">INTRODUCCIÓN DE DATOS</div>
 <div id="caja11112"></div>
 </div>
 <div id="caja1112">

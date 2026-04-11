@@ -11,6 +11,36 @@
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios." name="description"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"/>
+<meta property="og:title" content="Determinantes: teoría, ejemplos y calculadora online | Matematikal"/>
+<meta property="og:description" content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios. Teoría, propiedades y herramienta interactiva."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Determinantes: teoría, ejemplos y calculadora online",
+  "description": "Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios. Teoría, propiedades y herramienta interactiva.",
+  "url": "https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "InteractiveResource",
+  "teaches": "Cálculo de determinantes",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
 
 <link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
@@ -138,7 +168,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
 <text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
 </svg>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO</a>
 </div>
 </div>
 <h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Cálculo de determinantes</h1>
@@ -146,11 +176,64 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
   Álgebra lineal · Bachillerato
 </div>
-<div class="heroDesc"><p>El <strong style="color:#fff">determinante</strong> es un número asociado a cada matriz cuadrada. Determina si la matriz es invertible, su relación con el rango y permite resolver sistemas mediante la regla de Cramer.</p></div>
 <div class="heroLinks"><a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
 <a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango por Gauss</a>
-<a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Regla de Cramer</a></div>
+<a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Sistemas lineales por Gauss</a></div>
 </section>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:20px;padding:28px 32px;background:#fff;margin-bottom:16px;box-shadow:0 4px 24px rgba(20,40,120,.07)">
+<p class="miniTitle">Conceptos básicos</p>
+<h2 style="font-family:var(--font-display);font-size:1.35rem;font-weight:400;color:var(--blue-deep);margin:0 0 24px;letter-spacing:-.01em">CONCEPTOS BÁSICOS</h2>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:0 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">1. El determinante de una matriz cuadrada</h3>
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 16px">El <strong>determinante</strong> de una matriz cuadrada \(A\) es un número real que queda unívocamente determinado por los elementos de dicha matriz. Se denota \(\det(A)\) o \(|A|\) y tiene múltiples aplicaciones en el álgebra lineal: decidir si una matriz es invertible, calcular su rango, resolver sistemas de ecuaciones lineales mediante la regla de Cramer o calcular áreas y volúmenes en geometría analítica.</p>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">2. Determinante de orden 2</h3>
+<div class="k">\[\det(A)=\begin{vmatrix}a &amp; b \\ c &amp; d\end{vmatrix}=ad-bc \qquad \text{Por ejemplo:} \qquad \begin{vmatrix}3 &amp; -1 \\ 2 &amp; 5\end{vmatrix}=3\cdot5-(-1)\cdot2=15+2=17\]</div>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">3. Determinante de orden 3. Regla de Sarrus</h3>
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">La <strong>regla de Sarrus</strong> permite calcular el determinante de una matriz \(3\times3\) de forma directa:</p>
+<div class="k">\[\begin{vmatrix}a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33}\end{vmatrix}=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{13}a_{22}a_{31}-a_{12}a_{21}a_{33}-a_{11}a_{23}a_{32}\]</div>
+<div class="k">\[\text{Por ejemplo:}\qquad\begin{vmatrix}1 &amp; 2 &amp; 0 \\ 3 &amp; -1 &amp; 2 \\ 1 &amp; 0 &amp; 4\end{vmatrix}=(-4+4+0)-(0+0+24)=0-24=-24\]</div>
+<p style="color:var(--text-muted);font-size:.92rem;margin:8px 0 0"><strong>Atención:</strong> la regla de Sarrus no es válida para determinantes de orden superior a 3.</p>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">4. Menor complementario y adjunto de un elemento</h3>
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">Sea \(A\) una matriz cuadrada de orden \(n\) y sea \(a_{ij}\) uno de sus elementos:</p>
+<ul style="color:var(--text-secondary);line-height:1.72;padding-left:24px;margin:0 0 8px">
+<li><strong>Menor complementario</strong> \(M_{ij}\): determinante de la submatriz de orden \(n-1\) que se obtiene al suprimir la fila \(i\) y la columna \(j\) de la matriz \(A\).</li>
+<li style="margin-top:8px"><strong>Adjunto</strong> (cofactor) \(A_{ij}\): el menor complementario \(M_{ij}\) precedido del signo que corresponde según la posición del elemento:</li>
+</ul>
+<div class="k">\[A_{ij}=(-1)^{i+j}\cdot M_{ij}\]</div>
+<p style="color:var(--text-secondary);line-height:1.72;margin:8px 0 4px">La pauta de signos \((-1)^{i+j}\) sigue el patrón en damero:</p>
+<div class="k">\[\begin{pmatrix}+ &amp; - &amp; + &amp; \cdots \\ - &amp; + &amp; - &amp; \cdots \\ + &amp; - &amp; + &amp; \cdots \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots\end{pmatrix}\]</div>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:20px 0 8px;border-left:4px solid var(--blue-bright);padding-left:10px">5. Determinante de orden superior. Desarrollo por adjuntos (Teorema de Laplace)</h3>
+<p style="color:var(--text-secondary);line-height:1.72;margin:0 0 8px">Para calcular un determinante de orden \(n\geq4\) se utiliza el <strong>teorema de Laplace</strong>: el determinante puede desarrollarse por cualquier fila \(i\) o cualquier columna \(j\), sumando los productos de cada elemento por su adjunto:</p>
+<div class="k">\[\det(A)=\sum_{j=1}^{n}a_{ij}\cdot A_{ij}\qquad\text{(desarrollo por la fila }i\text{)}\]</div>
+<div class="k">\[\det(A)=\sum_{i=1}^{n}a_{ij}\cdot A_{ij}\qquad\text{(desarrollo por la columna }j\text{)}\]</div>
+<p style="color:var(--text-secondary);line-height:1.72;margin:8px 0 0">Conviene elegir la fila o columna que contenga más ceros, ya que cada término con \(a_{ij}=0\) desaparece del desarrollo y simplifica el cálculo. Aplicando el teorema repetidamente el determinante se reduce hasta orden 3, donde se aplica la regla de Sarrus.</p>
+
+<h3 style="font-size:1rem;font-weight:700;color:var(--blue-deep);margin:24px 0 12px;border-left:4px solid var(--blue-bright);padding-left:10px">6. Ejemplos</h3>
+<div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px">
+<div style="flex:1;min-width:280px;border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 1 · Orden 2</strong>
+<div class="k" style="margin:0">\[\begin{vmatrix}3 &amp; -2 \\ 1 &amp; 4\end{vmatrix}=3\cdot4-(-2)\cdot1=12+2=14\]</div>
+</div>
+<div style="flex:1;min-width:280px;border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 2 · Orden 3 (Regla de Sarrus)</strong>
+<div class="k" style="margin:0">\[\begin{vmatrix}2 &amp; -1 &amp; 3 \\ 1 &amp; 4 &amp; 2 \\ -2 &amp; 1 &amp; 5\end{vmatrix}=(40+4+3)-(-24+4-5)=47+25=72\]</div>
+</div>
+</div>
+<div style="border:1px solid var(--border-card);border-radius:14px;padding:16px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
+<strong style="display:block;margin-bottom:8px;color:var(--blue-deep);font-size:.88rem;text-transform:uppercase;letter-spacing:.04em">Ejemplo 3 · Orden 4 (Desarrollo por la primera fila)</strong>
+<p style="color:var(--text-secondary);font-size:.93rem;margin:0 0 4px">Se desarrolla por la primera fila. Como \(a_{12}=0\), ese término desaparece:</p>
+<div class="k">\[\begin{vmatrix}1 &amp; 0 &amp; 2 &amp; 1 \\ 0 &amp; 3 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 0 &amp; 3 \\ 1 &amp; 2 &amp; 1 &amp; 0\end{vmatrix}=1\cdot A_{11}+0\cdot A_{12}+2\cdot A_{13}+1\cdot A_{14}=1\cdot A_{11}+2\cdot A_{13}+1\cdot A_{14}\]</div>
+<p style="color:var(--text-secondary);font-size:.93rem;margin:8px 0 4px">Se calcula cada adjunto aplicando la regla de Sarrus a los menores de orden 3:</p>
+<div class="k">\[A_{11}=(+1)\begin{vmatrix}3 &amp; 1 &amp; 2 \\ 1 &amp; 0 &amp; 3 \\ 2 &amp; 1 &amp; 0\end{vmatrix}=(+1)(0+6+2-0-9-0)=-1\]</div>
+<div class="k">\[A_{13}=(+1)\begin{vmatrix}0 &amp; 3 &amp; 2 \\ 2 &amp; 1 &amp; 3 \\ 1 &amp; 2 &amp; 0\end{vmatrix}=(+1)(0+9+8-2-0-0)=+15\]</div>
+<div class="k">\[A_{14}=(-1)\begin{vmatrix}0 &amp; 3 &amp; 1 \\ 2 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 1\end{vmatrix}=(-1)(0+0+4-1-0-6)=(-1)(-3)=+3\]</div>
+<div class="k">\[\det(A)=1\cdot(-1)+2\cdot15+1\cdot3=-1+30+3=32\]</div>
+</div>
+</div>
 <div class="grid">
 <section class="accentCard span8">
 <p class="miniTitle">Idea clave</p>
@@ -361,13 +444,20 @@ En una matriz triangular (superior o inferior), el determinante es el producto d
 </div></div>
 
 </section>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Calcular el valor de un determinante</h2>
+<p>Esta página sirve como introducción teórica y como guía de uso de la herramienta. Si quieres introducir tus propios datos y calcular determinantes numéricos o algebraicos paso a paso o de forma automática, puedes pasar a la página de trabajo desde el siguiente enlace.</p>
+<div class="btnRow">
+<a class="trabajoBtn" href="#calculadora">IR A LA PÁGINA DE TRABAJO</a>
+</div>
+</div>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
 </div><div id="calculadora" style="display:none">
 <header id="tituloinicial">
-<h1>CALCULO DEL VALOR DE UN DETERMINANTE NUMÉRICO O ALGEBRAICO</h1>
+<h1>CÁLCULO DEL VALOR DE UN DETERMINANTE NUMÉRICO O ALGEBRAICO</h1>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
