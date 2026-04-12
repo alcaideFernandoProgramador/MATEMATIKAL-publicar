@@ -123,7 +123,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .resultadoRango,.resultadoDet,.resultado{margin-top:16px;display:flex;justify-content:center}
 .resultadoRango span,.resultadoDet span,.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border-radius:999px;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);font-size:1rem;font-weight:700;color:var(--blue-deep);letter-spacing:-.01em}
 .exampleText p{margin:0 0 8px;color:var(--text-secondary)}
-@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
+@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}.herramienta-cta{flex-direction:column}}
+.herramienta-cta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:4px;flex-wrap:wrap}
+.herramienta-cta p{margin:0;color:rgba(255,255,255,.85);font-size:1rem;line-height:1.6;max-width:600px}
+.herramienta-cta p strong{color:#fff}
 </style>
 <style id="mk-ejercicios-css">
 .mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}
@@ -168,7 +171,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
 <text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
 </svg>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO →</a>
 </div>
 </div>
 <h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Rango con parámetro (menores)</h1>
@@ -324,6 +327,12 @@ Su determinante es el producto de los elementos de la diagonal:
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
+
+<!-- CTA herramienta -->
+<div class="herramienta-cta">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz con parámetro y calcular la discusión del rango mediante menores de forma automática.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
 <h1>RANGO DE UNA MATRIZ CON UN PARÁMETRO (método de los menores)</h1>
