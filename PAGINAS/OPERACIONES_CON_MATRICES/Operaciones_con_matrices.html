@@ -520,11 +520,6 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
-<!-- CTA herramienta -->
-<div class="herramienta-cta">
-  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tus propias matrices y realizar operaciones con ellas paso a paso o de forma automática.</p>
-  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
-</div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
 <h1>OPERACIONES CON MATRICES</h1>
@@ -558,7 +553,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
-<script src="/common.js"></script></div><div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<script src="/common.js"></script></div><div style="max-width:1100px;margin:0 auto;padding:0 24px"><div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
 <h2>Errores típicos</h2>
 <ul class="errorsList">
 <li>Intentar sumar o restar matrices con dimensiones distintas.</li>
@@ -584,7 +579,15 @@ window.addEventListener('DOMContentLoaded',function(){
 <li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula.</li>
 <li><strong>¿Cómo se introduce la matriz identidad en la aplicación?</strong> Usando la letra <code>I</code>.</li>
 </ul>
-</div><script>
+</div>
+
+<!-- CTA herramienta -->
+<div class="herramienta-cta">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tus propias matrices y realizar operaciones con ellas paso a paso o de forma automática.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
+</div>
+<script>
 document.addEventListener('DOMContentLoaded',function(){
   var intro=document.getElementById('introPrincipal'), calc=document.getElementById('calculadora');
   function enfocarPrimerInput(){
