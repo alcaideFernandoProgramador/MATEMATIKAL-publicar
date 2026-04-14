@@ -111,7 +111,7 @@ function latexAug(aug, n){
   var cols = new Array(n).fill("r").join("") + "|" + new Array(n).fill("r").join("");
   var rows = aug.map(function(row){
     return row.map(latexFrac).join(" & ");
-  }).join(" \\\\ ");
+  }).join(" \\\\[8pt] ");
   return "\\left(\\begin{array}{"+cols+"}"+rows+"\\end{array}\\right)";
 }
 
@@ -127,7 +127,7 @@ function renderMatriz(mat, container){
   var n = mat.length;
   var rows = mat.map(function(row){
     return row.map(latexFrac).join(" & ");
-  }).join(" \\\\ ");
+  }).join(" \\\\[8pt] ");
   var latex = "\\left(\\begin{array}{"+new Array(n).fill("r").join("")+"}"+rows+"\\end{array}\\right)";
   try{
     katex.render(latex, container, {throwOnError:false, displayMode:false});
@@ -188,13 +188,17 @@ function renderPasoUsuario(simboloFn){
 
 function _getTiraAuto(limpiar){
   var c221 = $("caja221"); if(!c221) return null;
-  c221.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:10px;row-gap:10px;overflow-x:auto;";
   if(limpiar) html(c221,"");
   var t = $("tiraAuto");
   if(!t){
+    // Contenedor exterior: controla el scroll — hereda height de caja221 vía flex:1
+    var scroll = document.createElement("div"); scroll.id = "tiraAutoScroll";
+    scroll.style.cssText = "flex:1;min-height:0;width:100%;overflow-y:scroll;overflow-x:hidden;box-sizing:border-box;";
+    // Contenedor interior: solo layout flex, sin restricciones de altura
     t = document.createElement("div"); t.id = "tiraAuto";
-    t.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:10px;row-gap:10px;max-width:100%;box-sizing:border-box;";
-    c221.appendChild(t);
+    t.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:10px;row-gap:10px;padding:8px;box-sizing:border-box;width:100%;";
+    scroll.appendChild(t);
+    c221.appendChild(scroll);
   }
   return t;
 }
@@ -317,16 +321,17 @@ function resolverAutomatico(){
     _addAugAuto(p.mat);
   }
 
-  // Resultado final
-  var resBox = document.createElement("div");
-  resBox.className = "inv-result-box";
-  var lbl = document.createElement("div"); lbl.className="inv-label";
-  lbl.textContent = "Matriz inversa A⁻¹";
-  resBox.appendChild(lbl);
-  var matDiv = document.createElement("div"); matDiv.className="inv-mat";
+  // Resultado final inline en caja221
+  var resWrap = document.createElement("div");
+  resWrap.style.cssText="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:10px;padding:8px 12px;";
+  var lbl = document.createElement("span");
+  lbl.style.cssText="font-weight:800;font-size:12px;color:var(--accent);white-space:nowrap;";
+  lbl.textContent="⇒ A⁻¹ =";
+  var matDiv = document.createElement("div");
   renderMatriz(res.inversa, matDiv);
-  resBox.appendChild(matDiv);
-  c221.appendChild(resBox);
+  resWrap.appendChild(lbl);
+  resWrap.appendChild(matDiv);
+  _addNodoAuto(resWrap);
 }
 
 /* ---------- Comprobación de fin en modo usuario ---------- */
