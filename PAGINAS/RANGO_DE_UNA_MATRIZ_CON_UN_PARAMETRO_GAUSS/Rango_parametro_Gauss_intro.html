@@ -72,7 +72,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .heroTop{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative;z-index:1}
 .heroTop h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0;flex:1;text-shadow:0 2px 12px rgba(0,0,0,.18)}
 .heroBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;backdrop-filter:blur(8px);margin-bottom:10px;width:fit-content}
-.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:900px}
+.heroDesc{position:relative;z-index:1;margin-top:14px;color:#fff;font-size:1.02rem;line-height:1.7;max-width:900px}
 .heroDesc ol{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
 .heroDesc ol li,.heroDesc ul li{margin:6px 0}
 .heroDesc ul{margin:10px 0 0 20px;padding:0;color:rgba(255,255,255,.82)}
@@ -438,9 +438,11 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 </script>
 
 <!-- CTA herramienta -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 56px">
 <div class="herramienta-cta">
   <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz con parámetro, aplicar el método de Gauss y obtener la discusión del rango automáticamente.</p>
   <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
 </div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">

@@ -406,7 +406,7 @@ function crearFormulario(){
   var bSel=document.createElement("button"); bSel.textContent="Seleccionar"; bSel.addEventListener("click",onSelect);
   var bReset=document.createElement("button"); bReset.textContent="RESET";
   bReset.addEventListener("click", function(){
-    crearFormulario();
+    _afterExec();
   });
   btnBar.appendChild(bSel); btnBar.appendChild(bReset);
   c122.appendChild(btnBar);
