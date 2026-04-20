@@ -153,6 +153,40 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 </div>
 </section>
 
+<!-- BLOQUE 0: Sistema general -->
+<div class="grid">
+<section class="card span12">
+  <p class="miniTitle">Notación general</p>
+  <h2>Sistema de \(m\) ecuaciones y \(n\) incógnitas</h2>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:32px;margin-top:8px">
+    <div class="k" style="margin:0;text-align:left">\[
+    \left\{\begin{aligned}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \\
+    \vdots \hspace{6em} &\;\vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &= b_m
+    \end{aligned}\right.
+    \]</div>
+    <div class="k" style="margin:0;text-align:left">\[
+    A = \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+    \end{pmatrix}
+    \]</div>
+    <div class="k" style="margin:0;text-align:left">\[
+    (A\,|\,b) = \left(\begin{array}{cccc|c}
+    a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\
+    a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
+    \end{array}\right)
+    \]</div>
+  </div>
+</section>
+</div>
+
 <!-- BLOQUE 1: Teorema -->
 <div class="grid">
 <section class="accentCard span8">
@@ -166,8 +200,8 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <table class="tablaClas">
     <tr><th>rg(A)</th><th>rg(A|b)</th><th>Comparación con n</th><th>Tipo de sistema</th></tr>
     <tr><td>\(r\)</td><td>\(r' \neq r\)</td><td>—</td><td><strong>Incompatible</strong> (sin solución)</td></tr>
-    <tr><td>\(r\)</td><td>\(r\)</td><td>\(r = n\)</td><td><strong>Compatible Determinado</strong> (solución única)</td></tr>
-    <tr><td>\(r\)</td><td>\(r\)</td><td>\(r &lt; n\)</td><td><strong>Compatible Indeterminado</strong> (\(n-r\) parámetros libres)</td></tr>
+    <tr><td>\(r\)</td><td>\(r'=r\)</td><td>\(r = n\)</td><td><strong>Compatible Determinado</strong> (solución única)</td></tr>
+    <tr><td>\(r\)</td><td>\(r'=r\)</td><td>\(r &lt; n\)</td><td><strong>Compatible Indeterminado</strong> (\(n-r\) parámetros libres)</td></tr>
   </table>
   <p class="muted">Cuando el sistema es compatible indeterminado, la solución depende de \(n - \text{rg}(A)\) parámetros libres (uno por cada incógnita que no esté determinada univocamente).</p>
 </section>
@@ -313,16 +347,6 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   \]</div>
   <p>Por tanto \(\text{rg}(A\,|\,b) = 2\).</p>
   <p><strong>4) Aplicación del teorema:</strong> \(\text{rg}(A) = 1 \neq 2 = \text{rg}(A\,|\,b)\) → <strong>Sistema Incompatible</strong>. No tiene solución.</p>
-  </div>
-</section>
-</div>
-
-<!-- CTA herramienta -->
-<div class="grid">
-<section class="card span12">
-  <div class="herramienta-cta">
-    <p><strong>Usa la herramienta interactiva</strong> para practicar el teorema de Rouché-Frobenius paso a paso: introduce tu sistema, calcula menores eligiendo filas y columnas, confirma cada rango y obtén la clasificación y la solución.</p>
-    <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2" style="flex-shrink:0">IR A LA HERRAMIENTA →</a>
   </div>
 </section>
 </div>
@@ -473,6 +497,16 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 </div>
 
 </section>
+
+<!-- CTA herramienta -->
+<div class="grid">
+<section class="card span12">
+  <div class="herramienta-cta">
+    <p><strong>Usa la herramienta interactiva</strong> para practicar el teorema de Rouché-Frobenius paso a paso: introduce tu sistema, calcula menores eligiendo filas y columnas, confirma cada rango y obtén la clasificación y la solución.</p>
+    <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2" style="flex-shrink:0">IR A LA HERRAMIENTA →</a>
+  </div>
+</section>
+</div>
 
 </div><!-- fin introWrap -->
 

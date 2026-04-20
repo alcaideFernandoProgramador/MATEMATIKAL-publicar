@@ -684,7 +684,7 @@ if(casosAutomatico.length===0){
             inputValor2.focus();
             inputValor2.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();
               let valorrr=inputValor2.value;
-              try{if((valorrr||"").trim().length===0)throw new Error();if(valorrr.includes("/"))valorrr=parseFloat(pasarADecimal(valorrr));if(valorrr.includes(","))valorrr=valorrr.replace(",",".");valorrr=parseFloat(valorrr);if(Number.isNaN(valorrr))throw new Error();}
+              try{if((valorrr||"").trim().length===0)throw new Error();if(valorrr.includes(","))valorrr=valorrr.replace(",",".");if(valorrr.includes("/")){if(typeof pasarADecimal==="function")valorrr=pasarADecimal(valorrr)+"";else{let p=valorrr.split("/");if(p.length!==2)throw new Error();valorrr=(parseFloat(p[0])/parseFloat(p[1])).toString();}}valorrr=parseFloat(valorrr);if(Number.isNaN(valorrr))throw new Error();}
               catch(e){c2.innerHTML="Entrada no válida. Usa decimal (0.5) o fracción (1/2).";inputValor2.value="";inputValor2.focus();return;}
               let txt="CASO: "+nombreParametro+"="+fraccionContinua(valorrr.toString(),long);
               _resolverYpintarCasoValor(valorrr,txt,false);inputValor2.value="";inputValor2.focus();

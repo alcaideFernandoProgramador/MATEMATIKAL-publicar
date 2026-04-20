@@ -202,7 +202,7 @@ h4{
 
 #caja221{
   height:88%;display:flex;align-items:center;flex-direction:row;flex-wrap:wrap;
-  gap:6px;overflow-x:auto;
+  gap:6px;overflow-x:auto;overflow-y:auto;
 }
 
 #caja222{
@@ -299,8 +299,9 @@ span.mjx-mtable{padding:0!important;margin:0!important}
 .cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
 
 #contenedor{
-  height:auto;
-  min-height:calc(100vh - 76px - var(--footer-h,74px));
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
   padding-bottom:10px;
 }
 
