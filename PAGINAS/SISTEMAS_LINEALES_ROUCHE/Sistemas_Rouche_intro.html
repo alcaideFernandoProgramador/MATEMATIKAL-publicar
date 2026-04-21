@@ -63,7 +63,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .hero::before{width:340px;height:340px;top:-120px;right:-80px}
 .hero::after{width:200px;height:200px;bottom:-80px;left:30px}
 .heroBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;backdrop-filter:blur(8px);margin-bottom:10px;width:fit-content}
-.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:700px}
+.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7;max-width:100%}
 .heroLinks{position:relative;z-index:1;margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
 .heroLinkBtn{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;font-size:.88rem;font-weight:600;letter-spacing:.01em;backdrop-filter:blur(6px);transition:background .18s,transform .15s,box-shadow .18s}
 .heroLinkBtn:hover{background:rgba(255,255,255,.24);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
@@ -144,7 +144,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   Álgebra lineal · Bachillerato
 </div>
 <div class="heroDesc">
-  <p>Aprende a <strong style="color:#fff">discutir y resolver sistemas de ecuaciones lineales</strong> mediante el teorema de Rouché-Frobenius: cálculo de rangos por menores, clasificación del sistema y obtención de la solución.</p>
+  <p>Esta página ayuda a <strong style="color:#fff">discutir y resolver sistemas de ecuaciones lineales</strong> mediante el método de los menores. Es decir, mediante el cálculo de rangos por menores, la aplicación del teorema de Rouché-Frobenius y la regla de Cramer.</p>
 </div>
 <div class="heroLinks">
   <a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Método de Gauss</a>
@@ -276,10 +276,64 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   \end{pmatrix}
   \]</div>
   <p>Cuando el sistema es <strong>Compatible Indeterminado</strong>, se asignan parámetros \(t_1, t_2, \ldots\) a las incógnitas libres y se aplica la regla de Cramer al subsistema cuadrado que queda con las incógnitas no libres.</p>
+
+  <hr style="border:none;border-top:1px solid var(--border-card);margin:24px 0">
+
+  <!-- Ejemplo CD 3x3 -->
+  <p class="miniTitle" style="margin-top:0">Ejemplo — Compatible Determinado 3×3</p>
+  <div style="margin-left:24px;padding-left:16px;border-left:3px solid var(--border-card)">
+  <div class="k" style="text-align:left">\[
+  \left\{\begin{aligned}
+  &x + y + z = 6 \\
+  &x - y + z = 2 \\
+  &2x + y - z = 1
+  \end{aligned}\right.
+  \]</div>
+  <div class="k" style="text-align:left">\[\det(A)=\begin{vmatrix}1&1&1\\1&-1&1\\2&1&-1\end{vmatrix}=6\neq 0\;\Rightarrow\;\text{rg}(A)=\text{rg}(A|b)=3=n\;\Rightarrow\;\textbf{Compatible Determinado}\]</div>
+  <p>Aplicamos Cramer:</p>
+  <div class="k" style="text-align:left">\[\begin{aligned}
+  &\det(A_1)=\begin{vmatrix}6&1&1\\2&-1&1\\1&1&-1\end{vmatrix}=0+3+3=6,\quad
+  \det(A_2)=\begin{vmatrix}1&6&1\\1&2&1\\2&1&-1\end{vmatrix}=-3+18-3=12\\[10pt]
+  &\det(A_3)=\begin{vmatrix}1&1&6\\1&-1&2\\2&1&1\end{vmatrix}=-3+3+18=18
+  \end{aligned}\]</div>
+  <div class="k" style="text-align:left">\[
+  x=\frac{\det(A_1)}{\det(A)}=\frac{6}{6}=1,\qquad y=\frac{\det(A_2)}{\det(A)}=\frac{12}{6}=2,\qquad z=\frac{\det(A_3)}{\det(A)}=\frac{18}{6}=3
+  \]</div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border-card);margin:24px 0">
+
+  <!-- Ejemplo CI 3x3 -->
+  <p class="miniTitle" style="margin-top:0">Ejemplo — Compatible Indeterminado 3×3</p>
+  <div style="margin-left:24px;padding-left:16px;border-left:3px solid var(--border-card)">
+  <div class="k" style="text-align:left">\[
+  \left\{\begin{aligned}
+  &x_1 + x_2 + x_3 = 4 \\
+  &2x_1 + 2x_2 + 2x_3 = 8 \\
+  &x_1 + 2x_2 - x_3 = 1
+  \end{aligned}\right.
+  \]</div>
+  <div class="k" style="text-align:left">\[\begin{aligned}&\text{Como las filas 1 y 2 son proporcionales y }\begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq 0\;\Rightarrow\;\text{rg}(A)=\text{rg}(A|b)=2\\&\text{rg}(A)=\text{rg}(A|b)=2&lt;n=3\;\Rightarrow\;\textbf{Compatible Indeterminado}\end{aligned}\]</div>
+  <p>Fijamos \(x_3=t\). Subsistema con las ecuaciones 1.ª y 3.ª:</p>
+  <div class="k" style="text-align:left">\[
+  \left\{\begin{aligned}x_1+x_2&=4-t\\x_1+2x_2&=1+t\end{aligned}\right.
+  \qquad A_s=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad\det(A_s)=1
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  \det(A_{s,1})=\begin{vmatrix}4-t&1\\1+t&2\end{vmatrix}=7-3t,\qquad
+  \det(A_{s,2})=\begin{vmatrix}1&4-t\\1&1+t\end{vmatrix}=2t-3
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  x_1=7-3t,\qquad x_2=2t-3,\qquad x_3=t\quad(t\in\mathbb{R})
+  \]</div>
+  </div>
 </section>
 </div>
 
 <!-- BLOQUE 3: Ejemplos -->
+<div class="mk-ejercicios" style="margin-bottom:0">
+  <h2>Ejercicios resueltos</h2>
+</div>
 <div class="grid">
 <section class="card span12">
   <p class="miniTitle">Ejemplo 1 — Compatible Determinado</p>
@@ -303,7 +357,8 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <p>Como existe un menor de orden 2 no nulo: \(\text{rg}(A) = 2\).</p>
   <p><strong>3) Rango de \((A\,|\,b)\).</strong> La matriz ampliada es \(2\times 3\), el máximo orden es \(\min(2,3)=2\). Cualquier menor de orden 2 que incluya alguna de las tres columnas y tenga determinante no nulo basta. Ya sabemos que el menor formado por las filas \(\{1,2\}\) y columnas \(\{1,2\}\) vale \(-2 \neq 0\), por tanto: \(\text{rg}(A\,|\,b) = 2\).</p>
   <p><strong>4) Aplicación del teorema:</strong> \(\text{rg}(A) = \text{rg}(A\,|\,b) = 2 = n\) → <strong>Compatible Determinado</strong>.</p>
-  <p><strong>5) Solución por la regla de Cramer.</strong> \(\det(A)=-2\). Formamos \(A_1\) y \(A_2\) sustituyendo cada columna por \(b=(3,1)^T\):</p>
+  <p><strong>5) Solución por la regla de Cramer.</strong> Formamos \(A_1\) y \(A_2\) sustituyendo cada columna por \(b=(3,1)^T\):</p>
+  <div class="k" style="text-align:left">\[\det(A)=\begin{vmatrix}1&1\\1&-1\end{vmatrix}=-1-1=-2\]</div>
   <div class="k" style="text-align:left">\[
   \det(A_1)=\begin{vmatrix}3&1\\1&-1\end{vmatrix}=-3-1=-4,\qquad
   \det(A_2)=\begin{vmatrix}1&3\\1&1\end{vmatrix}=1-3=-2
