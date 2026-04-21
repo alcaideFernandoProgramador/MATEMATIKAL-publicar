@@ -248,8 +248,34 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
         <li style="margin:4px 0">Si \(\text{rg}(A) = \text{rg}(A\,|\,b) &lt; n\) → Compatible Indeterminado.</li>
       </ul>
     </li>
-    <li style="margin:10px 0"><strong>Obtener la solución</strong> si el sistema es compatible (sustitución regresiva o parametrización).</li>
+    <li style="margin:10px 0"><strong>Obtener la solución</strong> si el sistema es compatible:
+      <ul style="margin:6px 0 0;padding-left:16px">
+        <li style="margin:4px 0">Si es <strong>Compatible Determinado</strong>: aplicar la <strong>regla de Cramer</strong>.</li>
+        <li style="margin:4px 0">Si es <strong>Compatible Indeterminado</strong>: asignar parámetros a las \(n-r\) incógnitas libres y aplicar la regla de Cramer al subsistema cuadrado resultante.</li>
+      </ul>
+    </li>
   </ol>
+</section>
+</div>
+
+<!-- BLOQUE 2b: Regla de Cramer -->
+<div class="grid">
+<section class="card span12">
+  <p class="miniTitle">Resolución del sistema</p>
+  <h2>4. Regla de Cramer</h2>
+  <p>Cuando el sistema es <strong>Compatible Determinado</strong> (\(\text{rg}(A)=n\), es decir \(\det(A)\neq 0\)), cada incógnita se obtiene como cociente de dos determinantes:</p>
+  <div class="k">\[
+  x_i = \frac{\det(A_i)}{\det(A)}, \qquad i=1,2,\ldots,n
+  \]</div>
+  <p>donde \(A_i\) es la matriz que resulta de <strong>sustituir la columna \(i\)-ésima de \(A\) por el vector de términos independientes \(b\)</strong>:</p>
+  <div class="k">\[
+  A_i = \begin{pmatrix}
+  a_{11} & \cdots & a_{1,i-1} & b_1 & a_{1,i+1} & \cdots & a_{1n} \\
+  \vdots & & \vdots & \vdots & \vdots & & \vdots \\
+  a_{n1} & \cdots & a_{n,i-1} & b_n & a_{n,i+1} & \cdots & a_{nn}
+  \end{pmatrix}
+  \]</div>
+  <p>Cuando el sistema es <strong>Compatible Indeterminado</strong>, se asignan parámetros \(t_1, t_2, \ldots\) a las incógnitas libres y se aplica la regla de Cramer al subsistema cuadrado que queda con las incógnitas no libres.</p>
 </section>
 </div>
 
@@ -277,7 +303,14 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <p>Como existe un menor de orden 2 no nulo: \(\text{rg}(A) = 2\).</p>
   <p><strong>3) Rango de \((A\,|\,b)\).</strong> La matriz ampliada es \(2\times 3\), el máximo orden es \(\min(2,3)=2\). Cualquier menor de orden 2 que incluya alguna de las tres columnas y tenga determinante no nulo basta. Ya sabemos que el menor formado por las filas \(\{1,2\}\) y columnas \(\{1,2\}\) vale \(-2 \neq 0\), por tanto: \(\text{rg}(A\,|\,b) = 2\).</p>
   <p><strong>4) Aplicación del teorema:</strong> \(\text{rg}(A) = \text{rg}(A\,|\,b) = 2 = n\) → <strong>Compatible Determinado</strong>.</p>
-  <p><strong>5) Solución:</strong> Sumando las dos ecuaciones: \(2x = 4 \Rightarrow x=2\). Sustituyendo: \(y=1\).</p>
+  <p><strong>5) Solución por la regla de Cramer.</strong> \(\det(A)=-2\). Formamos \(A_1\) y \(A_2\) sustituyendo cada columna por \(b=(3,1)^T\):</p>
+  <div class="k" style="text-align:left">\[
+  \det(A_1)=\begin{vmatrix}3&1\\1&-1\end{vmatrix}=-3-1=-4,\qquad
+  \det(A_2)=\begin{vmatrix}1&3\\1&1\end{vmatrix}=1-3=-2
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  x=\frac{\det(A_1)}{\det(A)}=\frac{-4}{-2}=2,\qquad y=\frac{\det(A_2)}{\det(A)}=\frac{-2}{-2}=1
+  \]</div>
   <div class="k" style="text-align:left">\[
   \text{Solución única: } \left[x=2,\; y=1\right]
   \]</div>
@@ -317,8 +350,27 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   \]</div>
   <p>Y todos los menores de orden 3 de \((A\,|\,b)\) resultan nulos. El mismo menor de orden 2 \((-2)\) ya encontrado garantiza \(\text{rg}(A\,|\,b) = 2\).</p>
   <p><strong>4) Aplicación del teorema:</strong> \(\text{rg}(A) = \text{rg}(A\,|\,b) = 2 &lt; n=3\) → <strong>Compatible Indeterminado</strong> con \(3-2=1\) parámetro libre.</p>
+  <p><strong>5) Solución por la regla de Cramer.</strong> Fijamos la incógnita libre \(x_3=t\). Las dos ecuaciones independientes son la 1.ª y la 3.ª; pasando \(x_3\) al segundo miembro queda el subsistema cuadrado:</p>
   <div class="k" style="text-align:left">\[
-  \text{Infinitas soluciones: }\left\{\begin{aligned}&x_1=\tfrac{3}{2}-\tfrac{3}{2}t\\&x_2=\tfrac{1}{2}-\tfrac{1}{2}t\\&x_3=t\end{aligned}\right.\quad (t\in\mathbb{R})
+  \left\{\begin{aligned}
+  x_1+x_2&=2-t\\
+  x_1-x_2&=1-2t
+  \end{aligned}\right.
+  \qquad A_s=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+  b_s=\begin{pmatrix}2-t\\1-2t\end{pmatrix}
+  \]</div>
+  <p>\(\det(A_s)=-1-1=-2\). Aplicamos Cramer:</p>
+  <div class="k" style="text-align:left">\[
+  \det(A_{s,1})=\begin{vmatrix}2-t&1\\1-2t&-1\end{vmatrix}=-(2-t)-(1-2t)=3t-3
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  \det(A_{s,2})=\begin{vmatrix}1&2-t\\1&1-2t\end{vmatrix}=(1-2t)-(2-t)=-1-t
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  x_1=\frac{3t-3}{-2}=\frac{3-3t}{2},\qquad x_2=\frac{-1-t}{-2}=\frac{1+t}{2},\qquad x_3=t
+  \]</div>
+  <div class="k" style="text-align:left">\[
+  \text{Infinitas soluciones: }\left\{\begin{aligned}&x_1=\tfrac{3-3t}{2}\\&x_2=\tfrac{1+t}{2}\\&x_3=t\end{aligned}\right.\quad (t\in\mathbb{R})
   \]</div>
   </div>
 </section>
@@ -375,8 +427,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
     El mismo menor garantiza \(\text{rg}(A|b)=2\).
     <h4>Discusión</h4>
     \(\text{rg}(A)=\text{rg}(A|b)=2=n\) → <strong>Compatible Determinado</strong>.
-    <h4>Solución</h4>
-    Sumando: \(3x=6\Rightarrow x=2\); \(y=1\).
+    <h4>Solución (Cramer)</h4>
+    \(\det(A)=-3\).
+    \[\det(A_1)=\begin{vmatrix}5&1\\1&-1\end{vmatrix}=-5-1=-6,\qquad\det(A_2)=\begin{vmatrix}2&5\\1&1\end{vmatrix}=2-5=-3\]
+    \[x=\frac{-6}{-3}=2,\qquad y=\frac{-3}{-3}=1\]
     <div class="mk-resultado">\(x=2,\quad y=1\)</div>
   </div>
 </div>
@@ -400,8 +454,12 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
     El mismo menor garantiza \(\text{rg}(A|b)=3\).
     <h4>Discusión</h4>
     \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>Compatible Determinado</strong>.
-    <h4>Solución</h4>
-    Usando Gauss o sustitución: \(x=1,\;y=2,\;z=3\).
+    <h4>Solución (Cramer)</h4>
+    \(\det(A)=7\).
+    \[\det(A_1)=\begin{vmatrix}6&1&1\\3&-1&1\\2&2&-1\end{vmatrix}=6(1-2)-1(-3-2)+1(6+2)=-6+5+8=7\]
+    \[\det(A_2)=\begin{vmatrix}1&6&1\\2&3&1\\1&2&-1\end{vmatrix}=1(-3-2)-6(-2-1)+1(4-3)=-5+18+1=14\]
+    \[\det(A_3)=\begin{vmatrix}1&1&6\\2&-1&3\\1&2&2\end{vmatrix}=1(-2-6)-1(4-3)+6(4+1)=-8-1+30=21\]
+    \[x=\frac{7}{7}=1,\qquad y=\frac{14}{7}=2,\qquad z=\frac{21}{7}=3\]
     <div class="mk-resultado">\(x=1,\quad y=2,\quad z=3\)</div>
   </div>
 </div>
@@ -423,9 +481,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
     El elemento \(a_{11}=1\neq 0\Rightarrow\text{rg}(A)=1\). La fila 2 de \((A|b)\) es el doble de la fila 1, así que \(\text{rg}(A|b)=1\).
     <h4>Discusión</h4>
     \(\text{rg}(A)=\text{rg}(A|b)=1 < n=2\) → <strong>Compatible Indeterminado</strong> con 1 parámetro.
-    <h4>Solución</h4>
-    \(x=4-2t,\quad y=t\quad(t\in\mathbb{R})\)
-    <div class="mk-resultado">Infinitas soluciones: \(x=4-2t,\;y=t\)</div>
+    <h4>Solución (Cramer)</h4>
+    Fijamos la incógnita libre \(y=t\). El subsistema resultante es la ecuación \(x=4-2t\), con matriz \(A_s=(1)\) y \(b_s=(4-2t)\):
+    \[x=\frac{\det(A_{s,1})}{\det(A_s)}=\frac{4-2t}{1}=4-2t\]
+    <div class="mk-resultado">Infinitas soluciones: \(x=4-2t,\;y=t\quad(t\in\mathbb{R})\)</div>
   </div>
 </div>
 
@@ -433,7 +492,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <div class="mk-ejercicio">
   <div class="mk-ej-head">
     <span class="mk-ej-num">4</span>
-    <span class="mk-badge">Compatible Indeterminado</span>
+    <span class="mk-badge">Compatible Determinado</span>
     <span class="mk-ej-level">Nivel medio</span>
   </div>
   <div class="mk-enunciado">
@@ -442,13 +501,16 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <button class="mk-toggle" onclick="this.classList.toggle('mk-open');this.nextElementSibling.classList.toggle('mk-visible')">Ver solución</button>
   <div class="mk-sol">
     <h4>Rangos</h4>
-    \[\det(A)=\begin{vmatrix}1&1&1\\2&1&-1\\1&0&-1\end{vmatrix}=1(-1-0)-1(-2+1)+1(0-1)=-1+1-1=-1\neq 0\]
-    Espera: \(\det(A)=-1\neq 0\Rightarrow\text{rg}(A)=3\). Pero la tercera ecuación \(x-z=0\) no tiene término en \(y\) (coeficiente 0). Comprobemos mejor: \(\det(A)=1(1\cdot(-1)-(-1)\cdot 0)-1(2\cdot(-1)-(-1)\cdot 1)+1(2\cdot 0-1\cdot 1)=-1+1-1=-1\neq 0\).
-    <br>Entonces \(\text{rg}(A)=3=n\): en realidad el sistema tiene solución única.
+    \[\det(A)=\begin{vmatrix}1&1&1\\2&1&-1\\1&0&-1\end{vmatrix}=1(-1-0)-1(-2+1)+1(0-1)=-1+1-1=-1\neq 0\Rightarrow\text{rg}(A)=3\]
+    El mismo menor garantiza \(\text{rg}(A|b)=3\).
     <h4>Discusión</h4>
     \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>Compatible Determinado</strong>.
-    <h4>Solución</h4>
-    De la tercera ecuación: \(x=z\). Sustituyendo: \(z+y+z=3\Rightarrow y+2z=3\) y \(2z+y-z=1\Rightarrow y+z=1\). Restando: \(z=2\), \(x=2\), \(y=-1\).
+    <h4>Solución (Cramer)</h4>
+    \(\det(A)=-1\).
+    \[\det(A_1)=\begin{vmatrix}3&1&1\\1&1&-1\\0&0&-1\end{vmatrix}=3(-1-0)-1(-1-0)+1(0-0)=-3+1=-2\]
+    \[\det(A_2)=\begin{vmatrix}1&3&1\\2&1&-1\\1&0&-1\end{vmatrix}=1(-1-0)-3(-2+1)+1(0-1)=-1+3-1=1\]
+    \[\det(A_3)=\begin{vmatrix}1&1&3\\2&1&1\\1&0&0\end{vmatrix}=1(0-0)-1(0-1)+3(0-1)=0+1-3=-2\]
+    \[x=\frac{-2}{-1}=2,\qquad y=\frac{1}{-1}=-1,\qquad z=\frac{-2}{-1}=2\]
     <div class="mk-resultado">\(x=2,\quad y=-1,\quad z=2\)</div>
   </div>
 </div>

@@ -118,6 +118,12 @@ function _construirIndicador(){
     item.appendChild(num);item.appendChild(txt);
     pasoIndicadorDer.appendChild(item);
   });
+  let btnAutoG=document.createElement("button");btnAutoG.type="button";
+  btnAutoG.id="btnAutoGlobal";btnAutoG.className="btn-auto";
+  btnAutoG.textContent="Resolución automática →";
+  btnAutoG.style.display="none";
+  btnAutoG.addEventListener("click",function(){_autoResolverDesde(1);});
+  pasoIndicadorDer.appendChild(btnAutoG);
 }
 function _actualizarIndicador(){
   let items=pasoIndicadorDer.querySelectorAll(".paso-ind-item");
@@ -218,7 +224,7 @@ function _tarjetaDiscusion(){
 
   let card=document.createElement("div");
   card.className="hist-entrada hist-discusion";
-  let et=document.createElement("div");et.className="hist-etiqueta";et.textContent="Rouché-Frobenius";card.appendChild(et);
+  let et=document.createElement("div");et.className="hist-etiqueta";et.textContent="Paso 3 — Discusión";card.appendChild(et);
 
   let vals=document.createElement("div");vals.className="hist-disc-vals";
   _rk(`\\text{rg}(A)=${rA}\\quad\\text{rg}(A|b)=${rAb}\\quad n=${n}`,vals);
@@ -244,64 +250,88 @@ function _tarjetaDiscusion(){
   return {card, tipo};
 }
 
-function _tarjetaSolucion(){
-  let card=document.createElement("div");
-  card.className="hist-entrada hist-solucion";
-  let et=document.createElement("div");et.className="hist-etiqueta";et.textContent="Solución del sistema";card.appendChild(et);
-  let v=document.createElement("div");v.className="hist-sol-cuerpo";card.appendChild(v);
-  Representar.solucionesSistemaLineal(matrizAmpS,v,false,[]);
-  return card;
+// =====================================================================
+// CERTIFICACIÓN DE RANGO (menor no nulo + menores nulos de orden superior)
+// =====================================================================
+function _combs(arr,k){
+  if(k===0)return[[]];if(!arr.length)return[];
+  let h=arr[0],t=arr.slice(1);
+  return[..._combs(t,k-1).map(function(c){return[h].concat(c);}), ..._combs(t,k)];
+}
+
+function _agregarCertificacion(parent, mat, prefijo, rango){
+  let m=mat.length, nc=mat[0].length;
+  let maxOrd=Math.min(m,nc);
+  let filAll=Array.from({length:m},function(_,i){return i;});
+  let colAll=Array.from({length:nc},function(_,j){return j;});
+  let resArea=document.createElement("div");resArea.className="form-res-area";
+
+  // Menor no nulo de orden rango (certifica el rango)
+  let cert=null;
+  outerCert: for(let fC of _combs(filAll,rango)){
+    for(let cC of _combs(colAll,rango)){
+      let minor=Matriz.menor(mat,fC,cC);
+      let det=Matriz.determinanteNumerico(minor);
+      if(det!==null&&Number.isFinite(det)&&!_esCeroNum(det)){cert={fC,cC,minor,det};break outerCert;}
+    }
+  }
+  if(cert){
+    let blq=document.createElement("div");blq.className="form-menor-blq form-menor-nonulo";
+    let hdr=document.createElement("div");hdr.className="form-menor-hdr";
+    hdr.textContent="F:{"+cert.fC.map(function(x){return x+1;}).join(",")+"}  C:{"+cert.cC.map(function(x){return x+1;}).join(",")+"}  · orden "+rango;
+    blq.appendChild(hdr);
+    let val=document.createElement("div");val.className="form-menor-val";
+    let mRows=cert.minor.map(function(r){return r.map(_numLx).join("&");});
+    _rk("\\begin{vmatrix}"+mRows.join("\\\\")+"\\end{vmatrix}="+_numLx(cert.det),val);
+    blq.appendChild(val);
+    let inf=document.createElement("div");inf.className="form-menor-inf";
+    if(rango>=maxOrd){
+      inf.innerHTML="<span class='hist-maxord'>⭐ Menor de orden máximo no nulo.</span>";
+    }else{
+      inf.innerHTML="<span class='hist-maxord'>⭐ Menor no nulo de orden "+rango+". Los de orden "+(rango+1)+" son todos nulos:</span>";
+    }
+    blq.appendChild(inf);
+    resArea.appendChild(blq);
+  }
+
+  // Todos los menores nulos del orden siguiente (prueban que no existe rango mayor)
+  if(rango>0&&rango<maxOrd){
+    let nextOrd=rango+1;
+    for(let fC of _combs(filAll,nextOrd)){
+      for(let cC of _combs(colAll,nextOrd)){
+        let minor=Matriz.menor(mat,fC,cC);
+        let det=Matriz.determinanteNumerico(minor);
+        let blq=document.createElement("div");blq.className="form-menor-blq form-menor-nulo";
+        let hdr=document.createElement("div");hdr.className="form-menor-hdr";
+        hdr.textContent="F:{"+fC.map(function(x){return x+1;}).join(",")+"}  C:{"+cC.map(function(x){return x+1;}).join(",")+"}  · orden "+nextOrd;
+        blq.appendChild(hdr);
+        let val=document.createElement("div");val.className="form-menor-val";
+        let mRows=minor.map(function(r){return r.map(_numLx).join("&");});
+        _rk("\\begin{vmatrix}"+mRows.join("\\\\")+"\\end{vmatrix}="+_numLx(det),val);
+        blq.appendChild(val);
+        resArea.appendChild(blq);
+      }
+    }
+  }
+
+  parent.appendChild(resArea);
+  let v=document.createElement("div");v.className="hist-badge-rango";
+  _rk("\\text{rg}("+prefijo+") = "+rango,v);
+  parent.appendChild(v);
 }
 
 // =====================================================================
 // RESOLUCIÓN AUTOMÁTICA
 // =====================================================================
 function _autoResolverDesde(desde){
-  // Combinaciones de k elementos de arr
-  function combs(arr,k){
-    if(k===0)return[[]];if(!arr.length)return[];
-    let[h,...t]=arr;
-    return[...combs(t,k-1).map(c=>[h,...c]),...combs(t,k)];
-  }
-  // Primer menor no nulo del orden dado
-  function hallarMenor(mat,rango){
-    if(rango===0)return null;
-    let m=mat.length,n=mat[0].length;
-    for(let fC of combs([...Array(m).keys()],rango))
-      for(let cC of combs([...Array(n).keys()],rango)){
-        let minor=Matriz.menor(mat,fC,cC);
-        let det=Matriz.determinanteNumerico(minor);
-        if(det!==null&&Number.isFinite(det)&&!_esCeroNum(det))
-          return{filasIdx:fC,colsIdx:cC,minorMat:minor,det};
-      }
-    return null;
-  }
-  // Crea tarjeta estática con el menor hallado y la confirmación del rango
+  // Crea tarjeta estática con certificación completa del rango
   function crearCardAuto(paso,prefijo,mat,rangoReal){
     if(tarjetaActiva&&tarjetaActiva.parentNode)tarjetaActiva.parentNode.removeChild(tarjetaActiva);
     tarjetaActiva=null;
     let card=document.createElement("div");card.className="hist-entrada hist-rango-conf";
     let etq=document.createElement("div");etq.className="hist-etiqueta";
-    etq.textContent=`Paso ${paso} — ${prefijo}`;card.appendChild(etq);
-    let resArea=document.createElement("div");resArea.className="form-res-area";
-    let r=hallarMenor(mat,rangoReal);
-    if(r){
-      let blq=document.createElement("div");blq.className="form-menor-blq form-menor-nonulo";
-      let hdr=document.createElement("div");hdr.className="form-menor-hdr";
-      hdr.textContent=`F:{${r.filasIdx.map(x=>x+1).join(",")}} C:{${r.colsIdx.map(x=>x+1).join(",")}} · orden ${r.filasIdx.length}`;
-      blq.appendChild(hdr);
-      let val=document.createElement("div");val.className="form-menor-val";
-      let mRows=r.minorMat.map(row=>row.map(_numLx).join("&"));
-      _rk(`\\begin{vmatrix}${mRows.join("\\\\")}\\end{vmatrix}=${_numLx(r.det)}`,val);
-      blq.appendChild(val);
-      let inf=document.createElement("div");inf.className="form-menor-inf";
-      inf.innerHTML=`<span class="hist-maxord">No existen menores no nulos de orden superior.</span>`;
-      blq.appendChild(inf);
-      resArea.appendChild(blq);
-    }
-    card.appendChild(resArea);
-    let v=document.createElement("div");v.className="hist-badge-rango";
-    _rk(`\\text{rg}(${prefijo}) = ${rangoReal}`,v);card.appendChild(v);
+    etq.textContent="Paso "+paso+" — "+prefijo;card.appendChild(etq);
+    _agregarCertificacion(card,mat,prefijo,rangoReal);
     historialDiv.appendChild(card);
     historialDiv.scrollTop=historialDiv.scrollHeight;
   }
@@ -338,13 +368,6 @@ function _crearTarjetaActiva(mat, numFilas, numCols, maxOrd, prefijo, rangoReal,
   let et=document.createElement("div");et.className="hist-etiqueta";
   et.textContent=`Paso ${pasoActual} — ${prefijo}`;
   card.appendChild(et);
-
-  // Botón resolución automática
-  let btnAuto=document.createElement("button");btnAuto.type="button";
-  btnAuto.className="btn-auto";btnAuto.textContent="Resolución automática →";
-  let pasoCap=pasoActual;
-  btnAuto.addEventListener("click",function(){_autoResolverDesde(pasoCap);});
-  card.appendChild(btnAuto);
 
   // Zona acumuladora de resultados de menores (dentro de la tarjeta)
   let resArea=document.createElement("div");resArea.className="form-res-area";
@@ -399,33 +422,65 @@ function _crearTarjetaActiva(mat, numFilas, numCols, maxOrd, prefijo, rangoReal,
     btnM.classList.add("activo");btnR.classList.remove("activo");
     _clear(zona);
 
-    let rowM=document.createElement("div");rowM.className="form-row";
-    let lFil=document.createElement("label");lFil.textContent="Filas:";
-    let iFil=document.createElement("input");iFil.type="text";iFil.className="input-indices";iFil.placeholder=`ej: 1,2`;
-    let lCol=document.createElement("label");lCol.textContent="Cols:";
-    let iCol=document.createElement("input");iCol.type="text";iCol.className="input-indices";iCol.placeholder=`ej: 1,3`;
-    rowM.appendChild(lFil);rowM.appendChild(iFil);rowM.appendChild(lCol);rowM.appendChild(iCol);
-    zona.appendChild(rowM);
-    let msgM=document.createElement("div");msgM.className="form-msg";zona.appendChild(msgM);
+    let selRows=new Set(), selCols=new Set();
+    let rowBtns=[], colBtns=[];
 
-    function _calcMenor(){
-      msgM.innerHTML="";
-      try{
-        let filIdx=_parseIndices(iFil.value,numFilas);
-        let colIdx=_parseIndices(iCol.value,numCols);
-        if(filIdx.length!==colIdx.length){msgM.innerHTML=`<span class="err">Mismo nº de filas y columnas.</span>`;iFil.focus();return;}
-        let minor=Matriz.menor(mat,filIdx,colIdx);
-        let det=Matriz.determinanteNumerico(minor);
-        if(det===null||!Number.isFinite(det)){msgM.innerHTML=`<span class="err">No se pudo calcular.</span>`;return;}
-        _addResultado(filIdx,colIdx,minor,det);
-        iFil.value="";iCol.value="";msgM.innerHTML="";
-        iFil.focus();
-      }catch(err){msgM.innerHTML=`<span class="err">${err.message||"Índices no válidos."}</span>`;}
+    // Fila de botones de filas
+    let pickerF=document.createElement("div");pickerF.className="form-picker-row";
+    let lblF=document.createElement("span");lblF.className="form-picker-label";lblF.textContent="Filas:";
+    pickerF.appendChild(lblF);
+    for(let i=0;i<numFilas;i++){
+      let b=document.createElement("button");b.type="button";b.className="form-picker-btn";b.textContent=i+1;
+      b.addEventListener("click",function(){
+        if(selRows.has(i)){selRows.delete(i);b.classList.remove("sel");}
+        else{selRows.add(i);b.classList.add("sel");}
+        _tryCompute();
+      });
+      pickerF.appendChild(b);rowBtns.push(b);
     }
+    zona.appendChild(pickerF);
 
-    iFil.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();iCol.focus();}});
-    iCol.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();_calcMenor();}});
-    iFil.focus();
+    // Fila de botones de columnas
+    let pickerC=document.createElement("div");pickerC.className="form-picker-row";
+    let lblC=document.createElement("span");lblC.className="form-picker-label";lblC.textContent="Cols:";
+    pickerC.appendChild(lblC);
+    for(let j=0;j<numCols;j++){
+      let b=document.createElement("button");b.type="button";b.className="form-picker-btn";b.textContent=j+1;
+      b.addEventListener("click",function(){
+        if(selCols.has(j)){selCols.delete(j);b.classList.remove("sel");}
+        else{selCols.add(j);b.classList.add("sel");}
+        _tryCompute();
+      });
+      pickerC.appendChild(b);colBtns.push(b);
+    }
+    zona.appendChild(pickerC);
+
+    let hint=document.createElement("div");hint.className="form-picker-hint";zona.appendChild(hint);
+
+    function _tryCompute(){
+      let nF=selRows.size, nC=selCols.size;
+      if(nF===0&&nC===0){hint.textContent="";return;}
+      if(nF===0){hint.textContent="Selecciona "+nC+" fila"+(nC>1?"s":"")+" para formar el menor.";return;}
+      if(nC===0){hint.textContent="Selecciona "+nF+" columna"+(nF>1?"s":"")+" para formar el menor.";return;}
+      if(nF!==nC){
+        let diff=Math.abs(nF-nC);
+        if(nF>nC) hint.textContent="Selecciona "+diff+" columna"+(diff>1?"s más":" más")+".";
+        else      hint.textContent="Selecciona "+diff+" fila"+(diff>1?"s más":" más")+".";
+        return;
+      }
+      // Mismo número → calcular
+      hint.textContent="";
+      let filIdx=Array.from(selRows).sort(function(a,b){return a-b;});
+      let colIdx=Array.from(selCols).sort(function(a,b){return a-b;});
+      let minor=Matriz.menor(mat,filIdx,colIdx);
+      let det=Matriz.determinanteNumerico(minor);
+      if(det===null||!Number.isFinite(det)){hint.textContent="No se pudo calcular el determinante.";return;}
+      _addResultado(filIdx,colIdx,minor,det);
+      // Limpiar selección
+      selRows.clear();selCols.clear();
+      rowBtns.forEach(function(b){b.classList.remove("sel");});
+      colBtns.forEach(function(b){b.classList.remove("sel");});
+    }
   }
 
   /* ── MODO: indicar rango ── */
@@ -450,12 +505,10 @@ function _crearTarjetaActiva(mat, numFilas, numCols, maxOrd, prefijo, rangoReal,
       if(rDecl===rangoReal){
         msgR.innerHTML=`<span class="cierto">CIERTO</span>`;
         setTimeout(function(){
-          // Quitar solo el toggle y la zona de inputs; conservar cabecera y menores
           if(tog.parentNode)tog.parentNode.removeChild(tog);
           if(zona.parentNode)zona.parentNode.removeChild(zona);
           card.className="hist-entrada hist-rango-conf";
-          let v=document.createElement("div");v.className="hist-badge-rango";
-          _rk(`\\text{rg}(${prefijo}) = ${rDecl}`,v);card.appendChild(v);
+          _agregarCertificacion(card,mat,prefijo,rDecl);
           tarjetaActiva=null;
           onRangoOk(rDecl);
         },600);
@@ -649,6 +702,7 @@ function _confirmarSistema(){
 function iniciarPaso1(){
   pasoActual=1;
   _actualizarIndicador();
+  let btnAG=document.getElementById("btnAutoGlobal");if(btnAG)btnAG.style.display="";
 
   let maxOrd=Math.min(nEcuaciones,nIncognitas);
   _mostrarRef(
@@ -721,13 +775,190 @@ function iniciarPaso3(){
 }
 
 // =====================================================================
-// PASO 4 — SOLUCIÓN (automática)
+// PASO 4 — SOLUCIÓN POR CRAMER
 // =====================================================================
+
+function _addValorLine(parent, latexStr){
+  let d=document.createElement("div");d.className="hist-valor";_rk(latexStr,d);parent.appendChild(d);
+}
+
+function _buildLinearExprTex(constant, paramCoeffs, pNames){
+  let parts=[];
+  if(!_esCeroNum(constant))parts.push({num:constant,name:null});
+  paramCoeffs.forEach(function(c,i){if(!_esCeroNum(c))parts.push({num:c,name:pNames[i]});});
+  if(!parts.length)return"0";
+  let result="";
+  parts.forEach(function(p,idx){
+    let isFirst=idx===0;
+    if(p.name===null){
+      let s=_numLx(p.num);if(!isFirst&&p.num>0)s="+"+s;result+=s;
+    }else{
+      let abs=Math.abs(p.num),sign=p.num<0?"-":(isFirst?"":"+");
+      let isOne=Math.abs(abs-1)<1e-9;
+      let coefTex=isOne?"":_numLx(abs);
+      result+=sign+coefTex+p.name;
+    }
+  });
+  return result;
+}
+
+function _cramerCD(card, panel){
+  let matCoef=_matCoefN();
+  let b=matrizAmpN.map(function(r){return r[nIncognitas];});
+  let n=nIncognitas;
+  let detA=Matriz.determinanteNumerico(matCoef);
+
+  let mRows=matCoef.map(function(r){return r.map(_numLx).join("&");});
+  _addValorLine(card,"\\det(A)=\\begin{vmatrix}"+mRows.join("\\\\")+"\\end{vmatrix}="+_numLx(detA));
+
+  let results=[];
+  for(let i=0;i<n;i++){
+    let Ai=matCoef.map(function(row,ri){let nr=row.slice();nr[i]=b[ri];return nr;});
+    let detAi=Matriz.determinanteNumerico(Ai);
+    let xi=detAi/detA;
+    results.push(xi);
+    let aiRows=Ai.map(function(r){return r.map(_numLx).join("&");});
+    _addValorLine(card,
+      "\\det(A_{"+(i+1)+"})=\\begin{vmatrix}"+aiRows.join("\\\\")+"\\end{vmatrix}="+_numLx(detAi)
+      +"\\qquad x_{"+(i+1)+"}=\\dfrac{"+_numLx(detAi)+"}{"+_numLx(detA)+"}="+_numLx(xi)
+    );
+  }
+
+  let solTex=results.map(function(v,i){return"x_{"+(i+1)+"}="+_numLx(v);}).join(",\\quad ");
+  let tex="\\left["+solTex+"\\right]";
+  let b1=document.createElement("div");b1.className="hist-badge-rango";_rk(tex,b1);card.appendChild(b1);
+  let b2=document.createElement("div");b2.className="hist-badge-rango";_rk(tex,b2);panel.appendChild(b2);
+}
+
+function _echelonNumerica(mat){
+  // Gaussian elimination returning numeric rows and pivot column indices
+  let m=mat.length, nc=mat[0].length;
+  let aux=mat.map(function(r){return r.slice();});
+  let pivotCols=[], pivotRow=0;
+  for(let col=0;col<nc&&pivotRow<m;col++){
+    let found=-1;
+    for(let row=pivotRow;row<m;row++){if(Math.abs(aux[row][col])>1e-9){found=row;break;}}
+    if(found===-1)continue;
+    let tmp=aux[pivotRow];aux[pivotRow]=aux[found];aux[found]=tmp;
+    let piv=aux[pivotRow][col];
+    for(let row=pivotRow+1;row<m;row++){
+      if(Math.abs(aux[row][col])>1e-9){
+        let f=aux[row][col]/piv;
+        for(let c=col;c<nc;c++)aux[row][c]-=f*aux[pivotRow][c];
+      }
+    }
+    pivotCols.push(col);pivotRow++;
+  }
+  return{rows:aux,pivotCols:pivotCols};
+}
+
+function _cramerCI(card, panel){
+  let n=nIncognitas, r=rangoA_confirm;
+
+  // Buscar el menor certificador en la matriz de coeficientes ORIGINAL (igual que _agregarCertificacion)
+  let matCoef=_matCoefN();
+  let m=matCoef.length;
+  let filAll=Array.from({length:m},function(_,i){return i;});
+  let colAll=Array.from({length:n},function(_,j){return j;});
+
+  let cert=null;
+  outerCI: for(let fC of _combs(filAll,r)){
+    for(let cC of _combs(colAll,r)){
+      let minor=Matriz.menor(matCoef,fC,cC);
+      let det=Matriz.determinanteNumerico(minor);
+      if(det!==null&&Number.isFinite(det)&&!_esCeroNum(det)){cert={fC:fC,cC:cC,minor:minor,det:det};break outerCI;}
+    }
+  }
+
+  let pivotCols=cert.cC;
+  let freeCols=[];
+  for(let j=0;j<n;j++){if(!pivotCols.includes(j))freeCols.push(j);}
+
+  let numP=freeCols.length;
+  let pNames=numP===1?["t"]:freeCols.map(function(_,i){return"t_{"+(i+1)+"}";});
+
+  // Asignación de variables libres
+  let paramTex=freeCols.map(function(c,i){return"x_{"+(c+1)+"}="+pNames[i];}).join(",\\quad ");
+  let paramRange=pNames.map(function(p){return p+"\\in\\mathbb{R}";}).join(",\\;");
+  _addValorLine(card,paramTex+"\\quad("+paramRange+")");
+
+  // Asub ES el menor certificador (valores de la matriz original)
+  let Asub=cert.minor;
+  let detAsub=cert.det;
+  let subRows=Asub.map(function(row){return row.map(_numLx).join("&");});
+  _addValorLine(card,"\\det(A_s)=\\begin{vmatrix}"+subRows.join("\\\\")+"\\end{vmatrix}="+_numLx(detAsub));
+
+  // b original en las filas del menor certificador
+  let bOrig=cert.fC.map(function(row){return matrizAmpN[row][n];});
+
+  // Para cada variable pivote: Cramer con b original y contribuciones de variables libres
+  let solutions=pivotCols.map(function(varIdx,k){
+    let AsubK=Asub.map(function(row,ri){let nr=row.slice();nr[k]=bOrig[ri];return nr;});
+    let detConst=Matriz.determinanteNumerico(AsubK);
+    let paramCoeffs=freeCols.map(function(fc){
+      // Contribución de xfc: -A[pivRow][fc] en la columna k (por linealidad)
+      let bParam=cert.fC.map(function(row){return-matrizAmpN[row][fc];});
+      let AsubKp=Asub.map(function(row,ri){let nr=row.slice();nr[k]=bParam[ri];return nr;});
+      return Matriz.determinanteNumerico(AsubKp);
+    });
+    return{varIdx:varIdx,constant:detConst,paramCoeffs:paramCoeffs};
+  });
+
+  // Columna denominador (Asub)
+  let denMatRows=Asub.map(function(row){return row.map(_numLx).join("&");});
+  let denTex="\\begin{vmatrix}"+denMatRows.join("\\\\")+"\\end{vmatrix}";
+
+  solutions.forEach(function(sol,k){
+    let idx=sol.varIdx+1;
+
+    // Columna simbólica: bOrig[i] - sum(A[pivRow][fc]*pName)
+    let symCol=bOrig.map(function(b,ri){
+      let coeffs=freeCols.map(function(fc){return-matrizAmpN[cert.fC[ri]][fc];});
+      return _buildLinearExprTex(b,coeffs,pNames);
+    });
+
+    // Matriz numerador: Asub con columna k reemplazada por symCol
+    let numMatRows=Asub.map(function(row,ri){
+      return row.map(function(v,ci){return ci===k?symCol[ri]:_numLx(v);}).join("&");
+    });
+    let numMatTex="\\begin{vmatrix}"+numMatRows.join("\\\\")+"\\end{vmatrix}";
+
+    // Numerador y resultado simbólico
+    let numValTex=_buildLinearExprTex(sol.constant,sol.paramCoeffs,pNames);
+    let xiConst=sol.constant/detAsub;
+    let xiPCoeffs=sol.paramCoeffs.map(function(c){return c/detAsub;});
+    let simplTex=_buildLinearExprTex(xiConst,xiPCoeffs,pNames);
+
+    _addValorLine(card,
+      "x_{"+idx+"}=\\dfrac{"+numMatTex+"}{"+denTex+"}"
+      +"=\\dfrac{"+numValTex+"}{"+_numLx(detAsub)+"}"
+      +"="+simplTex
+    );
+  });
+
+  // Solución paramétrica completa
+  let allVars=[];
+  for(let j=0;j<n;j++){
+    let pivIdx=pivotCols.indexOf(j);
+    if(pivIdx>=0){
+      let sol=solutions[pivIdx];
+      let xiConst=sol.constant/detAsub;
+      let xiPCoeffs=sol.paramCoeffs.map(function(c){return c/detAsub;});
+      allVars.push("x_{"+(j+1)+"}="+_buildLinearExprTex(xiConst,xiPCoeffs,pNames));
+    }else{
+      let fi=freeCols.indexOf(j);
+      allVars.push("x_{"+(j+1)+"}="+pNames[fi]);
+    }
+  }
+  let solSys="\\left\\{\\begin{aligned}"+allVars.map(function(s){return"&"+s;}).join("\\\\")+"\\end{aligned}\\right.\\quad("+paramRange+")";
+  let b1=document.createElement("div");b1.className="hist-badge-rango";_rk(solSys,b1);card.appendChild(b1);
+  let b2=document.createElement("div");b2.className="hist-badge-rango";_rk(solSys,b2);panel.appendChild(b2);
+}
+
 function iniciarPaso4(){
   pasoActual=4;
   _actualizarIndicador();
 
-  // Renderizar solución directamente en ESPACIO DE RESULTADOS
   _clear(refContenido);
   let rangosBar=document.createElement("div");rangosBar.className="ref-rangos";
   [`\\text{rg}(A)=${rangoA_confirm}`,`\\text{rg}(A|b)=${rangoAmp_confirm}`,`n=${nIncognitas}`].forEach(function(par){
@@ -735,12 +966,27 @@ function iniciarPaso4(){
   });
   refContenido.appendChild(rangosBar);
 
-  let titSol=document.createElement("div");titSol.className="ref-titulo";titSol.textContent="Paso 4 — Solución";
+  // Discusión Rouché-Frobenius
+  let rA=rangoA_confirm, rAb=rangoAmp_confirm, n=nIncognitas;
+  let discDiv=document.createElement("div");discDiv.className="hist-disc-conclu "+(rA!==rAb?"hist-tipo-incompatible":rA===n?"hist-tipo-cd":"hist-tipo-ci");
+  let discTex,lib=n-rA;
+  if(rA!==rAb) discTex="\\text{rg}(A)\\neq\\text{rg}(A|b)\\Rightarrow\\textbf{Incompatible}";
+  else if(rA===n) discTex="\\text{rg}(A)=\\text{rg}(A|b)=n\\Rightarrow\\textbf{Compatible Det.}";
+  else discTex="\\text{rg}(A)=\\text{rg}(A|b)<n\\Rightarrow\\textbf{Comp. Indet.}\\;("+lib+"\\text{ par.})";
+  _rk(discTex,discDiv);
+  refContenido.appendChild(discDiv);
+
+  let titSol=document.createElement("div");titSol.className="ref-titulo";titSol.textContent="Paso 4 — Solución (Cramer)";
   refContenido.appendChild(titSol);
 
-  // La biblioteca necesita la matriz ya escalonada en resolverSistemaCI
-  let matEch=Matriz.eliminarFilasNulas(Matriz.escalonarMatrizNumerica(matrizAmpN.map(r=>r.slice())));
-  Representar.solucionesSistemaLineal(matEch,refContenido,false,[]);
+  let card=document.createElement("div");card.className="hist-entrada hist-solucion";
+  let et=document.createElement("div");et.className="hist-etiqueta";et.textContent="Paso 4 — Regla de Cramer";card.appendChild(et);
+
+  let tipo=(rangoA_confirm===nIncognitas)?"cd":"ci";
+  if(tipo==="cd"){_cramerCD(card,refContenido);}else{_cramerCI(card,refContenido);}
+
+  historialDiv.appendChild(card);
+  historialDiv.scrollTop=historialDiv.scrollHeight;
 
   caja11111.textContent="PROCESO COMPLETADO";
   caja11112.style.color="#dbeafe";
@@ -793,7 +1039,17 @@ document.addEventListener("DOMContentLoaded",function(){
     if(btnHomeEl&&btnHomeEl.parentNode===ctrlTop)ctrlTop.insertBefore(otroSistema,btnHomeEl);
     else ctrlTop.appendChild(otroSistema);
   }
-  otroSistema.addEventListener("click",function(){sessionStorage.setItem("irACalculadora","1");window.location.reload();});
+  otroSistema.addEventListener("click",function(){
+    nEcuaciones=0;nIncognitas=0;
+    matrizAmpS=[];matrizAmpN=[];
+    rangoA_real=0;rangoAmp_real=0;
+    rangoA_confirm=null;rangoAmp_confirm=null;
+    pasoActual=0;tablaInput=null;valoresInput=[];tarjetaActiva=null;
+    _clear(historialDiv);
+    _construirIndicador();
+    let btnAG=document.getElementById("btnAutoGlobal");if(btnAG)btnAG.style.display="none";
+    iniciarPaso0();
+  });
 
   iniciarPaso0();
 });
