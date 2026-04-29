@@ -110,7 +110,7 @@ function _permutarFilasN(mat,i,j){let t=mat[i];mat[i]=mat[j];mat[j]=t;return mat
 function _permutarColsN(mat,i,j){for(let r=0;r<mat.length;r++){let t=mat[r][i];mat[r][i]=mat[r][j];mat[r][j]=t;}return mat;}
 function _ordenarFilasPorCerosN(mat){
   function zLeft(row){let c=0;for(let j=0;j<row.length-1;j++){if(_esCeroNum(row[j]))c++;else break;}return c;}
-  return mat.slice().sort((a,b)=>zLeft(b)-zLeft(a));
+  return mat.slice().sort((a,b)=>zLeft(a)-zLeft(b));
 }
 function _eliminarFilasNulasN(mat){
   let out=[];for(let i=0;i<mat.length;i++){let all=true;for(let j=0;j<mat[i].length;j++)if(!_esCeroNum(mat[i][j])){all=false;break;}if(!all)out.push(mat[i].slice());}
@@ -217,7 +217,10 @@ function crearFormulario(){
       let n=matrizActualN.length,f1=null;
       i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Fila i no válida.");}});
       i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
-          _permutarFilasN(matrizActualN,f1-1,f2-1);_afterPasoUsuario();_clr();
+          _permutarFilasN(matrizActualN,f1-1,f2-1);_syncSfromN();
+          if(hayAlgoUsuario)Representar.simboloPermutarFilas(f1,f2,matrizActualN.length,caja21);
+          Representar.matrizGaussCompleta(matrizActualS,caja21,leyendaIncognitas,ordenLeyenda);hayAlgoUsuario=true;
+          if(Matriz.esMatrizEscalonada(matrizActualN))_pintarSolucionEnCaja12(matrizActualS);_clr();
         }catch(e){i2.value="";i2.focus();_err("Fila j no válida.");}});
       return;
     }
@@ -228,11 +231,17 @@ function crearFormulario(){
       let m=matrizActualN[0].length-1,c1=null;
       i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_err("Columna i no válida.");}});
       i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
-          _permutarColsN(matrizActualN,c1-1,c2-1);_swapLey(c1-1,c2-1);_afterPasoUsuario();_clr();
+          _permutarColsN(matrizActualN,c1-1,c2-1);_swapLey(c1-1,c2-1);_syncSfromN();
+          if(hayAlgoUsuario)Representar.simboloPermutarColumnas(c1,c2,matrizActualN.length,caja21);
+          Representar.matrizGaussCompleta(matrizActualS,caja21,leyendaIncognitas,ordenLeyenda);hayAlgoUsuario=true;
+          if(Matriz.esMatrizEscalonada(matrizActualN))_pintarSolucionEnCaja12(matrizActualS);_clr();
         }catch(e){i2.value="";i2.focus();_err("Columna j no válida.");}});
       return;
     }
-    if(opt==="op3"){matrizActualN=_ordenarFilasPorCerosN(matrizActualN);_afterPasoUsuario();_clr();return;}
+    if(opt==="op3"){matrizActualN=_ordenarFilasPorCerosN(matrizActualN);_syncSfromN();
+      if(hayAlgoUsuario)Representar.simboloFilasNulasAbajo(matrizActualN.length,caja21);
+      Representar.matrizGaussCompleta(matrizActualS,caja21,leyendaIncognitas,ordenLeyenda);hayAlgoUsuario=true;
+      if(Matriz.esMatrizEscalonada(matrizActualN))_pintarSolucionEnCaja12(matrizActualS);_clr();return;}
     if(opt==="op4"){
       let d=document.createElement("div"),l1=document.createElement("label"),i1=document.createElement("input"),l2=document.createElement("label"),i2=document.createElement("input");
       d.style.display="flex";d.style.alignItems="center";d.style.gap="10px";l1.innerHTML="a=";l2.innerHTML="m=";
@@ -314,7 +323,7 @@ function resolverAutomaticoConPasosEnteros(){
   if(!matrizOriginalS.length)return;
   if(letreroUsuario)letreroUsuario.style.display="none";caja21.style.display="none";_clear(caja21);hayAlgoUsuario=false;
   _clear(caja221);
-  let eq=_matEquivalenteEntera(matrizOriginalS),baseInt=eq.has?eq.mat:matrizOriginalS.map(r=>r.map(x=>_strip(x)));
+  let eq=_matEquivalenteEntera(matrizActualS),baseInt=eq.has?eq.mat:matrizActualS.map(r=>r.map(x=>_strip(x)));
   for(let i=0;i<baseInt.length;i++)for(let j=0;j<baseInt[0].length;j++){
     let v=_strip(baseInt[i][j]);if(/^[-+]?\d+$/.test(v))continue;let f=_fracFromStr(v);baseInt[i][j]=f.p.toString();
   }
@@ -345,7 +354,7 @@ document.addEventListener("DOMContentLoaded",function(){
     if(btnHome&&btnHome.parentNode===parent)parent.insertBefore(otroSistema,btnHome);
     else parent.appendChild(otroSistema);
   }else document.body.appendChild(otroSistema);
-  otroSistema.addEventListener("click",function(){window.location.reload();});
+  otroSistema.addEventListener("click",function(){sessionStorage.setItem('irACalculadora','1');window.location.reload();});
   crearNumeroEcuaciones();
 });
 

@@ -278,7 +278,7 @@ const insertarOtrasMatrices=()=>{let ayuda=$("abreVentana1");if(!ayuda)return;le
 let volver=[...cont.children].find(el=>el!==ayuda&&(/volver/i.test(el.textContent||"")||/volver/i.test(el.id||"")));
 let b=ayuda.cloneNode(true);b.id="otrasMatrices";b.textContent="Otras matrices";b.classList?.remove("abreVentana");
 if(b.tagName==="A"){b.href="#";b.removeAttribute("download")}else if(b.tagName==="BUTTON")b.type="button";
-b.addEventListener("click",e=>{e.preventDefault();location.reload()});
+b.addEventListener("click",e=>{e.preventDefault();sessionStorage.setItem('irACalculadora','1');location.reload();});
 if(volver)cont.insertBefore(b,volver);else ayuda.insertAdjacentElement("afterend",b)};insertarOtrasMatrices();
 const archivos={abreVentana1:{pdf:'INSTRUCCIONES/Ayuda.pdf',
 docx:'INSTRUCCIONES/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;

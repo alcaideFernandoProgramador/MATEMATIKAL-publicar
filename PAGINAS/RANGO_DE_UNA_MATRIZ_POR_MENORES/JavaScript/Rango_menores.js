@@ -460,7 +460,7 @@ window.addEventListener("click",function(event){if(event.target==ventana){ventan
 let ayuda=abreVentana1;try{
 if(ayuda&&ayuda.parentElement){
 let parent=ayuda.parentElement,btn=document.createElement("button");btn.textContent="Otra matriz";
-btn.addEventListener("click",()=>{window.scrollTo(0,0);window.location.reload();});
+btn.addEventListener("click",()=>{window.scrollTo(0,0);sessionStorage.setItem('irACalculadora','1');window.location.reload();});
 let volver=[...parent.querySelectorAll("button,a")].find(x=>String(x.textContent||"").trim()==="Volver");
 if(volver)parent.insertBefore(btn,volver);else parent.appendChild(btn);
 }

@@ -441,7 +441,7 @@ let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.sty
 aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER o TAB del teclado)";
 inyectarEstilosUI();
 let btnOtra=document.createElement("button");btnOtra.id="btnOtraMatriz";btnOtra.className="btn";btnOtra.textContent="Otra matriz";
-btnOtra.addEventListener("click",()=>{location.reload();});
+btnOtra.addEventListener("click",()=>{sessionStorage.setItem('irACalculadora','1');location.reload();});
 tituloCaja1.insertBefore(btnOtra,tituloCaja1.firstChild);
 initPdfAyuda();
 acoplarOtraMatrizConAyuda();

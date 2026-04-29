@@ -78,3 +78,19 @@ iframe{border:none}
 .contenidoVentana{width:min(1400px,96vw)!important;height:92vh!important;max-height:92vh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
 .contenidoVentana iframe{flex:1 1 auto!important;width:100%!important;height:100%!important;border:0!important}
 .cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
+
+/* #calculadora es el contenedor real — debe ser flex column de altura completa */
+#calculadora{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:700px){
+  /* Desbloquear scroll de documento en pantallas pequeñas */
+  html,body{overflow:auto!important;height:auto!important;}
+  #calculadora{height:auto!important;min-height:100vh;overflow:visible!important;}
+  #contenedor{overflow:visible!important;height:auto!important;}
+  /* caja3 pasa a altura automática (ya no queda espacio sobrante) */
+  #contenedorCaja3{flex:none;}
+  #caja3{height:auto;min-height:200px;overflow:visible;}
+  /* Cabecera más compacta */
+  #tituloinicial{padding:8px 12px;}
+}

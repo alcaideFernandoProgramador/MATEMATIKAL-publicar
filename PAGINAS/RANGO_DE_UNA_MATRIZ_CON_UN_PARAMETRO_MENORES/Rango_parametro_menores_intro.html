@@ -1,15 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="es">
 <head>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html"/>
 <title>Rango de una matriz con parámetro por menores | Matematikal</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo." name="description"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html"/>
+<meta property="og:title" content="Rango de una matriz con parámetro por menores | Matematikal"/>
+<meta property="og:description" content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo resuelto por casos."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Rango de una matriz con parámetro por menores",
+  "description": "Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo resuelto por casos.",
+  "url": "https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "InteractiveResource",
+  "teaches": "Rango de una matriz con parámetro por el método de los menores",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
 
 <link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
@@ -58,6 +90,9 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .volverBtn:hover{background:rgba(255,255,255,.28)!important;transform:translateY(-1px)}
 .trabajoBtn{display:inline-flex!important;align-items:center;padding:11px 24px!important;border-radius:999px!important;background:#fff!important;border:none!important;color:var(--blue-deep)!important;text-decoration:none!important;font-weight:800!important;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn)!important;transition:transform .15s,box-shadow .18s}
 .trabajoBtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(43,79,170,.36)!important}
+.heroTopBar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;position:relative;z-index:1}
+.logoMini{display:block;flex-shrink:0}
+
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-bottom:16px}
 .span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
 .card,.accentCard{background:var(--bg-card)!important;border:1px solid var(--border-card)!important;border-radius:var(--radius-card)!important;box-shadow:var(--shadow-card)!important;padding:26px 28px!important;transition:box-shadow .2s,transform .2s}
@@ -89,114 +124,368 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .resultadoRango,.resultadoDet,.resultado{margin-top:16px;display:flex;justify-content:center}
 .resultadoRango span,.resultadoDet span,.resultado span{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border-radius:999px;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);font-size:1rem;font-weight:700;color:var(--blue-deep);letter-spacing:-.01em}
 .exampleText p{margin:0 0 8px;color:var(--text-secondary)}
-@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}}
+@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}.herramienta-cta{flex-direction:column}.infoGrid,.grid2,.modeGrid{grid-template-columns:1fr}}
+.herramienta-cta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:4px;flex-wrap:wrap}
+.herramienta-cta p{margin:0;color:rgba(255,255,255,.85);font-size:1rem;line-height:1.6;max-width:600px}
+.herramienta-cta p strong{color:#fff}
+.card.callout{background:linear-gradient(135deg,var(--blue-light) 0%,#edf0ff 100%)!important}
+.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.infoCard{background:rgba(59,110,248,.05);border:1px solid rgba(59,110,248,.13);border-radius:14px;padding:16px 18px}
+.infoCard h3{font-size:.95rem;color:var(--blue-deep);margin:0 0 6px;font-weight:700}
+.infoCard p{margin:0;color:var(--text-secondary);font-size:.93rem;line-height:1.6}
+.bullets{margin:0;padding-left:20px}
+.bullets li{margin:8px 0;line-height:1.6;color:var(--text-secondary)}
+.bullets li strong{color:var(--text-primary)}
+.steps{margin:0;padding-left:20px}
+.steps li{margin:10px 0;line-height:1.6;color:var(--text-secondary)}
+.steps li strong{color:var(--text-primary)}
+.steps li kbd{background:#e8eeff;border:1px solid rgba(59,110,248,.2);border-radius:4px;padding:1px 6px;font-size:.82rem;color:var(--blue-deep);font-family:inherit}
+.steps li code{background:#e8eeff;border-radius:4px;padding:1px 5px;font-size:.84rem;color:var(--blue-deep)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.miniCard{border:1px solid var(--border-card);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--bg-page)}
+.miniCard h3{font-size:.93rem;color:var(--blue-deep);margin:0 0 6px;font-weight:700}
+.miniCard p{margin:0;color:var(--text-secondary);font-size:.9rem}
+.miniCard ul{margin:0;padding-left:16px;color:var(--text-secondary);font-size:.9rem}
+.miniCard ul li{margin:5px 0}
+.modeGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.modeCard{background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:14px 16px}
+.modeTitle{font-weight:700;color:#fff;font-size:.9rem;margin-bottom:5px}
+.modeText{color:rgba(255,255,255,.8);font-size:.88rem;line-height:1.55}
+#miniEjemplo .k{margin-left:20px!important}
+#miniEjemplo h3{font-family:var(--font-display);font-size:1.05rem;font-weight:400;color:var(--blue-deep);margin:18px 0 6px;letter-spacing:-.01em}
+#miniEjemplo h3:first-of-type{margin-top:0}
+</style>
+<style id="mk-ejercicios-css">
+.mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}
+.mk-ejercicios>h2{font-family:var(--font-display,inherit);font-size:1.45rem;font-weight:400;color:var(--blue-deep,#1a2b6b);border-left:5px solid var(--blue-bright,#3b6ef8);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary,#4a5270);margin-bottom:1.8rem}
+.mk-ejercicio{background:var(--bg-card,#fff);border:1px solid var(--border-card,rgba(30,50,150,.08));border-radius:var(--radius-card,20px);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card,0 4px 24px rgba(20,40,120,.07))}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:var(--blue-light,#e8eeff);border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep,#1a2b6b);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.mk-b-det{background:#d4edda;color:#155724}
+.mk-b-ind{background:#fff3cd;color:#856404}
+.mk-b-inc{background:#f8d7da;color:#721c24}
+.mk-b-neu{background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted,#7b839e)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary,#0f1629);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid,#2d4faa);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep,#1a2b6b)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page,#f4f6fd);font-size:.94rem;line-height:1.8;color:var(--text-primary,#0f1629)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid,#2d4faa);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem}
+.mk-res-det{background:#d4edda;color:#155724}
+.mk-res-ind{background:#fff3cd;color:#856404}
+.mk-res-inc{background:#f8d7da;color:#721c24}
+.mk-res-neu{background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
+.mk-tip{background:var(--blue-light,#e8eeff);border-left:4px solid var(--blue-bright,#3b6ef8);border-radius:0 8px 8px 0;padding:.55rem .9rem;font-size:.85rem;color:var(--blue-deep,#1a2b6b);margin-top:.9rem;line-height:1.6}
+.mk-tip strong{color:var(--blue-deep,#1a2b6b)}
 </style>
 </head>
 <body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
-<div class="heroTop">
+<div class="heroTopBar">
 <a class="volverBtn" href="/index.html">← Volver</a>
-<h1>Rango con parámetro (menores)</h1>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
+<div style="display:flex;align-items:center;gap:14px">
+<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
+<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
+<line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
+<text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
+</svg>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO →</a>
 </div>
+</div>
+<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 28px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center;line-height:0.88">RANGO CON PARÁMETRO<br><span style="font-size:clamp(1.1rem,2.2vw,1.6rem);letter-spacing:.04em;font-style:italic">Método de los menores</span></h1>
 <div class="heroBadge">
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
   Álgebra lineal · Bachillerato
 </div>
-<div class="heroDesc"><p>Calcula el rango de una matriz con <strong style="color:#fff">parámetro</strong> usando el método de los menores. Se busca un menor no nulo independiente del parámetro y se estudia para qué valores los menores de orden superior se anulan.</p></div>
-<div class="heroLinks"><a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango con parámetro (Gauss)</a>
+<div class="heroDesc">
+<p>Calcula el rango de una matriz con <strong style="color:#fff">parámetro</strong> usando el método de los menores.</p>
+</div>
+<div class="heroLinks">
+<a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango con parámetro (Gauss)</a>
 <a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango numérico por menores</a>
-<a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a></div>
-</section>
-<div class="grid">
-<section class="accentCard span8">
-<p class="miniTitle">Idea clave</p>
-<h2>¿Qué se hace exactamente?</h2>
-<p>Cuando una matriz contiene un parámetro, su rango puede variar según el valor que tome dicho parámetro. Por eso no basta con encontrar un menor no nulo sin más: después hay que ampliar ese menor y estudiar para qué valores del parámetro los menores de orden superior se anulan.</p>
-<p>El procedimiento consiste en buscar un <strong>menor no nulo</strong> de orden pequeño. Eso garantiza que el rango es al menos dicho orden. A continuación se amplía con filas y columnas adicionales para formar menores de orden superior. Después se determinan los valores del parámetro que hacen nulos esos menores y, a partir de ahí, se separa el estudio en casos.</p>
-<p class="muted">En resumen: primero se garantiza un rango mínimo, después se analizan los menores de orden máximo que pueden aparecer y finalmente se decide el rango en cada caso particular y en el caso general.</p>
-</section>
-<section class="card span4">
-<p class="miniTitle">Notas</p>
-<h2>Antes de empezar</h2>
-<ul class="stepsList">
-<li>Valida cada celda con <strong>ENTER</strong> o <strong>TAB</strong> para evitar valores sin registrar.</li>
-<li>Escribe siempre el parámetro con la misma letra en toda la matriz.</li>
-<li>Si introduces fracciones, mantén una notación consistente <strong>(a/b)</strong>.</li>
-</ul>
-</section>
-<section class="card span12">
-<p class="miniTitle">Método de los menores</p>
-<h2>Pasos fundamentales</h2>
-<div class="stepBlocks">
-<div class="stepBlock"><strong>Paso 1</strong><span>Se busca un menor no nulo de orden pequeño. Eso garantiza que el rango es al menos dicho orden.</span></div>
-<div class="stepBlock"><strong>Paso 2</strong><span>Se amplía ese menor para formar menores de orden superior, normalmente de orden máximo posible.</span></div>
-<div class="stepBlock"><strong>Paso 3</strong><span>Se estudian los valores del parámetro que anulan simultáneamente esos menores. Con ello se obtienen los casos particulares y el caso general.</span></div>
+<a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a>
 </div>
 </section>
-<section class="card span6">
-<p class="miniTitle">Cómo se usa</p>
-<h2>Paso a paso en la página</h2>
-<ol class="stepsList">
-<li>Introduce las dimensiones de la matriz. Rellena los elementos y valida con ENTER o TAB.</li>
-<li>Busca primero un menor de orden 2 que sea no nulo.</li>
-<li>Amplía ese menor con nuevas filas y columnas para obtener menores de orden superior.</li>
-<li>Observa qué valores del parámetro anulan todos los menores ampliados que estás usando.</li>
-<li>También puedes utilizar <strong>Solución automática</strong> para obtener la resolución completa con los casos intermedios.</li>
+
+<section class="card">
+<h2>Rango de una matriz con parámetro</h2>
+<div style="margin-left:20px">
+<p>El rango de una matriz es el orden del mayor menor no nulo que puede extraerse de ella, es decir, el tamaño de la submatriz cuadrada más grande cuyo determinante no es cero. En términos equivalentes, coincide con el número máximo de filas (o columnas) linealmente independientes.</p>
+<p>Cuando la matriz contiene un parámetro, el valor de ese rango puede variar dependiendo del valor que adopte. Algunos valores del parámetro pueden hacer que filas que en general son independientes se vuelvan proporcionales o combinaciones lineales entre sí, reduciendo el rango. El objetivo es identificar exactamente para qué valores ocurre esto y cuál es el rango en cada caso.</p>
+<p>El método de los menores proporciona un procedimiento sistemático. En general, se localizan los menores de orden máximo que se pueden formar y se anulan para obtener los posibles valores críticos que dan lugar a casos especiales. A continuación, se estudia cada uno de estos casos por separado y el caso general.</p>
+<div class="infoGrid">
+<div class="infoCard">
+<h3>Rango de una matriz numérica</h3>
+<p>Si la matriz no contiene parámetros, el rango es un valor fijo que puede determinarse buscando el mayor menor no nulo.</p>
+</div>
+<div class="infoCard">
+<h3>Rango de una matriz con parámetro</h3>
+<p>Si hay un parámetro, el rango puede variar según su valor. Se identifican los valores críticos y se estudia el rango en cada caso.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="card callout">
+<h2>Propiedades del rango</h2>
+<div style="margin-left:20px">
+<ul class="bullets">
+<li>Para una matriz de orden \(m\times n\), se cumple siempre \(0\leq\operatorname{rg}(A)\leq\min(m,n)\).</li>
+<li>Si existe un menor de orden \(k\) no nulo, entonces \(\operatorname{rg}(A)\geq k\).</li>
+<li>Si todos los menores de orden \(k+1\) son nulos, entonces \(\operatorname{rg}(A)\leq k\).</li>
+<li>El rango no cambia al aplicar operaciones elementales de fila o de columna.</li>
+<li>El rango de una matriz y el de su traspuesta coinciden: \(\operatorname{rg}(A)=\operatorname{rg}(A^t)\).</li>
+<li>Si la matriz tiene una fila o columna completamente nula, el rango es inferior al número de filas o columnas.</li>
+<li>Si la matriz es cuadrada de orden \(n\), tiene rango \(n\) si y solo si su determinante es distinto de cero.</li>
+</ul>
+</div>
+</section>
+
+<div class="grid" style="margin-bottom:16px">
+<section class="accentCard span12">
+<p class="miniTitle">Teoría</p>
+<h2>El método de los menores</h2>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<strong>¿Qué es un menor de orden \(k\)?</strong><br>
+Un <strong>menor de orden \(k\)</strong> de una matriz \(A\) es el determinante de cualquier submatriz cuadrada de orden \(k\) obtenida eligiendo \(k\) filas y \(k\) columnas de \(A\). El menor es <strong>no nulo</strong> si su valor es distinto de cero.<br>
+<span style="display:block;text-align:center;margin:10px 0">\(M_{i_1\ldots i_k}^{j_1\ldots j_k}=\left|\begin{matrix}a_{i_1 j_1}&amp;\cdots&amp;a_{i_1 j_k}\\\vdots&amp;&amp;\vdots\\a_{i_k j_1}&amp;\cdots&amp;a_{i_k j_k}\end{matrix}\right|\)</span>
+El máximo orden en el que existe al menos un menor no nulo define exactamente el rango de la matriz.
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<strong>Criterio del rango por menores.</strong><br>
+El rango de la matriz \(A\) es \(r\) si y solo si se cumplen simultáneamente:<br>
+<span style="display:block;padding-left:24px">1) Existe al menos un menor de orden \(r\) no nulo.</span>
+<span style="display:block;padding-left:24px">2) Todos los menores de orden \(r+1\) son nulos (o bien \(r=\min(m,n)\)).</span><br>
+En la práctica no hace falta comprobar todos los menores de orden \(r+1\): basta con verificar que todos los menores obtenidos <strong>ampliando</strong> el menor de orden \(r\) ya encontrado son nulos.
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:0">
+<strong>Procedimiento para matrices con parámetro.</strong><br>
+<span style="display:block;padding-left:24px;margin-top:6px">1) <strong>Rango máximo del caso general.</strong> Se buscan los menores de orden máximo y se anulan. Así se obtienen los valores críticos. El caso general será el del resto de valores que no son críticos; para ellos, el rango será el máximo posible.</span>
+<span style="display:block;padding-left:24px;margin-top:6px">2) <strong>Estudio por casos críticos.</strong> Se debe estudiar cada caso por separado, sustituyendo el valor en el parámetro y utilizando el método general de los menores para matrices numéricas.</span>
+<span style="display:block;padding-left:24px;margin-top:6px">3) <strong>Resumen.</strong> Se hace un resumen de todos los casos incluyendo el general.</span>
+</div>
+</section>
+</div>
+
+<section class="card" id="miniEjemplo">
+<h2>Ejemplos rápidos</h2>
+<h3>Ejemplo 1: Matriz 2×3 (caso numérico)</h3>
+<p class="muted">Sea \(A=\left(\begin{matrix}1 &amp; 2 &amp; 3\\2 &amp; 4 &amp; 6\end{matrix}\right)\). El orden máximo posible es 2. Se calculan los tres menores de orden 2.</p>
+<div class="k">\[\left|\begin{matrix}1&amp;2\\2&amp;4\end{matrix}\right|=0,\qquad\left|\begin{matrix}1&amp;3\\2&amp;6\end{matrix}\right|=0,\qquad\left|\begin{matrix}2&amp;3\\4&amp;6\end{matrix}\right|=0\]</div>
+<p class="muted">Todos los menores de orden máximo son nulos, así que el rango no alcanza 2. Se baja al orden 1: \(a_{11}=1\neq 0\).</p>
+<div class="resultadoRango"><span>\(\operatorname{rg}(A)=1\)</span></div>
+<h3>Ejemplo 2: Matriz 3×4 con parámetro \(t\)</h3>
+<p class="muted">Sea \(A=\left(\begin{matrix}t &amp; 1 &amp; 0 &amp; t-1\\2 &amp; 1 &amp; 1 &amp; 2\\0 &amp; 3 &amp; t &amp; 2\end{matrix}\right)\). El orden máximo es 3. Se calculan menores de ese orden y se igualan a cero.</p>
+<div class="k">\[\begin{aligned}
+&amp;1)\ \text{Menores de orden máximo (3):}\\[4pt]
+&amp;\left|\begin{matrix}t&amp;1&amp;0\\2&amp;1&amp;1\\0&amp;3&amp;t\end{matrix}\right|=t^2-5t\qquad\left|\begin{matrix}1&amp;0&amp;t-1\\1&amp;1&amp;2\\3&amp;t&amp;2\end{matrix}\right|=t^2-6t+5\\[6pt]
+&amp;2)\ \text{Valores críticos (anulan todos los menores de orden 3 a la vez):}\\[4pt]
+&amp;t^2-5t=0\Rightarrow t=0\text{ ó }t=5;\quad t^2-6t+5=0\Rightarrow t=1\text{ ó }t=5\\[4pt]
+&amp;\text{Solo }t=5\text{ anula todos.}\quad\Rightarrow\text{Caso general: }t\neq 5.\\[6pt]
+&amp;3)\ \text{Caso crítico }t=5\text{: se sustituye y se aplica el método numérico.}\\[4pt]
+&amp;A=\left(\begin{matrix}5&amp;1&amp;0&amp;4\\2&amp;1&amp;1&amp;2\\0&amp;3&amp;5&amp;2\end{matrix}\right)\Rightarrow\left|\begin{matrix}1&amp;0\\1&amp;1\end{matrix}\right|=1\neq 0,\text{ todos los menores de orden 3 son nulos.}\Rightarrow\operatorname{rg}(A)=2\\[6pt]
+&amp;4)\ \text{Resumen: caso general }(t\neq 5)\Rightarrow\operatorname{rg}(A)=3;\quad\text{caso crítico }(t=5)\Rightarrow\operatorname{rg}(A)=2.
+\end{aligned}\]</div>
+<div class="resultadoRango" style="gap:12px"><span>Si \(t\neq 5\), rg(\(A\))=3</span><span>Si \(t=5\), rg(\(A\))=2</span></div>
+<h3>Ejemplo 3: Matriz 2×2 con parámetro \(a\)</h3>
+<p class="muted">Sea \(B=\left(\begin{matrix}a &amp; 2a\\3 &amp; 6\end{matrix}\right)\). El orden máximo es 2. Se calcula el único menor de ese orden.</p>
+<div class="k">\[\begin{aligned}
+&amp;1)\ \left|\begin{matrix}a&amp;2a\\3&amp;6\end{matrix}\right|=6a-6a=0\quad\text{para todo valor de }a.\\[6pt]
+&amp;\text{El menor de orden máximo es siempre nulo: no hay caso general con rango 2.}\\[6pt]
+&amp;2)\ \text{No hay valores críticos separados: todos los valores de }a\text{ son equivalentes.}\\[4pt]
+&amp;\text{Se aplica el método numérico directamente: }a_{21}=3\neq 0\Rightarrow\operatorname{rg}(B)\geq 1.\\[6pt]
+&amp;3)\ \text{Resumen: }\operatorname{rg}(B)=1\text{ para todo valor de }a.
+\end{aligned}\]</div>
+<div class="resultadoRango"><span>\(\operatorname{rg}(B)=1\) para todo \(a\)</span></div>
+</section>
+
+<section class="card">
+<h2>Cómo se usa la aplicación</h2>
+<ol class="steps">
+<li><strong>Introduce las dimensiones</strong> de la matriz y valida cada campo con <kbd>ENTER</kbd> o <kbd>TAB</kbd>.</li>
+<li><strong>Rellena los elementos.</strong> Si hay un parámetro, usa siempre la misma letra en todas las celdas que lo contengan.</li>
+<li><strong>Elige el modo de trabajo:</strong> resolución manual (el usuario selecciona los menores) o solución automática (la herramienta muestra la discusión completa).</li>
+<li><strong>Modo manual:</strong> selecciona las filas y columnas del menor que quieras calcular. La herramienta lo evalúa y te indica si es nulo o no nulo.</li>
+<li><strong>Modo automático:</strong> la aplicación muestra todos los casos posibles del rango, con los valores críticos del parámetro y el razonamiento completo.</li>
 </ol>
 </section>
-<section class="card span6">
-<p class="miniTitle">Errores típicos</p>
-<h2>Conviene vigilarlos</h2>
-<ul class="errorsList">
-<li>Elegir un menor inicial nulo y sacar conclusiones a partir de él.</li>
-<li>Ampliar el menor cambiando la base del estudio en mitad del proceso.</li>
-<li>Olvidar estudiar los valores del parámetro que anulan a la vez los menores de orden superior.</li>
-<li>Concluir un rango incorrecto cuando existe al menos un menor ampliado no nulo.</li>
+
+<section class="card callout">
+<h2>Opciones disponibles en la aplicación</h2>
+<ul style="list-style:none;margin:0;padding:0">
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 1</strong> — Resolución manual: el usuario selecciona los menores y construye la discusión del rango por casos.</li>
+<li style="padding:6px 0"><strong>Opción 2</strong> — Solución automática: la aplicación genera la discusión completa con todos los valores críticos del parámetro.</li>
 </ul>
 </section>
-<section class="card span12">
-<p class="miniTitle">Ejemplo rápido</p>
-<h2>Aplicación del método</h2>
-<div class="k">
-\[
-\begin{aligned}
-&amp;\text{Dada la matriz }A=\left( \begin{matrix}
-   t &amp; 1 &amp; 0 &amp; t-1  \\
-   2 &amp; 1 &amp; 1 &amp; 2  \\
-   0 &amp; 3 &amp; t &amp; 2  \\
-\end{matrix} \right)\text{, estudia su rango según los valores del parámetro }t \\
-&amp;1)\ \text{Se observa que el menor }\left| \begin{matrix}
-   1 &amp; 0  \\
-   1 &amp; 1  \\
-\end{matrix} \right|=1\ne 0.\ \text{Por lo tanto, el rango siempre es superior o igual a 2.} \\
-&amp;2)\ \text{Se obtienen los menores de orden máximo }(3)\text{ que se pueden formar ampliando el menor de orden 2 anterior:} \\
-&amp;\left| \begin{matrix}
-   t &amp; 1 &amp; 0  \\
-   2 &amp; 1 &amp; 1  \\
-   0 &amp; 3 &amp; t  \\
-\end{matrix} \right|=t^2-5t \qquad \left| \begin{matrix}
-   1 &amp; 0 &amp; t-1  \\
-   1 &amp; 1 &amp; 2  \\
-   3 &amp; t &amp; 2  \\
-\end{matrix} \right|=2+t^2-t-3t+3-2t=t^2-6t+5 \\
-&amp;3)\ \text{Se obtienen los valores de }t\text{ que anulan estos menores:} \\
-&amp;t^2-5t=0\Rightarrow t=0,\ t=5 \qquad t^2-6t+5=0\Rightarrow t=1,\ t=5 \\
-&amp;\text{El único valor de }t\text{ que anula los dos menores a la vez es }t=5.\ \text{Por tanto, se deben estudiar los casos }t=5\text{ y }t\ne 5. \\
-&amp;4)\ \text{Para }t=5\text{, los dos menores de orden 3 son nulos y, por tanto, el orden del mayor menor no nulo es 2. }\operatorname{rg}(A)=2 \\
-&amp;5)\ \text{Para }t\ne 5\text{, hay por lo menos un menor de orden 3 no nulo y, por tanto, }\operatorname{rg}(A)=3
-\end{aligned}
-\]
+
+<section class="grid2">
+<div class="card">
+<h2>Formatos admitidos</h2>
+<p>En los elementos de la matriz se admiten:</p>
+<ul class="bullets">
+<li>Números enteros y decimales.</li>
+<li>Fracciones del tipo <code>a/b</code>, por ejemplo <code>3/2</code>.</li>
+<li>Expresiones con el parámetro: <code>t+1</code>, <code>2t-3</code>, <code>t^2</code>.</li>
+</ul>
+<p class="muted">Escribe siempre el parámetro con la misma letra en toda la matriz para que la aplicación lo reconozca correctamente.</p>
 </div>
-<p class="muted" style="margin-top:14px">En este ejemplo, el rango baja a 2 únicamente cuando \(t=5\). En el resto de los casos existe al menos un menor de orden 3 no nulo, así que el rango es 3.</p>
-<div class="resultadoRango"><span>Si t=5, rg(A)=2</span><span>Si t≠5, rg(A)=3</span></div>
+<div class="card">
+<h2>Estructura de la página de trabajo</h2>
+<div class="miniCard">
+<h3>Introducción de datos</h3>
+<p>En esta zona se fijan las dimensiones de la matriz y se introducen sus elementos.</p>
+</div>
+<div class="miniCard">
+<h3>Espacio de operaciones</h3>
+<ul class="bullets">
+<li>Los menores calculados por el usuario y su resultado.</li>
+<li>La discusión por casos del rango con los valores críticos del parámetro.</li>
+<li>En modo automático, la solución completa razonada.</li>
+</ul>
+</div>
+</div>
 </section>
-</div>
+
+<section class="mk-ejercicios">
+<h2>Ejercicios propuestos</h2>
+<p class="mk-subtitulo">Discute el rango según el parámetro usando el método de los menores. Busca primero un menor no nulo de orden bajo y estudia cuándo se anulan los menores de orden superior.</p>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge mk-b-neu">Parámetro t</span><span class="mk-ej-level">Nivel medio · tres valores críticos</span></div>
+<div class="mk-enunciado">Discute el rango de la matriz según los valores de \(t\):
+\[A=\left(\begin{matrix}1 &amp; 0 &amp; t\\0 &amp; t &amp; 1\\t &amp; 0 &amp; 1\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante de orden 3</h4>
+Desarrollando por la primera columna:
+\[|A|=1\cdot(t\cdot1-1\cdot0)-0+t\cdot(0\cdot1-t\cdot t)=t-t^3=t(1-t^2)=t(1-t)(1+t)\]
+\(|A|=0\) cuando \(t=0\), \(t=1\) o \(t=-1\).
+<h4>Menores de orden 2 en los casos críticos</h4>
+<ul>
+<li>Si \(t=0\): la matriz queda \(\begin{pmatrix}1&amp;0&amp;0\\0&amp;0&amp;1\\0&amp;0&amp;1\end{pmatrix}\). Las filas 2 y 3 son iguales. El menor \(\begin{vmatrix}1&amp;0\\0&amp;1\end{vmatrix}=1\neq 0\) → \(\operatorname{rg}(A)=2\).</li>
+<li>Si \(t=1\): la matriz queda \(\begin{pmatrix}1&amp;0&amp;1\\0&amp;1&amp;1\\1&amp;0&amp;1\end{pmatrix}\). Las filas 1 y 3 son iguales. El menor \(\begin{vmatrix}1&amp;0\\0&amp;1\end{vmatrix}=1\neq 0\) → \(\operatorname{rg}(A)=2\).</li>
+<li>Si \(t=-1\): la matriz queda \(\begin{pmatrix}1&amp;0&amp;-1\\0&amp;-1&amp;1\\-1&amp;0&amp;1\end{pmatrix}\). Fila 1 + fila 3 = \(\mathbf{0}\). El menor \(\begin{vmatrix}1&amp;0\\0&amp;-1\end{vmatrix}=-1\neq 0\) → \(\operatorname{rg}(A)=2\).</li>
+</ul>
+<div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=2\) si \(t\in\{0,1,-1\}\) &nbsp;·&nbsp; \(\operatorname{rg}(A)=3\) si \(t\notin\{0,1,-1\}\)</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge mk-b-neu">Parámetro t</span><span class="mk-ej-level">Nivel medio · dos valores críticos</span></div>
+<div class="mk-enunciado">Discute el rango de la matriz según los valores de \(t\):
+\[A=\left(\begin{matrix}1 &amp; 2 &amp; t\\2 &amp; 1 &amp; 1\\t &amp; 2 &amp; 1\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante de orden 3</h4>
+\[|A|=1(1-2)-2(2-t)+t(4-t)=-1-4+2t+4t-t^2=-t^2+6t-5=-(t-1)(t-5)\]
+\(|A|=0\) cuando \(t=1\) o \(t=5\).
+<h4>Rango en los casos críticos</h4>
+Para \(t=1\) y para \(t=5\), el menor \(\begin{vmatrix}1&amp;2\\2&amp;1\end{vmatrix}=1-4=-3\neq 0\), así que \(\operatorname{rg}(A)\geq 2\). Como el determinante es nulo, \(\operatorname{rg}(A)&lt;3\). Por tanto \(\operatorname{rg}(A)=2\).
+<div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=3\) si \(t\neq 1,5\) &nbsp;·&nbsp; \(\operatorname{rg}(A)=2\) si \(t=1\) o \(t=5\)</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge mk-b-neu">Parámetro k</span><span class="mk-ej-level">Nivel básico · matriz triangular</span></div>
+<div class="mk-enunciado">Discute el rango de la matriz según los valores de \(k\):
+\[A=\left(\begin{matrix}1 &amp; 2 &amp; 3\\0 &amp; k &amp; 1\\0 &amp; 0 &amp; k-2\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>La matriz es triangular superior</h4>
+Su determinante es el producto de los elementos de la diagonal:
+\[|A|=1\cdot k\cdot(k-2)=k(k-2)\]
+\(|A|=0\) cuando \(k=0\) o \(k=2\).
+<h4>Casos</h4>
+<ul>
+<li>Si \(k=0\): fila 2 \(=(0,0,1)\neq\mathbf{0}\) y el menor \(\begin{vmatrix}2&amp;3\\0&amp;1\end{vmatrix}=2\neq 0\) → \(\operatorname{rg}=2\).</li>
+<li>Si \(k=2\): fila 3 \(=(0,0,0)\), fila 2 \(=(0,2,1)\neq\mathbf{0}\) → \(\operatorname{rg}=2\).</li>
+<li>Si \(k\neq 0,2\): \(|A|\neq 0\) → \(\operatorname{rg}=3\).</li>
+</ul>
+<div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=3\) si \(k\neq 0,2\) &nbsp;·&nbsp; \(\operatorname{rg}(A)=2\) si \(k=0\) o \(k=2\)</div>
+<div class="mk-tip"><strong>Atajo:</strong> En matrices triangulares, el determinante es el producto de la diagonal. Si algún elemento diagonal se anula, el determinante es cero.</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge mk-b-neu">Parámetro a</span><span class="mk-ej-level">Nivel medio · matriz 2×4</span></div>
+<div class="mk-enunciado">Discute el rango de la matriz según los valores de \(a\):
+\[A=\left(\begin{matrix}1 &amp; 2 &amp; 0 &amp; a\\3 &amp; a &amp; 1 &amp; 0\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Rango máximo posible</h4>
+La matriz es \(2\times 4\), así que \(\operatorname{rg}(A)\leq 2\).
+<h4>Menor de orden 2</h4>
+Columnas 1 y 3: \(\begin{vmatrix}1&amp;0\\3&amp;1\end{vmatrix}=1\neq 0\) para todo valor de \(a\). Por tanto \(\operatorname{rg}(A)\geq 2\) siempre.
+<div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=2\) para todo valor de \(a\)</div>
+<div class="mk-tip"><strong>Observación:</strong> Cuando el rango mínimo garantizado ya coincide con el máximo posible (\(\min(m,n)\)), no hace falta buscar más menores. La discusión se reduce a un único caso.</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 5</span><span class="mk-badge mk-b-neu">Parámetro m</span><span class="mk-ej-level">Nivel alto · matriz 4×3</span></div>
+<div class="mk-enunciado">Discute el rango de la matriz según los valores de \(m\):
+\[A=\left(\begin{matrix}1 &amp; 1 &amp; 1\\1 &amp; m &amp; 1\\m &amp; 1 &amp; 1\\1 &amp; 1 &amp; m\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Rango máximo posible</h4>
+La matriz es \(4\times 3\), así que \(\operatorname{rg}(A)\leq 3\).
+<h4>Menor de orden 2</h4>
+El menor formado por las filas 1 y 2, columnas 1 y 2: \(\begin{vmatrix}1&amp;1\\1&amp;m\end{vmatrix}=m-1\). Es no nulo cuando \(m\neq 1\), así que para \(m\neq 1\) el rango es al menos 2.
+<h4>Menores de orden 3 (filas 1, 2, 3)</h4>
+\[\begin{vmatrix}1&amp;1&amp;1\\1&amp;m&amp;1\\m&amp;1&amp;1\end{vmatrix}=m-m^2-1-1+1+m=2m-m^2-1=-(m-1)^2\]
+Este menor es nulo exactamente cuando \(m=1\).
+<h4>Otro menor de orden 3 (filas 1, 2, 4)</h4>
+\[\begin{vmatrix}1&amp;1&amp;1\\1&amp;m&amp;1\\1&amp;1&amp;m\end{vmatrix}=m^2+1+1-m-1-m=m^2-2m+1=(m-1)^2\]
+También nulo cuando \(m=1\).
+<h4>Caso m=1</h4>
+Para \(m=1\) todas las filas son \((1,1,1)\) → \(\operatorname{rg}(A)=1\).
+<h4>Caso m≠1</h4>
+Los menores de orden 3 son \(-(m-1)^2\neq 0\) → \(\operatorname{rg}(A)=3\).
+<div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=1\) si \(m=1\) &nbsp;·&nbsp; \(\operatorname{rg}(A)=3\) si \(m\neq 1\)</div>
+</div></div>
+
+</section>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}});
 </script>
+<div style="max-width:1100px;margin:0 auto;padding:0 24px">
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Errores típicos</h2>
+<ul class="errorsList">
+<li>Elegir como menor inicial uno que sea nulo y sacar conclusiones a partir de él.</li>
+<li>No verificar que el menor de partida es independiente del parámetro (o que no se anula para ningún valor).</li>
+<li>Ampliar el menor con filas y columnas distintas en cada paso, cambiando la base del estudio a mitad del proceso.</li>
+<li>Olvidar estudiar si hay valores del parámetro que anulan <em>todos</em> los menores ampliados a la vez.</li>
+<li>Concluir que el rango es menor del que corresponde cuando existe al menos un menor ampliado no nulo.</li>
+<li>Confundir "anular un menor" con "anular el parámetro": que el parámetro valga cero no siempre implica que el rango baje.</li>
+<li>No calcular el rango exacto en los casos críticos: hay que buscar el mayor menor no nulo también para esos valores.</li>
+<li>Olvidar validar los datos con <kbd>ENTER</kbd> o <kbd>TAB</kbd> antes de operar.</li>
+</ul>
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Preguntas frecuentes</h2>
+<ul>
+<li><strong>¿Siempre hay que calcular todos los menores de orden máximo?</strong> No. Basta con ampliar el menor no nulo ya encontrado con distintas combinaciones de filas y columnas, hasta comprobar que todos esos menores son nulos (o encontrar uno que no lo sea).</li>
+<li><strong>¿Qué pasa si no encuentro ningún menor no nulo de ningún orden?</strong> Solo ocurre si la matriz es nula (todos sus elementos son cero). En ese caso \(\operatorname{rg}(A)=0\).</li>
+<li><strong>¿Puede haber más de dos casos?</strong> Sí. Puede haber varios valores críticos, cada uno con un rango diferente. Los casos están determinados por los valores del parámetro que anulan simultáneamente todos los menores de orden superior.</li>
+<li><strong>¿Qué diferencia hay entre el método de los menores y el de Gauss?</strong> Con Gauss se aplican operaciones elementales para escalonar la matriz y contar pivotes. Con menores se trabajan directamente determinantes de submatrices. Ambos métodos dan el mismo resultado.</li>
+<li><strong>¿El rango puede ser cero para algún valor del parámetro?</strong> Solo si la matriz entera es nula para ese valor. Si algún elemento es una constante distinta de cero, el rango será al menos 1 para todo valor del parámetro.</li>
+<li><strong>¿Pueden existir infinitos valores críticos?</strong> No, en general. Los valores críticos son raíces de polinomios en el parámetro, así que su número es finito y está acotado por el grado del polinomio.</li>
+<li><strong>¿Qué significa que el rango sea máximo?</strong> Que el rango coincide con \(\min(m,n)\), es decir, con la menor dimensión de la matriz. En ese caso todas las filas (o columnas) son linealmente independientes.</li>
+<li><strong>¿Es posible que el rango suba para algún valor crítico?</strong> No. Los valores críticos son aquellos para los que el rango <em>baja</em> respecto al caso general. Para el resto de valores el rango es el máximo posible dado por los menores de orden superior.</li>
+</ul>
+</div>
+<div class="herramienta-cta">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz con parámetro y obtener la discusión del rango mediante menores de forma manual o automática.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
+</div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
 <h1>RANGO DE UNA MATRIZ CON UN PARÁMETRO (método de los menores)</h1>
@@ -256,11 +545,22 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='block'; window.scrollTo(0,0); enfocarPrimerInput(); } }
-  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora') mostrarCalc();
+  if(sessionStorage.getItem('irACalculadora')){sessionStorage.removeItem('irACalculadora');mostrarCalc();}else if(location.hash==='calculadora'){ mostrarCalc(); } else { document.body.style.overflow='auto'; document.body.style.display='block'; }
 });
-</script></body>
+</script><script>
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+  if(open && window.renderMathInElement){
+    renderMathInElement(sol,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});
+  }
+}
+</script>
+</body>
 </html>

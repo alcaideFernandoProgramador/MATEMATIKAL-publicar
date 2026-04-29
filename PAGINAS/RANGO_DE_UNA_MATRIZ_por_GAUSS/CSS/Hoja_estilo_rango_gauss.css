@@ -202,7 +202,7 @@ h4{
 
 #caja221{
   height:88%;display:flex;align-items:center;flex-direction:row;flex-wrap:wrap;
-  gap:6px;overflow-x:auto;
+  gap:6px;overflow-x:auto;overflow-y:auto;
 }
 
 #caja222{
@@ -299,7 +299,24 @@ span.mjx-mtable{padding:0!important;margin:0!important}
 .cierraVentana{width:40px!important;height:40px!important;font-size:26px!important}
 
 #contenedor{
-  height:auto;
-  min-height:calc(100vh - 76px - var(--footer-h,74px));
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
   padding-bottom:10px;
+}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:1100px){
+  #caja1{flex-direction:column;}
+  #caja111{flex-direction:column;}
+  #caja1111{width:100%;min-width:0;}
+  #caja112{flex-direction:column;}
+}
+@media (max-width:700px){
+  #tituloinicial{flex-direction:column;align-items:stretch;padding:8px 12px;}
+  #controlesTop{justify-content:flex-end;}
+  #tituloinicial h1{font-size:15px;text-align:left;}
+  /* Dejar que la fila de paréntesis+matriz pueda hacer wrap */
+  #caja1122{flex-wrap:wrap!important;}
+  #caja11212{flex-wrap:wrap;}
 }

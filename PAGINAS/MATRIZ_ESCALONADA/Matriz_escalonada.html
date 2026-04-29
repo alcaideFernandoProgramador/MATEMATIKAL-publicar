@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="es">
 <head>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html"/>
 <title>Matriz escalonada: teoría, ejemplos y calculadora online | Matematikal</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -11,6 +13,36 @@
 <link href="../MATRIZ_ESCALONADA/CSS/Hoja_estilo_matriz_escalonada.css" rel="stylesheet" type="text/css"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
 <meta content="Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y acceso a la página de trabajo." name="description"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html"/>
+<meta property="og:title" content="Matriz escalonada: teoría, ejemplos y calculadora online | Matematikal"/>
+<meta property="og:description" content="Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y herramienta interactiva para practicar."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Matriz escalonada: teoría, ejemplos y calculadora online",
+  "description": "Matriz escalonada equivalente por filas: guía rápida, operaciones elementales, mini-ejemplo y herramienta interactiva para practicar.",
+  "url": "https://matematikal.com/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "InteractiveResource",
+  "teaches": "Matriz escalonada por filas",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
 <link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet"/>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
 <script defer="" src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
@@ -136,8 +168,8 @@ body{
   position:relative;
   z-index:1;
   margin-top:24px;
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(4,max-content);
   gap:10px;
 }
 
@@ -235,6 +267,9 @@ body{
   transition:transform .15s,box-shadow .18s;
 }
 .trabajoBtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(43,79,170,.36)!important}
+.heroTopBar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;position:relative;z-index:1}
+.logoMini{display:block;flex-shrink:0}
+
 
 /* ── CARDS ── */
 .card{
@@ -320,30 +355,64 @@ body{
   .introWrap{padding:16px 16px 40px}
   .heroTop{flex-direction:column;align-items:flex-start}
   .trabajoBtn{align-self:flex-start}
+  .heroLinks{grid-template-columns:repeat(2,max-content)}
+  .herramienta-cta{flex-direction:column}
 }
+.herramienta-cta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:4px;flex-wrap:wrap}
+.herramienta-cta p{margin:0;color:rgba(255,255,255,.85);font-size:1rem;line-height:1.6;max-width:600px}
+.herramienta-cta p strong{color:#fff}
 </style>
-<script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><script defer="" src="../MATRIZ_ESCALONADA/JavaScript/Matriz_escalonada.js" type="text/javascript"></script></head>
+<script defer="" src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js" type="text/javascript"></script><script defer="" src="../MATRIZ_ESCALONADA/JavaScript/Matriz_escalonada.js" type="text/javascript"></script><style id="mk-ejercicios-css">
+.mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}
+.mk-ejercicios>h2{font-family:var(--font-display,inherit);font-size:1.45rem;font-weight:400;color:var(--blue-deep,#1a2b6b);border-left:5px solid var(--blue-bright,#3b6ef8);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary,#4a5270);margin-bottom:1.8rem}
+.mk-ejercicio{background:var(--bg-card,#fff);border:1px solid var(--border-card,rgba(30,50,150,.08));border-radius:var(--radius-card,20px);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card,0 4px 24px rgba(20,40,120,.07))}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:var(--blue-light,#e8eeff);border-bottom:1px solid var(--border-card,rgba(30,50,150,.08))}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep,#1a2b6b);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.mk-b-det{background:#d4edda;color:#155724}
+.mk-b-ind{background:#fff3cd;color:#856404}
+.mk-b-inc{background:#f8d7da;color:#721c24}
+.mk-b-neu{background:rgba(59,110,248,.1);color:var(--blue-deep,#1a2b6b)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted,#7b839e)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary,#0f1629);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid,#2d4faa);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep,#1a2b6b)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page,#f4f6fd);font-size:.94rem;line-height:1.8;color:var(--text-primary,#0f1629)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid,#2d4faa);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem}
+.mk-res-det{background:#d4edda;color:#155724}
+.mk-res-ind{background:#fff3cd;color:#856404}
+.mk-res-inc{background:#f8d7da;color:#721c24}
+.mk-res-neu{background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep,#1a2b6b)}
+.mk-tip{background:var(--blue-light,#e8eeff);border-left:4px solid var(--blue-bright,#3b6ef8);border-radius:0 8px 8px 0;padding:.55rem .9rem;font-size:.85rem;color:var(--blue-deep,#1a2b6b);margin-top:.9rem;line-height:1.6}
+.mk-tip strong{color:var(--blue-deep,#1a2b6b)}
+</style>
+</head>
 <body><div id="introPrincipal">
 <div class="introWrap">
 <section class="hero">
-<div class="heroTop">
+<div class="heroTopBar">
 <a class="volverBtn" href="/index.html">← Volver</a>
-<h1>Matriz escalonada</h1>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">Ir a la herramienta →</a>
+<div style="display:flex;align-items:center;gap:14px">
+<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
+<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
+<line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
+<text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
+</svg>
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA PÁGINA DE TRABAJO →</a>
 </div>
+</div>
+<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1">Matriz escalonada</h1>
 
 <div class="heroBadge">
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
   Álgebra lineal · Bachillerato
-</div>
-
-<div class="heroDesc">
-  <p>Una matriz está en <strong style="color:#fff">forma escalonada</strong> cuando:</p>
-  <ol>
-    <li>Las filas nulas están situadas en los últimos lugares.</li>
-    <li>El pivote de cada fila no nula está situado más a la derecha que el pivote de la fila anterior.</li>
-  </ol>
-  <p style="margin-top:10px">Es la base para calcular el rango de una matriz y para resolver sistemas lineales por el método de Gauss.</p>
 </div>
 
 <div class="heroLinks">
@@ -365,15 +434,6 @@ body{
   </a>
 </div>
 
-<div class="heroOps">
-  <p>Operaciones elementales disponibles en la herramienta:</p>
-  <ul>
-    <li>Permutar el orden de dos filas \((F_i \leftrightarrow F_j)\)</li>
-    <li>Reordenar filas dejando abajo las de más ceros \((F\downarrow)\)</li>
-    <li>Simplificar una fila dividiéndola por un número \((F_a\to \frac{1}{m}F_a)\)</li>
-    <li>Cambiar una fila por combinación lineal de filas \((F_i\to aF_i+bF_j+cF_k)\)</li>
-  </ul>
-</div>
 </section>
 <section class="card">
 <h2>Definición formal de matriz escalonada</h2>
@@ -382,7 +442,55 @@ body{
 <li>Todas las filas nulas (si las hay) están situadas en los últimos lugares, debajo de todas las filas no nulas.</li>
 <li>El <strong>pivote</strong> de cada fila no nula —es decir, su primer elemento distinto de cero— está situado estrictamente más a la derecha que el pivote de la fila inmediatamente anterior.</li>
 </ul>
-<p>Esta definición implica que por debajo de cada pivote solo pueden aparecer ceros. Los pivotes no tienen por qué ser iguales a 1; basta con que sean distintos de cero. Cuando además todos los pivotes valen 1 y por encima de cada pivote también hay ceros, se habla de <strong>forma escalonada reducida</strong>, que es un caso más estricto y no es el objetivo de esta herramienta.</p>
+<p class="miniTitle" style="margin-top:14px">Notas:</p>
+<ul style="margin-left:24px">
+<li>Esta definición implica que por debajo de cada pivote solo pueden aparecer ceros.</li>
+<li>Los pivotes no tienen por qué ser iguales a 1; basta con que sean distintos de cero.</li>
+<li>Cuando además todos los pivotes valen 1 y por encima de cada pivote también hay ceros, se habla de <strong>forma escalonada reducida</strong>, que es un caso más estricto y no es el objetivo de esta herramienta.</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>Ejemplos de matrices escalonadas</h2>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[A=\begin{pmatrix} \mathbf{2} & 5 & -1 \\ 0 & \mathbf{3} & 4 \\ 0 & 0 & \mathbf{7} \end{pmatrix}\]
+    </div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[B=\begin{pmatrix} \mathbf{1} & 2 & 0 & 3 \\ 0 & \mathbf{-4} & 1 & 5 \\ 0 & 0 & 0 & 0 \end{pmatrix}\]
+    </div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[C=\begin{pmatrix} \mathbf{3} & 0 & 1 & -2 \\ 0 & 0 & \mathbf{5} & 1 \end{pmatrix}\]
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:28px">Ejemplos de matrices <em>no</em> escalonadas</h2>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[A=\begin{pmatrix} 0 & \mathbf{1} & 3 \\ \mathbf{2} & 5 & 0 \\ 0 & 0 & 4 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">El pivote de la fila 2 está más a la izquierda que el de la fila 1.</p>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[B=\begin{pmatrix} \mathbf{1} & 2 & 3 \\ 0 & \mathbf{4} & 1 \\ \mathbf{2} & 0 & 5 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">El elemento \(a_{31}\) es no nulo, estando por debajo del pivote de la primera columna.</p>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="k" style="margin:0">
+    \[C=\begin{pmatrix} \mathbf{3} & 1 & 2 \\ 0 & 0 & 0 \\ 0 & \mathbf{5} & 1 \end{pmatrix}\]
+    </div>
+    <p style="font-size:.8rem;color:var(--text-muted);margin:6px 4px 0">La fila nula no está al final: debajo de ella hay una fila no nula.</p>
+  </div>
+</div>
 </section>
 
 <section class="card">
@@ -391,9 +499,13 @@ body{
 <ul>
 <li><strong>Permutación de filas</strong> \((F_i \leftrightarrow F_j)\): intercambiar dos filas completas. Resulta útil cuando el pivote de una fila es cero y conviene buscar una fila con un elemento no nulo en esa posición.</li>
 <li><strong>Multiplicación de una fila por un escalar no nulo</strong> \((F_i \to k \cdot F_i,\ k \neq 0)\): multiplicar o dividir todos los elementos de una fila por un mismo número. Se usa habitualmente para simplificar fracciones o para hacer que el pivote valga 1.</li>
-<li><strong>Combinación lineal de filas</strong> \((F_i \to F_i + k \cdot F_j)\): reemplazar una fila por la suma de ella misma más un múltiplo de otra fila. Es la operación clave para introducir ceros debajo de los pivotes.</li>
+<li><strong>Combinación lineal de filas</strong> \((F_i \to aF_i + bF_j + cF_k)\): reemplazar una fila por una combinación lineal de ella y de otras, con la única condición de que el coeficiente de la fila que se quiere cambiar debe ser no nulo.</li>
 </ul>
-<p>Cualquier secuencia de operaciones elementales por filas conduce a una matriz equivalente por filas a la original. La forma escalonada resultante no es única (puede haber varias secuencias de operaciones que lleven a formas escalonadas distintas pero equivalentes), aunque el número de pivotes —y por tanto el rango— sí es único.</p>
+<p class="miniTitle" style="margin-top:14px">Notas:</p>
+<ul style="margin-left:24px">
+<li>Cualquier secuencia de operaciones elementales por filas conduce a una matriz equivalente por filas a la original y, por tanto, con el mismo rango.</li>
+<li>La forma escalonada resultante no es única. Puede haber varias secuencias de operaciones que lleven a formas escalonadas distintas pero equivalentes. En cualquier caso, el número de pivotes y el rango se conservan.</li>
+</ul>
 </section>
 
 <section class="card">
@@ -449,38 +561,41 @@ A = \left( \begin{matrix}
 <section class="card">
 <h2>Segundo ejemplo: matriz con fila nula (3×3)</h2>
 <p class="muted">Este ejemplo ilustra el caso en que la forma escalonada tiene una fila nula, lo que indica que el rango es menor que el número de filas.</p>
-<p><strong>Matriz inicial:</strong></p>
-<div class="k">
+<style>#ej2chain .katex-display,#ej2chain .katex-display>.katex{text-align:left!important;margin:0!important}</style>
+<div class="k" id="ej2chain">
 \[
-B = \left( \begin{matrix}
-2 &amp; -1 &amp; 3 \\
-4 &amp; -2 &amp; 6 \\
-1 &amp; 0 &amp; 2
-\end{matrix} \right)
-\]
-</div>
-<p><strong>Paso 1:</strong> Se reordenan las filas para situar el pivote más conveniente arriba \((F_1 \leftrightarrow F_3)\):</p>
-<div class="k">
-\[
+B = \left(\begin{matrix}2 &amp; -1 &amp; 3 \\4 &amp; -2 &amp; 6 \\1 &amp; 0 &amp; 2\end{matrix}\right)
 \underset{F_1 \leftrightarrow F_3}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\4 &amp; -2 &amp; 6 \\2 &amp; -1 &amp; 3\end{matrix} \right)
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\4 &amp; -2 &amp; 6 \\2 &amp; -1 &amp; 3\end{matrix}\right)
+\underset{F_2 \to F_2 - 4F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\2 &amp; -1 &amp; 3\end{matrix}\right)
+\underset{F_3 \to F_3 - 2F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; -1 &amp; -1\end{matrix}\right)
 \]
-</div>
-<p><strong>Paso 2:</strong> Se aplica \(F_2 \to F_2 - 4F_1\) y \(F_3 \to F_3 - 2F_1\):</p>
-<div class="k">
-\[
-\underset{\substack{F_2 \to F_2 - 4F_1 \\ F_3 \to F_3 - 2F_1}}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; -1 &amp; -1\end{matrix} \right)
-\]
-</div>
-<p><strong>Paso 3:</strong> Se aplica \(F_3 \to F_3 - \frac{1}{2}F_2\):</p>
-<div class="k">
 \[
 \underset{F_3 \to F_3 - \frac{1}{2}F_2}{\mathop{\sim}}\,
-\left( \begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; 0 &amp; 0\end{matrix} \right)
+\left(\begin{matrix}1 &amp; 0 &amp; 2 \\0 &amp; -2 &amp; -2 \\0 &amp; 0 &amp; 0\end{matrix}\right)
 \]
 </div>
 <p class="muted">La tercera fila es nula, lo que indica que las filas de la matriz original eran linealmente dependientes. El rango de \(B\) es 2.</p>
+</section>
+
+<section class="card">
+<h2>Tercer ejemplo: matriz 3×4 con rango 3</h2>
+<p class="muted">En este ejemplo la matriz tiene más columnas que filas. El escalonamiento requiere reordenar filas para situar el pivote adecuado en cada posición.</p>
+<style>#ej3chain .katex-display,#ej3chain .katex-display>.katex{text-align:left!important;margin:0!important}</style>
+<div class="k" id="ej3chain">
+\[
+C = \left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\4 &amp; 2 &amp; 7 &amp; 1 \\2 &amp; 3 &amp; 5 &amp; 2\end{matrix}\right)
+\underset{F_2 \to F_2 - 2F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 0 &amp; 1 &amp; 1 \\2 &amp; 3 &amp; 5 &amp; 2\end{matrix}\right)
+\underset{F_3 \to F_3 - F_1}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 0 &amp; 1 &amp; 1 \\0 &amp; 2 &amp; 2 &amp; 2\end{matrix}\right)
+\underset{F_2 \leftrightarrow F_3}{\mathop{\sim}}\,
+\left(\begin{matrix}2 &amp; 1 &amp; 3 &amp; 0 \\0 &amp; 2 &amp; 2 &amp; 2 \\0 &amp; 0 &amp; 1 &amp; 1\end{matrix}\right)
+\]
+</div>
+<p class="muted">La forma escalonada tiene tres pivotes (2, 2 y 1), uno por fila. El intercambio de filas en el último paso fue necesario porque el pivote natural de la segunda fila era cero. El rango de \(C\) es 3.</p>
 </section>
 
 <section class="card">
@@ -514,6 +629,80 @@ B = \left( \begin{matrix}
 <li><strong>¿Se puede usar con matrices que tengan fracciones?</strong> Sí. La herramienta admite fracciones en los elementos, lo que es habitual cuando se aplica la operación de simplificación de una fila dividiéndola por su pivote.</li>
 </ul>
 </section>
+
+<section class="mk-ejercicios">
+<h2>Ejercicios propuestos</h2>
+<p class="mk-subtitulo">Transforma cada matriz en una forma escalonada equivalente mediante operaciones elementales por filas.</p>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge mk-b-neu">Matriz 3×3</span><span class="mk-ej-level">Nivel básico · rg = 2</span></div>
+<div class="mk-enunciado">Obtén una forma escalonada de la matriz:
+\[A=\left(\begin{matrix}2 &amp; 4 &amp; 6\\1 &amp; 3 &amp; 5\\3 &amp; 5 &amp; 7\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Paso 1 — Intercambio para obtener pivote 1</h4>
+\[\underset{F_1\leftrightarrow F_2}{\sim}\left(\begin{matrix}1 &amp; 3 &amp; 5\\2 &amp; 4 &amp; 6\\3 &amp; 5 &amp; 7\end{matrix}\right)\]
+<h4>Paso 2 — Eliminar la primera columna</h4>
+\[\underset{\substack{F_2\to F_2-2F_1\\F_3\to F_3-3F_1}}{\sim}\left(\begin{matrix}1 &amp; 3 &amp; 5\\0 &amp; -2 &amp; -4\\0 &amp; -4 &amp; -8\end{matrix}\right)\]
+<h4>Paso 3 — Eliminar la segunda columna</h4>
+\[\underset{F_3\to F_3-2F_2}{\sim}\left(\begin{matrix}1 &amp; 3 &amp; 5\\0 &amp; -2 &amp; -4\\0 &amp; 0 &amp; 0\end{matrix}\right)\]
+La fila 3 original era combinación lineal de las anteriores.
+<div class="mk-resultado mk-res-neu">Forma escalonada obtenida · rg = 2</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge mk-b-neu">Matriz 3×4</span><span class="mk-ej-level">Nivel medio · rg = 3</span></div>
+<div class="mk-enunciado">Obtén una forma escalonada de la matriz:
+\[A=\left(\begin{matrix}0 &amp; 1 &amp; 2 &amp; 3\\2 &amp; 0 &amp; 1 &amp; 4\\1 &amp; 1 &amp; 1 &amp; 1\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Paso 1 — Intercambio para tener pivote ≠ 0 en (1,1)</h4>
+\[\underset{F_1\leftrightarrow F_3}{\sim}\left(\begin{matrix}1 &amp; 1 &amp; 1 &amp; 1\\2 &amp; 0 &amp; 1 &amp; 4\\0 &amp; 1 &amp; 2 &amp; 3\end{matrix}\right)\]
+<h4>Paso 2 — Eliminar primera columna</h4>
+\[\underset{F_2\to F_2-2F_1}{\sim}\left(\begin{matrix}1 &amp; 1 &amp; 1 &amp; 1\\0 &amp; -2 &amp; -1 &amp; 2\\0 &amp; 1 &amp; 2 &amp; 3\end{matrix}\right)\]
+<h4>Paso 3 — Eliminar segunda columna</h4>
+\[\underset{F_3\to 2F_3+F_2}{\sim}\left(\begin{matrix}1 &amp; 1 &amp; 1 &amp; 1\\0 &amp; -2 &amp; -1 &amp; 2\\0 &amp; 0 &amp; 3 &amp; 8\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">Forma escalonada obtenida · rg = 3</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge mk-b-neu">Matriz 4×3</span><span class="mk-ej-level">Nivel medio · rg = 2</span></div>
+<div class="mk-enunciado">Obtén una forma escalonada de la matriz:
+\[A=\left(\begin{matrix}1 &amp; 0 &amp; 1\\2 &amp; 1 &amp; 3\\4 &amp; 1 &amp; 5\\3 &amp; 1 &amp; 4\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Paso 1 — Eliminar primera columna</h4>
+\[\underset{\substack{F_2\to F_2-2F_1\\F_3\to F_3-4F_1\\F_4\to F_4-3F_1}}{\sim}\left(\begin{matrix}1 &amp; 0 &amp; 1\\0 &amp; 1 &amp; 1\\0 &amp; 1 &amp; 1\\0 &amp; 1 &amp; 1\end{matrix}\right)\]
+<h4>Paso 2 — Eliminar segunda columna</h4>
+\[\underset{\substack{F_3\to F_3-F_2\\F_4\to F_4-F_2}}{\sim}\left(\begin{matrix}1 &amp; 0 &amp; 1\\0 &amp; 1 &amp; 1\\0 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0\end{matrix}\right)\]
+Las filas 3 y 4 eran iguales a la fila 2 y quedan nulas.
+<div class="mk-resultado mk-res-neu">Forma escalonada obtenida · rg = 2</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge mk-b-neu">Matriz 3×3</span><span class="mk-ej-level">Nivel medio · rg = 3 con intercambio</span></div>
+<div class="mk-enunciado">Obtén una forma escalonada de la matriz:
+\[A=\left(\begin{matrix}0 &amp; 1 &amp; 2\\1 &amp; 0 &amp; 3\\2 &amp; -1 &amp; 0\end{matrix}\right)\]</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Paso 1 — Intercambio para pivote ≠ 0 en (1,1)</h4>
+\[\underset{F_1\leftrightarrow F_2}{\sim}\left(\begin{matrix}1 &amp; 0 &amp; 3\\0 &amp; 1 &amp; 2\\2 &amp; -1 &amp; 0\end{matrix}\right)\]
+<h4>Paso 2 — Eliminar primera columna</h4>
+\[\underset{F_3\to F_3-2F_1}{\sim}\left(\begin{matrix}1 &amp; 0 &amp; 3\\0 &amp; 1 &amp; 2\\0 &amp; -1 &amp; -6\end{matrix}\right)\]
+<h4>Paso 3 — Eliminar segunda columna</h4>
+\[\underset{F_3\to F_3+F_2}{\sim}\left(\begin{matrix}1 &amp; 0 &amp; 3\\0 &amp; 1 &amp; 2\\0 &amp; 0 &amp; -4\end{matrix}\right)\]
+<div class="mk-resultado mk-res-neu">Forma escalonada obtenida · rg = 3</div>
+<div class="mk-tip"><strong>Recuerda:</strong> El intercambio de filas no cambia el rango de la matriz, pero sí cambia el signo del determinante.</div>
+</div></div>
+
+</section>
+
+<!-- CTA herramienta -->
+<div class="herramienta-cta">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz, aplicar operaciones elementales paso a paso y obtener la forma escalonada con tu trabajo o automáticamente.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
+
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
@@ -546,7 +735,7 @@ renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:t
 <div id="caja11">
 <div id="caja111">
 <div id="caja1111">
-<div id="caja11111">INTODUCCIÓN DE DATOS</div>
+<div id="caja11111">INTRODUCCIÓN DE DATOS</div>
 <div id="caja11112"></div>
 </div>
 <div id="caja1112">
@@ -614,7 +803,15 @@ document.addEventListener('DOMContentLoaded',function(){
   function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
-  if(location.hash==='calculadora') mostrarCalc();
+  if(sessionStorage.getItem('irACalculadora')){sessionStorage.removeItem('irACalculadora');mostrarCalc();}else if(location.hash==='calculadora') mostrarCalc();
 });
-</script></body>
+</script><script>
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+}
+</script>
+</body>
 </html>

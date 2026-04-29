@@ -60,3 +60,19 @@ iframe{border:none}
   min-height:calc(100vh - 76px - var(--footer-h,74px));
   padding-bottom:10px;
 }
+
+/* #calculadora es el contenedor real — debe ser flex column de altura completa */
+#calculadora{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+#calculadora #contenedor{flex:1 1 auto;min-height:0;overflow-y:auto;height:auto;padding-bottom:calc(var(--footer-h,74px) + 10px);}
+
+/* ===== RESPONSIVE TABLET / MÓVIL ===== */
+@media (max-width:700px){
+  /* En móvil: dejar que la página haga scroll normal */
+  html,body{overflow:auto!important;height:auto!important;}
+  #calculadora{height:auto!important;min-height:100vh;overflow:visible!important;}
+  #calculadora #contenedor{overflow:visible!important;height:auto!important;}
+  /* Cabecera: dar espacio al título */
+  #tituloCaja1{white-space:normal;overflow:visible;text-overflow:clip;font-size:12px;}
+  /* Inputs de tabla: permitir scroll horizontal */
+  #caja1,#caja2{overflow-x:auto;}
+}
