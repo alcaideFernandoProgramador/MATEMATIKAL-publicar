@@ -266,7 +266,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
     El producto \(A\cdot B\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\). Si \(A\) es \(m\times p\) y \(B\) es \(p\times n\), el resultado es \(m\times n\).<br>
     <span style="display:block;text-align:center">\((AB)_{ij}=\displaystyle\sum_{k=1}^{p}a_{ik}\cdot b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{ip}b_{pj}\)</span>
     <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
-    <span style="display:block;padding-left:24px">El producto matricial <strong>no es conmutativo</strong>: en general \(AB\neq BA\).</span>
+    <span style="display:block;padding-left:24px">1) <strong>No conmutativo</strong>: en general \(AB\neq BA\).</span>
+    <span style="display:block;padding-left:24px">2) <strong>Asociativo</strong>: \((AB)C=A(BC)\).</span>
+    <span style="display:block;padding-left:24px">3) <strong>Distributivo</strong>: \(A(B+C)=AB+AC\) y \((A+B)C=AC+BC\).</span>
+    <span style="display:block;padding-left:24px">4) <strong>Divisores de cero</strong>: pueden existir matrices \(A\neq 0\) y \(B\neq 0\) tales que \(AB=0\).</span>
   </div>
 
   <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
@@ -368,7 +371,7 @@ A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{b
 <div class="k">\[
 A^{-1}=\dfrac{1}{4}\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}=\begin{bmatrix}1/2&amp;-1&amp;1/2\\1/4&amp;1/2&amp;-1/4\\-1/4&amp;1/2&amp;1/4\end{bmatrix}
 \]</div>
-<p class="muted">La herramienta calcula automáticamente la inversa de cualquier orden. Para matrices 3×3 o mayores, el método de Gauss-Jordan es más eficiente en la práctica.</p>
+<p class="muted">La herramienta calcula automáticamente la inversa de cualquier orden. Para matrices 3×3 o mayores, el método de Gauss-Jordan es más eficiente en la práctica. Puedes profundizar en el <a href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">cálculo de determinantes</a> y en la <a href="/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html">inversa por el método de Gauss-Jordan</a> en sus páginas correspondientes.</p>
 <h3 style="margin-top:18px">Potencia de una matriz</h3>
 <p class="muted">Si \(A=\begin{bmatrix}2&amp;0\\0&amp;3\end{bmatrix}\), las potencias se calculan multiplicando la matriz por sí misma sucesivamente.</p>
 <div class="k">\[
@@ -420,7 +423,7 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 <li>Fracciones del tipo <code>a/b</code>, por ejemplo <code>2/3</code>.</li>
 <li>Expresiones algebraicas con las matrices introducidas y con la matriz identidad <code>I</code>.</li>
 </ul>
-<p class="muted">Conviene mantener una notación consistente al introducir los datos para evitar errores en la interpretación de la expresión.</p>
+<p class="muted">Para introducir la traspuesta de una matriz se utiliza la notación <code>A^t</code> y para la inversa <code>A^(-1)</code>. Conviene mantener una notación consistente al introducir los datos para evitar errores en la interpretación de la expresión.</p>
 </div>
 <div class="card">
 <h2>Estructura de la página de trabajo</h2>
@@ -528,6 +531,30 @@ Calcula \(AB\) y \(BA\). ¿Son iguales?</div>
 <div class="mk-resultado">\((A^2)^t=(A^t)^2=\begin{pmatrix}7&15\\10&22\end{pmatrix}\) — ambos métodos coinciden</div>
 </div></div>
 
+<!-- EJ 7: Inversa 3x3 -->
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 7</span><span class="mk-badge">Inversa 3×3</span><span class="mk-ej-level">Nivel alto</span></div>
+<div class="mk-enunciado">Sea \(A=\left(\begin{matrix}1&2&0\\0&1&1\\1&0&2\end{matrix}\right)\). Calcula \(A^{-1}\) usando la matriz adjunta.</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Paso 1. Determinante</h4>
+\[\det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=2+2=4\neq0\]
+<p>El determinante es distinto de cero, por lo que la inversa existe.</p>
+<h4>Paso 2. Matriz de cofactores</h4>
+\[\text{Cof}(A)=\begin{bmatrix}
++\begin{vmatrix}1&1\\0&2\end{vmatrix} & -\begin{vmatrix}0&1\\1&2\end{vmatrix} & +\begin{vmatrix}0&1\\1&0\end{vmatrix}\\[18pt]
+-\begin{vmatrix}2&0\\0&2\end{vmatrix} & +\begin{vmatrix}1&0\\1&2\end{vmatrix} & -\begin{vmatrix}1&2\\1&0\end{vmatrix}\\[18pt]
++\begin{vmatrix}2&0\\1&1\end{vmatrix} & -\begin{vmatrix}1&0\\0&1\end{vmatrix} & +\begin{vmatrix}1&2\\0&1\end{vmatrix}
+\end{bmatrix}=\begin{bmatrix}2&1&-1\\-4&2&2\\2&-1&1\end{bmatrix}\]
+<h4>Paso 3. Adjunta</h4>
+\[\text{Adj}(A)=\text{Cof}(A)^t=\begin{bmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{bmatrix}\]
+<h4>Paso 4. Inversa</h4>
+\[A^{-1}=\dfrac{1}{4}\begin{bmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{bmatrix}=\begin{bmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{bmatrix}\]
+<h4>Verificación</h4>
+\[A\cdot A^{-1}=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}=I\checkmark\]
+<div class="mk-resultado">\(A^{-1}=\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}\)</div>
+</div></div>
+
 </section>
 </div>
 <script>
@@ -587,7 +614,6 @@ window.addEventListener('DOMContentLoaded',function(){
 <li>Pensar que toda matriz cuadrada tiene inversa: para que exista, la matriz debe ser regular.</li>
 <li>Olvidar que las potencias de matrices solo tienen sentido para matrices cuadradas.</li>
 <li>Tener especial cuidado con los paréntesis en expresiones algebraicas matriciales: su posición puede cambiar el resultado final.</li>
-<li>Para introducir una matriz traspuesta se utiliza la notación <code>A^t</code> y para la inversa <code>A^(-1)</code>.</li>
 <li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
 </ul>
 </div>
@@ -600,7 +626,7 @@ window.addEventListener('DOMContentLoaded',function(){
 <li><strong>¿Es siempre posible multiplicar dos matrices?</strong> No. El producto \(AB\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\).</li>
 <li><strong>¿Qué ocurre si el determinante de una matriz es cero?</strong> La matriz no tiene inversa. Se llama matriz singular.</li>
 <li><strong>¿La traspuesta de la traspuesta devuelve la matriz original?</strong> Sí. Se cumple siempre que \((A^t)^t=A\).</li>
-<li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula.</li>
+<li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula. Por ejemplo: \(\begin{pmatrix}1&1\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&1\end{pmatrix}=\begin{pmatrix}0&0\\0&0\end{pmatrix}\). Esto implica que en matrices no se puede "cancelar": \(AB=AC\) con \(A\neq 0\) no implica \(B=C\).</li>
 <li><strong>¿Cómo se introduce la matriz identidad en la aplicación?</strong> Usando la letra <code>I</code>.</li>
 </ul>
 </div>
