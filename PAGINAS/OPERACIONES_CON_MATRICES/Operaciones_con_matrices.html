@@ -341,11 +341,34 @@ E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 <div class="k">\[
 3A=3\begin{bmatrix}1&amp;-2\\0&amp;3\end{bmatrix}=\begin{bmatrix}3\cdot1&amp;3\cdot(-2)\\3\cdot0&amp;3\cdot3\end{bmatrix}=\begin{bmatrix}3&amp;-6\\0&amp;9\end{bmatrix}
 \]</div>
-<h3 style="margin-top:18px">Inversa de una matriz</h3>
-<p class="muted">Si \(A=\begin{bmatrix}2&amp;1\\5&amp;3\end{bmatrix}\), su determinante es \(\det(A)=2\cdot3-1\cdot5=1\neq0\), por lo que existe la inversa.</p>
+<h3 style="margin-top:18px">Inversa de una matriz 2×2</h3>
+<p class="muted">Si \(A=\begin{bmatrix}2&amp;1\\5&amp;3\end{bmatrix}\), su determinante es \(\det(A)=2\cdot3-1\cdot5=1\neq0\), por lo que existe la inversa. Para matrices 2×2 se aplica la fórmula directa: se intercambian los elementos de la diagonal y se cambian de signo los de la antidiagonal, dividiendo por el determinante.</p>
 <div class="k">\[
 A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}
 \]</div>
+<h3 style="margin-top:18px">Inversa de una matriz 3×3</h3>
+<p class="muted">Para matrices de orden mayor, se utiliza la fórmula general basada en la matriz adjunta. Sea \(A=\begin{bmatrix}1&amp;2&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;2\end{bmatrix}\). El procedimiento tiene tres pasos: calcular el determinante, obtener la matriz de cofactores y trasponer dicha matriz para formar la adjunta.</p>
+<p class="muted"><strong>Paso 1. Determinante.</strong></p>
+<div class="k">\[
+\det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=1\cdot2-2\cdot(-1)=2+2=4\neq0
+\]</div>
+<p class="muted"><strong>Paso 2. Matriz de cofactores.</strong> Cada cofactor \(C_{ij}=(-1)^{i+j}M_{ij}\), donde \(M_{ij}\) es el menor complementario (determinante de la submatriz que queda al eliminar la fila \(i\) y la columna \(j\)).</p>
+<div class="k">\[
+\text{Cof}(A)=\begin{bmatrix}
+(1\cdot2-1\cdot0) &amp; -(0\cdot2-1\cdot1) &amp; (0\cdot0-1\cdot1)\\
+-(2\cdot2-0\cdot0) &amp; (1\cdot2-0\cdot1) &amp; -(1\cdot0-2\cdot1)\\
+(2\cdot1-0\cdot1) &amp; -(1\cdot1-0\cdot0) &amp; (1\cdot1-2\cdot0)
+\end{bmatrix}
+=\begin{bmatrix}2&amp;1&amp;-1\\-4&amp;2&amp;2\\2&amp;-1&amp;1\end{bmatrix}
+\]</div>
+<p class="muted"><strong>Paso 3. Adjunta y resultado.</strong> La adjunta es la traspuesta de la matriz de cofactores.</p>
+<div class="k">\[
+\text{Adj}(A)=\text{Cof}(A)^t=\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}
+\]</div>
+<div class="k">\[
+A^{-1}=\dfrac{1}{4}\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}=\begin{bmatrix}1/2&amp;-1&amp;1/2\\1/4&amp;1/2&amp;-1/4\\-1/4&amp;1/2&amp;1/4\end{bmatrix}
+\]</div>
+<p class="muted">La herramienta calcula automáticamente la inversa de cualquier orden. Para matrices 3×3 o mayores, el método de Gauss-Jordan es más eficiente en la práctica.</p>
 <h3 style="margin-top:18px">Potencia de una matriz</h3>
 <p class="muted">Si \(A=\begin{bmatrix}2&amp;0\\0&amp;3\end{bmatrix}\), las potencias se calculan multiplicando la matriz por sí misma sucesivamente.</p>
 <div class="k">\[
@@ -383,9 +406,9 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 5</strong> — Obtener la traspuesta de una matriz.</li>
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 6</strong> — Obtener la inversa de una matriz.</li>
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 7</strong> — Obtener una potencia de una matriz.</li>
-<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 8</strong> — Operaciones combinadas: mostrar paso a paso.</li>
-<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 9</strong> — Operaciones combinadas: mostrar pasos de forma automática.</li>
-<li style="padding:6px 0"><strong>Opción 10</strong> — Operaciones combinadas: mediante pasos realizados por el usuario.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 8</strong> — Operaciones combinadas: mostrar paso a paso. Se introduce una expresión algebraica con varias matrices (por ejemplo, \(AB + C^t\)) y la herramienta muestra el resultado de cada operación intermedia pulsando un botón, de modo que se puede seguir el proceso a la velocidad deseada.</li>
+<li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 9</strong> — Operaciones combinadas: mostrar pasos de forma automática. Igual que la opción 8, pero los pasos intermedios aparecen de forma consecutiva sin necesidad de intervención: útil para revisar una solución completa de un vistazo.</li>
+<li style="padding:6px 0"><strong>Opción 10</strong> — Operaciones combinadas: mediante pasos realizados por el usuario. La herramienta no resuelve la expresión directamente; en cambio, el usuario indica qué operación quiere aplicar en cada momento y la herramienta la ejecuta. Permite practicar la resolución tomando las propias decisiones sobre el orden de las operaciones.</li>
 </ul>
 </section>
 <section class="grid2">
