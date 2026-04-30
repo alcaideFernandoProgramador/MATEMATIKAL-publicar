@@ -11,13 +11,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios." name="description"/>
+<meta content="Aprende a calcular determinantes de orden 2, 3 y 4 paso a paso: regla de Sarrus, desarrollo por adjuntos (Laplace) y propiedades. Ejercicios resueltos y herramienta interactiva para Bachillerato." name="description"/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Matematikal"/>
 <meta property="og:url" content="https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"/>
 <meta property="og:title" content="Determinantes: teoría, ejemplos y calculadora online | Matematikal"/>
-<meta property="og:description" content="Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios. Teoría, propiedades y herramienta interactiva."/>
+<meta property="og:description" content="Aprende a calcular determinantes de orden 2, 3 y 4 paso a paso: regla de Sarrus, desarrollo por adjuntos (Laplace) y propiedades. Ejercicios resueltos y herramienta interactiva para Bachillerato."/>
 <meta property="og:locale" content="es_ES"/>
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -25,12 +25,18 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Determinantes: teoría, ejemplos y calculadora online",
-  "description": "Cálculo de determinantes numéricos y algebraicos, con resultados y pasos intermedios. Teoría, propiedades y herramienta interactiva.",
+  "description": "Aprende a calcular determinantes de orden 2, 3 y 4 paso a paso: regla de Sarrus, desarrollo por adjuntos (Laplace) y propiedades. Ejercicios resueltos y herramienta interactiva para Bachillerato.",
   "url": "https://matematikal.com/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html",
   "inLanguage": "es",
   "educationalLevel": "Bachillerato",
   "learningResourceType": "InteractiveResource",
   "teaches": "Cálculo de determinantes",
+  "keywords": "determinantes, regla de Sarrus, desarrollo por adjuntos, teorema de Laplace, propiedades de los determinantes, menor complementario, cofactor, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
   "author": {
     "@type": "Person",
     "name": "Fernando Alcaide Guindo"
@@ -288,7 +294,9 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 
 <div style="border:1px solid var(--border-card);border-radius:14px;padding:14px 18px;background:linear-gradient(135deg,var(--blue-light),#f0f4ff)">
 <strong style="display:block;margin-bottom:4px;color:var(--blue-deep);font-size:.88rem">3. Combinación lineal de filas (o columnas)</strong>
-<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px">Se puede cambiar una fila \(F_i\) por una combinación lineal \(a\cdot F_i+b\cdot F_j\), con \(a\neq0\). La única condición es que el coeficiente de la fila que se cambia sea distinto de cero. Si ese coeficiente es distinto de 1, hay que poner como factor el inverso delante del determinante resultante.</p>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px"><strong>La operación:</strong> se puede sustituir una fila \(F_i\) por una combinación lineal \(a\cdot F_i+b\cdot F_j\), con \(a\neq0\).</p>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 4px"><strong>Efecto sobre el determinante:</strong> al sustituir \(F_i\) por \(a\cdot F_i+b\cdot F_j\) se está multiplicando \(F_i\) por \(a\), lo que multiplica el determinante por \(a\). Para compensar, hay que dividir el resultado por \(a\), es decir, poner el factor \(\tfrac{1}{a}\) delante.</p>
+<p style="color:var(--text-secondary);font-size:.91rem;margin:0 0 8px">El caso más habitual en Bachillerato es \(a=1\), es decir, \(F_i\to F_i+\lambda F_j\). En ese caso el determinante <strong>no cambia</strong> y no aparece ningún factor.</p>
 <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;padding-left:20px">
 
 <div style="border:1px solid rgba(59,110,248,.15);border-radius:12px;padding:12px 16px;background:#fff">
@@ -349,10 +357,9 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <p class="miniTitle">Cómo se calcula</p>
 <h2>Esquema general</h2>
 <ol class="stepsList">
-<li>Se realizan las operaciones de filas o columnas adecuadas hasta llegar a una línea formada por todos ceros excepto uno de sus elementos.</li>
-<li>Se reduce dicho determinante a otro de orden inferior utilizando la línea hallada en el apartado anterior.</li>
-<li>Se repiten los dos pasos anteriores hasta llegar a un determinante de orden 3.</li>
-<li>Se desarrolla el determinante de orden 3 hasta obtener el valor final.</li>
+<li><strong>Orden 2:</strong> aplicar directamente la fórmula \(\det(A)=ad-bc\). No hace falta ninguna reducción.</li>
+<li><strong>Orden 3:</strong> aplicar la regla de Sarrus o desarrollar por adjuntos. La regla de Sarrus es exclusiva de orden 3 — no funciona para órdenes superiores.</li>
+<li><strong>Orden 4 o superior:</strong> realizar operaciones de filas o columnas hasta conseguir una fila o columna con todos los elementos iguales a cero excepto uno. Reducir el determinante a uno de orden inferior usando ese elemento como pivote de Laplace. Repetir hasta llegar a orden 3 y aplicar Sarrus.</li>
 </ol>
 </section>
 <section class="card span6">
@@ -384,7 +391,6 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 <li><strong>Rango:</strong> si \(\det(A) \neq 0\), el rango de \(A\) es igual a su orden. Si \(\det(A) = 0\), el rango es menor.</li>
 <li><strong>Regla de Cramer:</strong> cuando \(\det(A) \neq 0\), la solución única del sistema \(Ax = b\) viene dada por \(x_i = \frac{\det(A_i)}{\det(A)}\).</li>
 <li><strong>Sistemas homogéneos:</strong> el sistema \(Ax = 0\) tiene solución no trivial si y solo si \(\det(A) = 0\).</li>
-<li><strong>Valores propios:</strong> los valores propios de \(A\) son las raíces del polinomio característico \(\det(A - \lambda I) = 0\).</li>
 </ul>
 </section>
 <section class="card span6">
@@ -508,7 +514,7 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 </script>
 </div><div id="calculadora" style="display:none">
 <header id="tituloinicial">
-<h1>CÁLCULO DEL VALOR DE UN DETERMINANTE NUMÉRICO O ALGEBRAICO</h1>
+<h2>CÁLCULO DEL VALOR DE UN DETERMINANTE NUMÉRICO O ALGEBRAICO</h2>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
