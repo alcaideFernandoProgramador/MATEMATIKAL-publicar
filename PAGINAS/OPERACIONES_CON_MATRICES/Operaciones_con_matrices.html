@@ -352,12 +352,12 @@ A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{b
 <div class="k">\[
 \det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=1\cdot2-2\cdot(-1)=2+2=4\neq0
 \]</div>
-<p class="muted"><strong>Paso 2. Matriz de cofactores.</strong> Cada cofactor \(C_{ij}=(-1)^{i+j}M_{ij}\), donde \(M_{ij}\) es el menor complementario (determinante de la submatriz que queda al eliminar la fila \(i\) y la columna \(j\)).</p>
+<p class="muted"><strong>Paso 2. Matriz de cofactores.</strong> Cada cofactor \(C_{ij}=(-1)^{i+j}M_{ij}\), donde \(M_{ij}\) es el menor complementario: el determinante de la submatriz 2×2 que queda al eliminar la fila \(i\) y la columna \(j\). La matriz de signos \((-1)^{i+j}\) es \(\begin{bmatrix}+&-&+\\-&+&-\\+&-&+\end{bmatrix}\).</p>
 <div class="k">\[
 \text{Cof}(A)=\begin{bmatrix}
-(1\cdot2-1\cdot0) &amp; -(0\cdot2-1\cdot1) &amp; (0\cdot0-1\cdot1)\\
--(2\cdot2-0\cdot0) &amp; (1\cdot2-0\cdot1) &amp; -(1\cdot0-2\cdot1)\\
-(2\cdot1-0\cdot1) &amp; -(1\cdot1-0\cdot0) &amp; (1\cdot1-2\cdot0)
++\begin{vmatrix}1&amp;1\\0&amp;2\end{vmatrix} &amp; -\begin{vmatrix}0&amp;1\\1&amp;2\end{vmatrix} &amp; +\begin{vmatrix}0&amp;1\\1&amp;0\end{vmatrix}\\[18pt]
+-\begin{vmatrix}2&amp;0\\0&amp;2\end{vmatrix} &amp; +\begin{vmatrix}1&amp;0\\1&amp;2\end{vmatrix} &amp; -\begin{vmatrix}1&amp;2\\1&amp;0\end{vmatrix}\\[18pt]
++\begin{vmatrix}2&amp;0\\1&amp;1\end{vmatrix} &amp; -\begin{vmatrix}1&amp;0\\0&amp;1\end{vmatrix} &amp; +\begin{vmatrix}1&amp;2\\0&amp;1\end{vmatrix}
 \end{bmatrix}
 =\begin{bmatrix}2&amp;1&amp;-1\\-4&amp;2&amp;2\\2&amp;-1&amp;1\end{bmatrix}
 \]</div>
@@ -408,7 +408,7 @@ AB(A+B^t)=\begin{bmatrix}3&amp;2\\1&amp;1\end{bmatrix}\begin{bmatrix}2&amp;3\\0&
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 7</strong> — Obtener una potencia de una matriz.</li>
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 8</strong> — Operaciones combinadas: mostrar paso a paso. Se introduce una expresión algebraica con varias matrices (por ejemplo, \(AB + C^t\)) y la herramienta muestra el resultado de cada operación intermedia pulsando un botón, de modo que se puede seguir el proceso a la velocidad deseada.</li>
 <li style="padding:6px 0;border-bottom:1px solid rgba(30,50,150,.07)"><strong>Opción 9</strong> — Operaciones combinadas: mostrar pasos de forma automática. Igual que la opción 8, pero los pasos intermedios aparecen de forma consecutiva sin necesidad de intervención: útil para revisar una solución completa de un vistazo.</li>
-<li style="padding:6px 0"><strong>Opción 10</strong> — Operaciones combinadas: mediante pasos realizados por el usuario. La herramienta no resuelve la expresión directamente. El usuario debe realizar los pasos de uno en uno y la herramienta comprueba si son correctos (o los ejecuta directamente). La herramienta ayuda al indicar el paso que se debe realizar en cada momento.</li>
+<li style="padding:6px 0"><strong>Opción 10</strong> — Operaciones combinadas: mediante pasos realizados por el usuario. La herramienta no resuelve la expresión directamente; en cambio, el usuario indica qué operación quiere aplicar en cada momento y la herramienta la ejecuta. Permite practicar la resolución tomando las propias decisiones sobre el orden de las operaciones.</li>
 </ul>
 </section>
 <section class="grid2">
