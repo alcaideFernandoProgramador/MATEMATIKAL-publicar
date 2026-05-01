@@ -10,13 +10,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta name="author" content="Fernando Alcaide Guindo"/>
-<meta name="description" content="Aprende a calcular la matriz inversa por el método de Gauss-Jordan: teoría, operaciones elementales, ejemplos resueltos paso a paso y herramienta interactiva."/>
+<meta name="description" content="Aprende a calcular la matriz inversa por el método de Gauss-Jordan para Bachillerato: teoría, operaciones elementales, ejemplos resueltos 2×2 y 3×3 paso a paso y herramienta interactiva."/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Matematikal"/>
 <meta property="og:url" content="https://matematikal.com/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html"/>
 <meta property="og:title" content="Matriz inversa por Gauss-Jordan: teoría y herramienta | Matematikal"/>
-<meta property="og:description" content="Aprende a calcular la matriz inversa por el método de Gauss-Jordan: teoría, operaciones elementales, ejemplos resueltos paso a paso y herramienta interactiva."/>
+<meta property="og:description" content="Aprende a calcular la matriz inversa por el método de Gauss-Jordan para Bachillerato: teoría, operaciones elementales, ejemplos resueltos 2×2 y 3×3 paso a paso y herramienta interactiva."/>
 <meta property="og:locale" content="es_ES"/>
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -24,12 +24,18 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Matriz inversa por Gauss-Jordan: teoría y herramienta",
-  "description": "Aprende a calcular la matriz inversa por el método de Gauss-Jordan: teoría, operaciones elementales, ejemplos resueltos paso a paso y herramienta interactiva.",
+  "description": "Aprende a calcular la matriz inversa por el método de Gauss-Jordan para Bachillerato: teoría, operaciones elementales, ejemplos resueltos 2×2 y 3×3 paso a paso y herramienta interactiva.",
   "url": "https://matematikal.com/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html",
   "inLanguage": "es",
   "educationalLevel": "Bachillerato",
   "learningResourceType": "InteractiveResource",
   "teaches": "Cálculo de la matriz inversa por el método de Gauss-Jordan",
+  "keywords": "matriz inversa, método de Gauss-Jordan, matriz ampliada, eliminación gaussiana, matriz regular, matriz singular, determinante, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
   "author": {"@type":"Person","name":"Fernando Alcaide Guindo"},
   "publisher": {"@type":"Organization","name":"Matematikal","url":"https://matematikal.com"}
 }
@@ -149,7 +155,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   Álgebra lineal · Bachillerato
 </div>
 <div class="heroLinks">
-  <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Inversa por adjunta</a>
+  <a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
   <a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a>
   <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Matriz escalonada</a>
 </div>
@@ -260,6 +266,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
   <div class="k">\[\underset{F_2\to F_2+2F_3}{F_1\to F_1-F_3}\quad\left(\begin{array}{ccc|ccc}1&0&0&\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\0&1&0&-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\0&0&1&\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{array}\right)\]</div>
   <p>La inversa es:</p>
   <div class="k">\[A^{-1}=\begin{pmatrix}\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\[4pt]-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\[4pt]\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{pmatrix}\]</div>
+  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}1&0&1\\2&1&0\\-1&1&1\end{pmatrix}\begin{pmatrix}\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\[2pt]-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\[2pt]\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\)</p>
 </section>
 </div>
 
@@ -288,7 +295,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
     <li><strong>¿Puede una matriz cuadrada no tener inversa?</strong> Sí: exactamente cuando su determinante es cero (matriz singular).</li>
     <li><strong>¿El método de Gauss-Jordan da siempre fracciones exactas?</strong> Sí, mientras se trabaje con fracciones exactas en cada paso. La herramienta de esta página lo hace automáticamente.</li>
     <li><strong>¿Hay otro método para calcular la inversa?</strong> Sí: el método de la matriz adjunta. Se basa en calcular los cofactores de \(A\) y dividir por el determinante. Está disponible en la página de Inversa por adjunta.</li>
-    <li><strong>¿La inversa sirve para resolver sistemas?</strong> Sí: si \(Ax=b\) y \(A\) es invertible, entonces \(x=A^{-1}b\). Sin embargo, para sistemas grandes el método de Gauss, el de Rouché-Frobenius o la regla de Cramer son más eficientes.</li>
+    <li><strong>¿La inversa sirve para resolver sistemas?</strong> Sí: si \(Ax=b\) y \(A\) es invertible, entonces \(x=A^{-1}b\). Sin embargo, para sistemas de pocas incógnitas la regla de Cramer puede ser más cómoda, y para sistemas grandes el método de Gauss o el de Rouché-Frobenius son más eficientes.</li>
   </ul>
 </section>
 </div>
@@ -317,6 +324,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 \[\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\2&0&1&0&0&1\end{array}\right)\underset{F_3\to F_3-2F_1}{\sim}\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\0&-4&1&-2&0&1\end{array}\right)\underset{F_3\to F_3+4F_2}{\sim}\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\0&0&13&-2&4&1\end{array}\right)\]
 <h4>Normalización y sustitución regresiva</h4>
 \[F_3\to\tfrac{1}{13}F_3\Rightarrow F_2\to F_2-3F_3\Rightarrow F_1\to F_1-2F_2\]
+\[\left(\begin{array}{ccc|ccc}1&0&0&\frac{1}{13}&-\frac{2}{13}&\frac{6}{13}\\[4pt]0&1&0&\frac{6}{13}&\frac{1}{13}&-\frac{3}{13}\\[4pt]0&0&1&-\frac{2}{13}&\frac{4}{13}&\frac{1}{13}\end{array}\right)\]
 <span class="mk-resultado">\(A^{-1}=\frac{1}{13}\begin{pmatrix}1&-2&6\\6&1&-3\\-2&4&1\end{pmatrix}\)</span>
 </div></div>
 
@@ -386,7 +394,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <!-- HERRAMIENTA -->
 <div id="calculadora" style="display:none">
 <div id="tituloinicial">
-<h1>MATRIZ INVERSA — Método de Gauss-Jordan</h1>
+<h2>MATRIZ INVERSA — Método de Gauss-Jordan</h2>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">

@@ -11,13 +11,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Calcula el rango de una matriz usando el método de los menores y comprueba el resultado con un ejemplo." name="description"/>
+<meta content="Aprende a calcular el rango de una matriz buscando el mayor menor no nulo. Teoría, ejemplos resueltos paso a paso y herramienta interactiva para Bachillerato." name="description"/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Matematikal"/>
 <meta property="og:url" content="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html"/>
 <meta property="og:title" content="Rango de una matriz por menores: teoría y ejemplos | Matematikal"/>
-<meta property="og:description" content="Calcula el rango de una matriz usando el método de los menores. Teoría, propiedades y herramienta interactiva con ejemplo resuelto."/>
+<meta property="og:description" content="Aprende a calcular el rango de una matriz buscando el mayor menor no nulo. Teoría, ejemplos resueltos paso a paso y herramienta interactiva para Bachillerato."/>
 <meta property="og:locale" content="es_ES"/>
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -25,12 +25,18 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Rango de una matriz por menores: teoría y ejemplos",
-  "description": "Calcula el rango de una matriz usando el método de los menores. Teoría, propiedades y herramienta interactiva con ejemplo resuelto.",
+  "description": "Aprende a calcular el rango de una matriz buscando el mayor menor no nulo. Teoría, ejemplos resueltos paso a paso y herramienta interactiva para Bachillerato.",
   "url": "https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html",
   "inLanguage": "es",
   "educationalLevel": "Bachillerato",
   "learningResourceType": "InteractiveResource",
   "teaches": "Rango de una matriz por el método de los menores",
+  "keywords": "rango de una matriz, método de los menores, menor no nulo, submatriz, determinante, rango por menores, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
   "author": {
     "@type": "Person",
     "name": "Fernando Alcaide Guindo"
@@ -249,8 +255,8 @@ La matriz identidad \(I_n\) siempre tiene rango \(n\).
 </div>
 <div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-top:14px">
 <strong>Consecuencia práctica.</strong> Para calcular el rango no hace falta comprobar todos los menores de todos los órdenes. Basta con:<br>
-<span style="display:block;padding-left:20px;margin-top:6px">1) Encontrar un menor de orden 2 no nulo (si no existe, el rango es 0 ó 1).</span>
-<span style="display:block;padding-left:20px">2) Intentar ampliarlo a orden 3 añadiendo una fila y una columna más.</span>
+<span style="display:block;padding-left:20px;margin-top:6px">1) Encontrar un menor de orden 2 no nulo. Si no existe ninguno: comprobar si hay algún elemento distinto de cero (rango = 1) o si la matriz es completamente nula (rango = 0).</span>
+<span style="display:block;padding-left:20px">2) Intentar ampliar ese menor de orden 2 a orden 3 añadiendo una fila y una columna más.</span>
 <span style="display:block;padding-left:20px">3) Continuar ampliando hasta que no se pueda o todos los intentos den 0.</span>
 </div>
 </section>
@@ -300,7 +306,7 @@ La matriz identidad \(I_n\) siempre tiene rango \(n\).
 <li>Introduce las dimensiones de la matriz. Rellena los elementos y valida con ENTER o TAB.</li>
 <li>Si introduces fracciones, mantén una notación consistente \((a/b)\).</li>
 <li>Elige los pasos en el orden adecuado.</li>
-<li>También puedes utilizar <strong>Solución automática</strong> (aunque no es recomendable) para obtener la solución del ejercicio incluyendo los pasos intermedios realizados.</li>
+<li>También puedes utilizar <strong>Solución automática</strong> para obtener la solución completa con todos los pasos intermedios. Es útil para verificar un resultado o estudiar el proceso.</li>
 </ol>
 </section>
 <section class="card span6">
@@ -364,10 +370,10 @@ Existe un menor de orden 3 no nulo, luego el rango es máximo.
 <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
 <div class="mk-sol">
 <h4>Menor de orden 3</h4>
-La fila 2 es el doble de la fila 1, por lo que \(|A|=0\). No existe menor de orden 3 no nulo.
+La fila 2 es el doble de la fila 1 (\(F_2=2F_1\)), por lo que las filas son linealmente dependientes y \(|A|=0\). Por tanto \(\text{rg}(A)&lt;3\). Necesitamos buscar si existe algún menor de orden 2 no nulo para determinar si el rango es 2 ó 1.
 <h4>Búsqueda de menor de orden 2</h4>
 \[\begin{vmatrix}1 &amp; 3\\1 &amp; 5\end{vmatrix}=5-3=2\neq 0\]
-Existe un menor de orden 2 no nulo, así que \(\text{rg}(A)\geq 2\). Como el de orden 3 es nulo, \(\text{rg}(A)&lt;3\).
+Existe un menor de orden 2 no nulo, luego \(\text{rg}(A)\geq 2\). Combinando: \(2\leq\text{rg}(A)&lt;3\), por lo que el rango es exactamente 2.
 <div class="mk-resultado mk-res-neu">rg(A) = 2</div>
 </div></div>
 
@@ -463,7 +469,7 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 </div>
 </div><div id="calculadora" style="display:none">
 <header id="tituloinicial">
-<h1>RANGO DE UNA MATRIZ NUMÉRICA (Método de los menores)</h1>
+<h2>RANGO DE UNA MATRIZ NUMÉRICA (Método de los menores)</h2>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">

@@ -10,13 +10,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos." name="description"/>
+<meta content="Aprende a calcular el rango de una matriz con parámetro usando el método de Gauss: escalonamiento, identificación de valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato." name="description"/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Matematikal"/>
 <meta property="og:url" content="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html"/>
 <meta property="og:title" content="Rango de una matriz con parámetro por Gauss: teoría y ejemplos | Matematikal"/>
-<meta property="og:description" content="Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos."/>
+<meta property="og:description" content="Aprende a calcular el rango de una matriz con parámetro usando el método de Gauss: escalonamiento, identificación de valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato."/>
 <meta property="og:locale" content="es_ES"/>
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -24,12 +24,18 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Rango de una matriz con parámetro por Gauss: teoría y ejemplos",
-  "description": "Calcula el rango de una matriz con parámetro usando el método de Gauss y comprueba el resultado con un ejemplo resuelto por casos.",
+  "description": "Aprende a calcular el rango de una matriz con parámetro usando el método de Gauss: escalonamiento, identificación de valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato.",
   "url": "https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html",
   "inLanguage": "es",
   "educationalLevel": "Bachillerato",
   "learningResourceType": "InteractiveResource",
   "teaches": "Rango de una matriz con parámetro por eliminación de Gauss",
+  "keywords": "rango con parámetro, método de Gauss, discusión por casos, valores críticos, pivote algebraico, escalonamiento, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
   "author": {
     "@type": "Person",
     "name": "Fernando Alcaide Guindo"
@@ -352,7 +358,7 @@ Donde \(a^2-a=a(a-1)\).
 <h4>Casos</h4>
 <ul>
 <li>Si \(a=1\): fila 2 y fila 3 se anulan → \(\text{rg}(A)=1\)</li>
-<li>Si \(a=0\): fila 2 \(=(-1,-1)\neq\mathbf{0}\), fila 3 \(=0\) → \(\text{rg}(A)=2\)</li>
+<li>Si \(a=0\): fila 2 \(=(0,-1,-1)\neq\mathbf{0}\), fila 3 \(=\mathbf{0}\) → \(\text{rg}(A)=2\)</li>
 <li>Si \(a\neq 0\) y \(a\neq 1\): tres pivotes → \(\text{rg}(A)=3\)</li>
 </ul>
 <div class="mk-resultado mk-res-neu">rg = 1 si a=1 · rg = 2 si a=0 · rg = 3 si a≠0,1</div>
@@ -446,7 +452,7 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 </div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
-<h1>RANGO DE UNA MATRIZ según los valores de un parámetro<br/>MÉTODO DE GAUSS</h1>
+<h2>RANGO DE UNA MATRIZ según los valores de un parámetro<br/>MÉTODO DE GAUSS</h2>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">

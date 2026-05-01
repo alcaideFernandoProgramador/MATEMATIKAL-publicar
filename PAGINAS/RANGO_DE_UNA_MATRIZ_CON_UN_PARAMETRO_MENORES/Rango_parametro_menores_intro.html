@@ -11,13 +11,13 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="/common.css" rel="stylesheet"/>
 <meta content="Fernando Alcaide Guindo" name="author"/>
-<meta content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo." name="description"/>
+<meta content="Aprende a calcular el rango de una matriz con parámetro usando el método de los menores: valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato." name="description"/>
 <!-- Open Graph -->
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="Matematikal"/>
 <meta property="og:url" content="https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html"/>
 <meta property="og:title" content="Rango de una matriz con parámetro por menores | Matematikal"/>
-<meta property="og:description" content="Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo resuelto por casos."/>
+<meta property="og:description" content="Aprende a calcular el rango de una matriz con parámetro usando el método de los menores: valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato."/>
 <meta property="og:locale" content="es_ES"/>
 <!-- JSON-LD -->
 <script type="application/ld+json">
@@ -25,12 +25,18 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Rango de una matriz con parámetro por menores",
-  "description": "Calcula el rango de una matriz con un parámetro usando el método de los menores y comprueba el resultado con un ejemplo resuelto por casos.",
+  "description": "Aprende a calcular el rango de una matriz con parámetro usando el método de los menores: valores críticos y discusión por casos. Ejercicios resueltos para Bachillerato.",
   "url": "https://matematikal.com/PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html",
   "inLanguage": "es",
   "educationalLevel": "Bachillerato",
   "learningResourceType": "InteractiveResource",
   "teaches": "Rango de una matriz con parámetro por el método de los menores",
+  "keywords": "rango con parámetro, método de los menores, menor no nulo, valores críticos, discusión por casos, submatriz, determinante, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
   "author": {
     "@type": "Person",
     "name": "Fernando Alcaide Guindo"
@@ -290,7 +296,8 @@ En la práctica no hace falta comprobar todos los menores de orden \(r+1\): bast
 &amp;\left|\begin{matrix}t&amp;1&amp;0\\2&amp;1&amp;1\\0&amp;3&amp;t\end{matrix}\right|=t^2-5t\qquad\left|\begin{matrix}1&amp;0&amp;t-1\\1&amp;1&amp;2\\3&amp;t&amp;2\end{matrix}\right|=t^2-6t+5\\[6pt]
 &amp;2)\ \text{Valores críticos (anulan todos los menores de orden 3 a la vez):}\\[4pt]
 &amp;t^2-5t=0\Rightarrow t=0\text{ ó }t=5;\quad t^2-6t+5=0\Rightarrow t=1\text{ ó }t=5\\[4pt]
-&amp;\text{Solo }t=5\text{ anula todos.}\quad\Rightarrow\text{Caso general: }t\neq 5.\\[6pt]
+&amp;\text{Solo }t=5\text{ aparece en ambos. Se puede verificar que los demás menores de orden 3 también son nulos para }t=5.\\[4pt]
+&amp;\Rightarrow\text{Caso general: }t\neq 5.\\[6pt]
 &amp;3)\ \text{Caso crítico }t=5\text{: se sustituye y se aplica el método numérico.}\\[4pt]
 &amp;A=\left(\begin{matrix}5&amp;1&amp;0&amp;4\\2&amp;1&amp;1&amp;2\\0&amp;3&amp;5&amp;2\end{matrix}\right)\Rightarrow\left|\begin{matrix}1&amp;0\\1&amp;1\end{matrix}\right|=1\neq 0,\text{ todos los menores de orden 3 son nulos.}\Rightarrow\operatorname{rg}(A)=2\\[6pt]
 &amp;4)\ \text{Resumen: caso general }(t\neq 5)\Rightarrow\operatorname{rg}(A)=3;\quad\text{caso crítico }(t=5)\Rightarrow\operatorname{rg}(A)=2.
@@ -315,7 +322,7 @@ En la práctica no hace falta comprobar todos los menores de orden \(r+1\): bast
 <li><strong>Rellena los elementos.</strong> Si hay un parámetro, usa siempre la misma letra en todas las celdas que lo contengan.</li>
 <li><strong>Elige el modo de trabajo:</strong> resolución manual (el usuario selecciona los menores) o solución automática (la herramienta muestra la discusión completa).</li>
 <li><strong>Modo manual:</strong> selecciona las filas y columnas del menor que quieras calcular. La herramienta lo evalúa y te indica si es nulo o no nulo.</li>
-<li><strong>Modo automático:</strong> la aplicación muestra todos los casos posibles del rango, con los valores críticos del parámetro y el razonamiento completo.</li>
+<li><strong>Modo automático:</strong> la aplicación muestra todos los casos posibles del rango, con los valores críticos del parámetro y el razonamiento completo. Es útil para verificar un resultado o estudiar el proceso.</li>
 </ol>
 </section>
 
@@ -445,7 +452,7 @@ También nulo cuando \(m=1\).
 <h4>Caso m=1</h4>
 Para \(m=1\) todas las filas son \((1,1,1)\) → \(\operatorname{rg}(A)=1\).
 <h4>Caso m≠1</h4>
-Los menores de orden 3 son \(-(m-1)^2\neq 0\) → \(\operatorname{rg}(A)=3\).
+Los menores de orden 3 calculados valen \(-(m-1)^2\) y \((m-1)^2\), ambos distintos de cero para \(m\neq 1\). Basta con encontrar uno no nulo para garantizar \(\operatorname{rg}(A)\geq 3\). Como el máximo posible en una matriz \(4\times 3\) es 3, concluimos \(\operatorname{rg}(A)=3\).
 <div class="mk-resultado mk-res-neu">\(\operatorname{rg}(A)=1\) si \(m=1\) &nbsp;·&nbsp; \(\operatorname{rg}(A)=3\) si \(m\neq 1\)</div>
 </div></div>
 
@@ -488,7 +495,7 @@ document.addEventListener("DOMContentLoaded",function(){if(window.renderMathInEl
 </div>
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
-<h1>RANGO DE UNA MATRIZ CON UN PARÁMETRO (método de los menores)</h1>
+<h2>RANGO DE UNA MATRIZ CON UN PARÁMETRO (método de los menores)</h2>
 <div id="controlesTop">
 <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a><a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
 <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
