@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://matematikal.com/PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html"/>
+<title>Matriz inversa por la fórmula de la adjunta: teoría y ejemplos | Matematikal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="/common.css" rel="stylesheet"/>
+<meta name="author" content="Fernando Alcaide Guindo"/>
+<meta name="description" content="Aprende a calcular la matriz inversa usando la fórmula de la adjunta para Bachillerato: cofactores, matriz de cofactores, adjunta y ejemplos resueltos 2×2 y 3×3 paso a paso."/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html"/>
+<meta property="og:title" content="Matriz inversa por la fórmula de la adjunta: teoría y ejemplos | Matematikal"/>
+<meta property="og:description" content="Aprende a calcular la matriz inversa usando la fórmula de la adjunta para Bachillerato: cofactores, matriz de cofactores, adjunta y ejemplos resueltos 2×2 y 3×3 paso a paso."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Matriz inversa por la fórmula de la adjunta: teoría y ejemplos",
+  "description": "Aprende a calcular la matriz inversa usando la fórmula de la adjunta para Bachillerato: cofactores, matriz de cofactores, adjunta y ejemplos resueltos 2×2 y 3×3 paso a paso.",
+  "url": "https://matematikal.com/PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "LearningResource",
+  "teaches": "Cálculo de la matriz inversa por la fórmula de la adjunta",
+  "keywords": "matriz inversa, fórmula de la adjunta, cofactores, menor complementario, matriz de cofactores, adjunta de una matriz, determinante, bachillerato, álgebra lineal",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "student",
+    "educationalLevel": "Bachillerato"
+  },
+  "author": {"@type":"Person","name":"Fernando Alcaide Guindo"},
+  "publisher": {"@type":"Organization","name":"Matematikal","url":"https://matematikal.com"}
+}
+</script>
+
+<link href="../../CARPETAS_AUXILIARES/katex/katex.min.css" rel="stylesheet">
+<script defer src="../../CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer src="../../CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+<script defer src="../../CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>body{overflow-y:auto!important;display:block!important}#introPrincipal{overflow:visible!important}</style>
+<style id="mk-design-v2">
+:root{
+  --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
+  --blue-light:#e8eeff;--blue-glow:rgba(59,110,248,.18);
+  --text-primary:#0f1629;--text-secondary:#4a5270;--text-muted:#7b839e;
+  --bg-page:#f4f6fd;--bg-card:#ffffff;--border-card:rgba(30,50,150,.08);
+  --radius-card:20px;
+  --shadow-card:0 4px 24px rgba(20,40,120,.07),0 1px 4px rgba(20,40,120,.04);
+  --shadow-btn:0 8px 28px rgba(43,79,170,.28);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0}
+.introWrap{max-width:1100px;margin:0 auto;padding:28px 24px 56px}
+.hero{position:relative;background:linear-gradient(135deg,var(--blue-deep) 0%,var(--blue-mid) 60%,#3355c8 100%);border-radius:28px;padding:36px 40px 32px;overflow:hidden;box-shadow:0 24px 60px rgba(20,40,130,.28),0 4px 12px rgba(20,40,130,.18);margin-bottom:32px}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.hero::before{width:340px;height:340px;top:-120px;right:-80px}
+.hero::after{width:200px;height:200px;bottom:-80px;left:30px}
+.heroBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;backdrop-filter:blur(8px);margin-bottom:10px;width:fit-content}
+.heroDesc{position:relative;z-index:1;margin-top:14px;color:rgba(255,255,255,.85);font-size:1.02rem;line-height:1.7}
+.heroLinks{position:relative;z-index:1;margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+.heroLinkBtn{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;font-size:.88rem;font-weight:600;letter-spacing:.01em;backdrop-filter:blur(6px);transition:background .18s,transform .15s,box-shadow .18s}
+.heroLinkBtn:hover{background:rgba(255,255,255,.24);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.heroLinkBtn svg{opacity:.7;flex-shrink:0}
+.volverBtn{display:inline-flex!important;align-items:center;gap:6px;padding:10px 20px!important;border-radius:999px!important;background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;text-decoration:none!important;font-weight:700!important;font-size:.88rem;letter-spacing:.03em;backdrop-filter:blur(8px);transition:background .18s,transform .15s}
+.volverBtn:hover{background:rgba(255,255,255,.28)!important;transform:translateY(-1px)}
+.trabajoBtn{display:inline-flex!important;align-items:center;padding:11px 24px!important;border-radius:999px!important;background:#fff!important;border:none!important;color:var(--blue-deep)!important;text-decoration:none!important;font-weight:800!important;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn)!important;transition:transform .15s,box-shadow .18s}
+.trabajoBtn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(43,79,170,.36)!important}
+.heroTopBar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;position:relative;z-index:1}
+.logoMini{display:block;flex-shrink:0}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
+.card,.accentCard{background:var(--bg-card)!important;border:1px solid var(--border-card)!important;border-radius:var(--radius-card)!important;box-shadow:var(--shadow-card)!important;padding:26px 28px!important;transition:box-shadow .2s,transform .2s}
+.card:hover,.accentCard:hover{box-shadow:0 8px 36px rgba(20,40,120,.11),0 2px 6px rgba(20,40,120,.05)!important;transform:translateY(-1px)}
+.card h2,.accentCard h2{font-family:var(--font-display);font-size:1.3rem!important;font-weight:400!important;color:var(--blue-deep);margin:0 0 14px!important;letter-spacing:-.01em}
+.card p,.accentCard p{margin:0 0 10px;line-height:1.72;color:var(--text-secondary)}
+.card p strong,.accentCard p strong{color:var(--text-primary)}
+.card ul,.accentCard ul{margin:0;padding-left:20px}
+.card ul li,.accentCard ul li{margin:8px 0;color:var(--text-secondary);line-height:1.6}
+.card ul li strong,.accentCard ul li strong{color:var(--text-primary)}
+.card ol,.accentCard ol{margin:0;padding-left:20px}
+.card ol li,.accentCard ol li{margin:8px 0;color:var(--text-secondary);line-height:1.6}
+.miniTitle{font-size:.78rem!important;font-weight:700!important;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-bright);margin:0 0 8px!important}
+.muted{color:var(--text-muted)!important;font-size:.94rem;line-height:1.65;margin:10px 0 0!important}
+.k{background:linear-gradient(135deg,var(--blue-light) 0%,#f0f4ff 100%)!important;border:1px solid rgba(59,110,248,.14)!important;border-radius:14px!important;padding:18px 20px!important;overflow-x:auto;margin:12px 0}
+.ops{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.op{border:1px solid var(--border-card)!important;border-radius:14px;padding:14px 16px;background:#f4f6fd!important}
+.op strong{display:block;margin-bottom:6px;color:var(--text-primary);font-size:.88rem;letter-spacing:.03em;text-transform:uppercase}
+.op span{color:var(--text-secondary);font-size:.93rem}
+.notesList,.stepsList{margin:0;padding-left:20px}
+.notesList li,.stepsList li{margin:8px 0;line-height:1.6;color:var(--text-secondary)}
+.notesList li strong,.stepsList li strong{color:var(--text-primary)}
+.herramienta-cta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:4px;flex-wrap:wrap}
+.herramienta-cta p{margin:0;color:rgba(255,255,255,.85);font-size:1rem;line-height:1.6;max-width:600px}
+.herramienta-cta p strong{color:#fff}
+.miniBubble{background:linear-gradient(135deg,var(--blue-deep) 0%,var(--blue-mid) 60%,#3355c8 100%);border-radius:16px;padding:16px 20px;margin-top:16px;color:rgba(255,255,255,.9);font-size:.97rem;line-height:1.6;box-shadow:0 8px 28px rgba(20,40,130,.22)}
+.miniBubble .k{margin:8px 0 0;color:#000!important}.miniBubble .k mjx-container,.miniBubble .k svg{color:#000!important;fill:#000!important}
+@media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.herramienta-cta{flex-direction:column}}
+/* Ejercicios */
+.mk-ejercicios{max-width:1060px;margin:0 auto 2rem}
+.mk-ejercicios>h2{font-family:var(--font-display);font-size:1.45rem;font-weight:400;color:var(--blue-deep);border-left:5px solid var(--blue-bright);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary);margin-bottom:1.8rem}
+.mk-ejercicio{background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-card);margin-bottom:1.4rem;overflow:hidden;box-shadow:var(--shadow-card)}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.2rem;background:#f4f6fd;border-bottom:1px solid var(--border-card)}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap;background:rgba(59,110,248,.1);color:var(--blue-deep)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page);font-size:.94rem;line-height:1.8;color:var(--text-primary)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+.mk-tip{margin-top:.75rem;padding:.6rem 1rem;border-radius:8px;background:rgba(59,110,248,.06);border-left:3px solid var(--blue-bright);font-size:.88rem;color:var(--text-secondary)}
+.mk-tip strong{color:var(--text-primary)}
+.signo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:180px;margin:10px 0}
+.signo-cell{text-align:center;font-size:1.1rem;font-weight:700;padding:8px;border-radius:8px;border:1px solid rgba(59,110,248,.18);background:#f4f6fd;color:var(--blue-deep)}
+</style>
+</head>
+<body><div id="introPrincipal">
+<div class="introWrap">
+
+<!-- HERO -->
+<section class="hero">
+<div class="heroTopBar">
+<a class="volverBtn" href="/index.html">← Volver</a>
+<div style="display:flex;align-items:center;gap:10px">
+<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora" style="font-size:.82rem;padding:9px 18px">IR A LA HERRAMIENTA →</a>
+<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
+<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
+<text x="42" y="36" font-family="system-ui,-apple-system,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.65)" letter-spacing="0.5">MATEMÁTICAS INTERACTIVAS</text>
+</svg>
+</div>
+</div>
+<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
+  MATRIZ INVERSA<br>
+  <span style="font-size:clamp(1.3rem,2.8vw,2rem);letter-spacing:.04em;font-style:italic">Fórmula de la adjunta</span>
+</h1>
+<div class="heroBadge">
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
+  Álgebra lineal · Bachillerato
+</div>
+<div class="heroDesc">
+  <p>La <strong style="color:#fff">fórmula de la adjunta</strong> calcula la inversa de una matriz a partir de sus adjuntos y su determinante. Es el método clásico para matrices de orden 2 y 3, y permite entender la estructura algebraica de la inversa.</p>
+</div>
+<div class="heroLinks">
+  <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Inversa por Gauss-Jordan</a>
+  <a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a>
+  <a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
+</div>
+</section>
+
+<!-- BLOQUE 1: Qué es + existencia -->
+<div class="grid">
+<section class="accentCard span6">
+  <p class="miniTitle">Definición</p>
+  <h2>1. ¿Qué es la matriz inversa?</h2>
+  <p>Dada una matriz cuadrada \(A\) de orden \(n\), se llama <strong>matriz inversa de \(A\)</strong> a la matriz \(A^{-1}\) que cumple:</p>
+  <div class="k">\[A \cdot A^{-1} = A^{-1} \cdot A = I_n\]</div>
+  <p>donde \(I_n\) es la matriz identidad de orden \(n\). La inversa, cuando existe, es <strong>única</strong>.</p>
+  <div class="miniBubble">
+    <span>Fórmula de la adjunta:</span>
+    <div class="k">\[A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\]</div>
+  </div>
+</section>
+
+<section class="card span6">
+  <p class="miniTitle">Condición de existencia</p>
+  <h2>¿Cuándo existe?</h2>
+  <p>La matriz \(A\) tiene inversa si y solo si su determinante es distinto de cero:</p>
+  <div class="k">\[\det(A) \neq 0 \implies \exists\, A^{-1}\]</div>
+  <ul class="notesList">
+    <li>Si \(\det(A) = 0\), la matriz se llama <strong>singular</strong> y no tiene inversa.</li>
+    <li>Si \(\det(A) \neq 0\), la matriz se llama <strong>regular</strong> o <strong>invertible</strong>.</li>
+  </ul>
+</section>
+</div>
+
+<!-- BLOQUE 2: Cofactores -->
+<div class="grid">
+<section class="accentCard span12">
+  <p class="miniTitle">Conceptos previos</p>
+  <h2>2. Adjuntos y matriz adjunta</h2>
+  <p>Para aplicar la fórmula de la adjunta es necesario calcular los <strong>adjuntos</strong> de cada elemento de la matriz.</p>
+  <div class="ops">
+    <div class="op">
+      <strong>Menor complementario \(M_{ij}\)</strong>
+      <span>El determinante de la submatriz que se obtiene eliminando la fila \(i\) y la columna \(j\) de \(A\).</span>
+    </div>
+    <div class="op">
+      <strong>Adjunto \(A_{ij}\)</strong>
+      <span>El menor complementario con el signo correspondiente a su posición: \(A_{ij} = (-1)^{i+j} M_{ij}\).</span>
+    </div>
+    <div class="op">
+      <strong>Matriz de signos</strong>
+      <span>La matriz \((-1)^{i+j}\) que determina el signo de cada cofactor. Para orden 3: \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\).</span>
+    </div>
+    <div class="op">
+      <strong>Matriz adjunta \(\text{Adj}(A)\)</strong>
+      <span>La matriz formada por todos los adjuntos \(A_{ij}\) en su posición \((i,j)\).</span>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:14px">Para una matriz 3×3 hay que calcular 9 adjuntos, cada uno como el determinante de una submatriz 2×2 con su signo correspondiente.</p>
+</section>
+</div>
+
+<!-- BLOQUE 3: La fórmula -->
+<div class="grid">
+<section class="accentCard span12">
+  <p class="miniTitle">Método</p>
+  <h2>3. La fórmula de la adjunta</h2>
+  <p>La <strong>matriz adjunta</strong> de \(A\), denotada \(\text{Adj}(A)\), está formada por los <strong>adjuntos</strong> \(A_{ij}\) de cada elemento de \(A\).</p>
+  <p>La fórmula de la inversa es:</p>
+  <div class="k">\[A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\]</div>
+  <p>El proceso tiene cuatro pasos:</p>
+  <ol class="stepsList">
+    <li><strong>Calcular \(\det(A)\).</strong> Si es cero, la inversa no existe. Si es distinto de cero, continuar.</li>
+    <li><strong>Calcular la matriz adjunta \(\text{Adj}(A)\).</strong> Para cada posición \((i,j)\), calcular el adjunto \(A_{ij} = (-1)^{i+j} M_{ij}\).</li>
+    <li><strong>Trasponer la adjunta.</strong> Calcular \(\text{Adj}(A)^t\).</li>
+    <li><strong>Dividir por el determinante.</strong> \(A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\).</li>
+  </ol>
+  <p class="muted">Para matrices 2×2 existe una fórmula directa que evita calcular los adjuntos uno a uno. Para matrices 3×3 es necesario el proceso completo.</p>
+</section>
+</div>
+
+<!-- BLOQUE 4: Fórmula 2×2 -->
+<div class="grid">
+<section class="card span12">
+  <p class="miniTitle">Caso especial</p>
+  <h2>4. Fórmula directa para matrices 2×2</h2>
+  <p>Para una matriz \(A = \begin{pmatrix}a&b\\c&d\end{pmatrix}\) con \(\det(A)=ad-bc\neq 0\), la fórmula de la adjunta se simplifica directamente a:</p>
+  <div class="k">\[A^{-1} = \dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\]</div>
+  <p>Es decir: se intercambian los elementos de la diagonal principal, se cambian de signo los de la diagonal secundaria, y se divide todo por el determinante. No hace falta calcular cofactores explícitamente.</p>
+</section>
+</div>
+
+<!-- BLOQUE 5: Ejemplo 2×2 -->
+<div class="grid">
+<section class="accentCard span12">
+  <p class="miniTitle">Ejemplo resuelto</p>
+  <h2>5. Ejemplo 2×2</h2>
+  <p>Calcular la inversa de \(A = \begin{pmatrix}3&1\\5&2\end{pmatrix}\).</p>
+  <p><strong>Paso 1.</strong> Determinante:</p>
+  <div class="k">\[\det(A)=3\cdot2-1\cdot5=6-5=1\neq 0\]</div>
+  <p><strong>Paso 2.</strong> Aplicar la fórmula directa 2×2:</p>
+  <div class="k">\[A^{-1}=\dfrac{1}{1}\begin{pmatrix}2&-1\\-5&3\end{pmatrix}=\begin{pmatrix}2&-1\\-5&3\end{pmatrix}\]</div>
+  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}3&1\\5&2\end{pmatrix}\begin{pmatrix}2&-1\\-5&3\end{pmatrix}=\begin{pmatrix}6-5&-3+3\\10-10&-5+6\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}\checkmark\)</p>
+</section>
+</div>
+
+<!-- BLOQUE 6: Ejemplo 3×3 -->
+<div class="grid">
+<section class="accentCard span12">
+  <p class="miniTitle">Ejemplo resuelto</p>
+  <h2>6. Ejemplo 3×3</h2>
+  <p>Calcular la inversa de \(A=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\).</p>
+
+  <p><strong>Paso 1. Determinante.</strong></p>
+  <div class="k">\[\det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=1\cdot2-2\cdot(-1)=2+2=4\neq 0\]</div>
+
+  <p><strong>Paso 2. Matriz adjunta.</strong> Aplicando \(A_{ij}=(-1)^{i+j}M_{ij}\):</p>
+  <div class="k">\[
+  \text{Adj}(A)=\begin{bmatrix}
+  +\begin{vmatrix}1&1\\0&2\end{vmatrix} & -\begin{vmatrix}0&1\\1&2\end{vmatrix} & +\begin{vmatrix}0&1\\1&0\end{vmatrix}\\[18pt]
+  -\begin{vmatrix}2&0\\0&2\end{vmatrix} & +\begin{vmatrix}1&0\\1&2\end{vmatrix} & -\begin{vmatrix}1&2\\1&0\end{vmatrix}\\[18pt]
+  +\begin{vmatrix}2&0\\1&1\end{vmatrix} & -\begin{vmatrix}1&0\\0&1\end{vmatrix} & +\begin{vmatrix}1&2\\0&1\end{vmatrix}
+  \end{bmatrix}
+  =\begin{bmatrix}2&1&-1\\-4&2&2\\2&-1&1\end{bmatrix}
+  \]</div>
+
+  <p><strong>Paso 3. Traspuesta de la adjunta:</strong></p>
+  <div class="k">\[\text{Adj}(A)^t=\begin{pmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{pmatrix}\]</div>
+
+  <p><strong>Paso 4. Inversa:</strong></p>
+  <div class="k">\[A^{-1}=\dfrac{1}{4}\begin{pmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{pmatrix}=\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}\]</div>
+
+  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\)</p>
+</section>
+</div>
+
+<!-- BLOQUE 7: Errores -->
+<div class="grid">
+<section class="card span12">
+  <p class="miniTitle">Atención</p>
+  <h2>7. Errores más comunes al calcular la inversa por adjunta</h2>
+  <ul class="notesList">
+    <li><strong>Olvidar aplicar el signo \((-1)^{i+j}\).</strong> El cofactor no es el menor solo: lleva el signo de su posición. La matriz de signos \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\) ayuda a no cometer este error.</li>
+    <li><strong>Eliminar la fila y columna incorrectas.</strong> Para calcular \(M_{ij}\) se elimina la fila \(i\) y la columna \(j\), no la fila \(j\) y la columna \(i\).</li>
+    <li><strong>Orden entre trasponer y dividir.</strong> Ambas operaciones son intercambiables: se puede trasponer primero y luego dividir, o dividir primero y luego trasponer. El resultado es el mismo.</li>
+    <li><strong>No comprobar el resultado.</strong> Siempre conviene verificar que \(A \cdot A^{-1} = I\), al menos para uno o dos elementos.</li>
+    <li><strong>Aplicar este método a matrices de orden 4 o superior.</strong> Para órdenes altos el método de Gauss-Jordan es mucho más eficiente. La fórmula de la adjunta es práctica sobre todo para órdenes 2 y 3.</li>
+  </ul>
+</section>
+</div>
+
+<!-- FAQ -->
+<div class="grid">
+<section class="card span12">
+  <p class="miniTitle">Preguntas frecuentes</p>
+  <h2>FAQ</h2>
+  <ul class="notesList">
+    <li><strong>¿Qué diferencia hay entre este método y el de Gauss-Jordan?</strong> Con Gauss-Jordan se aplican operaciones elementales sobre la matriz ampliada \([A\mid I]\). Con la adjunta se trabaja con determinantes de submatrices. Ambos dan el mismo resultado, pero Gauss-Jordan es más eficiente para matrices grandes y la adjunta es más ilustrativa para entender la estructura algebraica de la inversa.</li>
+    <li><strong>¿Qué es exactamente la matriz adjunta?</strong> La matriz adjunta \(\text{Adj}(A)\) está formada por los adjuntos \(A_{ij}\) de cada elemento. Para obtener la inversa se usa su traspuesta: \(A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\).</li>
+    <li><strong>¿Puede una matriz cuadrada no tener inversa?</strong> Sí: exactamente cuando \(\det(A)=0\) (matriz singular). En ese caso la fórmula no es aplicable porque implica dividir por cero.</li>
+    <li><strong>¿Tiene sentido hablar de inversa de una matriz no cuadrada?</strong> No en el sentido habitual. La inversa solo se define para matrices cuadradas.</li>
+    <li><strong>¿La inversa sirve para resolver sistemas?</strong> Sí: si \(Ax=b\) y \(A\) es invertible, entonces \(x=A^{-1}b\). Para sistemas de pocas incógnitas la regla de Cramer puede ser más cómoda, y para sistemas grandes el método de Gauss es más eficiente.</li>
+    <li><strong>¿Hay relación entre la adjunta y los determinantes?</strong> Sí. El producto \(A \cdot \text{Adj}(A)^t = \det(A) \cdot I\). Esta identidad es la base de la fórmula de la inversa y también se usa para demostrar que la inversa es única.</li>
+  </ul>
+</section>
+</div>
+
+<!-- EJERCICIOS -->
+<section class="mk-ejercicios">
+<h2>Ejercicios propuestos</h2>
+<p class="mk-subtitulo">Calcula la inversa de cada matriz usando la fórmula de la adjunta. Intenta resolverlo antes de ver la solución.</p>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 2×2 · Nivel básico</span></div>
+<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}4&3\\3&2\end{pmatrix}\) usando la fórmula de la adjunta.</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante</h4>
+\[\det(A)=4\cdot2-3\cdot3=8-9=-1\neq 0\]
+<h4>Fórmula directa 2×2</h4>
+\[A^{-1}=\dfrac{1}{-1}\begin{pmatrix}2&-3\\-3&4\end{pmatrix}=\begin{pmatrix}-2&3\\3&-4\end{pmatrix}\]
+<h4>Comprobación</h4>
+\[A\cdot A^{-1}=\begin{pmatrix}4&3\\3&2\end{pmatrix}\begin{pmatrix}-2&3\\3&-4\end{pmatrix}=\begin{pmatrix}-8+9&12-12\\-6+6&9-8\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}\checkmark\]
+<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}-2&3\\3&-4\end{pmatrix}\)</span>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Singular</span><span class="mk-ej-level">Matriz 2×2 · Nivel básico</span></div>
+<div class="mk-enunciado">Determina si \(A=\begin{pmatrix}6&4\\3&2\end{pmatrix}\) tiene inversa. Si no la tiene, explica por qué.</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante</h4>
+\[\det(A)=6\cdot2-4\cdot3=12-12=0\]
+La matriz es <strong>singular</strong>: su determinante es cero, por lo que no existe \(A^{-1}\).
+<div class="mk-tip"><strong>Observación:</strong> La fila 2 es la mitad de la fila 1 (\(F_2=\tfrac{1}{2}F_1\)), lo que confirma que las filas son linealmente dependientes y el determinante es nulo.</div>
+<span class="mk-resultado">La matriz no tiene inversa.</span>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 3×3 · Nivel medio</span></div>
+<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}1&0&0\\2&1&0\\3&2&1\end{pmatrix}\).</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante</h4>
+La matriz es triangular inferior, por lo que \(\det(A)=1\cdot1\cdot1=1\neq 0\).
+<h4>Matriz adjunta</h4>
+\[\text{Adj}(A)=\begin{bmatrix}
++\begin{vmatrix}1&0\\2&1\end{vmatrix} & -\begin{vmatrix}2&0\\3&1\end{vmatrix} & +\begin{vmatrix}2&1\\3&2\end{vmatrix}\\[18pt]
+-\begin{vmatrix}0&0\\2&1\end{vmatrix} & +\begin{vmatrix}1&0\\3&1\end{vmatrix} & -\begin{vmatrix}1&0\\3&2\end{vmatrix}\\[18pt]
++\begin{vmatrix}0&0\\1&0\end{vmatrix} & -\begin{vmatrix}1&0\\2&0\end{vmatrix} & +\begin{vmatrix}1&0\\2&1\end{vmatrix}
+\end{bmatrix}=\begin{bmatrix}1&-2&1\\0&1&-2\\0&0&1\end{bmatrix}\]
+<h4>Traspuesta de la adjunta</h4>
+\[\text{Adj}(A)^t=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\]
+<h4>Inversa</h4>
+\[A^{-1}=\dfrac{1}{1}\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\]
+<h4>Comprobación</h4>
+\[\begin{pmatrix}1&0&0\\2&1&0\\3&2&1\end{pmatrix}\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\]
+<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\)</span>
+<div class="mk-tip"><strong>Observación:</strong> La inversa de una matriz triangular inferior es también triangular inferior. La diagonal de la inversa es el inverso de cada elemento diagonal de \(A\); como todos valen 1, la diagonal de \(A^{-1}\) también es de unos.</div>
+</div></div>
+
+<div class="mk-ejercicio">
+<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 3×3 · Nivel medio-alto</span></div>
+<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}2&1&1\\1&2&1\\1&1&2\end{pmatrix}\).</div>
+<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+<div class="mk-sol">
+<h4>Determinante</h4>
+\[\det(A)=2(4-1)-1(2-1)+1(1-2)=6-1-1=4\neq 0\]
+<h4>Matriz adjunta</h4>
+\[\text{Adj}(A)=\begin{bmatrix}
++\begin{vmatrix}2&1\\1&2\end{vmatrix} & -\begin{vmatrix}1&1\\1&2\end{vmatrix} & +\begin{vmatrix}1&2\\1&1\end{vmatrix}\\[18pt]
+-\begin{vmatrix}1&1\\1&2\end{vmatrix} & +\begin{vmatrix}2&1\\1&2\end{vmatrix} & -\begin{vmatrix}2&1\\1&1\end{vmatrix}\\[18pt]
++\begin{vmatrix}1&1\\2&1\end{vmatrix} & -\begin{vmatrix}2&1\\1&1\end{vmatrix} & +\begin{vmatrix}2&1\\1&2\end{vmatrix}
+\end{bmatrix}=\begin{bmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{bmatrix}\]
+<h4>Traspuesta de la adjunta</h4>
+En este caso \(\text{Adj}(A)\) es simétrica, por lo que \(\text{Adj}(A)^t=\text{Adj}(A)\):
+\[\text{Adj}(A)=\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\]
+<h4>Inversa</h4>
+\[A^{-1}=\dfrac{1}{4}\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\]
+<h4>Comprobación (primera fila × primera columna)</h4>
+\[\tfrac{1}{4}(3\cdot2+(-1)\cdot1+(-1)\cdot1)=\tfrac{1}{4}(6-1-1)=\tfrac{4}{4}=1\checkmark\]
+<span class="mk-resultado">\(A^{-1}=\dfrac{1}{4}\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\)</span>
+<div class="mk-tip"><strong>Observación:</strong> La matriz \(A\) es simétrica y su inversa también lo es. Además la matriz adjunta coincide con su propia traspuesta, lo que simplifica el cálculo.</div>
+</div></div>
+
+</section>
+
+<!-- CTA herramienta -->
+<div class="herramienta-cta" style="max-width:1060px;margin:0 auto 40px">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz, calcular la inversa por la fórmula de la adjunta paso a paso y obtener el resultado automáticamente.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
+
+</div>
+</div>
+
+<!-- CALCULADORA -->
+<div id="calculadora" style="display:none">
+<header id="tituloinicial">
+  <h2>MATRIZ INVERSA — Fórmula de la Adjunta</h2>
+  <div id="controlesTop">
+    <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
+    <a aria-label="Volver a inicio" href="../../index.html" id="btnHome" title="Inicio">
+      <svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18"><path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"/></svg>
+      <span>VOLVER</span>
+    </a>
+  </div>
+</header>
+
+<div id="contenedor">
+
+  <section id="caja1">
+
+    <!-- Fila 1: caja oscura + controles -->
+    <div id="caja111">
+      <div id="caja1111">
+        <div id="caja11111">MATRIZ INTRODUCIDA</div>
+        <div id="caja11112">Elige el orden de la matriz</div>
+      </div>
+      <div id="caja1112">
+
+        <!-- Botones de orden -->
+        <div id="zonaOrden">
+          <span style="font-size:12px;font-weight:700;color:var(--muted);margin-right:6px">Orden:</span>
+          <button class="btnN" data-n="2">2×2</button>
+          <button class="btnN" data-n="3">3×3</button>
+          <button class="btnN" data-n="4">4×4</button>
+        </div>
+
+        <!-- Matriz con paréntesis (aparece al elegir orden) -->
+        <div id="zonaMatriz" style="display:none"></div>
+
+        <!-- Confirmada: botón resetear -->
+        <div id="zonaListo" style="display:none">
+          <button id="btnResetear2">Resetear</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Fila 2: dos paneles grandes -->
+    <div id="caja112" style="display:none">
+
+      <!-- Izquierda: matriz + resultados -->
+      <div id="caja1121">
+        <div id="matrizDisplay" style="padding:6px 0 10px"></div>
+        <div id="zonaResultados"></div>
+      </div>
+
+      <!-- Derecha: opciones -->
+      <div id="caja1122">
+        <div id="cajaOpcTitulo">PASOS</div>
+        <div id="cajaOpcLista">
+          <label id="pasoRow1"><input type="radio" name="adjOpc" value="1"> Paso 1: Cálculo del determinante</label>
+          <label id="pasoRow2"><input type="radio" name="adjOpc" value="2"> Paso 2: Obtención de los menores complementarios</label>
+          <label id="pasoRow3"><input type="radio" name="adjOpc" value="3"> Paso 3: Obtención de la matriz adjunta transpuesta</label>
+          <label id="pasoRow4"><input type="radio" name="adjOpc" value="4"> Paso 4: Obtención de la matriz inversa</label>
+        </div>
+        <div id="zonaParams"></div>
+        <div id="errMsg"></div>
+        <div id="cajaOpcBtns" style="display:flex;align-items:center;gap:6px">
+          <button id="btnSeleccionar">Seleccionar</button>
+          <button id="btnResetear">RESET</button>
+          <div style="flex:1"></div>
+          <button id="btnAuto">⚡ Solución automática</button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="caja2borde" style="display:none">
+    <div id="caja2">
+      <h4 id="letreroUsuario">ESPACIO DE OPERACIONES PROPUESTAS Y EFECTUADAS POR EL USUARIO</h4>
+      <div id="caja21"></div>
+    </div>
+  </section>
+
+</div><!-- /contenedor -->
+
+<footer class="siteFooter"><div class="footerInner">
+<a href="/about.html">Acerca de</a>
+<a href="/contacto.html">Contacto</a>
+<a href="/privacy.html">Privacidad</a>
+<a href="/cookies.html">Cookies</a>
+<a href="/aviso_legal.html">Aviso legal</a>
+</div></footer>
+</div>
+
+<style>
+/* ── Calculadora adjunta — estilo idéntico a Rango por menores ──────────── */
+#calculadora{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--accent-2:#0ea5a4;--border:#d1d5db;--soft:#eef2f7;--shadow:0 6px 18px rgba(0,0,0,.08);--radius:12px;--radius-sm:8px;--gap:10px}
+#calculadora *{box-sizing:border-box}
+#tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px}
+/* ── Rango-style layout (igual que Hoja_estilo_rango_menores.css) ────────── */
+#tituloinicial h2{font-size:18px;font-weight:800;letter-spacing:.2px;flex:1;text-align:left;margin:0;color:var(--ink)}
+#controlesTop{display:flex;align-items:center;gap:18px}
+.abreVentana{font-size:14px;font-weight:700;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);color:var(--ink);text-decoration:none}
+.abreVentana:hover{background:#e9eef9}
+#btnHome{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:46px;height:50px;background:var(--soft);border:1px solid var(--border);border-radius:10px;gap:2px;transition:.15s;text-decoration:none}
+#btnHome:hover{transform:translateY(-1px);background:#e9eef9}
+#btnHome svg{display:block;fill:var(--ink)}
+#btnHome span{font-size:9px;line-height:9px;color:var(--ink);font-weight:800;letter-spacing:.5px}
+#contenedor{height:calc(100vh - 76px);width:100%;padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap)}
+#caja1{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px;display:flex;flex-direction:column;gap:8px;flex:0 0 auto;min-height:290px}
+#caja111{display:flex;gap:var(--gap);align-items:stretch;margin-bottom:8px}
+#caja1111{flex:0 0 calc(30% - var(--gap)/2);min-width:220px;background:linear-gradient(135deg,#0f172a,#1f2937);color:#fff;border-radius:var(--radius-sm);border:1px solid #0b1020;padding:10px;display:flex;flex-direction:column;justify-content:space-between}
+#caja11111{display:flex;justify-content:center;align-items:center;text-align:center;font-size:14px;font-weight:800;letter-spacing:.6px;opacity:.95}
+#caja11112{margin-top:8px;font-size:11px;font-weight:700;color:#dbeafe;line-height:1.25;min-height:22px}
+#caja1112{flex:0 0 calc(69.5% - var(--gap)/2);background:var(--soft);border:1px dashed var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;gap:8px;padding:8px;flex-wrap:wrap}
+#caja112{display:flex;gap:var(--gap);align-items:stretch;min-height:190px}
+#caja1121,#caja1122{background:linear-gradient(180deg,#fff,var(--soft));border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px;flex:1;min-width:0;display:flex;flex-direction:column}
+#caja2borde{background:transparent;flex:1;min-height:220px}
+#caja2{height:100%;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px}
+#caja2 h4{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:6px 0 4px}
+#caja21{min-height:160px;border:1px solid var(--border);border-radius:var(--radius-sm);background:linear-gradient(180deg,#fff,var(--soft));margin:4px 0 10px;padding:10px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:10px;overflow:auto}
+/* Buttons */
+#calculadora button{appearance:none;border:1px solid var(--border);background:var(--soft);padding:7px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer;transition:.12s;color:var(--ink)}
+#calculadora button:hover{transform:translateY(-1px);background:#e9eef9;border-color:#c7d2fe}
+#btnSeleccionar{background:var(--soft)!important}
+#btnAuto{background:linear-gradient(90deg,var(--accent),var(--accent-2))!important;color:#fff!important;border-color:transparent!important}
+#btnAuto:hover{filter:brightness(1.06)!important}
+/* Matrix input */
+#calculadora input[type="text"]{font-family:inherit;font-size:13px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:4px 7px;outline:none;width:50px;text-align:center;transition:.12s}
+#calculadora input[type="text"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+#calculadora table{border-collapse:separate;border-spacing:5px;font-size:13px}
+/* Options panel */
+#cajaOpcTitulo{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.adjCell{cursor:pointer;padding:3px 7px;border-radius:4px;font-size:12px;font-weight:700;border:1.5px solid var(--accent);color:var(--accent);background:#fff;transition:.12s;line-height:1.4}
+.adjCell:hover{background:var(--soft);transform:translateY(-1px)}
+.adjCell.active{border-color:var(--accent-2);color:var(--accent-2);background:#f0fff4}
+.adjCellDone{display:inline-block;padding:3px 7px;border-radius:4px;font-size:12px;font-weight:700;border:1.5px solid #16a34a;color:#16a34a;background:#f0fdf4}
+#cajaOpcLista{display:flex;flex-direction:column;gap:2px;flex:1}
+#cajaOpcLista label{display:flex;align-items:center;gap:6px;padding:5px 4px;font-size:13px;color:var(--ink);cursor:pointer;border-radius:var(--radius-sm);transition:.1s}
+#cajaOpcLista label:hover{background:rgba(37,99,235,.06)}
+#cajaOpcLista input[type="radio"]{accent-color:var(--accent)}
+#zonaParams{padding:6px 0;font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:6px}
+.adjParamRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.adjParamRow label{font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;color:var(--ink)}
+.adjNumInput{width:48px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-weight:700;color:var(--ink);outline:none;text-align:center;font-size:13px}
+.adjNumInput:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+#errMsg{font-size:11px;font-weight:800;color:#b91c1c;min-height:16px;padding:2px 0}
+#cajaOpcBtns{display:flex;gap:6px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border);margin-top:6px}
+/* Result cards */
+.adjResultCard{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;align-self:flex-start}
+.adjResultCardTitle{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.adjResultCardBody{font-size:13px;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.adjSubline{font-size:12px;color:var(--muted)}
+.adjFinalVal{font-weight:700}
+.adjVal{color:var(--accent)}
+.adjBadgeOk{background:#dcfce7;color:#16a34a;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:800;margin-left:4px}
+.adjBadgeSingular{background:#fee2e2;color:#b91c1c;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:800;margin-left:4px}
+.resultBloque{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;align-self:flex-start}
+.resultado-final{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:var(--radius-sm);padding:10px;width:100%}
+.resultado-final strong{display:block;color:var(--accent);font-size:11px;font-weight:900;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.singular-aviso{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius-sm);padding:8px;color:#b91c1c;font-weight:700;font-size:12px;width:100%}
+/* Matriz display */
+#matrizDisplay{font-size:13px;color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:8px}
+#matrizDisplay table{border-collapse:separate;border-spacing:4px}
+#matrizDisplay td{min-width:32px;text-align:center;font-size:13px;color:var(--ink);font-weight:600;padding:2px 4px}
+/* Botones de orden */
+.btnN{border-radius:999px!important;border:1.5px solid var(--accent)!important;color:var(--accent)!important;background:#fff!important;font-weight:700!important;padding:5px 14px!important;font-size:12px!important}
+.btnN:hover,.btnN.active{background:var(--accent)!important;color:#fff!important}
+/* Paréntesis curvos de la matriz */
+.matrixWrap{display:inline-flex;align-items:stretch;gap:3px;vertical-align:middle}
+.mp{display:block;width:10px;flex-shrink:0;border:2.5px solid var(--ink)}
+.mp.lp{border-right:none;border-radius:60% 0 0 60%}
+.mp.rp{border-left:none;border-radius:0 60% 60% 0}
+/* Barras verticales para determinante */
+.detWrap{display:inline-flex;align-items:stretch;gap:4px;vertical-align:middle}
+.det-bar{display:block;width:0;border-left:2px solid var(--ink);flex-shrink:0}
+@media(max-width:1100px){#caja111{flex-direction:column}#caja1111,#caja1112{flex:none!important;width:100%!important}}
+@media(max-width:700px){#caja112{flex-direction:column}}
+</style>
+
+<script>
+(function(){
+// ── Fracciones ───────────────────────────────────────────────────────────
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;}
+function frac(n,d){if(d===0)return{n:0,d:1};if(n===0)return{n:0,d:1};var s=d<0?-1:1;n=s*n;d=s*d;var g=gcd(Math.abs(n),d);return{n:n/g,d:d/g};}
+function fadd(a,b){return frac(a.n*b.d+b.n*a.d,a.d*b.d);}
+function fmul(a,b){return frac(a.n*b.n,a.d*b.d);}
+function fneg(a){return{n:-a.n,d:a.d};}
+function fstr(f){if(f.d===1)return String(f.n);return f.n+'/'+f.d;}
+function fnum(x){
+  // Parsea entero, decimal o fracción "a/b"
+  x=String(x).trim();
+  if(x.indexOf('/')>=0){var p=x.split('/');return frac(parseInt(p[0]),parseInt(p[1]));}
+  var v=parseFloat(x);
+  if(!isFinite(v))return null;
+  // Convertir decimal a fracción
+  var s=x.replace('-','');
+  var dot=s.indexOf('.');
+  if(dot<0)return frac(Math.round(v),1);
+  var dec=s.length-dot-1;
+  var den=Math.pow(10,dec);
+  return frac(Math.round(v*den),den);
+}
+function feq(a,b){return a.n===b.n&&a.d===b.d;}
+var ZERO={n:0,d:1},ONE={n:1,d:1};
+
+// ── Determinante (recursivo) ─────────────────────────────────────────────
+function submat(M,row,col){
+  return M.filter((_,i)=>i!==row).map(r=>r.filter((_,j)=>j!==col));
+}
+function det(M){
+  var n=M.length;
+  if(n===1)return M[0][0];
+  if(n===2)return frac(M[0][0].n*M[1][1].d*M[1][1].n - M[0][1].n*M[0][1].d /* wrong */,1);
+  // Usar Laplace por primera fila
+  if(n===2){
+    return frac(
+      M[0][0].n*M[1][1].n*M[0][0].d*M[1][1].d - M[0][1].n*M[1][0].n,
+      M[0][0].d*M[1][1].d
+    );
+  }
+  var result=ZERO;
+  for(var j=0;j<n;j++){
+    var s=(j%2===0)?1:-1;
+    var cofij=fmul({n:s,d:1},fmul(M[0][j],det(submat(M,0,j))));
+    result=fadd(result,cofij);
+  }
+  return result;
+}
+// Reescribir det correctamente
+function det2(M){
+  var n=M.length;
+  if(n===1)return M[0][0];
+  if(n===2){
+    return fadd(fmul(M[0][0],M[1][1]),fneg(fmul(M[0][1],M[1][0])));
+  }
+  var result=ZERO;
+  for(var j=0;j<n;j++){
+    var sign=(j%2===0)?ONE:{n:-1,d:1};
+    var minor=det2(submat(M,0,j));
+    result=fadd(result,fmul(sign,fmul(M[0][j],minor)));
+  }
+  return result;
+}
+
+// ── Estado ───────────────────────────────────────────────────────────────
+var currentN=3;
+var fase='orden'; // 'orden' | 'entrada' | 'listo'
+var matrizActual=null;
+var detValue=null;
+var adjCalculados={};
+
+document.addEventListener('DOMContentLoaded',function(){
+  // Botones de orden (2×2 … 5×5)
+  document.querySelectorAll('.btnN').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.btnN').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      currentN=parseInt(b.dataset.n);
+      mostrarMatrizEntrada(currentN);
+    });
+  });
+
+  document.getElementById('btnResetear').addEventListener('click',irFaseOrden);
+  document.getElementById('btnResetear2').addEventListener('click',irFaseOrden);
+  document.getElementById('btnSeleccionar').addEventListener('click',ejecutarOpcion);
+  document.getElementById('btnAuto').addEventListener('click',solucionAutomatica);
+
+  document.querySelectorAll('input[name="adjOpc"]').forEach(function(r){
+    r.addEventListener('change',function(){actualizarParams(parseInt(this.value));});
+  });
+
+  // Navegación intro/calc
+  var intro=document.getElementById('introPrincipal');
+  var calc=document.getElementById('calculadora');
+  function mostrarCalc(ev){if(ev)ev.preventDefault();intro.style.display='none';calc.style.display='flex';calc.style.flexDirection='column';calc.style.minHeight='100vh';document.body.style.overflow='auto';window.scrollTo(0,0);}
+  function mostrarIntro(ev){if(ev)ev.preventDefault();calc.style.display='none';intro.style.display='block';window.scrollTo(0,0);}
+  document.querySelectorAll("a[href='#calculadora'],#btnMostrarCalculadora,#btnMostrarCalculadora2").forEach(function(b){b.addEventListener('click',mostrarCalc);});
+  var bv=document.getElementById('btnVolverExplicacion');
+  if(bv)bv.addEventListener('click',mostrarIntro);
+});
+
+// ── Fases de la interfaz ─────────────────────────────────────────────────
+function irFaseOrden(){
+  matrizActual=null;detValue=null;adjCalculados={};
+  document.getElementById('caja111').style.display='';
+  document.getElementById('caja11112').textContent='Elige el orden de la matriz';
+  document.getElementById('zonaOrden').style.display='';
+  document.getElementById('zonaMatriz').style.display='none';
+  document.getElementById('zonaListo').style.display='none';
+  document.getElementById('caja112').style.display='none';
+  document.getElementById('caja2borde').style.display='none';
+  document.getElementById('caja21').innerHTML='';
+  document.getElementById('matrizDisplay').innerHTML='';
+  document.getElementById('errMsg').textContent='';
+  document.querySelectorAll('.btnN').forEach(function(b){b.classList.remove('active');});
+}
+
+function mostrarMatrizEntrada(n){
+  currentN=n;
+  document.getElementById('caja11112').textContent='Matriz '+n+'×'+n+' — Introduce los valores';
+  document.getElementById('zonaOrden').style.display='none';
+  document.getElementById('zonaListo').style.display='none';
+  document.getElementById('zonaMatriz').style.display='';
+  document.getElementById('caja112').style.display='none';
+  document.getElementById('caja2borde').style.display='none';
+  document.getElementById('errMsg').textContent='';
+  renderMatriz(n);
+  // Foco en primera celda
+  var first=document.getElementById('m0_0');
+  if(first)setTimeout(function(){first.focus();},50);
+}
+
+function renderMatriz(n){
+  var zona=document.getElementById('zonaMatriz');
+  // Tabla de inputs con paréntesis CSS
+  var tbl='<table style="border-collapse:separate;border-spacing:5px"><tbody>';
+  for(var i=0;i<n;i++){
+    tbl+='<tr>';
+    for(var j=0;j<n;j++){
+      tbl+='<td><input type="text" id="m'+i+'_'+j+'" placeholder="" autocomplete="off" style="width:46px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-weight:700;text-align:center;background:#fff;outline:none;font-size:13px;color:var(--ink)"/></td>';
+    }
+    tbl+='</tr>';
+  }
+  tbl+='</tbody></table>';
+  zona.innerHTML='<div class="matrixWrap"><div class="mp lp"></div>'+tbl+'<div class="mp rp"></div></div>';
+  var inputs=zona.querySelectorAll('input');
+  inputs.forEach(function(inp,idx){
+    inp.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key==='Tab'){
+        if(e.key==='Tab')return; // Tab nativo ya avanza
+        e.preventDefault();
+        if(idx<inputs.length-1){inputs[idx+1].focus();}
+        else{confirmarMatriz();}
+      }
+    });
+    inp.addEventListener('blur',function(){
+      // Al salir de la última celda (Tab desde la última) confirmar
+      if(idx===inputs.length-1){confirmarMatriz();}
+    });
+    inp.addEventListener('focus',function(){this.select();});
+  });
+}
+
+function leerMatriz(){
+  var n=currentN,M=[];
+  for(var i=0;i<n;i++){
+    M.push([]);
+    for(var j=0;j<n;j++){
+      var el=document.getElementById('m'+i+'_'+j);
+      var v=fnum(el?(el.value.trim()||'0'):'0');
+      if(v===null){document.getElementById('errMsg').textContent='Valor no válido en fila '+(i+1)+', col '+(j+1)+'.';return null;}
+      M[i].push(v);
+    }
+  }
+  return M;
+}
+
+function confirmarMatriz(){
+  if(matrizActual)return; // ya confirmada
+  var M=leerMatriz();
+  if(!M)return;
+  matrizActual=M;detValue=null;adjCalculados={};
+  document.getElementById('caja111').style.display='none';
+  document.getElementById('caja112').style.display='';
+  document.getElementById('caja2borde').style.display='';
+  document.getElementById('errMsg').textContent='';
+  renderMatrizDisplay(M);
+  var r1=document.querySelector('input[name="adjOpc"][value="1"]');
+  if(r1){r1.checked=true;actualizarParams(1);}
+}
+
+function renderMatrizDisplay(M){
+  var n=M.length;
+  var tbl='<table style="border-collapse:separate;border-spacing:6px"><tbody>';
+  for(var i=0;i<n;i++){
+    tbl+='<tr>';
+    for(var j=0;j<n;j++){
+      tbl+='<td style="padding:2px 6px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+fstr(M[i][j])+'</td>';
+    }
+    tbl+='</tr>';
+  }
+  tbl+='</tbody></table>';
+  var html=
+    '<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">MATRIZ INTRODUCIDA</div>'+
+    '<div style="display:flex;align-items:center;gap:6px">'+
+      '<span style="font-size:14px;font-weight:700;color:var(--ink);align-self:center">A =</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+tbl+'<div class="mp rp"></div></div>'+
+    '</div>';
+  document.getElementById('matrizDisplay').innerHTML=html;
+}
+
+// ── Matriz adjunta clicable ──────────────────────────────────────────────
+function renderAdjMatrix(){
+  var html='<div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px">Haz clic en un adjunto para calcularlo</div>';
+  html+='<div style="display:inline-flex;align-items:center;gap:8px">';
+  html+='<span style="font-size:13px;font-weight:700;color:var(--ink)">Adj(A) =</span>';
+  html+='<div class="matrixWrap"><div class="mp lp"></div>';
+  html+='<table style="border-collapse:separate;border-spacing:6px"><tbody>';
+  for(var i=0;i<currentN;i++){
+    html+='<tr>';
+    for(var j=0;j<currentN;j++){
+      var key=i+'_'+j;
+      if(adjCalculados[key]){
+        var v=adjCalculados[key];
+        html+='<td><span class="adjCellDone">'+fstr(v)+'</span></td>';
+      } else {
+        html+='<td><button class="adjCell" data-i="'+i+'" data-j="'+j+'">A<sub>'+(i+1)+''+(j+1)+'</sub></button></td>';
+      }
+    }
+    html+='</tr>';
+  }
+  html+='</tbody></table>';
+  html+='<div class="mp rp"></div></div></div>';
+  return html;
+}
+
+window.seleccionarMenor=function(i,j){
+  // Quitar active de otras celdas
+  document.querySelectorAll('.adjCell').forEach(function(b){b.classList.remove('active');});
+  var btn=document.querySelector('.adjCell[data-i="'+i+'"][data-j="'+j+'"]');
+  if(btn)btn.classList.add('active');
+  window.calcularMenorIJ(i,j);
+};
+
+// ── Paso 2: funciones globales ────────────────────────────────────────────
+window.calcularMenor=function(){
+  var iEl=document.getElementById('inputI'),jEl=document.getElementById('inputJ');
+  var ii=parseInt(iEl?iEl.value:'')-1, jj=parseInt(jEl?jEl.value:'')-1;
+  var form=document.getElementById('minorForm');
+  if(!form||!matrizActual)return;
+  if(isNaN(ii)||isNaN(jj)||ii<0||ii>=currentN||jj<0||jj>=currentN){
+    form.innerHTML='<span style="font-size:12px;color:#b91c1c">Valores entre 1 y '+currentN+'.</span>';return;
+  }
+  if(adjCalculados[ii+'_'+jj]){
+    var a=adjCalculados[ii+'_'+jj];
+    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+(jj+1)+'</sub> = '+fstr(a)+' — ya calculado</span>';return;
+  }
+  var n1=currentN-1;
+  var subTbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
+  for(var r=0;r<n1;r++){
+    subTbl+='<tr>';
+    for(var c=0;c<n1;c++)
+      subTbl+='<td><input type="text" id="mc_'+r+'_'+c+'" style="width:38px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:600;background:#fff;outline:none"></td>';
+    subTbl+='</tr>';
+  }
+  subTbl+='</tbody></table>';
+  form.innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">'+
+      '<span style="font-size:13px;font-weight:700">A<sub>'+(ii+1)+(jj+1)+'</sub> =</span>'+
+      '<input type="text" id="mc_sign" placeholder="±" style="width:34px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff;outline:none">'+
+      '<div class="detWrap"><div class="det-bar"></div>'+subTbl+'<div class="det-bar"></div></div>'+
+      '<span style="font-size:18px;font-weight:300">=</span>'+
+      '<input type="text" id="mc_result" placeholder="" style="width:52px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff;outline:none">'+
+      '<span id="mc_feedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
+    '</div>';
+  // Tab/Enter navega entre todos los campos; último → valida
+  var ids=['mc_sign'];
+  for(var r=0;r<n1;r++) for(var c=0;c<n1;c++) ids.push('mc_'+r+'_'+c);
+  ids.push('mc_result');
+  ids.forEach(function(id,idx){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key==='Tab'){
+        e.preventDefault();
+        if(idx<ids.length-1){var nx=document.getElementById(ids[idx+1]);if(nx)nx.focus();}
+        else{window.validarMenor();}
+      }
+    });
+  });
+  document.getElementById('mc_sign').focus();
+};
+
+window.validarMenor=function(){
+  var form=document.getElementById('minorForm');
+  var ii=form?parseInt(form.dataset.ii):-1, jj=form?parseInt(form.dataset.jj):-1;
+  if(isNaN(ii)||isNaN(jj)||!matrizActual)return;
+  var n1=currentN-1;
+  var sub=submat(matrizActual,ii,jj);
+  var cSign=((ii+jj)%2===0)?1:-1;
+  var cAdj=fmul({n:cSign,d:1},det2(sub));
+  var errors=[];
+  // Signo
+  var sv=(document.getElementById('mc_sign')||{}).value||'';sv=sv.trim();
+  var signOk=cSign>0?(sv==='+'||sv==='+'):(sv==='-'||sv==='−'||sv==='−');
+  if(!signOk)errors.push('signo (esperado '+(cSign>0?'+':'−')+')');
+  // Celdas
+  var cellOk=true;
+  for(var r=0;r<n1&&cellOk;r++)for(var c=0;c<n1;c++){
+    var v=fnum(((document.getElementById('mc_'+r+'_'+c))||{value:''}).value.trim());
+    if(v===null||!feq(v,sub[r][c])){cellOk=false;break;}
+  }
+  if(!cellOk)errors.push('valores del menor');
+  // Resultado
+  var rv=fnum(((document.getElementById('mc_result'))||{value:''}).value.trim());
+  if(rv===null||!feq(rv,cAdj))errors.push('resultado (esperado '+fstr(cAdj)+')');
+  var form=document.getElementById('minorForm');
+  if(errors.length===0){
+    adjCalculados[ii+'_'+jj]=cAdj;
+    // Refrescar la matriz clicable con el valor nuevo
+    var zona=document.getElementById('zonaParams');
+    if(zona){
+      var oldForm=document.getElementById('minorForm');
+      var formHtml=oldForm?oldForm.outerHTML:'<div id="minorForm" style="margin-top:8px"></div>';
+      zona.innerHTML=renderAdjMatrix()+'<div id="minorForm" style="margin-top:8px"></div>';
+      var tabla=zona.querySelector('table');
+      if(tabla){
+        tabla.addEventListener('click',function(e){
+          var btn=e.target.closest('.adjCell');
+          if(!btn)return;
+          var i=parseInt(btn.dataset.i),j=parseInt(btn.dataset.j);
+          document.querySelectorAll('.adjCell').forEach(function(b){b.classList.remove('active');});
+          btn.classList.add('active');
+          window.calcularMenorIJ(i,j);
+        });
+      }
+    }
+    // Mantener el formulario visible con valores en readonly + indicador verde
+    var newForm=document.getElementById('minorForm');
+    if(newForm){
+      // Indicador de correcto al inicio
+      var ind=document.createElement('div');
+      ind.style.cssText='color:#16a34a;font-weight:800;font-size:12px;margin-bottom:6px';
+      ind.textContent='✓ Correcto — A'+(ii+1)+''+(jj+1)+' = '+fstr(cAdj);
+      newForm.insertBefore(ind, newForm.firstChild);
+      // Hacer inputs readonly y pintarlos en verde
+      newForm.querySelectorAll('input[type="text"]').forEach(function(inp){
+        inp.readOnly=true;
+        inp.style.borderColor='#16a34a';
+        inp.style.background='#f0fdf4';
+      });
+      // Ocultar botones de acción
+      ['btnAutoMenor','mc_feedback','btnReintentar'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el)el.style.display='none';
+      });
+    }
+    checkTodosAdj();
+  } else {
+    var fb=document.getElementById('mc_feedback');
+    if(fb){
+      fb.innerHTML='&nbsp;<span style="color:#b91c1c">✗ '+errors.join(' · ')+'</span>'+
+        '&nbsp;<button id="btnReintentar">↺ Reintentar</button>';
+      var br=document.getElementById('btnReintentar');
+      if(br) br.addEventListener('click',function(){window.calcularMenor();});
+    }
+  }
+};
+
+window.nuevoMenor=function(){
+  var iEl=document.getElementById('inputI'),jEl=document.getElementById('inputJ');
+  if(iEl)iEl.value='';if(jEl)jEl.value='';
+  var form=document.getElementById('minorForm');
+  if(form)form.innerHTML='';
+  if(iEl)iEl.focus();
+};
+
+// ── ¿Todos los adjuntos correctos? → mostrar Adj(A) ──────────────────────
+function checkTodosAdj(){
+  for(var i=0;i<currentN;i++)
+    for(var j=0;j<currentN;j++)
+      if(!adjCalculados[i+'_'+j])return;
+  // Limpiar paso 2 del formulario
+  var zona=document.getElementById('zonaParams');
+  if(zona)zona.innerHTML='';
+  var row2=document.getElementById('pasoRow2');
+  if(row2)row2.style.display='none';
+  // Mostrar Adj(A) en el workspace sin cabecera extra
+  var C=[];
+  for(var i=0;i<currentN;i++){C.push([]);for(var j=0;j<currentN;j++)C[i].push(adjCalculados[i+'_'+j]);}
+  addToCaja21(tablaMatriz(C,'Adj(A)','Paso 2 — Matriz adjunta'));
+  // Seleccionar paso 3 automáticamente
+  var r3=document.querySelector('input[name="adjOpc"][value="3"]');
+  if(r3){r3.checked=true;actualizarParams(3);}
+}
+
+// ── calcularMenorIJ: muestra el formulario para i,j específicos ───────────
+window.calcularMenorIJ=function(ii,jj){
+  var form=document.getElementById('minorForm');
+  if(!matrizActual||!form)return;
+  if(adjCalculados[ii+'_'+jj]){
+    var a=adjCalculados[ii+'_'+jj];
+    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+fstr(a)+'</span>';return;
+  }
+  var n1=currentN-1;
+  var tbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
+  for(var r=0;r<n1;r++){
+    tbl+='<tr>';
+    for(var c=0;c<n1;c++)
+      tbl+='<td><input type="text" id="mc_'+r+'_'+c+'" style="width:38px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:13px;font-weight:600;background:#fff"></td>';
+    tbl+='</tr>';
+  }
+  tbl+='</tbody></table>';
+  form.innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">'+
+      '<span style="font-size:13px;font-weight:700">A<sub>'+(ii+1)+''+(jj+1)+'</sub> =</span>'+
+      '<input type="text" id="mc_sign" placeholder="±" style="width:34px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
+      '<div class="detWrap"><div class="det-bar"></div>'+tbl+'<div class="det-bar"></div></div>'+
+      '<span style="font-size:18px;font-weight:300">=</span>'+
+      '<input type="text" id="mc_result" style="width:52px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
+      '<span id="mc_feedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
+      '<button id="btnAutoMenor" style="margin-left:8px;font-size:11px;opacity:.7">Automático (no recomendable)</button>'+
+    '</div>';
+  // guardar ii,jj en el form para validarMenor
+  form.dataset.ii=ii; form.dataset.jj=jj;
+  // Botón automático: rellena las celdas y valida
+  var btnAM=document.getElementById('btnAutoMenor');
+  if(btnAM) btnAM.addEventListener('click',function(){
+    var n1=currentN-1;
+    var sub=submat(matrizActual,ii,jj);
+    var cSign=((ii+jj)%2===0)?1:-1;
+    var signEl=document.getElementById('mc_sign');
+    if(signEl)signEl.value=cSign>0?'+':'−';
+    for(var r=0;r<n1;r++) for(var c=0;c<n1;c++){
+      var el=document.getElementById('mc_'+r+'_'+c);
+      if(el)el.value=fstr(sub[r][c]);
+    }
+    var resEl=document.getElementById('mc_result');
+    var cAdj=fmul({n:cSign,d:1},det2(sub));
+    if(resEl)resEl.value=fstr(cAdj);
+    // Ocultar botón automático y mostrar botón OK
+    btnAM.style.display='none';
+    var fb=document.getElementById('mc_feedback');
+    if(fb){
+      fb.innerHTML='<button id="btnOkAuto" style="margin-left:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;padding:5px 14px;border-radius:6px;font-weight:800;cursor:pointer">OK</button>';
+      var btnOk=document.getElementById('btnOkAuto');
+      if(btnOk) btnOk.addEventListener('click',function(){window.validarMenor();});
+    }
+  });
+  var ids=['mc_sign'];
+  for(var r=0;r<n1;r++) for(var c=0;c<n1;c++) ids.push('mc_'+r+'_'+c);
+  ids.push('mc_result');
+  ids.forEach(function(id,idx){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key==='Tab'){
+        e.preventDefault();
+        if(idx<ids.length-1){var nx=document.getElementById(ids[idx+1]);if(nx)nx.focus();}
+        else{window.validarMenor();}
+      }
+    });
+  });
+  document.getElementById('mc_sign').focus();
+};
+
+// ── Panel de opciones ────────────────────────────────────────────────────
+function actualizarParams(opc){
+  var zona=document.getElementById('zonaParams');
+  document.getElementById('errMsg').textContent='';
+  if(opc===2){
+    zona.innerHTML=renderAdjMatrix()+'<div id="minorForm" style="margin-top:8px"></div>';
+    // Delegación de eventos para las celdas clicables
+    var tabla=zona.querySelector('table');
+    if(tabla){
+      tabla.addEventListener('click',function(e){
+        var btn=e.target.closest('.adjCell');
+        if(!btn)return;
+        var i=parseInt(btn.dataset.i), j=parseInt(btn.dataset.j);
+        document.querySelectorAll('.adjCell').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
+        window.calcularMenorIJ(i,j);
+      });
+    }
+    return;
+  }
+  if(opc===2){// legacy - no llega aquí
+    zona.innerHTML=
+      '<form id="ijForm" autocomplete="off" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0">'+
+        '<label style="font-size:12px;font-weight:700;color:var(--ink)">Fila <em>i</em>:&nbsp;'+
+          '<input type="text" id="inputI" style="width:40px;padding:4px;border:1px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:700;outline:none">'+
+        '</label>'+
+        '<label style="font-size:12px;font-weight:700;color:var(--ink)">Columna <em>j</em>:&nbsp;'+
+          '<input type="text" id="inputJ" style="width:40px;padding:4px;border:1px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:700;outline:none">'+
+        '</label>'+
+        '<button type="submit" style="display:none">ok</button>'+
+      '</form>'+
+      '<div id="minorForm" style="margin-top:8px"></div>';
+
+    function mostrarFormularioMenor(){
+      var iEl=document.getElementById('inputI'), jEl=document.getElementById('inputJ');
+      var iVal=(iEl?iEl.value.trim():''), jVal=(jEl?jEl.value.trim():'');
+      // Si j está vacío, mover foco a j y esperar
+      if(!jVal){if(jEl)jEl.focus();return;}
+      var ii=parseInt(iVal)-1, jj=parseInt(jVal)-1;
+      var form=document.getElementById('minorForm');
+      if(!matrizActual||!form)return;
+      if(isNaN(ii)||isNaN(jj)||ii<0||ii>=currentN||jj<0||jj>=currentN){
+        form.innerHTML='<span style="color:#b91c1c;font-size:12px">Valores entre 1 y '+currentN+'.</span>';return;
+      }
+      if(adjCalculados[ii+'_'+jj]){
+        var a=adjCalculados[ii+'_'+jj];
+        form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+fstr(a)+'</span>';return;
+      }
+      var n1=currentN-1;
+      var tbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
+      for(var r=0;r<n1;r++){
+        tbl+='<tr>';
+        for(var c=0;c<n1;c++)
+          tbl+='<td><input type="text" id="mc_'+r+'_'+c+'" style="width:38px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:13px;font-weight:600;background:#fff"></td>';
+        tbl+='</tr>';
+      }
+      tbl+='</tbody></table>';
+      form.innerHTML=
+        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">'+
+          '<span style="font-size:13px;font-weight:700">A<sub>'+(ii+1)+''+(jj+1)+'</sub> =</span>'+
+          '<input type="text" id="mc_sign" placeholder="±" style="width:34px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
+          '<div class="detWrap"><div class="det-bar"></div>'+tbl+'<div class="det-bar"></div></div>'+
+          '<span style="font-size:18px;font-weight:300">=</span>'+
+          '<input type="text" id="mc_result" style="width:52px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
+          '<span id="mc_feedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
+        '</div>';
+      // Navegación Tab/Enter entre campos
+      var ids=['mc_sign'];
+      for(var r=0;r<n1;r++) for(var c=0;c<n1;c++) ids.push('mc_'+r+'_'+c);
+      ids.push('mc_result');
+      ids.forEach(function(id,idx){
+        var el=document.getElementById(id);
+        if(!el)return;
+        el.addEventListener('keydown',function(e){
+          if(e.key==='Enter'||e.key==='Tab'){
+            e.preventDefault();
+            if(idx<ids.length-1){var nx=document.getElementById(ids[idx+1]);if(nx)nx.focus();}
+            else{window.validarMenor();}
+          }
+        });
+      });
+      document.getElementById('mc_sign').focus();
+    }
+
+    document.getElementById('ijForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      mostrarFormularioMenor();
+    });
+    ['inputI','inputJ'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el)return;
+      el.addEventListener('keydown',function(e){
+        if(e.key==='Enter'){
+          e.preventDefault();
+          mostrarFormularioMenor();
+        }
+      });
+    });
+    window.calcularMenor=mostrarFormularioMenor;
+    document.getElementById('inputI').focus();
+  } else {
+    zona.innerHTML='';
+  }
+}
+
+function ejecutarOpcion(){
+  var r=document.querySelector('input[name="adjOpc"]:checked');
+  if(!r)return;
+  var opc=parseInt(r.value);
+  document.getElementById('errMsg').textContent='';
+
+  if(opc===1){
+    detValue=det2(matrizActual);
+    var ds=fstr(detValue);
+    var html='<div class="adjResultCard">'+
+      '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
+      '<div class="adjResultCardBody">'+
+        '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
+          '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
+          '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(matrizActual)+'<div class="det-bar"></div></div>'+
+          '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(detValue.n!==0?' ≠ 0':'')+'</span>'+
+        '</div>'+
+        '<span>'+(detValue.n===0
+          ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
+          :'✓ La matriz es <strong>invertible</strong>.')+
+        '</span>'+
+      '</div></div>';
+    addToCaja21(html);
+    // Paso 1 completado: ocultar su fila y pasar al paso 2
+    var row1=document.getElementById('pasoRow1');
+    if(row1)row1.style.display='none';
+    var r2=document.querySelector('input[name="adjOpc"][value="2"]');
+    if(r2){r2.checked=true;actualizarParams(2);}
+
+  } else if(opc===2){
+    if(detValue===null)detValue=det2(matrizActual);
+    // El botón Seleccionar actúa como validar si ya hay formulario, o como calcular si no
+    var form=document.getElementById('minorForm');
+    if(form&&document.getElementById('mc_sign')){
+      window.validarMenor();
+    } else {
+      window.calcularMenor();
+    }
+
+  } else if(opc===3){
+    if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
+    if(detValue.n===0){document.getElementById('errMsg').textContent='La matriz es singular.';return;}
+    var C=calcularCofactores(matrizActual);
+    var Adj=transponer(C);
+    var html=tablaMatriz(Adj,'Adj(A)ᵗ','Paso 3 — Matriz adjunta transpuesta');
+    addToCaja21(html);
+    // Paso 3 completado: ocultar y pasar al 4
+    var row3=document.getElementById('pasoRow3');
+    if(row3)row3.style.display='none';
+    var r4=document.querySelector('input[name="adjOpc"][value="4"]');
+    if(r4){r4.checked=true;actualizarParams(4);}
+
+  } else if(opc===4){
+    if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
+    if(detValue.n===0){document.getElementById('errMsg').textContent='La matriz es singular. No existe la inversa.';return;}
+    var C=calcularCofactores(matrizActual);
+    var Adj=transponer(C);
+    var Inv=dividirMatriz(Adj,detValue);
+    addToCaja21(tablaMatriz(Inv,'A⁻¹','Paso 4 — Matriz inversa'));
+    // Paso 4 completado: ocultar fila y mostrar resultado final en el formulario
+    var row4=document.getElementById('pasoRow4');
+    if(row4)row4.style.display='none';
+    document.getElementById('zonaParams').innerHTML='';
+    document.getElementById('errMsg').textContent='';
+    // Ocultar botones de pasos y mostrar resultado final en su lugar
+    document.getElementById('cajaOpcBtns').style.display='none';
+    document.getElementById('cajaOpcTitulo').textContent='RESULTADO FINAL';
+    // Construir display del resultado final en el panel
+    var ds=fstr(detValue);
+    var resTbl=matrizTbl(Inv);
+    var adjTbl=matrizTbl(Adj);
+    document.getElementById('cajaOpcLista').style.display='none';
+    var resHtml=
+      '<div style="padding:8px 0" id="resultadoFinal">'+
+        '<div style="font-size:13px;color:var(--ink);margin-bottom:10px">'+
+          '\\(A^{-1} = \\dfrac{1}{'+ds+'}\\,\\text{Adj}(A)^t\\)'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
+          '<span style="font-size:13px;font-weight:700;color:var(--ink)">A⁻¹ =</span>'+
+          '<span style="font-size:13px;font-weight:700;color:var(--ink)">(1/'+ds+')</span>'+
+          '<span style="font-size:16px;font-weight:300">·</span>'+
+          '<div class="matrixWrap"><div class="mp lp"></div>'+adjTbl+'<div class="mp rp"></div></div>'+
+          '<span style="font-size:18px;font-weight:300">=</span>'+
+          '<div class="matrixWrap"><div class="mp lp"></div>'+resTbl+'<div class="mp rp"></div></div>'+
+        '</div>'+
+      '</div>';
+    document.getElementById('zonaParams').innerHTML=resHtml;
+    if(window.renderMathInElement){
+      renderMathInElement(document.getElementById('resultadoFinal'),{
+        delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],
+        throwOnError:false
+      });
+    }
+  }
+}
+
+function addToCaja21(html){
+  var z=document.getElementById('caja21');
+  z.innerHTML+=html;
+  z.scrollTop=z.scrollHeight;
+}
+
+// ── Tabla interna de menores con signo (sin envoltorio) ──────────────────
+function menoresTblInner(M){
+  var n=M.length;
+  var tbl='<table style="border-collapse:separate;border-spacing:10px"><tbody>';
+  for(var i=0;i<n;i++){
+    tbl+='<tr>';
+    for(var j=0;j<n;j++){
+      var signo=((i+j)%2===0)?'+':'−';
+      var sigColor=((i+j)%2===0)?'color:var(--ink)':'color:#c0392b';
+      var sub=submat(M,i,j);
+      var subTbl='<table style="border-collapse:separate;border-spacing:3px"><tbody>';
+      for(var si=0;si<sub.length;si++){
+        subTbl+='<tr>';
+        for(var sj=0;sj<sub[si].length;sj++){
+          subTbl+='<td style="padding:1px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--ink)">'+fstr(sub[si][sj])+'</td>';
+        }
+        subTbl+='</tr>';
+      }
+      subTbl+='</tbody></table>';
+      tbl+='<td style="text-align:center;vertical-align:middle;padding:4px 6px">'+
+        '<div style="display:inline-flex;align-items:center;gap:2px">'+
+          '<span style="font-size:13px;font-weight:700;'+sigColor+'">'+signo+'</span>'+
+          '<div class="detWrap"><div class="det-bar"></div>'+subTbl+'<div class="det-bar"></div></div>'+
+        '</div></td>';
+    }
+    tbl+='</tr>';
+  }
+  return tbl+'</tbody></table>';
+}
+
+// ── Tabla interna (sin envoltorio) ───────────────────────────────────────
+function matrizTbl(M){
+  var n=M.length;
+  var t='<table style="border-collapse:separate;border-spacing:6px"><tbody>';
+  for(var i=0;i<n;i++){
+    t+='<tr>';
+    for(var j=0;j<n;j++){
+      t+='<td style="padding:3px 7px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+fstr(M[i][j])+'</td>';
+    }
+    t+='</tr>';
+  }
+  return t+'</tbody></table>';
+}
+
+// ── Tablas de resultados ─────────────────────────────────────────────────
+// nombre: notación matemática mostrada antes de la matriz (p.e. "Adj(A)")
+// desc:   etiqueta descriptiva pequeña encima (opcional)
+function tablaMatriz(M,nombre,desc){
+  var tbl=matrizTbl(M);
+  var html='<div class="resultBloque">';
+  if(desc) html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">'+desc+'</div>';
+  html+='<div style="display:inline-flex;align-items:center;gap:8px">';
+  if(nombre) html+='<span style="font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap">'+nombre+' =</span>';
+  html+='<div class="matrixWrap"><div class="mp lp"></div>'+tbl+'<div class="mp rp"></div></div>';
+  html+='</div></div>';
+  return html;
+}
+
+// ── Álgebra ──────────────────────────────────────────────────────────────
+function calcularCofactores(M){
+  var n=M.length,C=[];
+  for(var i=0;i<n;i++){C.push([]);for(var j=0;j<n;j++){var s=((i+j)%2===0)?ONE:{n:-1,d:1};C[i].push(fmul(s,det2(submat(M,i,j))));}}
+  return C;
+}
+function transponer(M){var n=M.length,T=[];for(var i=0;i<n;i++){T.push([]);for(var j=0;j<n;j++)T[i].push(M[j][i]);}return T;}
+function dividirMatriz(M,d){return M.map(function(row){return row.map(function(x){return frac(x.n*d.d,x.d*d.n);});});}
+
+// ── Solución automática ──────────────────────────────────────────────────
+function solucionAutomatica(){
+  var M=matrizActual;
+  if(!M)return;
+  var D=det2(M);detValue=D;
+  // Opción 1
+  var ds=fstr(D);
+  var html='<div class="adjResultCard">'+
+    '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
+    '<div class="adjResultCardBody">'+
+      '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
+        '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(M)+'<div class="det-bar"></div></div>'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(D.n!==0?' ≠ 0':'')+'</span>'+
+      '</div>'+
+      '<span>'+(D.n===0
+        ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
+        :'✓ La matriz es <strong>invertible</strong>.')+
+      '</span>'+
+    '</div></div>';
+  if(D.n!==0){
+    var C=calcularCofactores(M),Adj=transponer(C),Inv=dividirMatriz(Adj,D);
+    // Los tres bloques en la misma línea
+    html+='<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">';
+    // Bloque 1: Adj(A) — menores sin calcular + valores, todo centrado
+    html+='<div class="resultBloque" style="text-align:center">';
+    html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">Matriz adjunta</div>';
+    html+='<div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px">';
+    html+='<div style="display:inline-flex;align-items:center;gap:8px">'+
+      '<span style="font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap">Adj(A) =</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+menoresTblInner(M)+'<div class="mp rp"></div></div>'+
+      '</div>';
+    html+='<div style="display:inline-flex;align-items:center;gap:8px">'+
+      '<span style="font-size:20px;font-weight:300;color:var(--ink)">=</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(C)+'<div class="mp rp"></div></div>'+
+      '</div>';
+    html+='</div></div>';
+    // Bloque 2 y 3: Adj(A)^t e inversa
+    html+=tablaMatriz(Adj,'Adj(A)ᵗ','Traspuesta de la adjunta');
+    // Bloque A⁻¹ con fórmula bien formateada debajo de la matriz
+    html+='<div class="resultBloque">';
+    html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">Matriz inversa</div>';
+    html+='<div style="display:inline-flex;align-items:center;gap:8px">';
+    html+='<span style="font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap">A⁻¹ =</span>';
+    html+='<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(Inv)+'<div class="mp rp"></div></div>';
+    html+='</div>';
+    html+='<div style="font-size:13px;color:var(--ink);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">'+
+      '\\(A^{-1} = \\dfrac{1}{'+fstr(D)+'}\\,\\text{Adj}(A)^t\\)'+
+      '</div>';
+    html+='</div>';
+    html+='</div>';
+  }
+  document.getElementById('caja21').innerHTML+=html;
+  if(window.renderMathInElement){
+    renderMathInElement(document.getElementById('caja21'),{
+      delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],
+      throwOnError:false
+    });
+  }
+}
+
+})();
+</script>
+
+<script>
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+}
+document.addEventListener("DOMContentLoaded",function(){
+  if(window.renderMathInElement){
+    renderMathInElement(document.body,{
+      delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],
+      throwOnError:false
+    });
+  }
+});
+</script>
+</body>
+</html>
