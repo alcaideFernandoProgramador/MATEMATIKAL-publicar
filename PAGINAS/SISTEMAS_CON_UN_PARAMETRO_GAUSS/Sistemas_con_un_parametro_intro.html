@@ -142,6 +142,23 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .herramienta-cta p strong{color:#fff}
 .caseTitle{font-weight:700;color:var(--blue-deep);margin:18px 0 6px;font-size:1rem}
 @media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.ops,.stepBlocks,.tiposGrid{grid-template-columns:1fr}.heroOps ul{grid-template-columns:1fr}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.heroTop{flex-direction:column;align-items:flex-start}.trabajoBtn{align-self:flex-start}.herramienta-cta{flex-direction:column}}
+
+/* MK-RESPONSIVE-PATCH-V1 */
+html,body{overflow-x:clip;max-width:100%}
+.resultadoRango,.resultadoDet,.resultado{flex-wrap:wrap;max-width:100%;overflow-x:auto}
+.resultadoRango>span,.resultadoDet>span,.resultado>span{max-width:100%;overflow-x:auto}
+.k{max-width:100%;overflow-x:auto}
+@media (max-width:600px){
+  .heroTopBar{flex-wrap:wrap;gap:10px}
+  .heroTopBar>div{flex-wrap:wrap;gap:10px;justify-content:flex-start}
+  .trabajoBtn{font-size:.78rem!important;padding:9px 16px!important;white-space:nowrap}
+  .volverBtn{font-size:.82rem;padding:8px 16px!important}
+  .logoMini{width:120px;height:auto}
+  .heroLinks{grid-template-columns:1fr!important}
+  .hero{padding:22px 18px 22px!important}
+  .introWrap{padding:14px 12px 32px!important}
+}
+
 </style>
 <style id="mk-ejercicios-css">
 .mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}

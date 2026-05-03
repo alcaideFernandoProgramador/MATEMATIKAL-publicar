@@ -142,6 +142,23 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .infoCard h3{font-family:var(--font-display);font-size:1rem;font-weight:400;color:var(--blue-deep);margin:0 0 8px}
 .infoCard p{font-size:.93rem;color:var(--text-secondary);margin:0;line-height:1.6}
 @media(max-width:600px){.infoGrid{grid-template-columns:1fr}}
+
+/* MK-RESPONSIVE-PATCH-V1 */
+html,body{overflow-x:clip;max-width:100%}
+.resultadoRango,.resultadoDet,.resultado{flex-wrap:wrap;max-width:100%;overflow-x:auto}
+.resultadoRango>span,.resultadoDet>span,.resultado>span{max-width:100%;overflow-x:auto}
+.k{max-width:100%;overflow-x:auto}
+@media (max-width:600px){
+  .heroTopBar{flex-wrap:wrap;gap:10px}
+  .heroTopBar>div{flex-wrap:wrap;gap:10px;justify-content:flex-start}
+  .trabajoBtn{font-size:.78rem!important;padding:9px 16px!important;white-space:nowrap}
+  .volverBtn{font-size:.82rem;padding:8px 16px!important}
+  .logoMini{width:120px;height:auto}
+  .heroLinks{grid-template-columns:1fr!important}
+  .hero{padding:22px 18px 22px!important}
+  .introWrap{padding:14px 12px 32px!important}
+}
+
 </style>
 <style id="mk-ejercicios-css">
 .mk-ejercicios{font-family:var(--font-body,inherit);max-width:1060px;margin:2.5rem auto;padding:0 1rem}

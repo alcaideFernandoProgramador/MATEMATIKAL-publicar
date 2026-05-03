@@ -130,6 +130,23 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .mk-tip strong{color:var(--text-primary)}
 .signo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:180px;margin:10px 0}
 .signo-cell{text-align:center;font-size:1.1rem;font-weight:700;padding:8px;border-radius:8px;border:1px solid rgba(59,110,248,.18);background:#f4f6fd;color:var(--blue-deep)}
+
+/* MK-RESPONSIVE-PATCH-V1 */
+html,body{overflow-x:clip;max-width:100%}
+.resultadoRango,.resultadoDet,.resultado{flex-wrap:wrap;max-width:100%;overflow-x:auto}
+.resultadoRango>span,.resultadoDet>span,.resultado>span{max-width:100%;overflow-x:auto}
+.k{max-width:100%;overflow-x:auto}
+@media (max-width:600px){
+  .heroTopBar{flex-wrap:wrap;gap:10px}
+  .heroTopBar>div{flex-wrap:wrap;gap:10px;justify-content:flex-start}
+  .trabajoBtn{font-size:.78rem!important;padding:9px 16px!important;white-space:nowrap}
+  .volverBtn{font-size:.82rem;padding:8px 16px!important}
+  .logoMini{width:120px;height:auto}
+  .heroLinks{grid-template-columns:1fr!important}
+  .hero{padding:22px 18px 22px!important}
+  .introWrap{padding:14px 12px 32px!important}
+}
+
 </style>
 </head>
 <body><div id="introPrincipal">
