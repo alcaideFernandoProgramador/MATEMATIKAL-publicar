@@ -1021,8 +1021,7 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
     };
     expr=(expr??"").toString().replace(/(\d+)\s*\/\s*(\d+)\s*[eE]([+-]?\d+)/g,(m,n,d,e)=>{let den=Number(d);if(!den)return"NaN";let v=(Number(n)/den)*10**Number(e);if(Number.isFinite(v)&&Math.abs(v)<tol)return"0";let s=(Number(n)/den).toString()+"e"+e;return sciToDec(s);})
       .replace(/([+-]?\d*\.?\d+)[eE]([+-]?\d+)/g,(m)=>{let n=Number(m);if(Number.isFinite(n)&&Math.abs(n)<tol)return"0";return sciToDec(m);});
-    let regexCoeficientes=/(?<!\^)(\d+\.\d+)/g;let nums=expr.match(regexCoeficientes);
-    if(nums!==null){for(let i=0;i<nums.length;i++){let fr=fraccionContinua(nums[i].toString(),long);expr=expr.replace(nums[i],fr);}}
+    let regexCoeficientes=/(^|[^^])(\d+\.\d+)/g;expr=expr.replace(regexCoeficientes,(_,prev,num)=>{let fr=fraccionContinua(num.toString(),long);return prev+fr;});
     let regexExponente=/(\^)(\d+\.\d+)/g;expr=expr.replace(regexExponente,(_,c,e)=>{let fr=fraccionContinua(e.toString(),long);return `${c}(${fr})`;});
     return expr;
   }
@@ -2197,8 +2196,8 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
     const tokensSustituidos = postfijo.map(token => {for (const { nombre, matriz } of matrices) {if (token === nombre) {return `{${matrizALatex(matriz)}}`;}}return token;});
     const infijoSustituido = ExpresionMatricial.postfijaAInfija(tokensSustituidos);
     let resultado = infijoSustituido.replace(/\)\(/g, ')\\cdot (').replace(/\*/g, '\\cdot ');      
-    resultado = resultado.replace(/(?<!\^)\(([^()]*[+\-][^()]*)\)/g,'\\left[ $1 \\right]');
-    resultado = resultado.replace(/\^\(([^()]+)\)/g, '^{$1}');resultado = resultado.replace(/(?<!\^)\(([^()]*[+\-][^()]*)\)/g,'\\left[ $1 \\right]');return resultado;}
+    resultado = resultado.replace(/(^|[^^])\(([^()]*[+\-][^()]*)\)/g,(_,prev,inner)=>prev+'\\left[ '+inner+' \\right]');
+    resultado = resultado.replace(/\^\(([^()]+)\)/g, '^{$1}');resultado = resultado.replace(/(^|[^^])\(([^()]*[+\-][^()]*)\)/g,(_,prev,inner)=>prev+'\\left[ '+inner+' \\right]');return resultado;}
 }
 
 
