@@ -674,7 +674,24 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); } }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput();
+    // En móvil (<700px ancho): permitir scroll vertical al contenedor y observar caja21
+    if(window.innerWidth < 700){
+      var cont = document.getElementById('contenedor');
+      var caja21 = document.getElementById('caja21');
+      if(cont){ cont.style.overflowY='auto'; cont.style.height='calc(100vh - 76px)'; }
+      if(caja21 && !caja21._mkObserver){
+        caja21._mkObserver = new MutationObserver(function(){
+          if(caja21.children.length > 0){
+            requestAnimationFrame(function(){
+              caja21.scrollIntoView({behavior:'smooth', block:'start'});
+            });
+          }
+        });
+        caja21._mkObserver.observe(caja21, {childList:true, subtree:false});
+      }
+    }
+  } }
   function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
