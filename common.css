@@ -63,3 +63,18 @@ body{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-
 @media (max-width: 520px){
   .pg-determinantes #tituloinicial h1{font-size:13px;}
 }
+
+/* ===== FOOTER FIJO: compensar espacio en áreas de scroll interno de calculadoras =====
+   El body ya tiene padding-bottom para el footer, pero las zonas con scroll propio
+   (caja1, caja2, caja21) no lo heredan. Se lo añadimos aquí para que el último
+   elemento siempre sea alcanzable con el dedo en móvil. */
+
+#caja1{
+  padding-bottom: calc(var(--footer-h, 74px) + 12px);
+}
+#caja21, #caja2{
+  padding-bottom: calc(var(--footer-h, 74px) + 12px);
+}
+#contenedor{
+  padding-bottom: calc(var(--footer-h, 74px) + 16px);
+}

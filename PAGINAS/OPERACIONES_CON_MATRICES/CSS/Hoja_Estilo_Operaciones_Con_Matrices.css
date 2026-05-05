@@ -244,12 +244,12 @@ footer:not(.siteFooter) a:hover{text-decoration:underline;}
 @media (max-height:749px){
   #contenedor{
     /* Que el contenedor no crezca más allá de la pantalla disponible */
-    max-height:calc(100vh - 76px); /* 76px = altura aprox. de #tituloinicial */
+    max-height:calc(100vh - 76px - var(--footer-h, 45px)); /* 76px = altura aprox. de #tituloinicial */
     overflow:hidden;
   }
   #caja1{
     /* Altura máxima relativa a la pantalla, con scroll interno */
-    max-height:calc(100vh - 130px);
+    max-height:calc(100vh - 130px - var(--footer-h, 45px));
     overflow-y:auto;
     -webkit-overflow-scrolling:touch; /* inercia suave en iOS */
   }
@@ -258,6 +258,13 @@ footer:not(.siteFooter) a:hover{text-decoration:underline;}
 /* iPhone SE y pantallas muy bajas */
 @media (max-height:600px){
   #caja1{
-    max-height:calc(100vh - 110px);
+    max-height:calc(100vh - 110px - var(--footer-h, 45px));
   }
+}
+
+/* ===== FOOTER: padding interno en caja1 para que nada quede tapado =====
+   El footer fijo de 45-57px se compensa añadiendo espacio al final del scroll. */
+#caja1{
+  /* Se suma al padding ya existente (18px 20px) */
+  padding-bottom: calc(var(--footer-h, 74px) + 20px);
 }
