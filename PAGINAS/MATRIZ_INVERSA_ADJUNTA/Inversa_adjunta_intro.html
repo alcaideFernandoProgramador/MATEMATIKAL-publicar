@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
 <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -614,67 +614,14 @@ En este caso \(\text{Adj}(A)\) es simétrica, por lo que \(\text{Adj}(A)^t=\text
 
 <script>
 (function(){
-// ── Fracciones ───────────────────────────────────────────────────────────
-function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;}
-function frac(n,d){if(d===0)return{n:0,d:1};if(n===0)return{n:0,d:1};var s=d<0?-1:1;n=s*n;d=s*d;var g=gcd(Math.abs(n),d);return{n:n/g,d:d/g};}
-function fadd(a,b){return frac(a.n*b.d+b.n*a.d,a.d*b.d);}
-function fmul(a,b){return frac(a.n*b.n,a.d*b.d);}
-function fneg(a){return{n:-a.n,d:a.d};}
-function fstr(f){if(f.d===1)return String(f.n);return f.n+'/'+f.d;}
+// ── Fracciones y matrices (vía Biblioteca Matematikal 2.0) ───────────────
 function fnum(x){
-  // Parsea entero, decimal o fracción "a/b"
-  x=String(x).trim();
-  if(x.indexOf('/')>=0){var p=x.split('/');return frac(parseInt(p[0]),parseInt(p[1]));}
-  var v=parseFloat(x);
-  if(!isFinite(v))return null;
-  // Convertir decimal a fracción
-  var s=x.replace('-','');
-  var dot=s.indexOf('.');
-  if(dot<0)return frac(Math.round(v),1);
-  var dec=s.length-dot-1;
-  var den=Math.pow(10,dec);
-  return frac(Math.round(v*den),den);
-}
-function feq(a,b){return a.n===b.n&&a.d===b.d;}
-var ZERO={n:0,d:1},ONE={n:1,d:1};
-
-// ── Determinante (recursivo) ─────────────────────────────────────────────
-function submat(M,row,col){
-  return M.filter((_,i)=>i!==row).map(r=>r.filter((_,j)=>j!==col));
-}
-function det(M){
-  var n=M.length;
-  if(n===1)return M[0][0];
-  if(n===2)return frac(M[0][0].n*M[1][1].d*M[1][1].n - M[0][1].n*M[0][1].d /* wrong */,1);
-  // Usar Laplace por primera fila
-  if(n===2){
-    return frac(
-      M[0][0].n*M[1][1].n*M[0][0].d*M[1][1].d - M[0][1].n*M[1][0].n,
-      M[0][0].d*M[1][1].d
-    );
-  }
-  var result=ZERO;
-  for(var j=0;j<n;j++){
-    var s=(j%2===0)?1:-1;
-    var cofij=fmul({n:s,d:1},fmul(M[0][j],det(submat(M,0,j))));
-    result=fadd(result,cofij);
-  }
-  return result;
-}
-// Reescribir det correctamente
-function det2(M){
-  var n=M.length;
-  if(n===1)return M[0][0];
-  if(n===2){
-    return fadd(fmul(M[0][0],M[1][1]),fneg(fmul(M[0][1],M[1][0])));
-  }
-  var result=ZERO;
-  for(var j=0;j<n;j++){
-    var sign=(j%2===0)?ONE:{n:-1,d:1};
-    var minor=det2(submat(M,0,j));
-    result=fadd(result,fmul(sign,fmul(M[0][j],minor)));
-  }
-  return result;
+  x=String(x||"").trim().replace(/\s+/g,"").replace(/,/g,".");
+  if(!x.length)return "0";
+  if(/^[-+]?\d+$/.test(x))return x;
+  if(/^[-+]?\d+\/\d+$/.test(x))return FraccionNumerica.simplificar(x);
+  if(/^[-+]?(\d+\.\d*|\.\d+)$/.test(x))return ExpresionAlgebraica.pasarAFraccion(x);
+  return null;
 }
 
 // ── Estado ───────────────────────────────────────────────────────────────
@@ -810,7 +757,7 @@ function renderMatrizDisplay(M){
   for(var i=0;i<n;i++){
     tbl+='<tr>';
     for(var j=0;j<n;j++){
-      tbl+='<td style="padding:2px 6px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+fstr(M[i][j])+'</td>';
+      tbl+='<td style="padding:2px 6px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+M[i][j]+'</td>';
     }
     tbl+='</tr>';
   }
@@ -837,7 +784,7 @@ function renderAdjMatrix(){
       var key=i+'_'+j;
       if(adjCalculados[key]){
         var v=adjCalculados[key];
-        html+='<td><span class="adjCellDone">'+fstr(v)+'</span></td>';
+        html+='<td><span class="adjCellDone">'+v+'</span></td>';
       } else {
         html+='<td><button class="adjCell" data-i="'+i+'" data-j="'+j+'">A<sub>'+(i+1)+''+(j+1)+'</sub></button></td>';
       }
@@ -868,7 +815,7 @@ window.calcularMenor=function(){
   }
   if(adjCalculados[ii+'_'+jj]){
     var a=adjCalculados[ii+'_'+jj];
-    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+(jj+1)+'</sub> = '+fstr(a)+' — ya calculado</span>';return;
+    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+(jj+1)+'</sub> = '+a+' — ya calculado</span>';return;
   }
   var n1=currentN-1;
   var subTbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
@@ -911,9 +858,9 @@ window.validarMenor=function(){
   var ii=form?parseInt(form.dataset.ii):-1, jj=form?parseInt(form.dataset.jj):-1;
   if(isNaN(ii)||isNaN(jj)||!matrizActual)return;
   var n1=currentN-1;
-  var sub=submat(matrizActual,ii,jj);
+  var sub=Matriz.quitarFilayColumna(matrizActual,ii,jj);
   var cSign=((ii+jj)%2===0)?1:-1;
-  var cAdj=fmul({n:cSign,d:1},det2(sub));
+  var cAdj=FraccionNumerica.multiplicar(String(cSign),Matriz.determinante(sub));
   var errors=[];
   // Signo
   var sv=(document.getElementById('mc_sign')||{}).value||'';sv=sv.trim();
@@ -923,12 +870,12 @@ window.validarMenor=function(){
   var cellOk=true;
   for(var r=0;r<n1&&cellOk;r++)for(var c=0;c<n1;c++){
     var v=fnum(((document.getElementById('mc_'+r+'_'+c))||{value:''}).value.trim());
-    if(v===null||!feq(v,sub[r][c])){cellOk=false;break;}
+    if(v===null||FraccionNumerica.simplificar(v)!==FraccionNumerica.simplificar(sub[r][c])){cellOk=false;break;}
   }
   if(!cellOk)errors.push('valores del menor');
   // Resultado
   var rv=fnum(((document.getElementById('mc_result'))||{value:''}).value.trim());
-  if(rv===null||!feq(rv,cAdj))errors.push('resultado (esperado '+fstr(cAdj)+')');
+  if(rv===null||FraccionNumerica.simplificar(rv)!==FraccionNumerica.simplificar(cAdj))errors.push('resultado (esperado '+cAdj+')');
   var form=document.getElementById('minorForm');
   if(errors.length===0){
     adjCalculados[ii+'_'+jj]=cAdj;
@@ -956,7 +903,7 @@ window.validarMenor=function(){
       // Indicador de correcto al inicio
       var ind=document.createElement('div');
       ind.style.cssText='color:#16a34a;font-weight:800;font-size:12px;margin-bottom:6px';
-      ind.textContent='✓ Correcto — A'+(ii+1)+''+(jj+1)+' = '+fstr(cAdj);
+      ind.textContent='✓ Correcto — A'+(ii+1)+''+(jj+1)+' = '+cAdj;
       newForm.insertBefore(ind, newForm.firstChild);
       // Hacer inputs readonly y pintarlos en verde
       newForm.querySelectorAll('input[type="text"]').forEach(function(inp){
@@ -1015,7 +962,7 @@ window.calcularMenorIJ=function(ii,jj){
   if(!matrizActual||!form)return;
   if(adjCalculados[ii+'_'+jj]){
     var a=adjCalculados[ii+'_'+jj];
-    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+fstr(a)+'</span>';return;
+    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+a+'</span>';return;
   }
   var n1=currentN-1;
   var tbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
@@ -1042,17 +989,17 @@ window.calcularMenorIJ=function(ii,jj){
   var btnAM=document.getElementById('btnAutoMenor');
   if(btnAM) btnAM.addEventListener('click',function(){
     var n1=currentN-1;
-    var sub=submat(matrizActual,ii,jj);
+    var sub=Matriz.quitarFilayColumna(matrizActual,ii,jj);
     var cSign=((ii+jj)%2===0)?1:-1;
     var signEl=document.getElementById('mc_sign');
     if(signEl)signEl.value=cSign>0?'+':'−';
     for(var r=0;r<n1;r++) for(var c=0;c<n1;c++){
       var el=document.getElementById('mc_'+r+'_'+c);
-      if(el)el.value=fstr(sub[r][c]);
+      if(el)el.value=sub[r][c];
     }
     var resEl=document.getElementById('mc_result');
-    var cAdj=fmul({n:cSign,d:1},det2(sub));
-    if(resEl)resEl.value=fstr(cAdj);
+    var cAdj=FraccionNumerica.multiplicar(String(cSign),Matriz.determinante(sub));
+    if(resEl)resEl.value=cAdj;
     // Ocultar botón automático y mostrar botón OK
     btnAM.style.display='none';
     var fb=document.getElementById('mc_feedback');
@@ -1125,7 +1072,7 @@ function actualizarParams(opc){
       }
       if(adjCalculados[ii+'_'+jj]){
         var a=adjCalculados[ii+'_'+jj];
-        form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+fstr(a)+'</span>';return;
+        form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+a+'</span>';return;
       }
       var n1=currentN-1;
       var tbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
@@ -1191,17 +1138,17 @@ function ejecutarOpcion(){
   document.getElementById('errMsg').textContent='';
 
   if(opc===1){
-    detValue=det2(matrizActual);
-    var ds=fstr(detValue);
+    detValue=Matriz.determinante(matrizActual);
+    var ds=detValue;
     var html='<div class="adjResultCard">'+
       '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
       '<div class="adjResultCardBody">'+
         '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
           '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
           '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(matrizActual)+'<div class="det-bar"></div></div>'+
-          '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(detValue.n!==0?' ≠ 0':'')+'</span>'+
+          '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(detValue!=="0"?' ≠ 0':'')+'</span>'+
         '</div>'+
-        '<span>'+(detValue.n===0
+        '<span>'+(detValue==="0"
           ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
           :'✓ La matriz es <strong>invertible</strong>.')+
         '</span>'+
@@ -1214,7 +1161,7 @@ function ejecutarOpcion(){
     if(r2){r2.checked=true;actualizarParams(2);}
 
   } else if(opc===2){
-    if(detValue===null)detValue=det2(matrizActual);
+    if(detValue===null)detValue=Matriz.determinante(matrizActual);
     // El botón Seleccionar actúa como validar si ya hay formulario, o como calcular si no
     var form=document.getElementById('minorForm');
     if(form&&document.getElementById('mc_sign')){
@@ -1225,9 +1172,8 @@ function ejecutarOpcion(){
 
   } else if(opc===3){
     if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
-    if(detValue.n===0){document.getElementById('errMsg').textContent='La matriz es singular.';return;}
-    var C=calcularCofactores(matrizActual);
-    var Adj=transponer(C);
+    if(detValue==="0"){document.getElementById('errMsg').textContent='La matriz es singular.';return;}
+    var Adj=Matriz.adjunta(matrizActual);
     var html=tablaMatriz(Adj,'Adj(A)ᵗ','Paso 3 — Matriz adjunta transpuesta');
     addToCaja21(html);
     // Paso 3 completado: ocultar y pasar al 4
@@ -1238,9 +1184,8 @@ function ejecutarOpcion(){
 
   } else if(opc===4){
     if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
-    if(detValue.n===0){document.getElementById('errMsg').textContent='La matriz es singular. No existe la inversa.';return;}
-    var C=calcularCofactores(matrizActual);
-    var Adj=transponer(C);
+    if(detValue==="0"){document.getElementById('errMsg').textContent='La matriz es singular. No existe la inversa.';return;}
+    var Adj=Matriz.adjunta(matrizActual);
     var Inv=dividirMatriz(Adj,detValue);
     addToCaja21(tablaMatriz(Inv,'A⁻¹','Paso 4 — Matriz inversa'));
     // Paso 4 completado: ocultar fila y mostrar resultado final en el formulario
@@ -1252,7 +1197,7 @@ function ejecutarOpcion(){
     document.getElementById('cajaOpcBtns').style.display='none';
     document.getElementById('cajaOpcTitulo').textContent='RESULTADO FINAL';
     // Construir display del resultado final en el panel
-    var ds=fstr(detValue);
+    var ds=detValue;
     var resTbl=matrizTbl(Inv);
     var adjTbl=matrizTbl(Adj);
     document.getElementById('cajaOpcLista').style.display='none';
@@ -1295,12 +1240,12 @@ function menoresTblInner(M){
     for(var j=0;j<n;j++){
       var signo=((i+j)%2===0)?'+':'−';
       var sigColor=((i+j)%2===0)?'color:var(--ink)':'color:#c0392b';
-      var sub=submat(M,i,j);
+      var sub=Matriz.quitarFilayColumna(M,i,j);
       var subTbl='<table style="border-collapse:separate;border-spacing:3px"><tbody>';
       for(var si=0;si<sub.length;si++){
         subTbl+='<tr>';
         for(var sj=0;sj<sub[si].length;sj++){
-          subTbl+='<td style="padding:1px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--ink)">'+fstr(sub[si][sj])+'</td>';
+          subTbl+='<td style="padding:1px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--ink)">'+sub[si][sj]+'</td>';
         }
         subTbl+='</tr>';
       }
@@ -1323,7 +1268,7 @@ function matrizTbl(M){
   for(var i=0;i<n;i++){
     t+='<tr>';
     for(var j=0;j<n;j++){
-      t+='<td style="padding:3px 7px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+fstr(M[i][j])+'</td>';
+      t+='<td style="padding:3px 7px;text-align:center;font-size:13px;font-weight:600;color:var(--ink)">'+M[i][j]+'</td>';
     }
     t+='</tr>';
   }
@@ -1345,36 +1290,30 @@ function tablaMatriz(M,nombre,desc){
 }
 
 // ── Álgebra ──────────────────────────────────────────────────────────────
-function calcularCofactores(M){
-  var n=M.length,C=[];
-  for(var i=0;i<n;i++){C.push([]);for(var j=0;j<n;j++){var s=((i+j)%2===0)?ONE:{n:-1,d:1};C[i].push(fmul(s,det2(submat(M,i,j))));}}
-  return C;
-}
-function transponer(M){var n=M.length,T=[];for(var i=0;i<n;i++){T.push([]);for(var j=0;j<n;j++)T[i].push(M[j][i]);}return T;}
-function dividirMatriz(M,d){return M.map(function(row){return row.map(function(x){return frac(x.n*d.d,x.d*d.n);});});}
+function dividirMatriz(M,d){return M.map(function(row){return row.map(function(x){return FraccionNumerica.dividir(x,d);});});}
 
 // ── Solución automática ──────────────────────────────────────────────────
 function solucionAutomatica(){
   var M=matrizActual;
   if(!M)return;
-  var D=det2(M);detValue=D;
+  var D=Matriz.determinante(M);detValue=D;
   // Opción 1
-  var ds=fstr(D);
+  var ds=D;
   var html='<div class="adjResultCard">'+
     '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
     '<div class="adjResultCardBody">'+
       '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
         '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
         '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(M)+'<div class="det-bar"></div></div>'+
-        '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(D.n!==0?' ≠ 0':'')+'</span>'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(D!=="0"?' ≠ 0':'')+'</span>'+
       '</div>'+
-      '<span>'+(D.n===0
+      '<span>'+(D==="0"
         ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
         :'✓ La matriz es <strong>invertible</strong>.')+
       '</span>'+
     '</div></div>';
-  if(D.n!==0){
-    var C=calcularCofactores(M),Adj=transponer(C),Inv=dividirMatriz(Adj,D);
+  if(D!=="0"){
+    var Adj=Matriz.adjunta(M),C=Matriz.trasponer(Adj),Inv=dividirMatriz(Adj,D);
     // Los tres bloques en la misma línea
     html+='<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">';
     // Bloque 1: Adj(A) — menores sin calcular + valores, todo centrado
@@ -1400,7 +1339,7 @@ function solucionAutomatica(){
     html+='<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(Inv)+'<div class="mp rp"></div></div>';
     html+='</div>';
     html+='<div style="font-size:13px;color:var(--ink);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">'+
-      '\\(A^{-1} = \\dfrac{1}{'+fstr(D)+'}\\,\\text{Adj}(A)^t\\)'+
+      '\\(A^{-1} = \\dfrac{1}{'+ds+'}\\,\\text{Adj}(A)^t\\)'+
       '</div>';
     html+='</div>';
     html+='</div>';

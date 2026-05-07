@@ -2,7 +2,7 @@
 
 <html lang="es">
 <head>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -594,40 +594,6 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
-<div style="max-width:1100px;margin:0 auto;padding:0 24px"><div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
-<h2>Errores típicos</h2>
-<ul class="errorsList">
-<li>Intentar sumar o restar matrices con dimensiones distintas.</li>
-<li>Intentar multiplicar matrices cuando las dimensiones no son compatibles: el número de columnas de la primera matriz debe coincidir con el número de filas de la segunda.</li>
-<li>Olvidar que el producto de matrices no es conmutativo: puede estar definido <code>AB</code> y no estar definido <code>BA</code>, o bien ambos productos pueden existir y ser distintos.</li>
-<li>Confundir la matriz traspuesta con la matriz inversa.</li>
-<li>Pensar que toda matriz cuadrada tiene inversa: para que exista, la matriz debe ser regular.</li>
-<li>Olvidar que las potencias de matrices solo tienen sentido para matrices cuadradas.</li>
-<li>Tener especial cuidado con los paréntesis en expresiones algebraicas matriciales: su posición puede cambiar el resultado final.</li>
-<li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
-</ul>
-</div>
-<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
-<h2>Preguntas frecuentes</h2>
-<ul>
-<li><strong>¿Puede calcularse \(A^2\) si \(A\) no es cuadrada?</strong> No. Las potencias solo están definidas para matrices cuadradas.</li>
-<li><strong>¿Qué es la matriz identidad?</strong> Es la matriz cuadrada con unos en la diagonal y ceros en el resto. Cumple \(AI=IA=A\).</li>
-<li><strong>¿Cuándo existe la inversa de una suma?</strong> \((A+B)^{-1}\) no tiene una fórmula simple. No es igual a \(A^{-1}+B^{-1}\).</li>
-<li><strong>¿Es siempre posible multiplicar dos matrices?</strong> No. El producto \(AB\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\).</li>
-<li><strong>¿Qué ocurre si el determinante de una matriz es cero?</strong> La matriz no tiene inversa. Se llama matriz singular.</li>
-<li><strong>¿La traspuesta de la traspuesta devuelve la matriz original?</strong> Sí. Se cumple siempre que \((A^t)^t=A\).</li>
-<li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula. Por ejemplo: \(\begin{pmatrix}1&1\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&1\end{pmatrix}=\begin{pmatrix}0&0\\0&0\end{pmatrix}\). Esto implica que en matrices no se puede "cancelar": \(AB=AC\) con \(A\neq 0\) no implica \(B=C\).</li>
-<li><strong>¿Cómo se introduce la matriz identidad en la aplicación?</strong> Usando la letra <code>I</code>.</li>
-</ul>
-</div>
-
-<!-- CTA herramienta -->
-<div class="herramienta-cta">
-  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tus propias matrices y realizar operaciones con ellas paso a paso o de forma automática.</p>
-  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
-</div>
-</div>
-
 </div><div id="calculadora" style="display:none">
 <div id="tituloinicial">
 <h2 id="titulocalculadora">OPERACIONES CON MATRICES</h2>
@@ -661,7 +627,39 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 </div>
 <footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
-<script src="/common.js"></script>
+<script src="/common.js"></script></div><div style="max-width:1100px;margin:0 auto;padding:0 24px"><div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Errores típicos</h2>
+<ul class="errorsList">
+<li>Intentar sumar o restar matrices con dimensiones distintas.</li>
+<li>Intentar multiplicar matrices cuando las dimensiones no son compatibles: el número de columnas de la primera matriz debe coincidir con el número de filas de la segunda.</li>
+<li>Olvidar que el producto de matrices no es conmutativo: puede estar definido <code>AB</code> y no estar definido <code>BA</code>, o bien ambos productos pueden existir y ser distintos.</li>
+<li>Confundir la matriz traspuesta con la matriz inversa.</li>
+<li>Pensar que toda matriz cuadrada tiene inversa: para que exista, la matriz debe ser regular.</li>
+<li>Olvidar que las potencias de matrices solo tienen sentido para matrices cuadradas.</li>
+<li>Tener especial cuidado con los paréntesis en expresiones algebraicas matriciales: su posición puede cambiar el resultado final.</li>
+<li>Olvidar validar los datos con <kbd>ENTER</kbd> o con <kbd>TAB</kbd>.</li>
+</ul>
+</div>
+<div style="border:1px solid rgba(59,110,248,.18);border-radius:14px;padding:16px 20px;background:#fff;margin-bottom:12px">
+<h2>Preguntas frecuentes</h2>
+<ul>
+<li><strong>¿Puede calcularse \(A^2\) si \(A\) no es cuadrada?</strong> No. Las potencias solo están definidas para matrices cuadradas.</li>
+<li><strong>¿Qué es la matriz identidad?</strong> Es la matriz cuadrada con unos en la diagonal y ceros en el resto. Cumple \(AI=IA=A\).</li>
+<li><strong>¿Cuándo existe la inversa de una suma?</strong> \((A+B)^{-1}\) no tiene una fórmula simple. No es igual a \(A^{-1}+B^{-1}\).</li>
+<li><strong>¿Es siempre posible multiplicar dos matrices?</strong> No. El producto \(AB\) solo está definido si el número de columnas de \(A\) coincide con el número de filas de \(B\).</li>
+<li><strong>¿Qué ocurre si el determinante de una matriz es cero?</strong> La matriz no tiene inversa. Se llama matriz singular.</li>
+<li><strong>¿La traspuesta de la traspuesta devuelve la matriz original?</strong> Sí. Se cumple siempre que \((A^t)^t=A\).</li>
+<li><strong>¿Puede \(AB=0\) sin que \(A=0\) o \(B=0\)?</strong> Sí. El producto de dos matrices no nulas puede ser la matriz nula. Por ejemplo: \(\begin{pmatrix}1&1\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&1\end{pmatrix}=\begin{pmatrix}0&0\\0&0\end{pmatrix}\). Esto implica que en matrices no se puede "cancelar": \(AB=AC\) con \(A\neq 0\) no implica \(B=C\).</li>
+<li><strong>¿Cómo se introduce la matriz identidad en la aplicación?</strong> Usando la letra <code>I</code>.</li>
+</ul>
+</div>
+
+<!-- CTA herramienta -->
+<div class="herramienta-cta">
+  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tus propias matrices y realizar operaciones con ellas paso a paso o de forma automática.</p>
+  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA PÁGINA DE TRABAJO →</a>
+</div>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   var intro=document.getElementById('introPrincipal'), calc=document.getElementById('calculadora');
@@ -674,24 +672,7 @@ document.addEventListener('DOMContentLoaded',function(){
       if(typeof campo.select==='function' && (campo.tagName||'').toLowerCase()==='input') campo.select();
     });
   }
-  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput();
-    // En móvil (<700px ancho): permitir scroll vertical al contenedor y observar caja21
-    if(window.innerWidth < 700){
-      var cont = document.getElementById('contenedor');
-      var caja21 = document.getElementById('caja21');
-      if(cont){ cont.style.overflowY='auto'; cont.style.height='calc(100vh - 76px)'; }
-      if(caja21 && !caja21._mkObserver){
-        caja21._mkObserver = new MutationObserver(function(){
-          if(caja21.children.length > 0){
-            requestAnimationFrame(function(){
-              caja21.scrollIntoView({behavior:'smooth', block:'start'});
-            });
-          }
-        });
-        caja21._mkObserver.observe(caja21, {childList:true, subtree:false});
-      }
-    }
-  } }
+  function mostrarCalc(ev){ if(ev) ev.preventDefault(); if(intro) intro.style.display='none'; if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh'; document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column'; window.scrollTo(0,0); enfocarPrimerInput(); } }
   function mostrarIntro(ev){ if(ev) ev.preventDefault(); if(calc) calc.style.display='none'; if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0);} }
   document.querySelectorAll("a[href='#calculadora'], #btnMostrarCalculadora").forEach(function(btn){ btn.addEventListener('click',mostrarCalc); });
   var btn2=document.getElementById('btnVolverExplicacion'); if(btn2) btn2.addEventListener('click',mostrarIntro);
