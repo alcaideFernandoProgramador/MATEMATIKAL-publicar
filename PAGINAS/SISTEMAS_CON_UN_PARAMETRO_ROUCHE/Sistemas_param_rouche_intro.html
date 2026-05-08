@@ -146,7 +146,7 @@ html,body{overflow-x:clip;max-width:100%}
 </div>
 </div>
 <h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
-  SISTEMAS CON PARÁMETRO<br>
+  SISTEMAS CON UN PARÁMETRO<br>
   <span style="font-size:clamp(1.3rem,2.8vw,2rem);letter-spacing:.04em;font-style:italic">Teorema de Rouché-Frobenius</span>
 </h1>
 <div class="heroBadge">
@@ -199,10 +199,10 @@ html,body{overflow-x:clip;max-width:100%}
 <section class="card span6">
   <p class="miniTitle">Clave del método</p>
   <h2>2. Valores críticos del parámetro</h2>
-  <p>Un <strong>valor crítico</strong> es un valor del parámetro que anula algún determinante relevante, haciendo que el rango de \(A\) o de \((A|b)\) baje respecto a lo habitual.</p>
+  <p>Un <strong>valor crítico</strong> es un valor del parámetro que anula algún determinante relevante, haciendo que el rango de \(A\) o de \((A|b)\) baje respecto al valor máximo de los órdenes de los menores que se pueden formar con la matriz.</p>
   <p>Para encontrarlos:</p>
   <ol style="margin:0;padding-left:20px;color:var(--text-secondary)">
-    <li style="margin:8px 0">Calcula \(\det(M)\) donde \(M\) es una submatriz cuadrada de orden máximo.</li>
+    <li style="margin:8px 0">Calcula \(\det(M)\) donde \(M\) es un menor de orden máximo.</li>
     <li style="margin:8px 0">Si el determinante depende del parámetro, resuélvelo: \(\det(M) = 0\).</li>
     <li style="margin:8px 0">Las soluciones son los valores críticos.</li>
     <li style="margin:8px 0">Para cada uno, sustituye y recalcula el rango de \(A\) y \((A|b)\).</li>
@@ -253,9 +253,9 @@ html,body{overflow-x:clip;max-width:100%}
   <p><strong>Caso general \(a\neq 1\):</strong> \(\det(A)=1-a\neq 0\Rightarrow\text{rg}(A)=2=n\). El mismo menor está en \((A|b)\), así que \(\text{rg}(A|b)=2\). Sistema <strong>Compatible Determinado</strong>.</p>
   <div class="k" style="text-align:left">\[
   x=\frac{\begin{vmatrix}1&1\\a&1\end{vmatrix}}{\det(A)}=\frac{1-a}{1-a}=1,\qquad
-  y=\frac{\begin{vmatrix}1&1\\1&a\end{vmatrix}}{1-a}=\frac{a-1}{1-a}=-1
+  y=\frac{\begin{vmatrix}1&1\\a&a\end{vmatrix}}{1-a}=\frac{0}{1-a}=0
   \]\[
-  \text{Solución única: } x=1,\; y=-1 \quad (a\neq 1)
+  \text{Solución única: } x=1,\; y=0 \quad (a\neq 1)
   \]</div>
 
   <p><strong>Caso particular \(a=1\):</strong></p>
@@ -264,7 +264,7 @@ html,body{overflow-x:clip;max-width:100%}
   \]</div>
   <p>Las dos filas de \(A\) son iguales: \(\det(A)=0\). El elemento \(a_{11}=1\neq 0\Rightarrow\text{rg}(A)=1\). La segunda fila de \((A|b)\) también es igual a la primera: \(\text{rg}(A|b)=1\).</p>
   <p>\(\text{rg}(A)=\text{rg}(A|b)=1&lt;n=2\) → <strong>Compatible Indeterminado</strong> con 1 parámetro libre.</p>
-  <div class="k" style="text-align:left">\[y=t\;\Rightarrow\;x=1-t,\qquad (t\in\mathbb{R})
+  <div class="k" style="text-align:left">\[x=1-t,\; y=t,\qquad (t\in\mathbb{R})
   \]</div>
   </div>
 </section>
@@ -273,7 +273,7 @@ html,body{overflow-x:clip;max-width:100%}
 <div class="grid">
 <section class="card span12">
   <p class="miniTitle">Ejemplo 2 — Sistema 3×3</p>
-  <h2>Dos valores críticos con tipos distintos</h2>
+  <h2>Un valor crítico con análisis completo</h2>
   <div style="margin-left:24px;padding-left:16px;border-left:3px solid var(--border-card)">
   <div class="k" style="text-align:left">\[
   \left\{\begin{aligned}
@@ -285,19 +285,18 @@ html,body{overflow-x:clip;max-width:100%}
   \]</div>
   <p><strong>Rango de \(A\):</strong></p>
   <div class="k" style="text-align:left">\[
-  \det(A)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=a^2+1+1-a-a-1=(a-1)^2(a+2) \cdot \frac{1}{1}
+  \det(A)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=a^2-2a+1=(a-1)^2
   \]</div>
-  <p>Calculando correctamente por Sarrus o cofactores:</p>
-  <div class="k" style="text-align:left">\[\det(A)=a^3-2a^2+1=(a-1)^2(a+2)\cdot\frac{?}{?}\]</div>
-  <p>Desarrollando por la primera fila:</p>
-  <div class="k" style="text-align:left">\[\det(A)=1\cdot(a^2-1)-1\cdot(a-1)+1\cdot(1-a)=(a-1)(a+1)-(a-1)-(a-1)=(a-1)(a+1-2)=(a-1)(a-1)=(a-1)^2 \cdot \text{...}\]</div>
-  <p>Resultado correcto (sustituyendo valores): \(\det(A)=(a-1)^2(a+2)\cdot\frac{1}{1}\). Los valores críticos son <strong>\(a=1\)</strong> y <strong>\(a=-2\)</strong>.</p>
+  <p>El único valor crítico es <strong>\(a=1\)</strong>, porque \(\det(A)=0\) exactamente en ese valor.</p>
   <table class="tablaClas" style="margin-top:12px">
-    <tr><th>Caso</th><th>rg(A)</th><th>rg(A|b)</th><th>Tipo</th><th>Solución</th></tr>
-    <tr><td>\(a\neq 1, a\neq -2\)</td><td>3</td><td>3</td><td>Compatible Det.</td><td>Solución única</td></tr>
-    <tr><td>\(a=1\)</td><td>1</td><td>1</td><td>Compatible Indet.</td><td>2 parámetros libres</td></tr>
-    <tr><td>\(a=-2\)</td><td>2</td><td>3</td><td>Incompatible</td><td>Sin solución</td></tr>
+    <tr><th>Caso</th><th>rg(A)</th><th>rg(A|b)</th><th>Número incógnitas</th><th>Tipo</th></tr>
+    <tr><td>\(a\neq 1\)</td><td>3</td><td>3</td><td>3</td><td>Compatible Determinado</td></tr>
+    <tr><td>\(a=1\)</td><td>1</td><td>1</td><td>3</td><td>Compatible Indeterminado (dos parámetros libres)</td></tr>
   </table>
+  <p>1) Para \(a\neq 1\): el sistema es compatible determinado. Aplicando la regla de Cramer, las incógnitas se obtienen como</p>
+  <p>\[x=\frac{\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}}{\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}}=\frac{(a-1)^2}{(a-1)^2}=1,\qquad y=\frac{\begin{vmatrix}1&1&1\\1&1&1\\1&1&a\end{vmatrix}}{\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}}=\frac{0}{(a-1)^2}=0,\qquad z=\frac{\begin{vmatrix}1&1&1\\1&a&1\\1&1&1\end{vmatrix}}{\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}}=\frac{0}{(a-1)^2}=0\]</p>
+  <p>2) Para \(a=1\): el sistema es compatible indeterminado y las soluciones son:</p>
+  <p>\[\begin{cases}x=1-t-s\\y=t\\z=s\end{cases}\qquad (t,s\in\mathbb{R})\]</p>
   </div>
 </section>
 </div>

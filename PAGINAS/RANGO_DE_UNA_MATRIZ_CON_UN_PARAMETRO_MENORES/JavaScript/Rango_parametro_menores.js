@@ -296,7 +296,7 @@ let param=(solucionesPaso3[0]?parseCaso(solucionesPaso3[0]).p:"k")||"k",vals=sol
 let vTxt=vals.length===2?`${param}≠${vals[0]} y ${param}≠${vals[1]}`:vals.map(v=>`${param}≠${v}`).join(" y ");
 let rangoGen=(menorElegidoMat?menorElegidoMat.length:Math.min(matriz.length,matriz[0].length));
 let cg=document.createElement("div");cg.style.cssText="font-weight:bold;text-decoration:underline;margin-bottom:6px;";
-cg.textContent=`CASO GENERAL: Para cualquier valor ${vTxt}`;box.appendChild(cg);
+cg.textContent=`caso general: Para cualquier valor ${vTxt}`;box.appendChild(cg);
 let genCont=document.createElement("div");genCont.style.marginLeft="18px";box.appendChild(genCont);
 let row1=document.createElement("div");row1.style.cssText="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;";genCont.appendChild(row1);
 row1.appendChild(spanMathFromLatex("\\text{Menor elegido:}","math"));

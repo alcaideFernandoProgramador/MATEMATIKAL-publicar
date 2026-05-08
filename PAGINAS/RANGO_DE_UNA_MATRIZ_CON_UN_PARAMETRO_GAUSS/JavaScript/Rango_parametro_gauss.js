@@ -267,12 +267,12 @@ function solucionEscalonada(escalonada){
   casosAutomaticoNumerico=casosAutomaticoNumerico.filter(v=>typeof v==="number"&&!Number.isNaN(v));
 
   let panel=document.createElement("div");panel.className="casosPanel";grid.appendChild(panel);
-  let h=document.createElement("div");h.className="panelTitle";h.innerHTML="CASOS ESPECÍFICOS QUE SE DEBEN ESTUDIAR POR SEPARADO";panel.appendChild(h);
+let h=document.createElement("div");h.className="panelTitle";h.innerHTML="casos específicos que se deben estudiar por separado";panel.appendChild(h);
   let info=document.createElement("div");info.className="mb8";panel.appendChild(info);
   let ui={row1:null,row2:null,list:null,fin:null,inp1:null,auto:null};
 
   function _listaGeneral(){return [...new Set((casosAutomatico||[]).map(x=>_simpl(x)))].filter(x=>x&&x!=="G"&&x!=="g");}
-  function _tituloGeneral(){let L=_listaGeneral();if(!L.length)return "CASO GENERAL (∀ "+nombreParametro+")";return "CASO GENERAL (∀ "+nombreParametro+" ∉ {"+L.join(", ")+"})";}
+  function _tituloGeneral(){let L=_listaGeneral();if(!L.length)return "caso general (∀ "+nombreParametro+")";return "caso general (∀ "+nombreParametro+" ∉ {"+L.join(", ")+"})";}
   function _lineaRango(card,mat1,mat2,r){let line=document.createElement("div");line.className="casosLine";
     let s1=document.createElement("span");s1.innerHTML="rango ";let m1=document.createElement("span");let s2=document.createElement("span");s2.innerHTML=" = rango ";
     let m2=document.createElement("span");let s3=document.createElement("span");s3.innerHTML=" = "+r;line.appendChild(s1);line.appendChild(m1);
@@ -304,7 +304,7 @@ function solucionEscalonada(escalonada){
   }
 
   if(casosAutomatico.length===0){
-    info.innerHTML="No hay casos específicos. Pulsa CASO GENERAL para obtener el rango.";let btn=document.createElement("button");btn.innerHTML="CASO GENERAL";panel.appendChild(btn);
+    info.innerHTML="No hay casos específicos. Pulsa caso general para obtener el rango.";let btn=document.createElement("button");btn.innerHTML="caso general";panel.appendChild(btn);
     btn.addEventListener("click",function(){_imprimirRangoCaso(null,"general");btn.disabled=true;_activarEstudioExtra();});return;
   }
 
