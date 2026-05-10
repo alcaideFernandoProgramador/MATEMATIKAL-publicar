@@ -69,6 +69,21 @@ function _normalizarCasoEspecial(raw) {
   return s.replace(/\s+/g, "");
 }
 
+function _valorNumericoCasoEspecial(raw) {
+  let s = _normalizarCasoEspecial(raw);
+  if (!s) return NaN;
+  try {
+    let dec = ExpresionAlgebraica.pasarADecimal(_simpl(s));
+    let v = parseFloat(dec);
+    if (Number.isFinite(v)) return v;
+  } catch (e) {}
+  if (/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)) {
+    let [num, den] = s.split("/").map(Number);
+    return den ? num / den : NaN;
+  }
+  return parseFloat(s);
+}
+
 function _parseCasosEspeciales(raw) {
   if (!raw) return [];
   return String(raw)
@@ -76,6 +91,33 @@ function _parseCasosEspeciales(raw) {
     .map(_normalizarCasoEspecial)
     .filter(Boolean)
     .filter((v, i, self) => self.indexOf(v) === i);
+}
+
+function _mismoCasoEspecial(a, b) {
+  let sa = _normalizarCasoEspecial(a);
+  let sb = _normalizarCasoEspecial(b);
+  if (sa === sb) return true;
+  let na = _valorNumericoCasoEspecial(sa);
+  let nb = _valorNumericoCasoEspecial(sb);
+  return Number.isFinite(na) && Number.isFinite(nb) && Math.abs(na - nb) < 1e-9;
+}
+
+function _incluyeCasoEspecial(lista, valor) {
+  return (lista || []).some(v => _mismoCasoEspecial(v, valor));
+}
+
+function _addCasoEspecialGlobal(valor) {
+  let v = _normalizarCasoEspecial(valor);
+  if (v && !_incluyeCasoEspecial(valoresCriticos, v)) valoresCriticos.push(v);
+}
+
+function _casosEsperadosInternos(mat) {
+  try {
+    let vals = Matriz.rangoPorCasos(mat)[2] || [];
+    return vals.map(_normalizarCasoEspecial).filter(Boolean);
+  } catch (e) {
+    return [];
+  }
 }
 
 function _rootsExpr(expr) {
@@ -147,13 +189,23 @@ function _matAmpLxS() {
 }
 
 function _sistemaLxS() {
-  let xLabels = Array.from({ length: nIncognitas }, (_, j) => `x_{${j + 1}}`);
+  let baseLabels = ["x", "y", "z"];
+  let xLabels = Array.from({ length: nIncognitas }, (_, j) => baseLabels[j] || `x_{${j + 1}}`);
   let rows = matrizAmpS.map(fila => {
+    let first = true;
     let lhs = fila.slice(0, nIncognitas).map((c, j) => {
       let cs = _simpl(c);
       if (_esCeroExpr(cs)) return null;
-      let tex = _toLaTeX(cs);
-      return (j === 0 ? "" : "+") + tex + xLabels[j];
+      let s = String(cs).replace(/\s+/g, "");
+      let neg = s[0] === "-";
+      let abs = neg ? s.slice(1) : s;
+      let necesitaPar = abs !== "1" && /[+\-]/.test(abs);
+      let coef = (abs === "1") ? "" : (necesitaPar ? `\\left(${_toLaTeX(abs)}\\right)` : _toLaTeX(abs));
+      let sign = "";
+      if (first) sign = neg ? "-" : "";
+      else sign = neg ? "-" : "+";
+      first = false;
+      return sign + coef + xLabels[j];
     }).filter(t => t !== null).join("") || "0";
     let rhs = _toLaTeX(_simpl(fila[nIncognitas]));
     return lhs + "=" + rhs;
@@ -166,7 +218,9 @@ function _sistemaLxS() {
 // =====================================================================
 function _construirIndicador() {
   _clear(pasoIndicadorDer);
-  ["Rango A", "Rango (A|b)", "Casos especiales", "Discusión", "Solución"].forEach((lbl, i) => {
+  pasoIndicadorDer.style.display = "none";
+  return;
+  ["Rango A", "Rango (A|b)", "Casos especiales", "Caso y sol.", "Final"].forEach((lbl, i) => {
     if (i > 0) {
       let sep = document.createElement("div");
       sep.className = "paso-sep"; sep.textContent = "›";
@@ -200,10 +254,6 @@ function _actualizarIndicador() {
 // =====================================================================
 function _mostrarRef(titulo, latexContent, notaHTML, rangosArr) {
   _clear(refContenido);
-  if (titulo) {
-    let h = document.createElement("div"); h.className = "ref-titulo"; h.textContent = titulo;
-    refContenido.appendChild(h);
-  }
   if (latexContent) {
     let d = document.createElement("div"); d.className = "ref-mat";
     _rk(latexContent, d); refContenido.appendChild(d);
@@ -225,11 +275,32 @@ function _mostrarRef(titulo, latexContent, notaHTML, rangosArr) {
 // =====================================================================
 // HISTORIAL
 // =====================================================================
+function _scrollHistorialAbajo() {
+  if (!historialDiv) return;
+  requestAnimationFrame(() => {
+    let scrollCasos = historialDiv.querySelector(".hist-casos-scroll");
+    if (scrollCasos) scrollCasos.scrollTop = scrollCasos.scrollHeight;
+    else historialDiv.scrollTop = historialDiv.scrollHeight;
+  });
+}
+
+function _prepararScrollCasos() {
+  if (!historialDiv) return null;
+  historialDiv.classList.add("historial-auto");
+  let scrollCasos = historialDiv.querySelector(".hist-casos-scroll");
+  if (!scrollCasos) {
+    scrollCasos = document.createElement("div");
+    scrollCasos.className = "hist-casos-scroll";
+    historialDiv.appendChild(scrollCasos);
+  }
+  return scrollCasos;
+}
+
 function _insertarAnteActiva(card) {
   if (tarjetaActiva && tarjetaActiva.parentNode === historialDiv)
     historialDiv.insertBefore(card, tarjetaActiva);
   else historialDiv.appendChild(card);
-  historialDiv.scrollTop = historialDiv.scrollHeight;
+  _scrollHistorialAbajo();
 }
 
 // =====================================================================
@@ -264,14 +335,260 @@ function _tarjetaRangoConfirmado(prefijo, casos) {
 // =====================================================================
 // TARJETA DE DISCUSIÓN POR CASO
 // =====================================================================
+function _hacerTarjetaColapsable(card, textoBoton = "Mostrar detalle", ocultarResumen = false) {
+  if (!card) return;
+  let cuerpo = card.querySelector(".hist-colapsable-cuerpo");
+  if (!cuerpo) {
+    cuerpo = document.createElement("div");
+    cuerpo.className = "hist-colapsable-cuerpo";
+    card.appendChild(cuerpo);
+  }
+  if (card.querySelector(".hist-toggle-detalle")) return;
+
+  if (ocultarResumen) {
+    let primeraEtiqueta = card.querySelector(".hist-etiqueta");
+    Array.from(card.children).forEach(child => {
+      if (
+        child === cuerpo ||
+        child === primeraEtiqueta ||
+        child.classList.contains("hist-toggle-detalle")
+      ) return;
+      cuerpo.appendChild(child);
+    });
+  }
+
+  cuerpo.hidden = true;
+  card.classList.add("hist-colapsada");
+
+  let btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "hist-toggle-detalle";
+  btn.textContent = textoBoton;
+  btn.addEventListener("click", () => {
+    let oculto = cuerpo.hidden;
+    cuerpo.hidden = !oculto;
+    card.classList.toggle("hist-colapsada", !oculto);
+    btn.textContent = oculto ? "Ocultar detalle" : textoBoton;
+  });
+  card.appendChild(btn);
+}
+
+function _colapsarTarjetasRangoConfirmadas() {
+  if (!historialDiv) return;
+  historialDiv.querySelectorAll(".hist-rango-conf").forEach(card => {
+    _hacerTarjetaColapsable(card, "Mostrar detalle", true);
+  });
+}
+
+function _buscarMenorConstanteNoNulo(mat, numFilas, numCols, orden, val = null) {
+  if (!orden) return null;
+  let base = val === null ? mat : Matriz.sustituir(mat, nombreParam, val);
+  let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+  let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+  for (let fs of filas) for (let cs of cols) {
+    let sub = Matriz.menor(base, fs, cs);
+    let det = _simpl(_detStr(sub));
+    if (_contieneParam(det) || _esCeroExpr(det)) continue;
+    return { sub, det, filas: fs, cols: cs };
+  }
+  return null;
+}
+
+function _buscarMenoresSinRaizComun(mat, numFilas, numCols, orden) {
+  if (!orden) return null;
+  let candidatos = [];
+  let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+  let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+  for (let fs of filas) for (let cs of cols) {
+    let sub = Matriz.menor(mat, fs, cs);
+    let det = _simpl(_detStr(sub));
+    if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+    let roots = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+    if (!roots.length) continue;
+    candidatos.push({ sub, det, roots, filas: fs, cols: cs });
+  }
+  for (let i = 0; i < candidatos.length; i++) {
+    for (let j = i + 1; j < candidatos.length; j++) {
+      let comun = candidatos[i].roots.some(r => _incluyeCasoEspecial(candidatos[j].roots, r));
+      if (!comun) return [candidatos[i], candidatos[j]];
+    }
+  }
+  return null;
+}
+
+function _buscarMenorSinRaicesRacionales(mat, numFilas, numCols, orden) {
+  if (!orden) return null;
+  let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+  let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+  for (let fs of filas) for (let cs of cols) {
+    let sub = Matriz.menor(mat, fs, cs);
+    let det = _simpl(_detStr(sub));
+    if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+    let raicesRacionales = _rootsExpr(det)
+      .map(_normalizarCasoEspecial)
+      .filter(Boolean)
+      .filter(v => /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:\/[+-]?(?:\d+(?:\.\d+)?|\.\d+))?$/.test(v.replace(",", ".")));
+    if (raicesRacionales.length === 0) return { sub, det, filas: fs, cols: cs };
+  }
+  return null;
+}
+
+function _buscarMenorNoNuloCasoGeneral(mat, numFilas, numCols, orden) {
+  if (!orden) return null;
+  let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+  let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+  for (let fs of filas) for (let cs of cols) {
+    let sub = Matriz.menor(mat, fs, cs);
+    let det = _simpl(_detStr(sub));
+    if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+    let raices = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+    if (raices.length && raices.every(r => _incluyeCasoEspecial(valoresCriticos, r))) {
+      return { sub, det, roots: raices, filas: fs, cols: cs };
+    }
+  }
+  return null;
+}
+
+function _crearJustificacionRangoAuto(mat, numFilas, numCols, orden, val = null) {
+  let ejemplo = _buscarMenorConstanteNoNulo(mat, numFilas, numCols, orden, val);
+  let el = document.createElement("div");
+  el.className = "hist-menor-ejemplo";
+  if (ejemplo) {
+    _rk(`\\text{Ejemplo: }${_detMatrixTex(ejemplo.sub)}=${_toLaTeX(ejemplo.det)}\\;\\text{ distinto de }\\;0`, el);
+    return el;
+  }
+  if (val !== null) return null;
+  let general = _buscarMenorNoNuloCasoGeneral(mat, numFilas, numCols, orden);
+  if (general) {
+    _rk(`${_detMatrixTex(general.sub)}=${_toLaTeX(general.det)}`, el);
+    return el;
+  }
+  let sinRaices = _buscarMenorSinRaicesRacionales(mat, numFilas, numCols, orden);
+  if (sinRaices) {
+    _rk(`\\text{Ejemplo: }${_detMatrixTex(sinRaices.sub)}=${_toLaTeX(sinRaices.det)}\\;\\text{ no se anula para valores racionales}`, el);
+    return el;
+  }
+  let pareja = _buscarMenoresSinRaizComun(mat, numFilas, numCols, orden);
+  if (!pareja) return null;
+  let tex = pareja.map(m => `${_detMatrixTex(m.sub)}=${_toLaTeX(m.det)}`).join("\\quad\\text{y}\\quad ");
+  _rk(`\\text{Ejemplo: }${tex}\\quad\\text{no se anulan a la vez}`, el);
+  return el;
+}
+
+function _crearTarjetaRangoAuto(titulo, prefijo, casos, mat, numFilas, numCols) {
+  let card = document.createElement("div");
+  card.className = "hist-entrada hist-rango-conf hist-auto-resumen";
+  let et = document.createElement("div"); et.className = "hist-etiqueta"; et.textContent = titulo;
+  card.appendChild(et);
+
+  let vg = document.createElement("div"); vg.className = "hist-badge-rango";
+  let texG = `\\text{rg}(${prefijo}) = ${casos.general}`;
+  if (casos.especiales.length > 0) {
+    texG += `\\;\\;(${nombreParam}\\neq ${casos.especiales.map(e => _toLaTeX(e.val)).join(",\\,")})`;
+  }
+  _rk(texG, vg);
+  let justG = _crearJustificacionRangoAuto(mat, numFilas, numCols, casos.general, null);
+  _appendFilaRango(card, vg, justG);
+
+  casos.especiales.forEach(e => {
+    let ve = document.createElement("div"); ve.className = "hist-badge-rango";
+    ve.style.cssText = "background:#fff7ed;color:#c2410c;";
+    _rk(`\\text{rg}(${prefijo}) = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
+    let justE = _crearJustificacionRangoAuto(mat, numFilas, numCols, e.r, e.val);
+    if (justE) justE.classList.add("especial");
+    _appendFilaRango(card, ve, justE);
+  });
+  return card;
+}
+
+function _appendFilaRango(card, badge, justificacion) {
+  let row = document.createElement("div");
+  row.className = "hist-rango-linea";
+  if (justificacion) row.appendChild(justificacion);
+  row.appendChild(badge);
+  card.appendChild(row);
+}
+
+function _crearTarjetaCasoAuto(val, rA, rAb) {
+  let correcto = _tipoCaso(rA, rAb);
+  let card = document.createElement("div"); card.className = "hist-entrada hist-discusion hist-caso-card";
+  let caseTop = document.createElement("div"); caseTop.className = "hist-caso-top";
+  let h = document.createElement("div"); h.className = "hist-etiqueta hist-caso-titulo";
+  h.textContent = _casoTextoPlano(val);
+  caseTop.appendChild(h);
+  let ranks = document.createElement("div"); ranks.className = "hist-disc-vals";
+  _rk(`\\text{rg}(A)=${rA}\\quad\\text{rg}(A|b)=${rAb}\\quad n=${nIncognitas}`, ranks);
+  caseTop.appendChild(ranks);
+
+  let tipo = document.createElement("div"); tipo.className = "caso-opciones";
+  [
+    { value: "SCD", label: "SCD" },
+    { value: "CSI", label: "SDI" },
+    { value: "SI", label: "SI" }
+  ].forEach(opt => {
+    let lab = document.createElement("span"); lab.className = "caso-opcion auto";
+    if (opt.value === correcto) lab.classList.add("seleccionado");
+    lab.textContent = opt.label;
+    tipo.appendChild(lab);
+  });
+  caseTop.appendChild(tipo);
+
+  let fb = document.createElement("div");
+  fb.className = "disc-feedback hist-disc-conclu " + (correcto === "SCD" ? "hist-tipo-cd" : correcto === "CSI" ? "hist-tipo-ci" : "hist-tipo-incompatible");
+  fb.textContent = "CIERTO";
+  caseTop.appendChild(fb);
+  card.appendChild(caseTop);
+
+  if (correcto !== "SI") _renderSolucionCaso(card, val, rA);
+  else {
+    let no = document.createElement("div"); no.className = "hist-valor"; no.textContent = "No hay soluciones.";
+    card.appendChild(no);
+    _appendIncompatiblePanel(val);
+  }
+  return card;
+}
+
+function _actualizarRangosCabecera(prefijo, casos) {
+  if (!caja112 || !casos) return;
+  let bloques = Array.from(caja112.querySelectorAll(".mat-bloque"));
+  let bloque = bloques.find(b => {
+    let t = b.querySelector(".mat-bloque-titulo");
+    return t && t.textContent.trim() === prefijo;
+  });
+  if (!bloque) return;
+
+  let anterior = bloque.querySelector(".conf-rangos");
+  if (anterior) anterior.remove();
+
+  let wrap = document.createElement("div");
+  wrap.className = "conf-rangos";
+
+  let general = document.createElement("div");
+  general.className = "conf-rango-badge";
+  let texG = `\\text{rg}(${prefijo})=${casos.general}`;
+  if (casos.especiales.length > 0) {
+    let vals = casos.especiales.map(e => _toLaTeX(e.val)).join(",\\,");
+    texG += `\\;(${nombreParam}\\neq ${vals})`;
+  }
+  _rk(texG, general);
+  wrap.appendChild(general);
+
+  casos.especiales.forEach(e => {
+    let esp = document.createElement("div");
+    esp.className = "conf-rango-badge especial";
+    _rk(`\\text{rg}(${prefijo})=${e.r}\\;(${nombreParam}=${_toLaTeX(e.val)})`, esp);
+    wrap.appendChild(esp);
+  });
+
+  bloque.appendChild(wrap);
+}
+
 function _tarjetaDiscusion(prefijo, rA, rAb, n, val) {
   let tipo = rA !== rAb ? "incompatible" : rA === n ? "cd" : "ci";
 
   let card = document.createElement("div"); card.className = "hist-entrada hist-discusion";
   let et = document.createElement("div"); et.className = "hist-etiqueta";
-  et.textContent = val === null
-    ? `Discusión — Caso general (${nombreParam} ≠ valores críticos)`
-    : `Discusión — ${nombreParam} = ${val}`;
+  et.textContent = `Discusión — ${_casoTextoPlano(val)}`;
   card.appendChild(et);
 
   let vals = document.createElement("div"); vals.className = "hist-disc-vals";
@@ -297,6 +614,203 @@ function _tarjetaDiscusion(prefijo, rA, rAb, n, val) {
   return { card, tipo };
 }
 
+function _tipoCaso(rA, rAb) {
+  if (rA !== rAb) return "SI";
+  return rA === nIncognitas ? "SCD" : "CSI";
+}
+
+function _textoTipo(tipo) {
+  if (tipo === "SCD") return "Sistema compatible determinado";
+  if (tipo === "CSI") return "Sistema compatible indeterminado";
+  return "Sistema incompatible";
+}
+
+function _rangosParaCaso(val) {
+  let especiales = casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos;
+  let esEspecial = val !== null && _incluyeCasoEspecial(especiales, val);
+  let rA = val === null || !esEspecial
+    ? rangoA_casos.general
+    : (rangoA_casos.especiales.find(e => e.val === val)?.r ?? rangoA_casos.general);
+  let rAb = val === null || !esEspecial
+    ? rangoAb_casos.general
+    : (rangoAb_casos.especiales.find(e => e.val === val)?.r ?? rangoAb_casos.general);
+  return { rA, rAb };
+}
+
+function _normalizarCasoPaso4(raw) {
+  let s = _strip(raw);
+  if (!s) return { ok: false, msg: "Introduce G o un valor del parametro." };
+  if (/^g$/i.test(s)) return { ok: true, val: null };
+  let v = _normalizarCasoEspecial(s);
+  let permitidos = casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos;
+  if (_incluyeCasoEspecial(permitidos, v)) return { ok: true, val: v, extraGeneral: false };
+  let nv = _valorNumericoCasoEspecial(v);
+  if (Number.isFinite(nv)) return { ok: true, val: v, extraGeneral: true };
+  return { ok: false, msg: `Usa G, un valor numerico, o uno de los especiales: ${permitidos.map(x => nombreParam + "=" + x).join(", ")}.` };
+}
+
+function _casoTexto(val) {
+  let especiales = casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos;
+  if (val === null) {
+    let lista = especiales.map(v => _toLaTeX(v)).join(",");
+    return lista
+      ? `\\text{Caso general }(${nombreParam}\\neq ${lista})`
+      : `\\text{Caso general}`;
+  }
+  return _incluyeCasoEspecial(especiales, val)
+    ? `\\text{Caso }${nombreParam}=${_toLaTeX(val)}`
+    : `\\text{Caso }${nombreParam}=${_toLaTeX(val)}\\;\\text{(dentro del caso general)}`;
+}
+
+function _casoTextoPlano(val) {
+  if (val !== null) return `${nombreParam} = ${val}`;
+  let especiales = casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos;
+  return especiales.length ? `Caso general (${nombreParam} != ${especiales.join(", ")})` : "Caso general";
+}
+
+function _appendSolucionPanel(val, node) {
+  if (!refContenido || !node) return;
+  let box = document.createElement("div"); box.className = "ref-nota";
+  let title = document.createElement("div"); title.className = "confirmados-caso-titulo";
+  _rk(`\\text{Solucion: }${_casoTexto(val)}`, title);
+  box.appendChild(title);
+  box.appendChild(node.cloneNode(true));
+  refContenido.appendChild(box);
+}
+
+function _appendIncompatiblePanel(val) {
+  if (!refContenido) return;
+  let box = document.createElement("div"); box.className = "ref-nota";
+  let title = document.createElement("div"); title.className = "confirmados-caso-titulo";
+  _rk(`\\text{Conclusion: }${_casoTexto(val)}`, title);
+  let msg = document.createElement("div");
+  msg.className = "hist-badge-rango hist-sol-linea";
+  msg.style.cssText = "background:#fef2f2;color:#dc2626;border:1px solid #fecaca;";
+  _rk(`\\text{Sistema incompatible: no hay soluciones}`, msg);
+  box.appendChild(title);
+  box.appendChild(msg);
+  refContenido.appendChild(box);
+}
+
+function _numToTexCalc(x) {
+  if (!Number.isFinite(x)) return "?";
+  let r = Math.round(x * 1e9) / 1e9;
+  if (Number.isInteger(r)) return r.toString();
+  return r.toFixed(4).replace(/0+$/, "").replace(/\.$/, "");
+}
+
+function _cocienteSimplificadoTex(num, den) {
+  let denS = String(den);
+  if (_esCeroExpr(denS)) return `\\frac{${_toLaTeX(num)}}{${_toLaTeX(denS)}}`;
+  try {
+    return _toLaTeX(_simpl(`(${num})/(${denS})`));
+  } catch (e) {
+    return `\\frac{${_toLaTeX(num)}}{${_toLaTeX(denS)}}`;
+  }
+}
+
+function _detMatrixTex(mat) {
+  return `\\begin{vmatrix}${mat.map(r => r.map(_toLaTeX).join("&")).join("\\\\")}\\end{vmatrix}`;
+}
+
+function _primerMenorNoNulo(mat, r) {
+  let rows = _combs(Array.from({ length: mat.length }, (_, i) => i), r);
+  let cols = _combs(Array.from({ length: mat[0].length }, (_, i) => i), r);
+  for (let rs of rows) for (let cs of cols) {
+    let sub = rs.map(i => cs.map(j => mat[i][j]));
+    let d = Matriz.determinanteNumerico(sub);
+    if (Math.abs(d) > 1e-9) return { rows: rs, cols: cs, det: d };
+  }
+  return null;
+}
+
+function _renderSolucionCaso(card, val, rA) {
+  let matS = val === null ? matrizAmpS : Matriz.sustituir(matrizAmpS, nombreParam, val);
+  if (val === null) {
+    _cramerSimbolicoCD(card, matS, rA, refContenido, val);
+    return;
+  }
+
+  let matNum = _sustitNum(matrizAmpS, _valorNumericoCasoEspecial(val));
+  let matCoef = matNum.map(r => r.slice(0, nIncognitas));
+  if (rA === nIncognitas) {
+    _cramerNumerico(card, matCoef, matNum, rA, refContenido, val);
+    return;
+  }
+
+  let piv = _primerMenorNoNulo(matCoef, rA);
+  if (!piv) {
+    let note = document.createElement("div"); note.className = "hist-valor";
+    note.textContent = "No se ha encontrado un subsistema regular para aplicar Cramer.";
+    card.appendChild(note);
+    return;
+  }
+
+  let freeCols = Array.from({ length: nIncognitas }, (_, i) => i).filter(i => !piv.cols.includes(i));
+  let paramNames = ["t", "s", "u", "v"];
+  let params = freeCols.map((_, i) => paramNames[i] || `t_{${i + 1}}`);
+  let info = document.createElement("div"); info.className = "hist-free-note";
+  let libresTex = freeCols.map((c, i) => `x_{${c + 1}}=${params[i]}`).join(",\\;");
+  _rk(`\\text{Dejamos ${freeCols.length === 1 ? "libre" : "libres"} }${libresTex}`, info);
+  let top = card.querySelector(".hist-caso-top");
+  let fb = top ? top.querySelector(".disc-feedback") : null;
+  if (fb && fb.parentNode) fb.parentNode.insertBefore(info, fb.nextSibling);
+  else if (top) top.appendChild(info);
+  else card.appendChild(info);
+
+  let detTex = _numToTexCalc(piv.det);
+  let sol = Array(nIncognitas).fill(null);
+  freeCols.forEach((c, i) => { sol[c] = params[i]; });
+
+  let rhsExprRows = piv.rows.map(rowIdx => {
+    let base = matNum[rowIdx][nIncognitas];
+    let terms = freeCols.map((fc, pi) => {
+      let coef = -matNum[rowIdx][fc];
+      if (Math.abs(coef) < 1e-9) return "";
+      let sign = coef >= 0 ? "+" : "-";
+      let abs = Math.abs(coef);
+      return `${sign}${abs === 1 ? "" : _numToTexCalc(abs)}${params[pi]}`;
+    }).join("");
+    return `${_numToTexCalc(base)}${terms}`;
+  });
+
+  function lhsRow(rowIdx) {
+    let first = true;
+    return piv.cols.map(c => {
+      let coef = matNum[rowIdx][c];
+      if (Math.abs(coef) < 1e-9) return "";
+      let sign = "";
+      if (first) sign = coef < 0 ? "-" : "";
+      else sign = coef < 0 ? "-" : "+";
+      first = false;
+      let abs = Math.abs(coef);
+      return `${sign}${abs === 1 ? "" : _numToTexCalc(abs)}x_{${c + 1}}`;
+    }).filter(Boolean).join("") || "0";
+  }
+
+  let solRow = document.createElement("div"); solRow.className = "hist-sol-row";
+  card.appendChild(solRow);
+
+  let sistema = document.createElement("div"); sistema.className = "hist-valor";
+  _rk(`\\left\\{\\begin{array}{l}${piv.rows.map((rowIdx, i) => `${lhsRow(rowIdx)}=${_toLaTeX(rhsExprRows[i])}`).join("\\\\")}\\end{array}\\right.`, sistema);
+  solRow.appendChild(sistema);
+
+  piv.cols.forEach(col => {
+    let Ai = piv.rows.map((rowIdx, rr) => piv.cols.map(c => c === col ? rhsExprRows[rr] : String(matNum[rowIdx][c])));
+    let detMatrix = _detMatrixTex(Ai);
+    let detAi = _detStr(Ai);
+    let xi = _cocienteSimplificadoTex(detAi, detTex);
+    let tex = `x_{${col + 1}}=\\frac{\\det(A_{${col + 1}})}{\\det(A_0)}=\\frac{${detMatrix}}{${detTex}}=${xi}`;
+    let el = document.createElement("div"); el.className = "hist-valor";
+    _rk(tex, el); solRow.appendChild(el);
+    sol[col] = xi;
+  });
+
+  let out = document.createElement("div"); out.className = "hist-badge-rango hist-sol-linea";
+  _rk(`\\left[${sol.map((s, i) => `x_{${i + 1}}=${s}`).join(",\\quad ")}\\right]`, out);
+  _appendSolucionPanel(val, out);
+}
+
 // =====================================================================
 // ENCONTRAR VALOR GENÉRICO (no crítico)
 // =====================================================================
@@ -304,7 +818,7 @@ function _encontrarValorGenerico() {
   let candidates = [7, 13, 97, 23, 41, -3, 100, 11, 5, 3, 2, -5, 17, 19];
   for (let c of candidates) {
     let isCrit = valoresCriticos.some(v => {
-      let nv = parseFloat(v);
+      let nv = _valorNumericoCasoEspecial(v);
       return Number.isFinite(nv) && Math.abs(nv - c) < 1e-9;
     });
     if (!isCrit) return c;
@@ -327,18 +841,23 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
   et.textContent = `Paso ${pasoActual} — ${prefijo}`;
   card.appendChild(et);
 
+  let cuerpo = document.createElement("div"); cuerpo.className = "hist-colapsable-cuerpo";
+  card.appendChild(cuerpo);
+
   let resArea = document.createElement("div"); resArea.className = "form-res-area";
-  card.appendChild(resArea);
+  cuerpo.appendChild(resArea);
 
   let tog = document.createElement("div"); tog.className = "form-toggle";
   let btnM = document.createElement("button"); btnM.className = "form-toggle-btn activo"; btnM.textContent = "Calcular menor"; btnM.type = "button";
   let btnR = document.createElement("button"); btnR.className = "form-toggle-btn"; btnR.textContent = "Indicar rango"; btnR.type = "button";
   tog.appendChild(btnM); tog.appendChild(btnR);
-  card.appendChild(tog);
+  cuerpo.appendChild(tog);
 
   let zona = document.createElement("div"); zona.className = "form-seccion";
-  card.appendChild(zona);
+  cuerpo.appendChild(zona);
   historialDiv.appendChild(card);
+  let criticosLocal = new Set();
+  let menoresCalculados = [];
 
   /* ── Añadir resultado de menor ── */
   function _addResultado(filIdx, colIdx, det, roots) {
@@ -347,7 +866,19 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
     let c = colIdx.map(x => x + 1).join(",");
 
     // Register critical values
-    roots.forEach(rv => { if (!valoresCriticos.includes(rv)) valoresCriticos.push(rv); });
+    let rangoGenericoLocal = _rangoNum(_sustitNum(mat, _encontrarValorGenerico()));
+    let rootsEfectivas = [];
+    roots.forEach(rv => {
+      let nv = _valorNumericoCasoEspecial(rv);
+      if (!Number.isFinite(nv)) return;
+      let cambiaRango = _rangoNum(_sustitNum(mat, nv)) !== rangoGenericoLocal;
+      if (!cambiaRango) return;
+      let norm = _normalizarCasoEspecial(rv);
+      rootsEfectivas.push(norm);
+      criticosLocal.add(norm);
+      _addCasoEspecialGlobal(norm);
+    });
+    menoresCalculados.push({ filIdx: filIdx.slice(), colIdx: colIdx.slice(), orden, det, roots: rootsEfectivas });
 
     let siempreNulo = _esCeroExpr(det);
     let tieneParam = _contieneParam(det);
@@ -382,7 +913,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
       } else {
         let rd = document.createElement("div"); rd.className = "form-menor-inf";
         rd.style.color = "#15803d";
-        rd.textContent = "No se anula para ningún valor real del parámetro.";
+        rd.textContent = "No se anula para ningún valor racional del parámetro.";
         blq.appendChild(rd);
       }
     }
@@ -391,14 +922,13 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
     if (siempreNulo) inf.textContent = "Siempre nulo (para todo valor del parámetro).";
     else if (siempreNoNulo) inf.textContent = "Siempre no nulo — no depende del parámetro.";
     else if (roots.length > 0) {
-      let rStr = roots.map(r => `${nombreParam}=${r}`).join(", ");
-      inf.textContent = `No nulo salvo cuando ${rStr}.`;
+      inf = null;
     } else {
       inf.textContent = "Nunca nulo.";
     }
-    blq.appendChild(inf);
+    if (inf) blq.appendChild(inf);
     resArea.appendChild(blq);
-    card.scrollIntoView({ block: "end", behavior: "smooth" });
+    _scrollHistorialAbajo();
   }
 
   /* ── MODO: calcular menor ── */
@@ -471,11 +1001,110 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
 
   /* ── MODO: indicar rango ── */
   function _modoRango() {
+    let maxPos = Math.min(numFilas, numCols);
+    let esperados = _casosEsperadosInternos(mat);
+    if (!esperados.length) esperados = _calcularRangoCasos(mat, numFilas, numCols, maxPos).criticos;
+    let detectados = [...valoresCriticos, ...Array.from(criticosLocal)];
+    let faltan = esperados.filter(v => !_incluyeCasoEspecial(detectados, v));
+    let necesitaMenorAmpliada = prefijo === "(A|b)" && valoresCriticos.length > 0;
+    let tieneMenorAmpliada = menoresCalculados.some(m =>
+      m.orden === maxPos && m.colIdx.includes(numCols - 1)
+    );
+    if (faltan.length || (necesitaMenorAmpliada && !tieneMenorAmpliada)) {
+      btnM.classList.add("activo"); btnR.classList.remove("activo");
+      _clear(zona);
+      let aviso = document.createElement("div");
+      aviso.className = "form-msg";
+      aviso.innerHTML = `<span class="err">Antes de indicar el rango debes calcular los menores adecuados para detectar los casos especiales.</span>`;
+      zona.appendChild(aviso);
+      let ayuda = document.createElement("div");
+      ayuda.className = "form-picker-hint";
+      ayuda.textContent = "Calcula menores cuyo determinante dependa del parámetro y se anule en esos valores.";
+      zona.appendChild(ayuda);
+      return;
+    }
+
+    function _menorConstanteCalculadoNoNulo(orden, val) {
+      return menoresCalculados.some(m => {
+        if (m.orden !== orden) return false;
+        let sub = Matriz.menor(mat, m.filIdx, m.colIdx);
+        if (val !== null) sub = Matriz.sustituir(sub, nombreParam, val);
+        let det = _simpl(_detStr(sub));
+        return !_contieneParam(det) && !_esCeroExpr(det);
+      });
+    }
+
+    function _menoresCalculadosSinRaizComun(orden) {
+      let candidatos = menoresCalculados
+        .filter(m => m.orden === orden)
+        .map(m => {
+          let sub = Matriz.menor(mat, m.filIdx, m.colIdx);
+          let det = _simpl(_detStr(sub));
+          if (_esCeroExpr(det) || !_contieneParam(det)) return null;
+          let roots = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+          return roots.length ? { det, roots } : null;
+        })
+        .filter(Boolean);
+      for (let i = 0; i < candidatos.length; i++) {
+        for (let j = i + 1; j < candidatos.length; j++) {
+          let comun = candidatos[i].roots.some(r => _incluyeCasoEspecial(candidatos[j].roots, r));
+          if (!comun) return true;
+        }
+      }
+      return false;
+    }
+
+    function _esRacionalTexto(raw) {
+      let s = _normalizarCasoEspecial(raw).replace(",", ".");
+      return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:\/[+-]?(?:\d+(?:\.\d+)?|\.\d+))?$/.test(s);
+    }
+
+    function _menorCalculadoSinRaicesRacionales(orden) {
+      return menoresCalculados.some(m => {
+        if (m.orden !== orden) return false;
+        let sub = Matriz.menor(mat, m.filIdx, m.colIdx);
+        let det = _simpl(_detStr(sub));
+        if (_esCeroExpr(det) || !_contieneParam(det)) return false;
+        let raicesRacionales = _rootsExpr(det)
+          .map(_normalizarCasoEspecial)
+          .filter(Boolean)
+          .filter(_esRacionalTexto);
+        return raicesRacionales.length === 0;
+      });
+    }
+
+    function _menorCalculadoNoNuloCasoGeneral(orden) {
+      return menoresCalculados.some(m => {
+        if (m.orden !== orden) return false;
+        let sub = Matriz.menor(mat, m.filIdx, m.colIdx);
+        let det = _simpl(_detStr(sub));
+        if (_esCeroExpr(det) || !_contieneParam(det)) return false;
+        let raices = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+        return raices.length && raices.every(r => _incluyeCasoEspecial(valoresCriticos, r));
+      });
+    }
+
+    function _rangoJustificado(orden, val) {
+      if (!orden) return true;
+      if (val !== null && _menorEjemploNoNulo(orden, val)) return true;
+      if (prefijo === "(A|b)" && rangoA_casos) {
+        let rA = val === null
+          ? rangoA_casos.general
+          : (rangoA_casos.especiales.find(e => _mismoCasoEspecial(e.val, val))?.r ?? rangoA_casos.general);
+        if (rA === orden && orden === Math.min(nEcuaciones, nIncognitas)) return true;
+      }
+      if (_menorConstanteCalculadoNoNulo(orden, val)) return true;
+      return val === null && (
+        _menorCalculadoNoNuloCasoGeneral(orden) ||
+        _menorCalculadoSinRaicesRacionales(orden) ||
+        _menoresCalculadosSinRaizComun(orden)
+      );
+    }
+
     btnR.classList.add("activo"); btnM.classList.remove("activo");
     _clear(zona);
 
     let criticos = valoresCriticos.slice();
-    let maxPos = Math.min(numFilas, numCols);
 
     // Build inputs for general case + each critical value
     let rows = [];
@@ -518,13 +1147,19 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
         }
 
         // Validate numerically
-        let testVal = (val === null) ? _encontrarValorGenerico() : parseFloat(val);
+        let testVal = (val === null) ? _encontrarValorGenerico() : _valorNumericoCasoEspecial(val);
         if (!Number.isFinite(testVal)) testVal = 0;
         let matNum = _sustitNum(mat, testVal);
         let rangoReal = _rangoNum(matNum);
 
         if (rangoReal !== rv) {
-          msgR.innerHTML = `<span class="falso">FALSO</span> — Para ${nombreParam}=${testVal}: rg = ${rangoReal}, no ${rv}.`;
+          let casoTxt = val === null ? "caso general" : `${nombreParam}=${val}`;
+          msgR.innerHTML = `<span class="falso">FALSO</span> — En el ${casoTxt}: rg = ${rangoReal}, no ${rv}.`;
+          input.value = ""; input.focus(); return;
+        }
+        if (!_rangoJustificado(rv, val)) {
+          let casoTxt = val === null ? "caso general" : `${nombreParam}=${val}`;
+          msgR.innerHTML = `<span class="err">Antes de indicar rg = ${rv} en el ${casoTxt}, calcula un menor de orden ${rv} que lo justifique.</span>`;
           input.value = ""; input.focus(); return;
         }
         resultados.push({ val, r: rv });
@@ -541,19 +1176,29 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
         if (tog.parentNode) tog.parentNode.removeChild(tog);
         if (zona.parentNode) zona.parentNode.removeChild(zona);
         card.className = "hist-entrada hist-rango-conf";
+        let et = card.querySelector(".hist-etiqueta");
+        if (prefijo === "A" && et) et.textContent = "Paso 1: Rango de A";
+        if (prefijo === "(A|b)" && et) et.textContent = "Paso 2: Rango(A|b)";
         // Add summary
         let vg = document.createElement("div"); vg.className = "hist-badge-rango";
         let texG = `\\text{rg}(${prefijo}) = ${casosObj.general}`;
         if (casosObj.especiales.length > 0) {
           texG += `\\;\\;(${nombreParam}\\neq ${casosObj.especiales.map(e => _toLaTeX(e.val)).join(",\\,")})`;
         }
-        _rk(texG, vg); card.appendChild(vg);
+        _rk(texG, vg);
+        let ejemploG = _menorEjemploNoNulo(casosObj.general, null);
+        let eg = _crearJustificacionRango(ejemploG, casosObj.general, null);
+        _appendFilaRango(card, vg, eg);
         casosObj.especiales.forEach(e => {
           let ve = document.createElement("div"); ve.className = "hist-badge-rango";
           ve.style.cssText = "background:#fff7ed;color:#c2410c;";
           _rk(`\\text{rg}(${prefijo}) = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
-          card.appendChild(ve);
+          let ejemploE = _menorEjemploNoNulo(e.r, e.val);
+          let ee = _crearJustificacionRango(ejemploE, e.r, e.val);
+          if (ee) ee.classList.add("especial");
+          _appendFilaRango(card, ve, ee);
         });
+        if (prefijo === "(A|b)") _colapsarTarjetasRangoConfirmadas();
         tarjetaActiva = null;
         onRangoOk(casosObj);
       }, 600);
@@ -570,6 +1215,102 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
     rows[0].input.focus();
   }
 
+  function _menorEjemploNoNulo(orden, val) {
+    if (!orden) return null;
+    let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+    let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+    let matBase = val === null ? mat : Matriz.sustituir(mat, nombreParam, val);
+    for (let fs of filas) for (let cs of cols) {
+      let sub = Matriz.menor(matBase, fs, cs);
+      let det = _simpl(_detStr(sub));
+      if (_contieneParam(det) || _esCeroExpr(det)) continue;
+      return { sub, det, filas: fs, cols: cs };
+    }
+    return null;
+  }
+
+  function _menoresSinRaizComun(orden) {
+    if (!orden) return null;
+    let candidatos = [];
+    let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+    let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+    for (let fs of filas) for (let cs of cols) {
+      let sub = Matriz.menor(mat, fs, cs);
+      let det = _simpl(_detStr(sub));
+      if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+      let roots = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+      if (!roots.length) continue;
+      candidatos.push({ sub, det, roots, filas: fs, cols: cs });
+    }
+    for (let i = 0; i < candidatos.length; i++) {
+      for (let j = i + 1; j < candidatos.length; j++) {
+        let comun = candidatos[i].roots.some(r => _incluyeCasoEspecial(candidatos[j].roots, r));
+        if (!comun) return [candidatos[i], candidatos[j]];
+      }
+    }
+    return null;
+  }
+
+  function _menorSinRaicesRacionales(orden) {
+    if (!orden) return null;
+    let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+    let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+    for (let fs of filas) for (let cs of cols) {
+      let sub = Matriz.menor(mat, fs, cs);
+      let det = _simpl(_detStr(sub));
+      if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+      let raicesRacionales = _rootsExpr(det)
+        .map(_normalizarCasoEspecial)
+        .filter(Boolean)
+        .filter(v => /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:\/[+-]?(?:\d+(?:\.\d+)?|\.\d+))?$/.test(v.replace(",", ".")));
+      if (raicesRacionales.length === 0) return { sub, det, filas: fs, cols: cs };
+    }
+    return null;
+  }
+
+  function _menorNoNuloCasoGeneral(orden) {
+    if (!orden) return null;
+    let filas = _combs(Array.from({ length: numFilas }, (_, i) => i), orden);
+    let cols = _combs(Array.from({ length: numCols }, (_, i) => i), orden);
+    for (let fs of filas) for (let cs of cols) {
+      let sub = Matriz.menor(mat, fs, cs);
+      let det = _simpl(_detStr(sub));
+      if (_esCeroExpr(det) || !_contieneParam(det)) continue;
+      let raices = _rootsExpr(det).map(_normalizarCasoEspecial).filter(Boolean);
+      if (raices.length && raices.every(r => _incluyeCasoEspecial(valoresCriticos, r))) {
+        return { sub, det, roots: raices, filas: fs, cols: cs };
+      }
+    }
+    return null;
+  }
+
+  function _crearJustificacionRango(ejemplo, orden, val) {
+    if (ejemplo) {
+      let el = document.createElement("div"); el.className = "hist-menor-ejemplo";
+      _rk(`\\text{Ejemplo: }${_detMatrixTex(ejemplo.sub)}=${_toLaTeX(ejemplo.det)}\\;\\text{ distinto de }\\;0`, el);
+      return el;
+    }
+    if (val !== null) return null;
+    let general = _menorNoNuloCasoGeneral(orden);
+    if (general) {
+      let el = document.createElement("div"); el.className = "hist-menor-ejemplo";
+      _rk(`${_detMatrixTex(general.sub)}=${_toLaTeX(general.det)}`, el);
+      return el;
+    }
+    let sinRaices = _menorSinRaicesRacionales(orden);
+    if (sinRaices) {
+      let el = document.createElement("div"); el.className = "hist-menor-ejemplo";
+      _rk(`\\text{Ejemplo: }${_detMatrixTex(sinRaices.sub)}=${_toLaTeX(sinRaices.det)}\\;\\text{ no se anula para valores racionales}`, el);
+      return el;
+    }
+    let pareja = _menoresSinRaizComun(orden);
+    if (!pareja) return null;
+    let el = document.createElement("div"); el.className = "hist-menor-ejemplo";
+    let tex = pareja.map(m => `${_detMatrixTex(m.sub)}=${_toLaTeX(m.det)}`).join("\\quad\\text{y}\\quad ");
+    _rk(`\\text{Ejemplo: }${tex}\\quad\\text{no se anulan a la vez}`, el);
+    return el;
+  }
+
   btnM.addEventListener("click", _modoMenor);
   btnR.addEventListener("click", _modoRango);
   _modoMenor();
@@ -579,46 +1320,61 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
 // RESOLUCIÓN AUTOMÁTICA
 // =====================================================================
 function _autoResolver() {
-  if (tarjetaActiva && tarjetaActiva.parentNode)
-    tarjetaActiva.parentNode.removeChild(tarjetaActiva);
   tarjetaActiva = null;
+  _clear(historialDiv);
+  historialDiv.classList.add("historial-auto");
+  _clear(refContenido);
+  valoresCriticos = [];
+  casosEspecialesUsuario = [];
 
-  // Compute rank of A symbolically
   let matCoef = _matCoefS();
   let maxOrdA = Math.min(nEcuaciones, nIncognitas);
   let { general: genA, criticos: critA } = _calcularRangoCasos(matCoef, nEcuaciones, nIncognitas, maxOrdA);
-  critA.forEach(v => { if (!valoresCriticos.includes(v)) valoresCriticos.push(v); });
-  let especA = critA.map(v => ({ val: v, r: _rangoNum(_sustitNum(matCoef, parseFloat(v))) }));
+  let internosA = _casosEsperadosInternos(matCoef);
+  if (internosA.length) critA = internosA;
+  critA.forEach(v => { _addCasoEspecialGlobal(v); });
+  let especA = critA.map(v => ({ val: v, r: _rangoNum(_sustitNum(matCoef, _valorNumericoCasoEspecial(v))) }));
   rangoA_casos = { general: genA, especiales: especA };
+  _actualizarRangosCabecera("A", rangoA_casos);
 
-  // Show card for A
-  let cardA = _tarjetaRangoConfirmado("A", rangoA_casos);
-  let etA = document.createElement("div"); etA.className = "hist-etiqueta";
-  etA.textContent = "Paso 1 — A (resolución automática)";
-  cardA.insertBefore(etA, cardA.firstChild);
-  historialDiv.appendChild(cardA);
-
-  pasoActual = 2; _actualizarIndicador();
-
-  // Compute rank of A|b
   let maxOrdAb = Math.min(nEcuaciones, nIncognitas + 1);
   let { general: genAb, criticos: critAb } = _calcularRangoCasos(matrizAmpS, nEcuaciones, nIncognitas + 1, maxOrdAb);
-  critAb.forEach(v => { if (!valoresCriticos.includes(v)) valoresCriticos.push(v); });
-  // For all critical values (from both A and A|b)
+  let internosAb = _casosEsperadosInternos(matrizAmpS);
+  if (internosAb.length) critAb = internosAb;
+  critAb.forEach(v => { _addCasoEspecialGlobal(v); });
   let allCrit = valoresCriticos.slice();
-  let especAb = allCrit.map(v => ({ val: v, r: _rangoNum(_sustitNum(matrizAmpS, parseFloat(v))) }));
+  let especAb = allCrit.map(v => ({ val: v, r: _rangoNum(_sustitNum(matrizAmpS, _valorNumericoCasoEspecial(v))) }));
   rangoAb_casos = { general: genAb, especiales: especAb };
+  rangoA_casos.especiales = allCrit.map(v => ({ val: v, r: _rangoNum(_sustitNum(matCoef, _valorNumericoCasoEspecial(v))) }));
+  _actualizarRangosCabecera("A", rangoA_casos);
+  _actualizarRangosCabecera("(A|b)", rangoAb_casos);
+  casosEspecialesUsuario = allCrit.slice();
 
-  // Recalculate speciales for A with all critical values too
-  rangoA_casos.especiales = allCrit.map(v => ({ val: v, r: _rangoNum(_sustitNum(matCoef, parseFloat(v))) }));
+  pasoActual = 5; _actualizarIndicador();
+  historialDiv.appendChild(_crearTarjetaRangoAuto("Paso 1: Rango de A", "A", rangoA_casos, matCoef, nEcuaciones, nIncognitas));
+  historialDiv.appendChild(_crearTarjetaRangoAuto("Paso 2: Rango(A|b)", "(A|b)", rangoAb_casos, matrizAmpS, nEcuaciones, nIncognitas + 1));
 
-  let cardAb = _tarjetaRangoConfirmado("(A|b)", rangoAb_casos);
-  let etAb = document.createElement("div"); etAb.className = "hist-etiqueta";
-  etAb.textContent = "Paso 2 — (A|b) (resolución automática)";
-  cardAb.insertBefore(etAb, cardAb.firstChild);
-  historialDiv.appendChild(cardAb);
+  let casosCard = document.createElement("div");
+  casosCard.className = "hist-entrada hist-rango-conf hist-auto-resumen hist-auto-casos-resumen";
+  let casosEt = document.createElement("div"); casosEt.className = "hist-etiqueta"; casosEt.textContent = "Paso 3: Casos especiales";
+  casosCard.appendChild(casosEt);
+  let casosTxt = document.createElement("div"); casosTxt.className = "hist-badge-rango";
+  if (allCrit.length) _rk(`\\text{Casos especiales: }${allCrit.map(v => `${nombreParam}=${_toLaTeX(v)}`).join(",\\;")}`, casosTxt);
+  else _rk(`\\text{No hay casos especiales}`, casosTxt);
+  casosCard.appendChild(casosTxt);
+  historialDiv.appendChild(casosCard);
 
-  iniciarPaso3Especiales(true);
+  let casosScroll = document.createElement("div");
+  casosScroll.className = "hist-casos-scroll";
+  historialDiv.appendChild(casosScroll);
+
+  let allVals = [null, ...allCrit];
+  allVals.forEach(val => {
+    let rA = val === null ? rangoA_casos.general : (rangoA_casos.especiales.find(e => _mismoCasoEspecial(e.val, val))?.r ?? rangoA_casos.general);
+    let rAb = val === null ? rangoAb_casos.general : (rangoAb_casos.especiales.find(e => _mismoCasoEspecial(e.val, val))?.r ?? rangoAb_casos.general);
+    casosScroll.appendChild(_crearTarjetaCasoAuto(val, rA, rAb));
+  });
+  _scrollHistorialAbajo();
 }
 
 function _calcularRangoCasos(mat, m, nc, maxOrd) {
@@ -627,6 +1383,7 @@ function _calcularRangoCasos(mat, m, nc, maxOrd) {
   let genericVal = _encontrarValorGenerico();
   let matNum = _sustitNum(mat, genericVal);
   let genRango = _rangoNum(matNum);
+  let candidatos = [];
 
   // Find critical values by computing all minors of order >= genRango
   for (let ord = Math.min(maxOrd, genRango + 1); ord >= Math.max(1, genRango); ord--) {
@@ -640,11 +1397,18 @@ function _calcularRangoCasos(mat, m, nc, maxOrd) {
         let det = _detStr(sub);
         if (!_esCeroExpr(det) && _contieneParam(det)) {
           let roots = _rootsExpr(det);
-          roots.forEach(r => { if (!criticos.includes(r)) criticos.push(r); });
+          roots.forEach(r => { if (!_incluyeCasoEspecial(candidatos, r)) candidatos.push(_normalizarCasoEspecial(r)); });
         }
       }
     }
   }
+  candidatos.forEach(r => {
+    let nr = _valorNumericoCasoEspecial(r);
+    if (!Number.isFinite(nr)) return;
+    if (_rangoNum(_sustitNum(mat, nr)) !== genRango && !_incluyeCasoEspecial(criticos, r)) {
+      criticos.push(r);
+    }
+  });
   return { general: genRango, criticos };
 }
 
@@ -661,7 +1425,11 @@ function _combs(arr, k) {
 function iniciarPaso0() {
   pasoActual = 0;
   _actualizarIndicador();
+  if (historialDiv) historialDiv.classList.remove("historial-auto");
 
+  if (!caja1111.parentNode && caja1112 && caja1112.parentNode) caja1112.parentNode.insertBefore(caja1111, caja1112);
+  caja1111.style.display = "flex";
+  if (caja1111.parentNode) caja1111.parentNode.style.minWidth = "";
   caja11111.textContent = "INTRODUCCIÓN DE DATOS";
   caja11112.style.color = "#dbeafe";
   caja11112.innerHTML = "Valida cada dato con ENTER o TAB.";
@@ -816,23 +1584,33 @@ function _confirmarSistema(valoresInput) {
   _clear(caja112);
   let fila = document.createElement("div"); fila.className = "confirmados-fila";
 
-  function _bloque(titulo, latexStr) {
-    let b = document.createElement("div"); b.className = "mat-bloque conf-blq";
+  function _bloque(titulo, latexStr, claseExtra) {
+    let b = document.createElement("div"); b.className = "mat-bloque conf-blq " + (claseExtra || "");
     let t = document.createElement("div"); t.className = "mat-bloque-titulo"; t.textContent = titulo;
     let c = document.createElement("div"); c.className = "mat-bloque-contenido";
     _rk(latexStr, c); b.appendChild(t); b.appendChild(c); return b;
   }
 
-  fila.appendChild(_bloque("Sistema", _sistemaLxS()));
+  fila.appendChild(_bloque("Sistema", _sistemaLxS(), "conf-sistema"));
   let vs1 = document.createElement("div"); vs1.className = "conf-vsep"; fila.appendChild(vs1);
-  fila.appendChild(_bloque("A", _matLxS(_matCoefS())));
+  fila.appendChild(_bloque("A", _matLxS(_matCoefS()), "conf-matriz"));
   let vs2 = document.createElement("div"); vs2.className = "conf-vsep"; fila.appendChild(vs2);
-  fila.appendChild(_bloque("(A|b)", _matAmpLxS()));
+  fila.appendChild(_bloque("(A|b)", _matAmpLxS(), "conf-matriz conf-ampliada"));
   caja112.appendChild(fila);
 
-  caja11111.textContent = "SISTEMA INTRODUCIDO";
-  caja11112.style.color = "#dbeafe";
-  caja11112.innerHTML = `${nEcuaciones} ec. · ${nIncognitas} incóg. · Parámetro: ${nombreParam} · Avanza →`;
+  let btnAG = document.createElement("button");
+  btnAG.type = "button";
+  btnAG.id = "btnAutoGlobal";
+  btnAG.className = "btn-auto btn-auto-cabecera";
+  btnAG.textContent = "Resolución automática →";
+  btnAG.style.display = "none";
+  btnAG.addEventListener("click", _autoResolver);
+  caja112.appendChild(btnAG);
+
+  if (caja1111.parentNode) {
+    caja1111.parentNode.style.minWidth = "0";
+    caja1111.remove();
+  }
 
   iniciarPaso1();
 }
@@ -844,16 +1622,16 @@ function iniciarPaso1() {
   pasoActual = 1; _actualizarIndicador();
   let btnAG = document.getElementById("btnAutoGlobal"); if (btnAG) btnAG.style.display = "";
 
-  let maxOrd = Math.min(nEcuaciones, nIncognitas);
   _mostrarRef(
     "Paso 1 — Rango de A",
-    _matLxS(_matCoefS()),
-    `Orden máximo de menores: <strong>${maxOrd}</strong> &nbsp;·&nbsp; Parámetro: <strong>${nombreParam}</strong>`,
+    null,
+    null,
     null
   );
 
   _crearTarjetaActiva(_matCoefS(), nEcuaciones, nIncognitas, "A", casos => {
     rangoA_casos = casos;
+    _actualizarRangosCabecera("A", rangoA_casos);
     iniciarPaso2();
   });
 }
@@ -864,26 +1642,29 @@ function iniciarPaso1() {
 function iniciarPaso2() {
   pasoActual = 2; _actualizarIndicador();
 
-  let maxOrd = Math.min(nEcuaciones, nIncognitas + 1);
-  let rangosBadge = [`\\text{rg}(A)=${rangoA_casos.general}`];
-  if (rangoA_casos.especiales.length > 0) {
-    rangoA_casos.especiales.forEach(e => {
-      rangosBadge.push(`\\text{rg}(A)=${e.r}\\;(${nombreParam}=${_toLaTeX(e.val)})`);
-    });
-  }
   _mostrarRef(
     "Paso 2 — Rango de (A|b)",
-    _matAmpLxS(),
-    `Orden máximo de menores: <strong>${maxOrd}</strong>`,
-    rangosBadge
+    null,
+    null,
+    null
   );
 
   _crearTarjetaActiva(matrizAmpS, nEcuaciones, nIncognitas + 1, "(A|b)", casos => {
     rangoAb_casos = casos;
     // Merge any new critical values
     casos.especiales.forEach(e => {
-      if (!valoresCriticos.includes(e.val)) valoresCriticos.push(e.val);
+      _addCasoEspecialGlobal(e.val);
     });
+    rangoA_casos.especiales = valoresCriticos.map(v => ({
+      val: v,
+      r: _rangoNum(_sustitNum(_matCoefS(), _valorNumericoCasoEspecial(v)))
+    }));
+    rangoAb_casos.especiales = valoresCriticos.map(v => ({
+      val: v,
+      r: _rangoNum(_sustitNum(matrizAmpS, _valorNumericoCasoEspecial(v)))
+    }));
+    _actualizarRangosCabecera("A", rangoA_casos);
+    _actualizarRangosCabecera("(A|b)", rangoAb_casos);
     iniciarPaso3Especiales();
   });
 }
@@ -899,175 +1680,164 @@ function iniciarPaso3Especiales(auto = false) {
     "Paso 3 — Casos especiales",
     null,
     casosCriticos.length > 0
-      ? `<strong>Marca los valores críticos que se deben estudiar y añade casos adicionales si lo deseas.</strong>`
-      : `<strong>No hay valores críticos detectados. Puedes continuar al siguiente paso.</strong>`,
+      ? `<strong>Los casos especiales son:</strong>`
+      : `<strong>No hay casos especiales.</strong>`,
     casosCriticos.map(v => `\\text{${nombreParam}}=${_toLaTeX(v)}`)
   );
 
-  let card = document.createElement("div"); card.className = "hist-entrada hist-activa";
-  tarjetaActiva = card;
-  let et = document.createElement("div"); et.className = "hist-etiqueta";
-  et.textContent = "Paso 3 — Casos especiales";
-  card.appendChild(et);
-  let zona = document.createElement("div"); zona.className = "form-seccion";
-  card.appendChild(zona);
-  historialDiv.appendChild(card);
-
-  if (casosCriticos.length === 0) {
-    let info = document.createElement("div"); info.className = "form-msg";
-    info.innerHTML = "<span class='cierto'>No hay valores críticos. Continúa al siguiente paso.</span>";
-    zona.appendChild(info);
-    let btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Continuar";
-    btn.addEventListener("click", function () {
-      casosEspecialesUsuario = [];
-      card.className = "hist-entrada hist-rango-conf";
-      let summary = document.createElement("div"); summary.className = "hist-badge-rango";
-      _rk(`\\text{Casos especiales: ninguno}`, summary);
-      card.appendChild(summary);
-      tarjetaActiva = null;
-      iniciarPaso4();
-    });
-    zona.appendChild(btn);
-    if (auto) btn.click();
-    return;
-  }
-
-  let pickList = document.createElement("div");
-  pickList.className = "form-row";
-  pickList.style.flexDirection = "column";
-  pickList.style.alignItems = "flex-start";
-  pickList.style.gap = "6px";
-  let instruction = document.createElement("div"); instruction.className = "form-msg";
-  instruction.textContent = "Marca los valores críticos que se deben estudiar:";
-  pickList.appendChild(instruction);
-
-  let seleccionado = new Set();
-  casosCriticos.forEach(val => {
-    let row = document.createElement("label");
-    row.style.display = "flex";
-    row.style.alignItems = "center";
-    row.style.gap = "8px";
-    row.style.fontSize = "12px";
-    let cb = document.createElement("input"); cb.type = "checkbox"; cb.value = val;
-    cb.addEventListener("change", function () {
-      if (cb.checked) seleccionado.add(val);
-      else seleccionado.delete(val);
-    });
-    let txt = document.createElement("span"); txt.textContent = `${nombreParam}=${val}`;
-    row.appendChild(cb);
-    row.appendChild(txt);
-    pickList.appendChild(row);
-  });
-  zona.appendChild(pickList);
-
-  let extraRow = document.createElement("div"); extraRow.className = "form-row";
-  let extraLabel = document.createElement("label"); extraLabel.textContent = "Casos adicionales:";
-  let extraInput = document.createElement("input"); extraInput.type = "text";
-  extraInput.style.width = "160px";
-  extraInput.placeholder = `Ej. ${nombreParam}=0, ${nombreParam}=2`;
-  extraRow.appendChild(extraLabel);
-  extraRow.appendChild(extraInput);
-  zona.appendChild(extraRow);
-
-  let msg = document.createElement("div"); msg.className = "form-msg";
-  zona.appendChild(msg);
-
-  let btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Validar casos";
-  btn.addEventListener("click", function () {
-    let faltantes = casosCriticos.filter(v => !seleccionado.has(v));
-    if (faltantes.length) {
-      msg.innerHTML = `<span class='err'>Debes marcar todos los valores críticos: ${faltantes.map(v => nombreParam + "=" + v).join(", ")}.</span>`;
-      return;
-    }
-    let extra = _parseCasosEspeciales(extraInput.value);
-    let casos = [...casosCriticos];
-    extra.forEach(v => { if (!casos.includes(v)) casos.push(v); });
-    casosEspecialesUsuario = casos;
-    msg.innerHTML = `<span class='cierto'>CIERTO</span> — Casos especiales listos.`;
-    setTimeout(function () {
-      card.className = "hist-entrada hist-rango-conf";
-      let summary = document.createElement("div"); summary.className = "hist-badge-rango";
-      _rk(`\\text{Casos especiales: }${casos.map(v => nombreParam + "=" + _toLaTeX(v)).join(",\\,")}`, summary);
-      card.appendChild(summary);
-      tarjetaActiva = null;
-      iniciarPaso4();
-    }, 600);
-  });
-  zona.appendChild(btn);
-
-  if (auto) {
-    casosCriticos.forEach(v => seleccionado.add(v));
-    btn.click();
-  }
+  _clear(refContenido);
+  casosEspecialesUsuario = casosCriticos.slice();
+  tarjetaActiva = null;
+  setTimeout(iniciarPaso4, 250);
 }
-
 // =====================================================================
-// =====================================================================
-// PASO 4 — DISCUSIÓN POR CASOS
+// PASO 3 — DISCUSION Y SOLUCION POR CASO
 // =====================================================================
 function iniciarPaso4() {
-  pasoActual = 4; _actualizarIndicador();
-
-  let casosParaMostrar = casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos;
-  let allVals = [null, ...casosParaMostrar];
-  let textoCasos = casosParaMostrar.length
-    ? `${nombreParam} ≠ {${casosParaMostrar.join(', ')}}`
-    : `todos los valores`;
-
+  pasoActual = 3; _actualizarIndicador();
+  let scrollCasos = _prepararScrollCasos();
+  let oldPaso4 = document.getElementById("paso4SelectorCaso");
+  if (oldPaso4) oldPaso4.remove();
+  let oldSep = caja112 ? caja112.querySelector(".confirmados-caso-sep") : null;
+  if (oldSep) oldSep.remove();
   _mostrarRef(
-    "Paso 4 — Discusión",
+    "Paso 3 - Caso y solucion",
     null,
-    `<strong>Casos:</strong> general (${textoCasos}) ${casosParaMostrar.length > 0 ? " + " + casosParaMostrar.length + " caso(s) particular(es)" : ""}`,
     null
   );
 
-  let incompatibleAll = true;
+  let card = document.createElement("div");
+  card.id = "paso4SelectorCaso";
+  card.className = "confirmados-caso";
+  tarjetaActiva = null;
+  let title = document.createElement("div");
+  title.className = "confirmados-caso-titulo";
+  title.textContent = "ESTUDIO DE LOS DIFERENTES CASOS";
+  card.appendChild(title);
+  let zona = document.createElement("div"); zona.className = "form-seccion";
+  card.appendChild(zona);
 
-  allVals.forEach(val => {
-    let rA = val === null ? rangoA_casos.general : (rangoA_casos.especiales.find(e => e.val === val)?.r ?? rangoA_casos.general);
-    let rAb = val === null ? rangoAb_casos.general : (rangoAb_casos.especiales.find(e => e.val === val)?.r ?? rangoAb_casos.general);
-    let { card } = _tarjetaDiscusion("A", rA, rAb, nIncognitas, val);
-    historialDiv.appendChild(card);
-    if (rA === rAb) incompatibleAll = false;
-  });
-
-  historialDiv.scrollTop = historialDiv.scrollHeight;
-
-  if (incompatibleAll) {
-    pasoActual = 5; _actualizarIndicador();
-    caja11111.textContent = "PROCESO COMPLETADO";
-    caja11112.style.color = "#fecaca";
-    caja11112.innerHTML = "Sistema incompatible en todos los casos.";
-  } else {
-    iniciarPaso5();
+  let filaConfirmados = caja112 ? caja112.querySelector(".confirmados-fila") : null;
+  if (filaConfirmados) {
+    let vs = document.createElement("div"); vs.className = "conf-vsep confirmados-caso-sep";
+    filaConfirmados.appendChild(vs);
+    filaConfirmados.appendChild(card);
+  } else if (caja112) {
+    caja112.appendChild(card);
   }
-}
 
-// =====================================================================
-// PASO 5 — SOLUCIÓN POR CASOS
+  let row = document.createElement("div"); row.className = "form-row confirmados-caso-row";
+  let label = document.createElement("label"); label.textContent = `Estudia el caso ${nombreParam}=`;
+  let inp = document.createElement("input"); inp.type = "text"; inp.style.width = "90px"; inp.placeholder = "G o valor";
+  row.appendChild(label); row.appendChild(inp); zona.appendChild(row);
+  let msg = document.createElement("div"); msg.className = "form-msg"; zona.appendChild(msg);
+  let casosEstudiados = [];
+
+  function crearCaso() {
+    let parsed = _normalizarCasoPaso4(inp.value);
+    if (!parsed.ok) { msg.innerHTML = `<span class='err'>${parsed.msg}</span>`; return; }
+    let val = parsed.val;
+    let repetido = casosEstudiados.some(v =>
+      (v === null && val === null) ||
+      (v !== null && val !== null && _mismoCasoEspecial(v, val))
+    );
+    if (repetido) {
+      msg.innerHTML = `<span class='err'>Ese caso ya se ha estudiado.</span>`;
+      inp.value = "";
+      inp.focus();
+      return;
+    }
+    casosEstudiados.push(val);
+    let { rA, rAb } = _rangosParaCaso(val);
+    let correcto = _tipoCaso(rA, rAb);
+
+    let caseCard = document.createElement("div"); caseCard.className = "hist-entrada hist-discusion hist-caso-card";
+    let caseTop = document.createElement("div"); caseTop.className = "hist-caso-top";
+    let h = document.createElement("div"); h.className = "hist-etiqueta hist-caso-titulo";
+    let especialesTxt = (casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos).join(", ");
+    h.textContent = val === null && especialesTxt ? `Caso general (${nombreParam} != ${especialesTxt})` : val === null ? "Caso general" : `Caso ${nombreParam}=${val}`;
+    caseTop.appendChild(h);
+    let ranks = document.createElement("div"); ranks.className = "hist-disc-vals";
+    _rk(`\\text{rg}(A)=${rA}\\quad\\text{rg}(A|b)=${rAb}\\quad n=${nIncognitas}`, ranks);
+    caseTop.appendChild(ranks);
+
+    let opts = document.createElement("div"); opts.className = "form-row caso-opciones";
+    let radioName = `tipo_${Date.now()}_${Math.random()}`;
+    [
+      { value: "SCD", label: "SCD" },
+      { value: "CSI", label: "SDI" },
+      { value: "SI", label: "SI" }
+    ].forEach(opt => {
+      let lab = document.createElement("label"); lab.className = "caso-opcion";
+      let radio = document.createElement("input"); radio.type = "radio"; radio.name = radioName; radio.value = opt.value;
+      lab.appendChild(radio); lab.appendChild(document.createTextNode(opt.label)); opts.appendChild(lab);
+      radio.addEventListener("change", () => validarTipo(opt.value, caseCard, correcto, rA, rAb, val));
+    });
+    caseTop.appendChild(opts);
+    caseCard.appendChild(caseTop);
+    (scrollCasos || historialDiv).appendChild(caseCard);
+    inp.value = "";
+    msg.textContent = "Puedes elegir otro caso especial, G, o un valor concreto dentro del caso general.";
+    _scrollHistorialAbajo();
+  }
+
+  function validarTipo(t, caseCard, correcto, rA, rAb, val) {
+    let old = caseCard.querySelector(".disc-feedback"); if (old) old.remove();
+    let fb = document.createElement("div"); fb.className = "disc-feedback hist-disc-conclu";
+    if (t !== correcto) {
+      fb.className += " hist-tipo-incompatible";
+      fb.textContent = "FALSO";
+      (caseCard.querySelector(".hist-caso-top") || caseCard).appendChild(fb);
+      return;
+    }
+    fb.className += correcto === "SCD" ? " hist-tipo-cd" : correcto === "CSI" ? " hist-tipo-ci" : " hist-tipo-incompatible";
+    fb.textContent = "CIERTO";
+    (caseCard.querySelector(".hist-caso-top") || caseCard).appendChild(fb);
+    if (caseCard.dataset.solved === "1") return;
+    caseCard.dataset.solved = "1";
+    if (correcto !== "SI") _renderSolucionCaso(caseCard, val, rA);
+    else {
+      let no = document.createElement("div"); no.className = "hist-valor"; no.textContent = "No hay soluciones."; caseCard.appendChild(no);
+      _appendIncompatiblePanel(val);
+    }
+  }
+
+  inp.addEventListener("keydown", ev => {
+    if (ev.key !== "Enter") return;
+    ev.preventDefault(); crearCaso();
+  });
+  inp.focus();
+  _scrollHistorialAbajo();
+}
 function iniciarPaso5() {
   pasoActual = 5; _actualizarIndicador();
 
   _clear(refContenido);
-  let titSol = document.createElement("div"); titSol.className = "ref-titulo";
-  titSol.textContent = "Paso 5 — Solución (Cramer por casos)";
-  refContenido.appendChild(titSol);
+  let scrollCasos = _prepararScrollCasos();
 
   let allVals = [null, ...(casosEspecialesUsuario.length ? casosEspecialesUsuario : valoresCriticos)];
 
   allVals.forEach(val => {
     let rA = val === null ? rangoA_casos.general : (rangoA_casos.especiales.find(e => e.val === val)?.r ?? rangoA_casos.general);
     let rAb = val === null ? rangoAb_casos.general : (rangoAb_casos.especiales.find(e => e.val === val)?.r ?? rangoAb_casos.general);
-    if (rA !== rAb) return; // incompatible — no solution
+    if (rA !== rAb) {
+      let card = document.createElement("div"); card.className = "hist-entrada hist-solucion";
+      let et = document.createElement("div"); et.className = "hist-etiqueta";
+      et.textContent = `Solución — ${_casoTextoPlano(val)}`;
+      let no = document.createElement("div"); no.className = "hist-valor"; no.textContent = "No hay soluciones.";
+      card.appendChild(et);
+      card.appendChild(no);
+      (scrollCasos || historialDiv).appendChild(card);
+      _appendIncompatiblePanel(val);
+      return;
+    }
 
     let matS = val === null ? matrizAmpS : Matriz.sustituir(matrizAmpS, nombreParam, val);
-    let matNum = val === null ? null : _sustitNum(matrizAmpS, parseFloat(val));
+    let matNum = val === null ? null : _sustitNum(matrizAmpS, _valorNumericoCasoEspecial(val));
 
     let card = document.createElement("div"); card.className = "hist-entrada hist-solucion";
     let et = document.createElement("div"); et.className = "hist-etiqueta";
-    et.textContent = val === null
-      ? `Solución — Caso general (${nombreParam} ≠ valores críticos)`
-      : `Solución — ${nombreParam} = ${val}`;
+    et.textContent = `Solución — ${_casoTextoPlano(val)}`;
     card.appendChild(et);
 
     if (val === null) {
@@ -1080,10 +1850,10 @@ function iniciarPaso5() {
       _cramerNumerico(card, matCoefNum, matAmpNum, rA, refContenido, val);
     }
 
-    historialDiv.appendChild(card);
+    (scrollCasos || historialDiv).appendChild(card);
   });
 
-  historialDiv.scrollTop = historialDiv.scrollHeight;
+  _scrollHistorialAbajo();
   caja11111.textContent = "PROCESO COMPLETADO";
   caja11112.style.color = "#dbeafe";
   caja11112.innerHTML = "Soluciones en el panel derecho →";
@@ -1097,23 +1867,31 @@ function _cramerSimbolicoCD(card, matS, rango, panel, val) {
   if (rango === n) {
     // Compatible Determinado: Cramer full
     let detA = _detStr(matCoefS);
-    let dEl = document.createElement("div"); dEl.className = "hist-valor";
-    _rk(`\\det(A)=${_toLaTeX(detA)}`, dEl); card.appendChild(dEl);
+    let dEl = document.createElement("div"); dEl.className = "hist-det-note";
+    _rk(`\\det(A)=${_detMatrixTex(matCoefS)}=${_toLaTeX(detA)}`, dEl);
+    let top = card.querySelector(".hist-caso-top");
+    let fb = top ? top.querySelector(".disc-feedback") : null;
+    if (fb && fb.parentNode) fb.parentNode.insertBefore(dEl, fb.nextSibling);
+    else if (top) top.appendChild(dEl);
+    else card.appendChild(dEl);
 
     let solTex = [];
+    let solRow = document.createElement("div"); solRow.className = "hist-sol-row";
+    card.appendChild(solRow);
     for (let i = 0; i < n; i++) {
       let Ai = matCoefS.map((row, ri) => {
         let nr = row.slice(); nr[i] = matS[ri][n]; return nr;
       });
       let detAi = _detStr(Ai);
-      let xi = `\\dfrac{${_toLaTeX(detAi)}}{${_toLaTeX(detA)}}`;
+      let xiExpr = _simpl(`(${detAi})/(${detA})`);
+      let xi = _toLaTeX(xiExpr);
       let dAiEl = document.createElement("div"); dAiEl.className = "hist-valor";
-      _rk(`x_{${i + 1}}=${xi}`, dAiEl); card.appendChild(dAiEl);
+      _rk(`x_{${i + 1}}=\\frac{\\det(A_{${i + 1}})}{\\det(A)}=\\frac{${_detMatrixTex(Ai)}}{${_toLaTeX(detA)}}=${xi}`, dAiEl); solRow.appendChild(dAiEl);
       solTex.push(`x_{${i + 1}}=${xi}`);
     }
-    let solEl = document.createElement("div"); solEl.className = "hist-badge-rango";
+    let solEl = document.createElement("div"); solEl.className = "hist-badge-rango hist-sol-linea";
     _rk(`\\left[${solTex.join(",\\quad ")}\\right]`, solEl);
-    card.appendChild(solEl); panel.appendChild(solEl.cloneNode(true));
+    _appendSolucionPanel(val, solEl);
 
   } else {
     // Compatible Indeterminado: show parametric structure
@@ -1162,22 +1940,28 @@ function _cramerNumerico(card, matCoef, matAmp, rango, panel, val) {
   if (rango === n) {
     let b = matAmp.map(r => r[n]);
     let detA = Matriz.determinanteNumerico(matCoef);
-    let dEl = document.createElement("div"); dEl.className = "hist-valor";
-    _rk(`\\det(A)=${_numToTex(detA)}`, dEl); card.appendChild(dEl);
+    let dEl = document.createElement("div"); dEl.className = "hist-det-note";
+    _rk(`\\det(A)=${_detMatrixTex(matCoef)}=${_numToTex(detA)}`, dEl);
+    let top = card.querySelector(".hist-caso-top");
+    let fb = top ? top.querySelector(".disc-feedback") : null;
+    if (fb && fb.parentNode) fb.parentNode.insertBefore(dEl, fb.nextSibling);
+    else if (top) top.appendChild(dEl);
+    else card.appendChild(dEl);
 
     let results = [];
+    let solRow = document.createElement("div"); solRow.className = "hist-sol-row";
+    card.appendChild(solRow);
     for (let i = 0; i < n; i++) {
       let Ai = matCoef.map((row, ri) => { let nr = row.slice(); nr[i] = b[ri]; return nr; });
       let detAi = Matriz.determinanteNumerico(Ai);
       let xi = detAi / detA;
       results.push(xi);
       let dAiEl = document.createElement("div"); dAiEl.className = "hist-valor";
-      _rk(`x_{${i + 1}}=\\dfrac{${_numToTex(detAi)}}{${_numToTex(detA)}}=${_numToTex(xi)}`, dAiEl);
-      card.appendChild(dAiEl);
+      _rk(`x_{${i + 1}}=\\frac{\\det(A_{${i + 1}})}{\\det(A)}=\\frac{${_detMatrixTex(Ai)}}{${_numToTex(detA)}}=${_numToTex(xi)}`, dAiEl);
+      solRow.appendChild(dAiEl);
     }
     let solTex = `\\left[${results.map((v, i) => `x_{${i + 1}}=${_numToTex(v)}`).join(",\\quad ")}\\right]`;
-    let b1 = document.createElement("div"); b1.className = "hist-badge-rango"; _rk(solTex, b1); card.appendChild(b1);
-    let b2 = document.createElement("div"); b2.className = "hist-badge-rango"; b2.style.cssText = "background:#fff7ed;color:#c2410c;"; _rk(solTex, b2); panel.appendChild(b2);
+    let b2 = document.createElement("div"); b2.className = "hist-badge-rango hist-sol-linea"; b2.style.cssText = "background:#fff7ed;color:#c2410c;"; _rk(solTex, b2); _appendSolucionPanel(val, b2);
 
   } else {
     // CI numeric
@@ -1200,6 +1984,9 @@ document.addEventListener("DOMContentLoaded", function () {
   pasoIndicadorDer = document.getElementById("pasoIndicadorDer");
   refContenido = document.getElementById("refContenido");
   historialDiv = document.getElementById("historial");
+  if (historialDiv && window.MutationObserver) {
+    new MutationObserver(_scrollHistorialAbajo).observe(historialDiv, { childList: true, subtree: true });
+  }
 
   _construirIndicador();
 

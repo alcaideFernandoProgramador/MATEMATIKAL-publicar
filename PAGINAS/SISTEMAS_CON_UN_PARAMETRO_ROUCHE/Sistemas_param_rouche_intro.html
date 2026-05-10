@@ -97,6 +97,8 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .herramienta-cta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:4px;flex-wrap:wrap}
 .herramienta-cta p{margin:0;color:rgba(255,255,255,.85);font-size:1rem;line-height:1.6;max-width:600px}
 .herramienta-cta p strong{color:#fff}
+.aviso-racionales{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);color:rgba(255,255,255,.92);font-size:.92rem;font-weight:600;line-height:1.45;position:relative;z-index:1}
+.aviso-racionales strong{color:#fff}
 .mk-ejercicios{max-width:1060px;margin:0 auto 2rem}
 .mk-ejercicios>h2{font-family:var(--font-display);font-size:1.45rem;font-weight:400;color:var(--blue-deep);border-left:5px solid var(--blue-bright);padding-left:.8rem;margin-bottom:.3rem;letter-spacing:-.01em}
 .mk-ejercicios>.mk-subtitulo{font-size:.94rem;color:var(--text-secondary);margin-bottom:1.8rem}
@@ -114,6 +116,16 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .mk-sol.mk-visible{display:block}
 .mk-sol h4{color:var(--blue-mid);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
 .mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+.mk-sol-pretty{display:grid;gap:14px}
+.mk-sol-step{background:#fff;border:1px solid rgba(30,50,150,.1);border-radius:12px;padding:16px 18px;box-shadow:0 2px 12px rgba(20,40,120,.05)}
+.mk-sol-step h4{margin:0 0 8px!important;color:var(--blue-deep);display:flex;align-items:center;gap:8px;text-transform:none!important;letter-spacing:0}
+.mk-step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--blue-mid);color:#fff;font-size:.75rem;font-weight:800;letter-spacing:0}
+.mk-sol-step p{margin:8px 0;color:var(--text-secondary);line-height:1.65}
+.mk-sol-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.mk-case{border-left:4px solid var(--blue-bright)}
+.mk-case-special{border-left-color:#0ea5a4}
+.mk-sol-note{margin-top:8px;padding:10px 12px;border-radius:8px;background:#f4f6fd;border:1px solid rgba(59,110,248,.14);color:var(--text-secondary)}
+@media(max-width:720px){.mk-sol-grid{grid-template-columns:1fr}.mk-sol-step{padding:14px 12px}}
 @media(max-width:900px){.span4,.span6,.span8,.span12{grid-column:span 12}.hero{padding:28px 24px 26px}.introWrap{padding:16px 16px 40px}.herramienta-cta{flex-direction:column}}
 html,body{overflow-x:clip;max-width:100%}
 .k{max-width:100%;overflow-x:auto}
@@ -155,12 +167,15 @@ html,body{overflow-x:clip;max-width:100%}
 </div>
 <div class="heroDesc">
   <p>Aprende a <strong style="color:#fff">discutir y resolver sistemas de ecuaciones lineales que contienen un parámetro</strong> usando el teorema de Rouché-Frobenius. El tipo del sistema (compatible/incompatible) depende del valor del parámetro, por lo que el análisis se realiza caso a caso.</p>
+  <p class="aviso-racionales"><strong>Aviso:</strong> solo se consideran valores racionales del parámetro. No irracionales o imaginarios.</p>
 </div>
 <div class="heroLinks">
   <a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_LINEALES_ROUCHE/Sistemas_Rouche_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rouché sin parámetro</a>
   <a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Parámetro por Gauss</a>
   <a class="heroLinkBtn" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Rango por menores</a>
 </div>
+</div>
+
 </section>
 
 <!-- BLOQUE 1: Concepto -->
@@ -318,6 +333,78 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
   <button class="mk-toggle">Ver solución</button>
   <div class="mk-sol">
+    <div class="mk-sol-pretty">
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">1</span> Matrices</h4>
+        <p>Para aplicar Rouch&eacute;-Frobenius escribimos la matriz de coeficientes y la matriz ampliada:</p>
+        <div class="k" style="text-align:left">\[
+        A=\begin{pmatrix}2&a\\1&1\end{pmatrix},\qquad
+        (A|b)=\left(\begin{array}{cc|c}2&a&4\\1&1&2\end{array}\right)
+        \]</div>
+      </div>
+
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">2</span> Obtenci&oacute;n de los valores cr&iacute;ticos</h4>
+        <div class="k" style="text-align:left">\[
+        \det(A)=\begin{vmatrix}2&a\\1&1\end{vmatrix}=2-a
+        \]\[
+        2-a=0\Rightarrow a=2
+        \]</div>
+        <div class="mk-sol-note"><strong>Valor cr&iacute;tico:</strong> \(a=2\). Por tanto, se estudian dos casos: \(a\neq2\) y \(a=2\).</div>
+      </div>
+
+      <div class="mk-sol-grid">
+        <div class="mk-sol-step mk-case">
+          <h4><span class="mk-step-num">3</span> Caso general \(a\neq 2\)</h4>
+          <p>Como \(\det(A)=2-a\neq0\), la matriz \(A\) tiene rango 2. Adem&aacute;s, el mismo menor aparece en la ampliada.</p>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=2=n
+          \Rightarrow \text{Sistema compatible determinado}
+          \]</div>
+          <p>La soluci&oacute;n &uacute;nica se calcula mediante la regla de Cramer:</p>
+          <div class="k" style="text-align:left">\[
+          x=\frac{\det(A_x)}{\det(A)}
+          =\frac{\begin{vmatrix}4&a\\2&1\end{vmatrix}}{2-a}
+          =\frac{4-2a}{2-a}
+          =\frac{2(2-a)}{2-a}=2
+          \]\[
+          y=\frac{\det(A_y)}{\det(A)}
+          =\frac{\begin{vmatrix}2&4\\1&2\end{vmatrix}}{2-a}
+          =\frac{0}{2-a}=0
+          \]</div>
+          <div class="mk-resultado">Soluci&oacute;n &uacute;nica: \(x=2,\;y=0\quad(a\neq2)\)</div>
+        </div>
+
+        <div class="mk-sol-step mk-case mk-case-special">
+          <h4><span class="mk-step-num">4</span> Caso cr&iacute;tico \(a=2\)</h4>
+          <p>Sustituimos \(a=2\) en las matrices:</p>
+          <div class="k" style="text-align:left">\[
+          A=\begin{pmatrix}2&2\\1&1\end{pmatrix},\qquad
+          (A|b)=\left(\begin{array}{cc|c}2&2&4\\1&1&2\end{array}\right)
+          \]</div>
+          <p>La primera fila es el doble de la segunda, tambi&eacute;n en la matriz ampliada. Nos queda el sistema equivalente:</p>
+          <div class="k" style="text-align:left">\[
+          A\sim\begin{pmatrix}1&1\end{pmatrix},\qquad
+          (A|b)\sim\left(\begin{array}{cc|c}1&1&2\end{array}\right),
+          \qquad x+y=2
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=1&lt;n=2
+          \Rightarrow \text{Sistema compatible indeterminado}
+          \]</div>
+          <p>Dejamos \(y\) como par&aacute;metro libre:</p>
+          <div class="k" style="text-align:left">\[
+          \begin{cases}
+          x=2-t\\
+          y=t
+          \end{cases}
+          \qquad t\in\mathbb{R}
+          \]</div>
+          <div class="mk-resultado">Infinitas soluciones: \(x=2-t,\;y=t\quad(t\in\mathbb{R})\)</div>
+        </div>
+      </div>
+    </div>
+    <div hidden>
     <h4>Matrices</h4>
     \[A=\begin{pmatrix}2&a\\1&1\end{pmatrix},\quad(A|b)=\left(\begin{array}{cc|c}2&a&4\\1&1&2\end{array}\right)\]
     <h4>Determinante de A</h4>
@@ -333,6 +420,7 @@ html,body{overflow-x:clip;max-width:100%}
     \(\text{rg}(A)=\text{rg}(A|b)=1&lt;n=2\) → <strong>Compatible Indeterminado</strong>.
     Fijamos \(y=t\): \(x=2-t\).
     <div class="mk-resultado">Infinitas soluciones: \(x=2-t,\;y=t\quad(t\in\mathbb{R})\)</div>
+    </div>
   </div>
 </div>
 
@@ -348,6 +436,66 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
   <button class="mk-toggle">Ver solución</button>
   <div class="mk-sol">
+    <div class="mk-sol-pretty">
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">1</span> Matrices</h4>
+        <div class="k" style="text-align:left">\[
+        A=\begin{pmatrix}1&2\\k&4\end{pmatrix},\qquad
+        (A|b)=\left(\begin{array}{cc|c}1&2&3\\k&4&k\end{array}\right)
+        \]</div>
+      </div>
+
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">2</span> Obtención de los valores críticos</h4>
+        <div class="k" style="text-align:left">\[
+        \det(A)=\begin{vmatrix}1&2\\k&4\end{vmatrix}=4-2k
+        \]\[
+        4-2k=0\Rightarrow k=2
+        \]</div>
+        <div class="mk-sol-note"><strong>Valor crítico:</strong> \(k=2\). Estudiamos \(k\neq2\) y \(k=2\).</div>
+      </div>
+
+      <div class="mk-sol-grid">
+        <div class="mk-sol-step mk-case">
+          <h4><span class="mk-step-num">3</span> Caso general \(k\neq 2\)</h4>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=2=n
+          \Rightarrow \text{Sistema compatible determinado}
+          \]</div>
+          <p>Aplicamos la regla de Cramer:</p>
+          <div class="k" style="text-align:left">\[
+          x=\frac{\begin{vmatrix}3&2\\k&4\end{vmatrix}}{4-2k}
+          =\frac{12-2k}{4-2k}
+          =\frac{6-k}{2-k}
+          \]\[
+          y=\frac{\begin{vmatrix}1&3\\k&k\end{vmatrix}}{4-2k}
+          =\frac{k-3k}{4-2k}
+          =\frac{k}{k-2}
+          \]</div>
+          <div class="mk-resultado">Solución única: \(x=\dfrac{6-k}{2-k},\;y=\dfrac{k}{k-2}\quad(k\neq2)\)</div>
+        </div>
+
+        <div class="mk-sol-step mk-case mk-case-special">
+          <h4><span class="mk-step-num">4</span> Caso crítico \(k=2\)</h4>
+          <p>Sustituimos \(k=2\):</p>
+          <div class="k" style="text-align:left">\[
+          A=\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad
+          (A|b)=\left(\begin{array}{cc|c}1&2&3\\2&4&2\end{array}\right)
+          \]</div>
+          <p>En \(A\) las filas son proporcionales, luego \(\operatorname{rg}(A)=1\). En cambio, en la ampliada aparece un menor no nulo:</p>
+          <div class="k" style="text-align:left">\[
+          \begin{vmatrix}1&3\\2&2\end{vmatrix}=2-6=-4\neq0
+          \Rightarrow \operatorname{rg}(A|b)=2
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=1\neq2=\operatorname{rg}(A|b)
+          \Rightarrow \text{Sistema incompatible}
+          \]</div>
+          <div class="mk-resultado">Sin solución para \(k=2\)</div>
+        </div>
+      </div>
+    </div>
+    <div hidden>
     <h4>Determinante de A</h4>
     \[\det(A)=\begin{vmatrix}1&2\\k&4\end{vmatrix}=4-2k\]
     Valor crítico: \(k=2\).
@@ -363,6 +511,8 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
 </div>
 
+</div>
+
 <!-- E3 -->
 <div class="mk-ejercicio">
   <div class="mk-ej-head">
@@ -375,6 +525,141 @@ html,body{overflow-x:clip;max-width:100%}
   </div>
   <button class="mk-toggle">Ver solución</button>
   <div class="mk-sol">
+    <div class="mk-sol-pretty">
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">1</span> Matrices</h4>
+        <div class="k" style="text-align:left">\[
+        A=\begin{pmatrix}1&1&1\\1&2&a\\1&4&a^2\end{pmatrix},\qquad
+        (A|b)=\left(\begin{array}{ccc|c}
+        1&1&1&3\\
+        1&2&a&4\\
+        1&4&a^2&6
+        \end{array}\right)
+        \]</div>
+      </div>
+
+      <div class="mk-sol-step">
+        <h4><span class="mk-step-num">2</span> Obtención de los valores críticos</h4>
+        <div class="k" style="text-align:left">\[
+        \det(A)=
+        \begin{vmatrix}1&1&1\\1&2&a\\1&4&a^2\end{vmatrix}
+        =a^2-3a+2=(a-1)(a-2)
+        \]</div>
+        <div class="mk-sol-note"><strong>Valores críticos:</strong> \(a=1\) y \(a=2\). Estudiamos el caso general y ambos casos críticos.</div>
+      </div>
+
+      <div class="mk-sol-grid">
+        <div class="mk-sol-step mk-case">
+          <h4><span class="mk-step-num">3</span> Caso general \(a\neq1,\;a\neq2\)</h4>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=3=n
+          \Rightarrow \text{Sistema compatible determinado}
+          \]</div>
+          <p>Calculamos la soluci&oacute;n &uacute;nica mediante la regla de Cramer:</p>
+          <div class="k" style="text-align:left">\[
+          x=\frac{\det(A_x)}{\det(A)}
+          =\frac{\begin{vmatrix}3&1&1\\4&2&a\\6&4&a^2\end{vmatrix}}{\det(A)}
+          =\frac{2(a-1)(a-2)}{(a-1)(a-2)}
+          =2
+          \]\[
+          y=\frac{\det(A_y)}{\det(A)}
+          =\frac{\begin{vmatrix}1&3&1\\1&4&a\\1&6&a^2\end{vmatrix}}{\det(A)}
+          =\frac{(a-1)(a-2)}{(a-1)(a-2)}
+          =1
+          \]\[
+          z=\frac{\det(A_z)}{\det(A)}
+          =\frac{\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}}{\det(A)}
+          =\frac{0}{(a-1)(a-2)}
+          =0
+          \]</div>
+          <div class="mk-resultado">Soluci&oacute;n &uacute;nica: \(x=2,\;y=1,\;z=0\quad(a\neq1,\;a\neq2)\)</div>
+        </div>
+
+        <div class="mk-sol-step mk-case mk-case-special">
+          <h4><span class="mk-step-num">4</span> Caso cr&iacute;tico \(a=1\)</h4>
+          <div class="k" style="text-align:left">\[
+          A=\begin{pmatrix}1&1&1\\1&2&1\\1&4&1\end{pmatrix},\qquad
+          (A|b)=\left(\begin{array}{ccc|c}
+          1&1&1&3\\
+          1&2&1&4\\
+          1&4&1&6
+          \end{array}\right)
+          \]</div>
+          <p>Hay un menor de orden 2 no nulo, por ejemplo:</p>
+          <div class="k" style="text-align:left">\[
+          \begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq0
+          \Rightarrow \operatorname{rg}(A)=2
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=2&lt;n=3
+          \Rightarrow \text{Sistema compatible indeterminado}
+          \]</div>
+          <p>Dejamos \(z=t\) y resolvemos el subsistema en \(x,y\) con Cramer:</p>
+          <div class="k" style="text-align:left">\[
+          \begin{cases}
+          x+y=3-t\\
+          x+2y=4-t
+          \end{cases}
+          \qquad
+          A_0=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad \det(A_0)=1
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          x=\frac{\begin{vmatrix}3-t&1\\4-t&2\end{vmatrix}}{1}=2-t,\qquad
+          y=\frac{\begin{vmatrix}1&3-t\\1&4-t\end{vmatrix}}{1}=1
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          \begin{cases}
+          x=2-t\\
+          y=1\\
+          z=t
+          \end{cases}
+          \qquad t\in\mathbb{R}
+          \]</div>
+          <div class="mk-resultado">Infinitas soluciones: \(x=2-t,\;y=1,\;z=t\quad(t\in\mathbb{R})\)</div>
+        </div>
+
+        <div class="mk-sol-step mk-case mk-case-special">
+          <h4><span class="mk-step-num">5</span> Caso cr&iacute;tico \(a=2\)</h4>
+          <div class="k" style="text-align:left">\[
+          A=\begin{pmatrix}1&1&1\\1&2&2\\1&4&4\end{pmatrix},\qquad
+          (A|b)=\left(\begin{array}{ccc|c}
+          1&1&1&3\\
+          1&2&2&4\\
+          1&4&4&6
+          \end{array}\right)
+          \]</div>
+          <p>En \(A\), las columnas segunda y tercera coinciden, y existe un menor de orden 2 no nulo; por tanto \(\operatorname{rg}(A)=2\).</p>
+          <p>En la ampliada tambi&eacute;n se tiene rango 2, porque la tercera ecuaci&oacute;n es combinaci&oacute;n de las dos primeras:</p>
+          <div class="k" style="text-align:left">\[
+          \operatorname{rg}(A)=\operatorname{rg}(A|b)=2&lt;n=3
+          \Rightarrow \text{Sistema compatible indeterminado}
+          \]</div>
+          <p>Dejamos \(z=t\) y resolvemos el subsistema en \(x,y\) con Cramer:</p>
+          <div class="k" style="text-align:left">\[
+          \begin{cases}
+          x+y=3-t\\
+          x+2y=4-2t
+          \end{cases}
+          \qquad
+          A_0=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad \det(A_0)=1
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          x=\frac{\begin{vmatrix}3-t&1\\4-2t&2\end{vmatrix}}{1}=2,\qquad
+          y=\frac{\begin{vmatrix}1&3-t\\1&4-2t\end{vmatrix}}{1}=1-t
+          \]</div>
+          <div class="k" style="text-align:left">\[
+          \begin{cases}
+          x=2\\
+          y=1-t\\
+          z=t
+          \end{cases}
+          \qquad t\in\mathbb{R}
+          \]</div>
+          <div class="mk-resultado">Infinitas soluciones: \(x=2,\;y=1-t,\;z=t\quad(t\in\mathbb{R})\)</div>
+        </div>
+      </div>
+    </div>
+    <div hidden>
     <h4>Determinante de A</h4>
     \[\det(A)=\begin{vmatrix}1&1&1\\1&2&a\\1&4&a^2\end{vmatrix}=a^2-a(4-1)+(4\cdot1-2\cdot1)\cdot(\text{...})\]
     Desarrollando: \(\det(A)=(a-1)(a-2)\). Valores críticos: \(\mathbf{a=1}\) y \(\mathbf{a=2}\).
@@ -384,9 +669,11 @@ html,body{overflow-x:clip;max-width:100%}
     \(A=\begin{pmatrix}1&1&1\\1&2&1\\1&4&1\end{pmatrix}\): \(\det(A)=0\). Menor de orden 2: filas \(\{1,2\}\) cols \(\{1,2\}\): \(\begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq 0\Rightarrow\text{rg}(A)=2\).
     Para \((A|b)\) con \(a=1\): \((A|b)=\left(\begin{array}{ccc|c}1&1&1&3\\1&2&1&4\\1&4&1&6\end{array}\right)\). Menor de orden 3 con cols \(\{1,2,4\}\): \(\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=0\). Como \(\text{rg}(A|b)=2\), el sistema es <strong>Compatible Indeterminado</strong> (1 parámetro libre).
     <h4>Caso \(a=2\)</h4>
-    Para \((A|b)\) con \(a=2\): la matriz ampliada tiene \(\text{rg}(A|b)=3\neq 2=\text{rg}(A)\) → <strong>Incompatible</strong>.
-    <div class="mk-resultado">3 casos: CD (gral.), CI (\(a=1\)), Incompat. (\(a=2\))</div>
+    Para \((A|b)\) con \(a=2\): \(\text{rg}(A)=\text{rg}(A|b)=2&lt;3\) → <strong>Compatible Indeterminado</strong>.
+    <div class="mk-resultado">3 casos: CD (gral.), CI (\(a=1\)), CI (\(a=2\))</div>
   </div>
+</div>
+
 </div>
 
 </section>
@@ -424,7 +711,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- CALCULADORA -->
 <div id="calculadora" style="display:none">
 <div id="tituloinicial">
-  <h1>SISTEMAS CON PARÁMETRO — Rouché-Frobenius</h1>
+  <h1 class="titulo-principal-calc">SISTEMAS CON PARÁMETRO — Rouché-Frobenius <span class="calc-limit-notice">Solo se consideran valores racionales del parámetro. No irracionales o imaginarios.</span></h1>
   <div id="controlesTop">
     <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
     <a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
@@ -455,7 +742,6 @@ document.addEventListener("DOMContentLoaded", function() {
       <div id="caja112"></div>
     </div>
     <div id="caja12">
-      <div id="caja12-titulo">ESPACIO DE RESULTADOS</div>
       <div id="pasoIndicadorDer"></div>
       <div id="refContenido"></div>
     </div>

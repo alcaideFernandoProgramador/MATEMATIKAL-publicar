@@ -215,6 +215,32 @@ function _tarjetaRango(prefijo, rango){
   return card;
 }
 
+function _hacerTarjetaColapsable(card, textoBoton){
+  if(!card||card.querySelector(".hist-toggle-detalle"))return;
+  textoBoton=textoBoton||"Mostrar detalle";
+  let cuerpo=document.createElement("div");
+  cuerpo.className="hist-colapsable-cuerpo";
+  Array.from(card.children).forEach(function(child){
+    if(child.classList.contains("hist-etiqueta"))return;
+    cuerpo.appendChild(child);
+  });
+  cuerpo.hidden=true;
+  card.classList.add("hist-colapsada");
+  card.appendChild(cuerpo);
+
+  let btn=document.createElement("button");
+  btn.type="button";
+  btn.className="hist-toggle-detalle";
+  btn.textContent=textoBoton;
+  btn.addEventListener("click",function(){
+    let oculto=cuerpo.hidden;
+    cuerpo.hidden=!oculto;
+    card.classList.toggle("hist-colapsada",!oculto);
+    btn.textContent=oculto?"Ocultar detalle":textoBoton;
+  });
+  card.appendChild(btn);
+}
+
 function _tarjetaDiscusion(){
   let rA=rangoA_confirm, rAb=rangoAmp_confirm, n=nIncognitas;
   let tipo;
@@ -331,7 +357,10 @@ function _autoResolverDesde(desde){
     let card=document.createElement("div");card.className="hist-entrada hist-rango-conf";
     let etq=document.createElement("div");etq.className="hist-etiqueta";
     etq.textContent="Paso "+paso+" — "+prefijo;card.appendChild(etq);
+    if(paso===1&&prefijo==="A")etq.textContent="Paso 1: Rango de A";
+    if(paso===2&&prefijo==="(A|b)")etq.textContent="Paso 2: Rango(A|b)";
     _agregarCertificacion(card,mat,prefijo,rangoReal);
+    if((paso===1&&prefijo==="A")||(paso===2&&prefijo==="(A|b)"))_hacerTarjetaColapsable(card);
     historialDiv.appendChild(card);
     historialDiv.scrollTop=historialDiv.scrollHeight;
   }
@@ -342,7 +371,7 @@ function _autoResolverDesde(desde){
     rangoA_confirm=rangoA_real;
     pasoActual=2;_actualizarIndicador();
     _mostrarRef("Paso 2 — Rango de (A|b)",_matAmpLx(),
-      `Orden máximo de menores: <strong>${Math.min(nEcuaciones,nIncognitas+1)}</strong>`,
+      null,
       [`\\text{rg}(A)=${rangoA_confirm}`]);
     crearCardAuto(2,"(A|b)",matrizAmpN,rangoAmp_real);
     rangoAmp_confirm=rangoAmp_real;
@@ -508,7 +537,11 @@ function _crearTarjetaActiva(mat, numFilas, numCols, maxOrd, prefijo, rangoReal,
           if(tog.parentNode)tog.parentNode.removeChild(tog);
           if(zona.parentNode)zona.parentNode.removeChild(zona);
           card.className="hist-entrada hist-rango-conf";
+          let et=card.querySelector(".hist-etiqueta");
+          if(prefijo==="A"&&et)et.textContent="Paso 1: Rango de A";
+          if(prefijo==="(A|b)"&&et)et.textContent="Paso 2: Rango(A|b)";
           _agregarCertificacion(card,mat,prefijo,rDecl);
+          if(prefijo==="A"||prefijo==="(A|b)")_hacerTarjetaColapsable(card);
           tarjetaActiva=null;
           onRangoOk(rDecl);
         },600);
@@ -708,7 +741,7 @@ function iniciarPaso1(){
   _mostrarRef(
     "Paso 1 — Rango de A",
     _matLx(_matCoefN()),
-    `Orden máximo de menores: <strong>${maxOrd}</strong>`,
+    null,
     null
   );
 
@@ -732,7 +765,7 @@ function iniciarPaso2(){
   _mostrarRef(
     "Paso 2 — Rango de (A|b)",
     _matAmpLx(),
-    `Orden máximo de menores: <strong>${maxOrd}</strong>`,
+    null,
     [`\\text{rg}(A)=${rangoA_confirm}`]
   );
 
