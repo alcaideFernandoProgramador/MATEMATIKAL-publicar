@@ -342,7 +342,6 @@ const latexGreek = Object.freeze({alpha: '\\alpha', beta: '\\beta', gamma: '\\ga
 var matrizObjeto=null;
 var matrizIntroducida;
 var matricesCreadas=[];
-var control="0";
 var long=11;
 var ordenVariables = ["x","y","z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w"];
 var funciones = ["arcsin", "arccos", "arctan", "arcsen", "arctg","sqrt", "sin", "sen", "cos", "tan", "log", "ln", "tg", "abs", "exp"];
@@ -420,9 +419,8 @@ class Monomio {
     if (keysA.length !== keysB.length) return false;
     for (let i = 0; i < keysA.length; i++) {if (keysA[i] !== keysB[i]) return false;if (Math.abs(varsA[keysA[i]]-varsB[keysB[i]]) > 1e-11) return false;}
     return true;}
-  static parseMonomio(cadena) {cadena = cadena.replace(/\s+/g, "");cadena = cadena.replace(/^\s*\+?/g, '');cadena = cadena.replace(/(\()\s*\+/g, '$1');
+  static parseMonomio(cadena) {if (cadena instanceof Monomio) return cadena;cadena = String(cadena).replace(/\s+/g, "");cadena = cadena.replace(/^\s*\+?/g, '');cadena = cadena.replace(/(\()\s*\+/g, '$1');
     cadena=ExpresionAlgebraica.eliminarParentesisInnecesarios(cadena);cadena=ExpresionAlgebraica.notacionSinProductos(cadena);
-    if (cadena instanceof Monomio) return cadena;
     const mGlobal = cadena.match(/^([+\-]?)\(([^()]+)\)$/);if (mGlobal && /^[+\-]?[^+\-]+$/.test(mGlobal[2])) 
       {const signo = mGlobal[1] === '-' ? -1 : 1;const interior = mGlobal[2];const monInt = Monomio.parseMonomio(interior);
         return new Monomio(signo * monInt.coeficiente, monInt.variables);}
@@ -432,7 +430,7 @@ class Monomio {
       if (contadorParentesis < 0) throw new Error("Formato de monomio no válido: paréntesis desbalanceados.");}
       if (contadorParentesis !== 0) throw new Error("Formato de monomio no válido: paréntesis desbalanceados.");
     let coeficiente = 1;let variables = {};let restoCadena = cadena;
-    const coeficienteRegex = /^([+-]?(?:\d+(?:\/\d+)?|\d*\.\d+|\d+)?)(?=[a-zA-Z]|$)/;const matchCoeficiente = restoCadena.match(coeficienteRegex);
+    const coeficienteRegex = new RegExp(`^([+-]?(?:\\d+(?:\\/\\d+)?|\\d*\\.\\d+|\\d+)?)(?=${VAR_CHR}|$)`);const matchCoeficiente = restoCadena.match(coeficienteRegex);
     if (matchCoeficiente) {const coeficienteStr = matchCoeficiente[1];if (coeficienteStr === "" || coeficienteStr === "+") coeficiente = 1;
       else if (coeficienteStr === "-") coeficiente = -1;else if (coeficienteStr.includes("/")) 
         {const [numerador, denominador] = coeficienteStr.split("/").map(parseFloat);if (denominador !== 0) coeficiente = numerador / denominador;
@@ -505,8 +503,9 @@ class Polinomio {
   simplificarInterno() {let mapaMonomios = {};for (let monomio of this.monomios) {
     let clave = JSON.stringify(Object.keys(monomio.variables).sort().reduce((acc, k) => { acc[k] = monomio.variables[k]; return acc; }, {}));
     if (mapaMonomios[clave]) {mapaMonomios[clave].coeficiente += monomio.coeficiente;} 
-    else {mapaMonomios[clave] = new Monomio(monomio.coeficiente, { ...monomio.variables });}}
+      else {mapaMonomios[clave] = new Monomio(monomio.coeficiente, { ...monomio.variables });}}
     this.monomios = Object.values(mapaMonomios).filter(m => Math.abs(m.coeficiente) > 1e-11);}
+  static _parseSimplificado(cadena) {let polinomio=Polinomio.parsePolinomio(cadena);polinomio.simplificarInterno();return polinomio;}
   toString() {if (this.monomios.length === 0) return '0';return this.monomios.map((monomio, index) => {let strMonomio = monomio.toString();
     return (index > 0 && !strMonomio.startsWith('-') ? '+' : '') + strMonomio;}).join('');}
   static parsePolinomio(cadena) {cadena = String(cadena).replace(/\s+/g, "");let prev;
@@ -521,43 +520,46 @@ class Polinomio {
       cadena = cadena.replace(new RegExp(`(${num})\\*(${VS})`, 'g'),'$1$2');cadena = cadena.replace(new RegExp(`(${VS})\\*(${num})`, 'g'),'$2$1');
       cadena = cadena.replace(new RegExp(`(${VS})\\*(${VS})`, 'g'),'$1$2');cadena = cadena.replace(new RegExp(`(${num})\\*\\s*([a-zA-Z])`, 'g'), '$1$2');
       cadena = cadena.replace(new RegExp(`([a-zA-Z])\\*\\s*([a-zA-Z])`, 'g'), '$1$2');} while (cadena !== anterior);
+    if(cadena==="")return new Polinomio([]);
     const monomioRegex =new RegExp(`([+\\-]?(?:${num})?${VS})|([+\\-]?${num})`,'g');
-    const monomios = [];let match;
-    while ((match = monomioRegex.exec(cadena)) !== null) {const token = match[0];
-     try {const mon = Monomio.parseMonomio(token);if (Math.abs(mon.coeficiente) > 1e-11) {monomios.push(mon);}} 
-     catch (_) {}}
+    const monomios = [];let match;let pos=0;
+    while (pos<cadena.length) {monomioRegex.lastIndex=pos;match=monomioRegex.exec(cadena);
+      if(!match||match.index!==pos)throw new Error(`Formato de polinomio no valido cerca de "${cadena.slice(pos)}".`);
+      const token = match[0];if(pos>0&&!/^[+\-]/.test(token))throw new Error(`Formato de polinomio no valido cerca de "${token}". Falta un operador.`);
+      try {const mon = Monomio.parseMonomio(token);if (Math.abs(mon.coeficiente) > 1e-11) {monomios.push(mon);}} 
+      catch (error) {throw new Error(`Formato de polinomio no valido en "${token}": ${error.message||error}`);}
+      pos=monomioRegex.lastIndex;}
     monomios.sort((a, b) => {const gradoA = ExpresionAlgebraica.evaluarGradoPolinomioEIF(a.toString());
       const gradoB = ExpresionAlgebraica.evaluarGradoPolinomioEIF(b.toString());
       if (gradoA === gradoB) {const va = Object.keys(a.variables).sort().join('');const vb = Object.keys(b.variables).sort().join('');
       return va.localeCompare(vb);}return gradoB - gradoA;});
     return new Polinomio(monomios);}
   static simplificar(cadena) {let polinomio = Polinomio.parsePolinomio(cadena);polinomio.simplificarInterno();return polinomio.toString();}
-  static ordenarTotal(cadena) {let polinomio = Polinomio.parsePolinomio(cadena);
+  static ordenarTotal(cadena) {let polinomio = Polinomio._parseSimplificado(cadena);if(polinomio.monomios.length===0)return"0";
     polinomio.monomios.sort((a, b) => {let gradoA = ExpresionAlgebraica.evaluarGradoPolinomioEIF(a.toString());
       let gradoB = ExpresionAlgebraica.evaluarGradoPolinomioEIF(b.toString());
       if (gradoA === gradoB) {let variablesA = Object.keys(a.variables).sort().join('');let variablesB = Object.keys(b.variables).sort().join('');
         return variablesA.localeCompare(variablesB);};return gradoB - gradoA;});return polinomio.toString();}
-  static sumar(p1, p2) {let polinomio1 = Polinomio.parsePolinomio(p1);let polinomio2 = Polinomio.parsePolinomio(p2);
+  static sumar(p1, p2) {let polinomio1 = Polinomio._parseSimplificado(p1);let polinomio2 = Polinomio._parseSimplificado(p2);
     let resultado = new Polinomio([...polinomio1.monomios, ...polinomio2.monomios]);resultado.simplificarInterno();return resultado.toString();}
-  static restar(p1, p2) {let polinomio1 = Polinomio.parsePolinomio(p1);let polinomio2 = Polinomio.parsePolinomio(p2);
+  static restar(p1, p2) {let polinomio1 = Polinomio._parseSimplificado(p1);let polinomio2 = Polinomio._parseSimplificado(p2);
     let polinomioRestado = polinomio2.monomios.map(m => new Monomio(-m.coeficiente, m.variables));
     let resultado = new Polinomio([...polinomio1.monomios, ...polinomioRestado]);resultado.simplificarInterno();
     resultado.monomios = resultado.monomios.filter(m => Math.abs(m.coeficiente) > 1e-11);let ress = resultado.toString();
     if (ress[ress.length-1] === "-") ress = ress + "1";return ress;}
-  static multiplicar(p1, p2) {let polinomio1 = Polinomio.parsePolinomio(p1);let polinomio2 = Polinomio.parsePolinomio(p2);let resultadoMonomios = [];
+  static multiplicar(p1, p2) {let polinomio1 = Polinomio._parseSimplificado(p1);let polinomio2 = Polinomio._parseSimplificado(p2);if(polinomio1.monomios.length===0||polinomio2.monomios.length===0)return"0";let resultadoMonomios = [];
     for (let m1 of polinomio1.monomios) {for (let m2 of polinomio2.monomios) {let nuevoMonomio = Monomio.multiplicar(m1.toString(), m2.toString());
         resultadoMonomios.push(Monomio.parseMonomio(nuevoMonomio));}}
     let resultado = new Polinomio(resultadoMonomios);(resultado.simplificarInterno()); resultado=resultado.toString();return Polinomio.ordenarTotal(resultado)}
-  static simplificarFactorComunCoeficientes(cadenaPolinomio){
-    if (Polinomio.parsePolinomio(cadenaPolinomio).monomios.length === 1) 
-         {return Monomio.dividir(cadenaPolinomio,Monomio.obtenerCoeficiente(cadenaPolinomio).toString());}
-    let polinomio = Polinomio.parsePolinomio(cadenaPolinomio);let coeficienteComun = polinomio.monomios[0].coeficiente;
+  static simplificarFactorComunCoeficientes(cadenaPolinomio){let polinomio = Polinomio._parseSimplificado(cadenaPolinomio);if(polinomio.monomios.length===0)return"0";
+    cadenaPolinomio=polinomio.toString();if (polinomio.monomios.length === 1) 
+         {return Monomio.dividir(cadenaPolinomio,polinomio.monomios[0].coeficiente.toString());}
+    let coeficienteComun = polinomio.monomios[0].coeficiente;
     for (let i = 1; i < polinomio.monomios.length; i++) {coeficienteComun = mcd(coeficienteComun, polinomio.monomios[i].coeficiente);}
     if (coeficienteComun!==1){cadenaPolinomio=Polinomio.dividir(cadenaPolinomio,coeficienteComun.toString())[0]};return cadenaPolinomio}
-  static factorComun(cadenaPolinomio) {
-    if (Polinomio.parsePolinomio(cadenaPolinomio).monomios.length === 1) 
-      {return [Monomio.obtenerCoeficiente(cadenaPolinomio).toString(),Monomio.obtenerParteLiteral(cadenaPolinomio)];}
-    let polinomio = Polinomio.parsePolinomio(cadenaPolinomio);if (polinomio.monomios.length === 0) return [cadenaPolinomio, "0"];
+  static factorComun(cadenaPolinomio) {let polinomio = Polinomio._parseSimplificado(cadenaPolinomio);if (polinomio.monomios.length === 0) return ["0", "0"];
+    cadenaPolinomio=polinomio.toString();if (polinomio.monomios.length === 1) 
+      {return [polinomio.monomios[0].coeficiente.toString(),Monomio.obtenerParteLiteral(cadenaPolinomio)];}
     let coeficienteComun = polinomio.monomios[0].coeficiente;
     for (let i = 1; i < polinomio.monomios.length; i++) {coeficienteComun = mcd(coeficienteComun, polinomio.monomios[i].coeficiente);}
     let variablesComunes = { ...polinomio.monomios[0].variables };
@@ -576,36 +578,31 @@ class Polinomio {
     let divisoresFactorComun = Monomio.obtenerMonomiosDivisores(factorComun);let divisoresResto = resto ? Polinomio.factorizar(resto) : [];
     let divisoresTotales =[...divisoresComunes,...divisoresFactorComun,...divisoresResto];divisoresTotales=divisoresTotales.map(valor=>valor.toString());
     divisoresTotales = [...new Set(divisoresTotales)];return divisoresTotales;}
-  static ordenarPorVariable(cadena, variable) {let polinomio = Polinomio.parsePolinomio(cadena);
+  static ordenarPorVariable(cadena, variable) {let polinomio = Polinomio._parseSimplificado(cadena);if(polinomio.monomios.length===0)return"0";
     polinomio.monomios.sort((m1, m2) => {let potenciaM1 = m1.variables[variable] || 0;let potenciaM2 = m2.variables[variable] || 0;
         return potenciaM2 - potenciaM1;});
     return polinomio.monomios.map((monomio,index)=>{let strMonomio=monomio.toString();return index>0&&strMonomio[0]!=='-'?'+'+strMonomio:strMonomio;}).join('');}
-  static coeficientesPotenciasDecrecientesVariable(cadena, variable) {let polinomio = Polinomio.parsePolinomio(cadena);let coeficientesAgrupados = {};
+  static _coeficientesPotenciasVariable(cadena, variable, creciente) {let polinomio = Polinomio._parseSimplificado(cadena);if(polinomio.monomios.length===0)return["0"];let coeficientesAgrupados = {};
     for (let monomio of polinomio.monomios) {let gradoVariable = monomio.variables[variable] || 0;
         let monomioSinVariable = Monomio.eliminarVariable(monomio.toString(), variable, gradoVariable);
         if (!coeficientesAgrupados[gradoVariable]) {coeficientesAgrupados[gradoVariable] = monomioSinVariable;} 
-          else {coeficientesAgrupados[gradoVariable] += "+" + monomioSinVariable;}}
+        else {coeficientesAgrupados[gradoVariable] += "+" + monomioSinVariable;}}
     let maxGrado = Math.max(...Object.keys(coeficientesAgrupados).map(grado => parseInt(grado, 10)));let resultado = [];
-    for (let i = maxGrado; i >= 0; i--) {if (coeficientesAgrupados[i]) {let simplificado = Polinomio.simplificar(coeficientesAgrupados[i].replace(/\+\-/g, '-'));
+    let inicio=creciente?0:maxGrado,fin=creciente?maxGrado:0,paso=creciente?1:-1;
+    for (let i = inicio; creciente?i<=fin:i>=fin; i+=paso) {if (coeficientesAgrupados[i]) {let simplificado = Polinomio.simplificar(coeficientesAgrupados[i].replace(/\+\-/g, '-'));
             resultado.push(simplificado);} else {resultado.push("0");}}return resultado;}
-  static coeficientesPotenciasCrecientesVariable(cadena, variable) {let polinomio = Polinomio.parsePolinomio(cadena);let coeficientesAgrupados = {};
-    for (let monomio of polinomio.monomios) {let gradoVariable = monomio.variables[variable] || 0;
-        let monomioSinVariable = Monomio.eliminarVariable(monomio.toString(), variable, gradoVariable);
-        if (!coeficientesAgrupados[gradoVariable]) {coeficientesAgrupados[gradoVariable] = monomioSinVariable;} 
-          else {coeficientesAgrupados[gradoVariable] += "+" + monomioSinVariable;}}
-    let maxGrado = Math.max(...Object.keys(coeficientesAgrupados).map(grado => parseInt(grado, 10)));let resultado = [];
-    for (let i = 0; i <= maxGrado; i++) {if (coeficientesAgrupados[i]) {let simplificado = Polinomio.simplificar(coeficientesAgrupados[i].replace(/\+\-/g, '-'));
-            resultado.push(simplificado);} else {resultado.push("0");}}return resultado;}
-  static grado(polinomio) {let p = Polinomio.parsePolinomio(polinomio);if(p.toString()==="0"){return 0};
+  static coeficientesPotenciasDecrecientesVariable(cadena, variable) {return Polinomio._coeficientesPotenciasVariable(cadena,variable,false);}
+  static coeficientesPotenciasCrecientesVariable(cadena, variable) {return Polinomio._coeficientesPotenciasVariable(cadena,variable,true);}
+  static grado(polinomio) {let p = Polinomio._parseSimplificado(polinomio);if(p.toString()==="0"){return 0};
     let gradoMaximo = Math.max(...p.monomios.map(monomio => Monomio.grado(monomio.toString())));return gradoMaximo;}
-  static gradoVariable(cadena, variable) {let polinomio = Polinomio.parsePolinomio(cadena);let gradoMaximo = 0;
+  static gradoVariable(cadena, variable) {let polinomio = Polinomio._parseSimplificado(cadena);let gradoMaximo = 0;
     for (let monomio of polinomio.monomios) {let gradoActual = monomio.variables[variable] || 0;if (gradoActual > gradoMaximo) {gradoMaximo = gradoActual;}}
     return gradoMaximo;}
   static elegirMonomioMayorGrado(cadena) {let grado = Polinomio.grado(cadena);let solucion = "";
-    let monom = Polinomio.parsePolinomio(cadena).monomios;for (let i = 0; i < monom.length; i++) 
+    let monom = Polinomio._parseSimplificado(cadena).monomios;for (let i = 0; i < monom.length; i++) 
       {if (Monomio.grado(monom[i].toString()) === grado) {solucion = monom[i].toString();break;}}return solucion;}
   static elegirMonomioMayorGradoVariable(cadena,variable) {let grado = Polinomio.gradoVariable(cadena,variable);let solucion = "";
-    let monom = Polinomio.parsePolinomio(cadena).monomios;for (let i = 0; i < monom.length; i++) 
+    let monom = Polinomio._parseSimplificado(cadena).monomios;for (let i = 0; i < monom.length; i++) 
       {if (Monomio.gradoVariable(monom[i].toString(),variable) === grado) {solucion = monom[i].toString();break;}}return solucion;}
   static dividirUnaVariable(polinomio1, polinomio2) {if (polinomio2 === "0") {throw new Error("División por cero.");}
     polinomio1=ExpresionAlgebraica.eliminarParentesisInnecesarios(polinomio1);polinomio2=ExpresionAlgebraica.eliminarParentesisInnecesarios(polinomio2);
@@ -733,11 +730,11 @@ class Polinomio {
     if(array.length>1){resultado=Polinomio.mcm(array[0],array[1]); 
     for (let i=2;i<array.length;i++){resultado=Polinomio.mcm(resultado,array[i])} return resultado}
     else{if(array.length===1){resultado=array[0];return resultado}else{return "1"}}}
-  static monomiosDecrecientes(cadena) {const polinomio = Polinomio.parsePolinomio(cadena);
+  static monomiosDecrecientes(cadena) {const polinomio = Polinomio._parseSimplificado(cadena);
     polinomio.monomios.sort((m1, m2) => {const gradoM1 = Object.values(m1.variables).reduce((acc, exp) => acc + exp, 0);
     const gradoM2 = Object.values(m2.variables).reduce((acc, exp) => acc + exp, 0);return gradoM2 - gradoM1;});
     return polinomio.monomios.map(monomio => monomio.toString());}
-  static monomiosCrecientes(cadena) {const polinomio = Polinomio.parsePolinomio(cadena);
+  static monomiosCrecientes(cadena) {const polinomio = Polinomio._parseSimplificado(cadena);
     polinomio.monomios.sort((m1, m2) => {const gradoM1 = Object.values(m1.variables).reduce((acc, exp) => acc + exp, 0);
     const gradoM2 = Object.values(m2.variables).reduce((acc, exp) => acc + exp, 0);return gradoM1 - gradoM2;});
     return polinomio.monomios.map(monomio => monomio.toString());} 
@@ -790,7 +787,7 @@ class Polinomio {
     for (let i=0;i<coefi.length;i++){let den=FraccionNumerica.denominador(fraccionContinua(coefi[i].toString(),long));denominadores.push(den)}
     let minComun=mcmArray(denominadores);poli=Polinomio.multiplicar(poli,minComun.toString());return [poli,minComun.toString()];}
   static desarrollarFactores(factores){let resultado="1"; for(let i=0;i<factores.length;i++){resultado=Polinomio.multiplicar(resultado, factores[i])}; return resultado}
-  static monomios(pol){let mon=[]; let polParse=Polinomio.parsePolinomio(pol); 
+  static monomios(pol){let mon=[]; let polParse=Polinomio._parseSimplificado(pol); 
     for(let i=0;i<polParse.monomios.length;i++){mon.push(polParse.monomios[i].toString())} return mon}
   static monomiosMayorGrado(pol){let mono=Polinomio.monomios(pol);let n=Polinomio.grado(pol);let monoMG=[]
     for(let i=0;i<mono.length;i++){if(Monomio.grado(mono[i])===n){monoMG.push(mono[i])}}; return monoMG}
@@ -802,16 +799,23 @@ class Polinomio {
 class FraccionNumerica {constructor(fraccion) {const [numerador, denominador] = FraccionNumerica.parseFraccion(fraccion);
                         this.numerador = numerador;this.denominador = denominador;}
   static parseFraccion(cadena){
-    let frac = FraccionAlgebraica.parseFraccion(cadena);if (frac[1].monomios.length===0){ return ["0","0"];};if (frac[0].monomios.length===0){ return ["0","1"];}
-    let numerador = frac[0].monomios[0].coeficiente.toString();let denominador = frac[1].monomios[0].coeficiente.toString();return [numerador, denominador];}
+    let frac = FraccionAlgebraica.parseFraccion(cadena);let numerador=FraccionNumerica._coeficienteNumerico(frac[0],"numerador");
+    let denominador=FraccionNumerica._coeficienteNumerico(frac[1],"denominador");return [numerador, denominador];}
+  static _coeficienteNumerico(polinomio,nombre){polinomio.simplificarInterno();if(polinomio.monomios.length===0)return"0";
+    if(polinomio.monomios.length!==1||Object.keys(polinomio.monomios[0].variables).length!==0)throw new Error(`FraccionNumerica solo admite ${nombre} numerico.`);
+    return polinomio.monomios[0].coeficiente.toString();}
+  static _denominadorCero(...denominadores){return denominadores.some(den=>den==="0");}
   static sumar(frac1, frac2) {const [num1, den1] = FraccionNumerica.parseFraccion(frac1);const [num2, den2] = FraccionNumerica.parseFraccion(frac2);
+    if(FraccionNumerica._denominadorCero(den1,den2)){return "Error: división por 0"}
     const numerador = num1 * den2 + num2 * den1;const denominador = den1 * den2;return FraccionNumerica.simplificar(numerador+"/("+denominador+")");}
   static restar(frac1, frac2) {const [num1, den1] = FraccionNumerica.parseFraccion(frac1);const [num2, den2] = FraccionNumerica.parseFraccion(frac2);
+    if(FraccionNumerica._denominadorCero(den1,den2)){return "Error: división por 0"}
     const numerador = num1 * den2 - num2 * den1;const denominador = den1 * den2;return FraccionNumerica.simplificar(numerador+"/("+denominador+")");}
   static multiplicar(frac1, frac2) {const [num1, den1] = FraccionNumerica.parseFraccion(frac1);const [num2, den2] = FraccionNumerica.parseFraccion(frac2);
+    if(FraccionNumerica._denominadorCero(den1,den2)){return "Error: división por 0"}
     const numerador = num1 * num2;const denominador = den1 * den2;return FraccionNumerica.simplificar(numerador+"/("+denominador+")");}
   static dividir(frac1, frac2) {const [num1, den1] = FraccionNumerica.parseFraccion(frac1);const [num2, den2] = FraccionNumerica.parseFraccion(frac2);
-    if(den1==="0"||num2==="0"||den2==="0"){return "Error: división por 0"}
+    if(FraccionNumerica._denominadorCero(den1,den2)||num2==="0"){return "Error: división por 0"}
     const numerador = num1 * den2;const denominador = den1 * num2;return FraccionNumerica.simplificar(numerador+"/("+denominador+")");}
   static simplificar(fraccion){
     fraccion = ExpresionAlgebraica.eliminarParentesisInnecesarios(fraccion);if(fraccion[0]==="-"&&fraccion[1]==="-"){fraccion=fraccion.slice(2);}
@@ -819,9 +823,9 @@ class FraccionNumerica {constructor(fraccion) {const [numerador, denominador] = 
     if(num<0&&den<0){num=Math.abs(num); den=Math.abs(den)};let max=mcd(num,den); num=num/max; den=den/max;
     if(num>0&&den<0){num=-num; den=Math.abs(den)}; if(den==1){fraccion=num;}else{if(den<0){fraccion=num+"/("+den+")"}
       else{fraccion=num+"/"+den}};return fraccion.toString();}
-  static potencia(frac, n) {n=parseFloat(n);if (!Number.isInteger(n)){return "Error: el exponente debe ser entero"}
-    let num= FraccionNumerica.parseFraccion(frac)[0]; let den= FraccionNumerica.parseFraccion(frac)[1];
-    if (n<0){let aux=num; num=den;den=aux};n=Math.abs(n);
+  static potencia(frac, n) {n=Number(n);if (!Number.isInteger(n)){return "Error: el exponente debe ser entero"}
+    let [num,den]= FraccionNumerica.parseFraccion(frac);if(den==="0"){return "Error: división por 0"};if(n===0)return"1";
+    if (n<0){if(num==="0"){return "Error: división por 0"};let aux=num; num=den;den=aux};n=Math.abs(n);
     const numerador = num ** n;const denominador = den **n;return FraccionNumerica.simplificar(numerador+"/("+denominador+")");}
   static numerador(fraccion){return FraccionNumerica.parseFraccion(fraccion)[0]}
   static denominador(fraccion){return FraccionNumerica.parseFraccion(fraccion)[1]}
@@ -852,7 +856,7 @@ class FraccionAlgebraica {constructor(fraccion) {const [numerador, denominador] 
         while(str.startsWith('(')&&str.endsWith(')')){ let d=0,w=true; 
           for(let i=0;i<str.length-1;i++){ const ch=str[i]; if(ch==='(') d++; else if(ch===')'){ d--; if(d<0) throw new Error("Paréntesis desbalanceados."); 
           if(d===0&&i<str.length-1){ w=false; break; } } } if(!w) break; str=str.slice(1,-1).trim(); } return str; }; numStr=stripOuterParens(numStr); 
-          denStr=stripOuterParens(denStr); const numerador=Polinomio.parsePolinomio(numStr); const denominador=Polinomio.parsePolinomio(denStr); 
+          denStr=stripOuterParens(denStr); const numerador=Polinomio._parseSimplificado(numStr); const denominador=Polinomio._parseSimplificado(denStr); 
     return [numerador,denominador]; }
   static simplificar(cadena){
     const strip=s=>{s=(""+s).trim();while(s.startsWith("(")&&s.endsWith(")"))s=s.slice(1,-1).trim();return s};
@@ -897,25 +901,27 @@ class FraccionAlgebraica {constructor(fraccion) {const [numerador, denominador] 
     if(dP==="-1")return nP.startsWith("-")?nP.slice(1):"-"+nP;
     let denProd=ExpresionAlgebraica.notacionConProductos(dP).includes("*");
     let pN=haySuma(nP)?"("+nP+")":nP,pD=(haySuma(dP)||denProd)?"("+dP+")":dP;return pN+"/"+pD}
+  static _esCero(polinomio){return polinomio.toString()==="0";}
+  static _denominadorCero(...fracciones){return fracciones.some(frac=>FraccionAlgebraica._esCero(frac.denominador));}
   static sumar(frac1, frac2) {frac1 = frac1 instanceof FraccionAlgebraica ? frac1 : new FraccionAlgebraica(frac1);
-    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);
+    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);if(FraccionAlgebraica._denominadorCero(frac1,frac2))return "∞";
     const nuevoNumerador = Polinomio.sumar(Polinomio.multiplicar(frac1.numerador.toString(), frac2.denominador.toString()),
     Polinomio.multiplicar(frac2.numerador.toString(), frac1.denominador.toString()));
     const nuevoDenominador = Polinomio.multiplicar(frac1.denominador.toString(), frac2.denominador.toString());
     let resultado=new FraccionAlgebraica(`(${nuevoNumerador}) / (${nuevoDenominador})`).toString();resultado=FraccionAlgebraica.simplificar(resultado);return resultado}
   static restar(frac1, frac2) {frac1 = frac1 instanceof FraccionAlgebraica ? frac1 : new FraccionAlgebraica(frac1);
-    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);
+    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);if(FraccionAlgebraica._denominadorCero(frac1,frac2))return "∞";
     const nuevoNumerador = Polinomio.restar(Polinomio.multiplicar(frac1.numerador.toString(), frac2.denominador.toString()),
     Polinomio.multiplicar(frac2.numerador.toString(), frac1.denominador.toString()));
     const nuevoDenominador = Polinomio.multiplicar(frac1.denominador.toString(), frac2.denominador.toString());
     let resultado= new FraccionAlgebraica(`(${nuevoNumerador}) / (${nuevoDenominador})`).toString();resultado=FraccionAlgebraica.simplificar(resultado);return resultado}
   static multiplicar(frac1, frac2) {frac1 = frac1 instanceof FraccionAlgebraica ? frac1 : new FraccionAlgebraica(frac1);
-    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);
+    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);if(FraccionAlgebraica._denominadorCero(frac1,frac2))return "∞";
     const nuevoNumerador = Polinomio.multiplicar(frac1.numerador.toString(), frac2.numerador.toString());
     const nuevoDenominador = Polinomio.multiplicar(frac1.denominador.toString(), frac2.denominador.toString());
     let resultado= new FraccionAlgebraica(`(${nuevoNumerador}) / (${nuevoDenominador})`).toString();resultado=FraccionAlgebraica.simplificar(resultado);return resultado}
   static dividir(frac1, frac2) {frac1 = frac1 instanceof FraccionAlgebraica ? frac1 : new FraccionAlgebraica(frac1);
-    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);
+    frac2 = frac2 instanceof FraccionAlgebraica ? frac2 : new FraccionAlgebraica(frac2);if(FraccionAlgebraica._denominadorCero(frac1,frac2)||FraccionAlgebraica._esCero(frac2.numerador))return "∞";
     const nuevoNumerador = Polinomio.multiplicar(frac1.numerador.toString(), frac2.denominador.toString());
     const nuevoDenominador = Polinomio.multiplicar(frac1.denominador.toString(), frac2.numerador.toString());
     let resultado=new FraccionAlgebraica(`(${nuevoNumerador}) / (${nuevoDenominador})`).toString();resultado=FraccionAlgebraica.simplificar(resultado);return resultado}
@@ -946,7 +952,7 @@ class ExpresionNumerica{
   constructor(expresion) { this.expresion = expresion; }
   static esValida(expresion) {return Validar.expresionNumerica(expresion)[0];}
   static infijaAPostfija(expresion){let r = Validar.expresionNumerica(expresion)[1];return r;}
-  static postfijaAInfija(salida) {const pila = [];const prioridad = { "+": 1, "-": 1, "*": 2, "/": 2, "^": 3 }; // <- sin "=";const reNumero = /^-?\d+(?:\.\d+)?$/;
+  static postfijaAInfija(salida) {const pila = [];const prioridad = { "+": 1, "-": 1, "*": 2, "/": 2, "^": 3 };const reNumero = /^-?\d+(?:\.\d+)?$/;
     for (const token of salida) {if (reNumero.test(token)) {pila.push({ expr: token, prio: 4 });} 
       else if (funciones.includes(token)) {if (!pila.length) return [false, "Error: argumento faltante para la función."];
         const arg = pila.pop();pila.push({ expr: `${token}(${arg.expr})`, prio: 4 });} 
@@ -1146,7 +1152,8 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
         funciones.includes(siguiente))) ||
         (funciones.includes(actual) && (esLetra(siguiente) || funciones.includes(siguiente) || esConst(siguiente))));
       if (insertar) resultado.push("*");};return resultado.join('');}
-  static notacionSinProductos(expre){return expre.replace(/(\d|[a-zA-Z)\]])\*(?=[a-zA-Z(\[])/g, "$1").replace(/([a-zA-Z)\]])\*(\d|[a-zA-Z(\[])/g, "$1$2");}
+  static notacionSinProductos(expre){const letra="A-Za-z\\u0370-\\u03FF";
+    return expre.replace(new RegExp(`(\\d|[${letra})\\]])\\*(?=[${letra}(\\[])`,"g"), "$1").replace(new RegExp(`([${letra})\\]])\\*(\\d|[${letra}(\\[])`,"g"), "$1$2");}
   static restarCadenaRango(cadena, ini, fin) {let resultado=cadena.slice(0,ini)+cadena.slice(fin+1);return resultado;}
   static pasarALatex(exp){
     if(exp==="")return"0";const tokens=ExpresionAlgebraica.infijaAPostfija(exp);
@@ -1189,20 +1196,19 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
     else stack.push({expr:t,pr:Infinity});}
     let out=stack.length?stack[0].expr:"0";out=out.replace(/\\cdot/g,"\\cdot ");
     out=out.replace(/\\left\(([A-Za-z])\^{-(\d+)}\\right\)/g,"$1^{-{$2}}");return out;}
-  static evaluarGradoPolinomioEPF(expresion) {let pila = [];
-    for (let i=0;i<expresion.length;i++){if(expresion[i]===" "){expresion.splice(i,1)}};for (let i=0;i<expresion.length;i++){
-      if (!isNaN(expresion[i])) {pila.push(0)};
-      if (expresion[i].match(/^[a-zA-Z]+$/)){pila.push(1)};
-      if (expresion[i]==="^"){pila.pop();let aux=pila[pila.length-1];pila.pop();pila.push(expresion[i-1]*aux)};
-      if (expresion[i]==="+"||expresion[i]==="-"){let aux=Math.max(pila[pila.length-1],pila[pila.length-2]);pila.pop();pila.pop();pila.push(aux)};
-      if (expresion[i]==="*"){let aux=pila[pila.length-1]+pila[pila.length-2];pila.pop();pila.pop();pila.push(aux)};}return pila.pop();}
-  static evaluarGradoPolinomioEIF(expresion) {expresion = ExpresionAlgebraica.infijaAPostfija(expresion);let pila = [];
-    for (let i=0;i<expresion.length;i++){if(expresion[i]===" "){expresion.splice(i,1)}};for (let i=0;i<expresion.length;i++){
-    if (!isNaN(expresion[i])) {pila.push(0)};
-    if (expresion[i].match(/^[a-zA-Z]+$/)){pila.push(1)};
-    if (expresion[i]==="^"){pila.pop();let aux=pila[pila.length-1];pila.pop();pila.push(expresion[i-1]*aux)};
-    if (expresion[i]==="+"||expresion[i]==="-"){let aux=Math.max(pila[pila.length-1],pila[pila.length-2]);pila.pop();pila.pop();pila.push(aux)};
-    if (expresion[i]==="*"){let aux=pila[pila.length-1]+pila[pila.length-2];pila.pop();pila.pop();pila.push(aux)};}return pila.pop();}
+  static _gradoPolinomioPostfija(expresion) {const tokens=(Array.isArray(expresion)?expresion:[]).filter(t=>t!==" ");const pila=[];
+    const esIdent=t=>new RegExp(`^[A-Za-z\\u0370-\\u03FF_][A-Za-z\\u0370-\\u03FF0-9_]*$`).test(t)&&!funciones.includes(t);
+    const leerNumero=t=>{t=String(t);if(/^[+\-]?\d+(?:\.\d+)?(?:\/[+\-]?\d+(?:\.\d+)?)?$/.test(t)){if(t.includes("/")){const[a,b]=t.split("/").map(Number);return a/b;}return Number(t);}return NaN;};
+    const pop=()=>pila.length?pila.pop():{grado:0,valor:NaN};for(const token of tokens){const numero=leerNumero(token);
+      if(Number.isFinite(numero)){pila.push({grado:0,valor:numero});continue;}
+      if(esIdent(token)){pila.push({grado:1,valor:NaN});continue;}
+      if(token==="+"||token==="-"){const b=pop(),a=pop();pila.push({grado:Math.max(a.grado,b.grado),valor:Number.isFinite(a.valor)&&Number.isFinite(b.valor)?(token==="+"?a.valor+b.valor:a.valor-b.valor):NaN});continue;}
+      if(token==="*"){const b=pop(),a=pop();pila.push({grado:a.grado+b.grado,valor:Number.isFinite(a.valor)&&Number.isFinite(b.valor)?a.valor*b.valor:NaN});continue;}
+      if(token==="/"){const b=pop(),a=pop();pila.push({grado:a.grado-b.grado,valor:Number.isFinite(a.valor)&&Number.isFinite(b.valor)?a.valor/b.valor:NaN});continue;}
+      if(token==="^"){const b=pop(),a=pop();pila.push({grado:Number.isFinite(b.valor)?a.grado*b.valor:NaN,valor:Number.isFinite(a.valor)&&Number.isFinite(b.valor)?a.valor**b.valor:NaN});}}
+    return pila.length?pila.pop().grado:0;}
+  static evaluarGradoPolinomioEPF(expresion) {return ExpresionAlgebraica._gradoPolinomioPostfija(expresion);}
+  static evaluarGradoPolinomioEIF(expresion) {return ExpresionAlgebraica._gradoPolinomioPostfija(ExpresionAlgebraica.infijaAPostfija(expresion));}
   static eliminarParentesisInnecesarios(exp){
     let ex=exp; ex=ExpresionAlgebraica.infijaAPostfija(ex); ex=ExpresionAlgebraica.postfijaAInfija(ex); return ex;}
   static emparejarPrimerParentesis(cadena){let contador=0;let codigos=[];for(let i=0;i<cadena.length;i++){
@@ -1223,9 +1229,19 @@ class Matriz {constructor(array) {this.matriz = array;}
   static _Z(x){return Matriz._S(x)==="0";}
   static _isNum(x){let s=(x??"").toString().trim().replace(/\s+/g,"").replace(/,/g,".");if(s==="")return false;
     return /^[+\-]?\d+$/.test(s)||/^[+\-]?\d*\.\d+$/.test(s)||/^[+\-]?\d+\/[+\-]?\d+$/.test(s);}
-  static sumar(matrizA, matrizB) {return matrizA.map((fila, i) =>fila.map((valor, j) => ExpresionAlgebraica.simplificar("("+valor +")+("+ matrizB[i][j]+")")));}
-  static restar(matrizA, matrizB) {return matrizA.map((fila, i) =>fila.map((valor, j) => ExpresionAlgebraica.simplificar("("+valor +")-("+ matrizB[i][j]+")")));}
-  static multiplicar(matrizA, matrizB) {const resultado = Array(matrizA.length).fill(0).map(() => Array(matrizB[0].length).fill(0));
+  static _dimensiones(matriz,nombre){if(!Array.isArray(matriz)||matriz.length===0||!Array.isArray(matriz[0]))throw new Error(`${nombre} debe ser un array de arrays no vacio.`);
+    const columnas=matriz[0].length;if(columnas===0)throw new Error(`${nombre} no puede tener filas vacias.`);
+    for(let i=1;i<matriz.length;i++){if(!Array.isArray(matriz[i])||matriz[i].length!==columnas)throw new Error(`${nombre} debe ser una matriz rectangular.`);}
+    return{filas:matriz.length,columnas};}
+  static sumar(matrizA, matrizB) {const a=Matriz._dimensiones(matrizA,"matrizA"),b=Matriz._dimensiones(matrizB,"matrizB");
+    if(a.filas!==b.filas||a.columnas!==b.columnas)throw new Error(`Dimensiones incompatibles para sumar matrices: (${a.filas}x${a.columnas}) y (${b.filas}x${b.columnas}).`);
+    return matrizA.map((fila, i) =>fila.map((valor, j) => ExpresionAlgebraica.simplificar("("+valor +")+("+ matrizB[i][j]+")")));}
+  static restar(matrizA, matrizB) {const a=Matriz._dimensiones(matrizA,"matrizA"),b=Matriz._dimensiones(matrizB,"matrizB");
+    if(a.filas!==b.filas||a.columnas!==b.columnas)throw new Error(`Dimensiones incompatibles para restar matrices: (${a.filas}x${a.columnas}) y (${b.filas}x${b.columnas}).`);
+    return matrizA.map((fila, i) =>fila.map((valor, j) => ExpresionAlgebraica.simplificar("("+valor +")-("+ matrizB[i][j]+")")));}
+  static multiplicar(matrizA, matrizB) {const a=Matriz._dimensiones(matrizA,"matrizA"),b=Matriz._dimensiones(matrizB,"matrizB");
+    if(a.columnas!==b.filas)throw new Error(`Dimensiones incompatibles para multiplicar matrices: (${a.filas}x${a.columnas}) y (${b.filas}x${b.columnas}).`);
+    const resultado = Array(matrizA.length).fill(0).map(() => Array(matrizB[0].length).fill(0));
     for (let i = 0; i < matrizA.length; i++) {for (let j = 0; j < matrizB[0].length; j++) {for (let k = 0; k < matrizB.length; k++) 
     {resultado[i][j]= ExpresionAlgebraica.simplificar("("+resultado[i][j]+")+("+ExpresionAlgebraica.simplificar("("+matrizA[i][k]+")*("+ matrizB[k][j]+")")+")");}}};
     return resultado;}
@@ -1421,7 +1437,9 @@ class Matriz {constructor(array) {this.matriz = array;}
     if(n===1){resultado=det[0][0]};if(n>1){for (let i=0;i<n;i++){resultado=resultado+det[0][i]*signo(0,i)*Matriz.determinanteNumerico(Matriz.quitarFilayColumna(det,0,i));}}
     return resultado}
   static determinante(det){
-    let detAux=det.map(a=>a.slice());detAux=Matriz.aString(detAux);if(detAux.length===0){return "0"};if(detAux.length!==detAux[0].length){return null}
+    if(Array.isArray(det)&&det.length===0)return "1";
+    const dim=Matriz._dimensiones(det,"matriz");if(dim.filas!==dim.columnas)throw new Error("El determinante solo esta definido para matrices cuadradas.");
+    let detAux=det.map(a=>a.slice());detAux=Matriz.aString(detAux);
     detAux=Matriz.simplificarElementosMatriz(detAux);function det1(d){return d[0][0]}
     function det2(d){let ad=ExpresionAlgebraica.simplificar("("+d[0][0]+")("+d[1][1]+")");let bc=ExpresionAlgebraica.simplificar("("+d[0][1]+")("+d[1][0]+")");
       return ExpresionAlgebraica.simplificar("("+ad+")-("+bc+")");}
@@ -1526,14 +1544,14 @@ class Matriz {constructor(array) {this.matriz = array;}
     for (let k = i-1; k >=0; k--) {let factor = A[k][i];for (let j = 0; j < n; j++) {
         A[k][j] = ExpresionAlgebraica.simplificar(`(${A[k][j]}) - ((${factor})*(${A[i][j]}))`);
         I[k][j] = ExpresionAlgebraica.simplificar(`(${I[k][j]}) - ((${factor})*(${I[i][j]}))`);} } }return I;}
-  static adjunta(matriz){let matrizAdjunta=matriz.map(function(arr){return arr.slice()});
+  static adjunta(matriz){const dim=Matriz._dimensiones(matriz,"matriz");if(dim.filas!==dim.columnas)throw new Error("La adjunta solo esta definida para matrices cuadradas.");
+    if(dim.filas===1)return [["1"]];let matrizAdjunta=matriz.map(function(arr){return arr.slice()});
     for (let i=0;i<matrizAdjunta.length;i++){for (let j=0;j<matrizAdjunta[0].length;j++){
       if((i+j)%2===0){matrizAdjunta[i][j]=Matriz.determinante(Matriz.quitarFilayColumna(matriz,i,j))}
       else{matrizAdjunta[i][j]=Polinomio.multiplicar(Matriz.determinante(Matriz.quitarFilayColumna(matriz,i,j)),"-1")}}};return matrizAdjunta}
-  static inversa(m){if(!Array.isArray(m)||m.length===0)throwOnError("matrizVacia"); 
-    if(m.some(r=>!Array.isArray(r)||r.length!==m.length))throwOnError("noCuadrada"); 
+  static inversa(m){const dim=Matriz._dimensiones(m,"matriz");if(dim.filas!==dim.columnas)throw new Error("La inversa solo esta definida para matrices cuadradas."); 
     let d=Matriz.determinante(m); d=typeof d==="string"?ExpresionAlgebraica.simplificar(d):d; 
-    if(d===0||d==="0")throwOnError("noRegular"); 
+    if(d===0||d==="0")throw new Error("La matriz no es regular y no tiene inversa."); 
     let a=Matriz.adjunta(m),t=Matriz.trasponer(a); 
     for(let i=0;i<t.length;i++){for(let j=0;j<t[0].length;j++){t[i][j]=ExpresionAlgebraica.simplificar("("+t[i][j]+")/("+d+")")}} return t}
   static identidad(n){let matriz = []; for (let i = 0; i < n; i++) {let fila = []; for (let j = 0; j < n; j++) {if (i === j) {fila.push("1");} 
@@ -1541,8 +1559,9 @@ class Matriz {constructor(array) {this.matriz = array;}
   static opuesta(matriz){let matrizN=matriz.map(function(arr){return arr.slice()});
     for (let i=0;i<matrizN.length;i++){for (let j=0;j<matrizN[0].length;j++)
       {matrizN[i][j]=ExpresionAlgebraica.simplificar("-("+matriz[i][j]+")")}}return matrizN}
-  static potencia(matriz, n) {const nFil = matriz.length, nCol = matriz[0].length;
-    if (nFil !== nCol) { throw new Error("La potencia solo está definida para matrices cuadradas."); }
+  static potencia(matriz, n) {const dim=Matriz._dimensiones(matriz,"matriz"),nFil=dim.filas,nCol=dim.columnas;n=Number(n);
+    if (nFil !== nCol) { throw new Error("La potencia solo esta definida para matrices cuadradas."); }
+    if (!Number.isInteger(n)||n<0) { throw new Error("El exponente debe ser un entero no negativo."); }
     if (n === 0) { return Matriz.identidad(nFil); };if (n === 1) { return matriz.map(arr => arr.slice()); };let resultado = matriz.map(arr => arr.slice());
     for (let i = 1; i < n; i++) {resultado = Matriz.multiplicar(resultado, matriz);}return resultado;}
   static pasarAFraccion(matriz){let aux=matriz.map(function (arr){return arr.slice()});
@@ -1873,10 +1892,6 @@ class Representar{
       Array.from(L[i].children).forEach(td=>{td.style.height=h+"px";td.style.verticalAlign="middle"});
       Array.from(R[i].children).forEach(td=>{td.style.height=h+"px";td.style.verticalAlign="middle"});}};
     requestAnimationFrame(()=>requestAnimationFrame(sync));}
-    static crearTabla(n,m,lug){let tabla=document.createElement('table');tabla.style.borderCollapse="separate";
-      tabla.style.borderSpacing="0 6px";tabla.style.fontSize="0.9em";for(let i=0;i<n;i++){let fila=document.createElement('tr');fila.id=`fila${i}`;
-      for(let j=0;j<m;j++){let columna=document.createElement('td');columna.id=`col${i}${j}`;columna.textContent="";
-      columna.style.padding="4px 8px";fila.appendChild(columna);};tabla.appendChild(fila);};lug.appendChild(tabla);}
   static crearTabla(n, m, lug) {let tabla = document.createElement('table');for (let i = 0; i < n; i++) {let fila = document.createElement('tr');fila.id = `fila${i}`;  
     for (let j = 0; j < m; j++) {let columna = document.createElement('td');columna.id = `col${i}${j}`;  columna.textContent = "";  
     fila.appendChild(columna);}tabla.appendChild(fila);};lug.appendChild(tabla);}
@@ -2446,7 +2461,7 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           botonReset.addEventListener("click", () => { contenedor.remove(); botonReset.remove(); inputFilas.disabled = false; inputColumnas.disabled = false; inputFilas.focus(); 
           matrizCreada.length = 0; cajaError.textContent = ""; }); } catch { Representar.mostrarError(cajaError, "Entrada de columnas inválida."); } } }); }); }; 
     const numero = await pedirNumeroDeMatrices(); const nombres = await pedirNombres(numero); 
-    matricesCreadas.length = matricesCreadas.length || 0; for (let i = 0; i < numero; i++) { const matriz = await crearUnaMatriz(nombres[i]); 
+    matricesCreadas.length = 0; for (let i = 0; i < numero; i++) { const matriz = await crearUnaMatriz(nombres[i]); 
     matricesCreadas.push({ nombre: nombres[i], matriz }); if (i < numero - 1) lugar.textContent = ""; } lugar.textContent = ""; 
     const linea = document.createElement("div"); linea.style.display = "flex"; linea.style.flexWrap = "nowrap"; linea.style.alignItems = "center"; linea.style.gap = "16px"; 
     linea.style.overflowX = "auto"; lugar.appendChild(linea); const ultimas = matricesCreadas.slice(-numero); 
@@ -2549,7 +2564,10 @@ class ExpresionMatricial {
   static postfijaAInfija(array){let r=ExpresionAlgebraica.postfijaAInfija(array);return r}
   static sinProductosNiParentesisInnecesarios(exp){let resultado=Validar.expresionMatricial(exp)[2];
     resultado=ExpresionAlgebraica.eliminarParentesisInnecesarios(resultado);resultado=ExpresionAlgebraica.notacionSinProductos(resultado);return resultado}
-  static calcular(exp,matr){
+  static _indiceTemporal(matr){let max=-1;for(let i=0;i<matr.length;i++){let m=String(matr[i]?.nombre??"").match(/^\u0393_(\d+)$/);
+      if(m)max=Math.max(max,parseInt(m[1],10));}return max+1}
+  static _clonarMatrices(matr){return (matr||[]).map(obj=>({nombre:obj.nombre,matriz:Array.isArray(obj.matriz)?obj.matriz.map(f=>Array.isArray(f)?f.slice():f):obj.matriz}));}
+  static calcular(exp,matr){matr=ExpresionMatricial._clonarMatrices(matr);let control=ExpresionMatricial._indiceTemporal(matr);
     let nomMatrices=matr.map(obj=>obj.nombre);let expPostfija=ExpresionMatricial.infijaAPostfija(exp);
     while(expPostfija.length!==1){nomMatrices=matr.map(obj=>obj.nombre);
       for(let i=0;i<expPostfija.length;i++){
@@ -2630,7 +2648,7 @@ class ExpresionMatricial {
             let ress=Matriz.potencia(mat1,expPostfija[i-1]);let ressObj={nombre:"\u0393"+"_"+control,matriz:ress};
             matr.push(ressObj);control++;expPostfija[i]=ressObj.nombre;expPostfija.splice(i-2,2);break}}}}
     for(let i=0;i<matr.length;i++){if(matr[i].nombre===expPostfija[0]){return matr[i].matriz}}}
-  static calcularUnPaso(exp,matr){let nomMatrices=matr.map(obj=>obj.nombre);let expPostfija=ExpresionMatricial.infijaAPostfija(exp);
+  static calcularUnPaso(exp,matr){let control=ExpresionMatricial._indiceTemporal(matr);let nomMatrices=matr.map(obj=>obj.nombre);let expPostfija=ExpresionMatricial.infijaAPostfija(exp);
     while(expPostfija.length!==1){for(let i=0;i<expPostfija.length;i++){
       if(expPostfija[i]==="+"){
         if(nomMatrices.includes(expPostfija[i-2])&&expPostfija[i-1]==="I"){
