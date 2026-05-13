@@ -99,6 +99,7 @@ function combineRows(aug, k, m, n, other){
 function latexFrac(v){
   // convierte string fracción a LaTeX  p/q → \frac{p}{q}, entero → entero
   v = (v||"0").toString().trim();
+  try{ v = FraccionNumerica.simplificar(v); }catch(_){}
   if(v.indexOf("/") === -1) return v;
   var parts = v.split("/");
   var num = parts[0], den = parts[1];

@@ -838,6 +838,7 @@ class FraccionNumerica {constructor(fraccion) {const [numerador, denominador] = 
   static simplificar(fraccion){
     fraccion = ExpresionAlgebraica.eliminarParentesisInnecesarios(fraccion);if(fraccion[0]==="-"&&fraccion[1]==="-"){fraccion=fraccion.slice(2);}
     let [num, den] = FraccionNumerica.parseFraccion(fraccion);if (den === "0"){ return "Error: división por 0"; }
+    if(Number(num)===0){return "0"}
     if(num<0&&den<0){num=Math.abs(num); den=Math.abs(den)};let max=mcd(num,den); num=num/max; den=den/max;
     if(num>0&&den<0){num=-num; den=Math.abs(den)}; if(den==1){fraccion=num;}else{if(den<0){fraccion=num+"/("+den+")"}
       else{fraccion=num+"/"+den}};return fraccion.toString();}
