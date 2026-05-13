@@ -1,0 +1,2172 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pruebas Matematikal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f7f9;
+      color: #1f2933;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .summary {
+      margin: 18px 0;
+      padding: 14px 16px;
+      border: 1px solid #d8dee8;
+      background: #fff;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    button {
+      border: 1px solid #aab4c3;
+      border-radius: 6px;
+      background: #fff;
+      color: #17202a;
+      padding: 8px 12px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button:hover {
+      background: #edf2f7;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid #d8dee8;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e9f0;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #eef2f7;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .ok {
+      color: #0f766e;
+      font-weight: 700;
+    }
+
+    .fail {
+      color: #b42318;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pruebas de matematikal_funciones_2.0.js</h1>
+    <p>Ejecuta pruebas rapidas de la biblioteca en el navegador.</p>
+
+    <div id="summary" class="summary">Preparando pruebas...</div>
+
+    <div class="toolbar">
+      <button type="button" id="runTests">Ejecutar de nuevo</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Prueba</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </main>
+
+  <script src="CARPETAS_AUXILIARES/BIBLIOTECA_MATEMATIKAL_2.0/matematikal_funciones_2.0.js"></script>
+  <script>
+    const tests = [
+      {
+        name: "ExpresionNumerica.postfijaAInfija convierte suma basica",
+        run() {
+          return assertEqual(ExpresionNumerica.postfijaAInfija(["2", "3", "+"]), "2+3");
+        }
+      },
+      {
+        name: "FraccionNumerica.sumar simplifica 1/2 + 1/3",
+        run() {
+          return assertEqual(FraccionNumerica.sumar("1/2", "1/3"), "5/6");
+        }
+      },
+      {
+        name: "FraccionNumerica.parseFraccion conserva numerador con denominador cero",
+        run() {
+          return assertDeepEqual(FraccionNumerica.parseFraccion("1/0"), ["1", "0"]);
+        }
+      },
+      {
+        name: "FraccionNumerica.simplificar detecta denominador cancelado",
+        run() {
+          return assertEqual(FraccionNumerica.simplificar("1/(1-1)"), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionNumerica.parseFraccion rechaza fraccion algebraica",
+        run() {
+          return assertThrows(
+            () => FraccionNumerica.parseFraccion("x/2"),
+            "FraccionNumerica solo admite numerador numerico"
+          );
+        }
+      },
+      {
+        name: "FraccionNumerica.potencia calcula exponente negativo",
+        run() {
+          return assertEqual(FraccionNumerica.potencia("2/3", -2), "9/4");
+        }
+      },
+      {
+        name: "FraccionNumerica.potencia rechaza cero con exponente negativo",
+        run() {
+          return assertEqual(FraccionNumerica.potencia("0", -1), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionNumerica.potencia rechaza denominador cero",
+        run() {
+          return assertEqual(FraccionNumerica.potencia("1/0", 2), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionNumerica.potencia rechaza exponente no entero",
+        run() {
+          return assertEqual(FraccionNumerica.potencia("2", "2/3"), "Error: el exponente debe ser entero");
+        }
+      },
+      {
+        name: "FraccionNumerica.sumar rechaza denominador cero",
+        run() {
+          return assertEqual(FraccionNumerica.sumar("1/0", "1/2"), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionNumerica.restar rechaza denominador cero",
+        run() {
+          return assertEqual(FraccionNumerica.restar("1/2", "1/0"), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionNumerica.multiplicar rechaza denominador cero",
+        run() {
+          return assertEqual(FraccionNumerica.multiplicar("1/0", "0"), "Error: divisi\u00F3n por 0");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.parseFraccion simplifica ambos lados",
+        run() {
+          const [num, den] = FraccionAlgebraica.parseFraccion("(x-x+1)/(y-y+2)");
+          return assertDeepEqual([num.toString(), den.toString()], ["1", "2"]);
+        }
+      },
+      {
+        name: "FraccionAlgebraica.numerador simplifica cancelaciones",
+        run() {
+          return assertEqual(FraccionAlgebraica.numerador("(x-x)/(y+1)"), "0");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.denominador simplifica cancelaciones",
+        run() {
+          return assertEqual(FraccionAlgebraica.denominador("1/(x-x)"), "0");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.sumar detecta denominador cero",
+        run() {
+          return assertEqual(FraccionAlgebraica.sumar("1/(x-x)", "1"), "\u221E");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.restar detecta denominador cero",
+        run() {
+          return assertEqual(FraccionAlgebraica.restar("1", "1/(x-x)"), "\u221E");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.multiplicar no oculta denominador cero",
+        run() {
+          return assertEqual(FraccionAlgebraica.multiplicar("1/(x-x)", "0"), "\u221E");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.dividir detecta divisor invalido",
+        run() {
+          return assertEqual(FraccionAlgebraica.dividir("1", "1/(x-x)"), "\u221E");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.dividir detecta divisor cero",
+        run() {
+          return assertEqual(FraccionAlgebraica.dividir("1", "x-x"), "\u221E");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.sumar opera denominadores algebraicos",
+        run() {
+          const resultado = FraccionAlgebraica.sumar("1/(x+1)", "1/(x-1)");
+          assertFractionAlgebraicallyEqual(resultado, "2x/(x^2-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.restar opera denominadores algebraicos",
+        run() {
+          const resultado = FraccionAlgebraica.restar("1/(x-1)", "1/(x+1)");
+          assertFractionAlgebraicallyEqual(resultado, "2/(x^2-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.multiplicar cancela factores comunes",
+        run() {
+          const resultado = FraccionAlgebraica.multiplicar("(x^2-1)/(x+1)", "1/(x-1)");
+          assertFractionAlgebraicallyEqual(resultado, "1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.dividir invierte y simplifica",
+        run() {
+          const resultado = FraccionAlgebraica.dividir("(x^2-1)/(x+1)", "x-1");
+          assertFractionAlgebraicallyEqual(resultado, "1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.sumar acepta instancias",
+        run() {
+          const resultado = FraccionAlgebraica.sumar(new FraccionAlgebraica("1/x"), new FraccionAlgebraica("1/x"));
+          assertFractionAlgebraicallyEqual(resultado, "2/x");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.parseFraccion rechaza doble barra superior",
+        run() {
+          return assertThrows(() => FraccionAlgebraica.parseFraccion("1/x/y"), "/");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.parseFraccion rechaza denominador vacio",
+        run() {
+          return assertThrows(() => FraccionAlgebraica.parseFraccion("x/"), "Denominador");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.parseFraccion rechaza parentesis desbalanceados",
+        run() {
+          return assertThrows(() => FraccionAlgebraica.parseFraccion("(x+1)/(x-1"), "desbalanceados");
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar normaliza signo en denominador",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("x/(-2)");
+          assertFractionAlgebraicallyEqual(resultado, "-x/2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar cancela doble signo",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(-x)/(-2)");
+          assertFractionAlgebraicallyEqual(resultado, "x/2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar cancela factor con coeficiente",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(2x+2)/(4x+4)");
+          assertFractionAlgebraicallyEqual(resultado, "1/2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar cancela factor cuadratico",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(x^2+2x+1)/(x+1)");
+          assertFractionAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar conserva irreducible",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(x+1)/(x+2)");
+          assertFractionAlgebraicallyEqual(resultado, "(x+1)/(x+2)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.sumar denominadores iguales",
+        run() {
+          const resultado = FraccionAlgebraica.sumar("x/(x+1)", "1/(x+1)");
+          assertFractionAlgebraicallyEqual(resultado, "1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.restar fracciones iguales da cero",
+        run() {
+          const resultado = FraccionAlgebraica.restar("(x+1)/(x-1)", "(x+1)/(x-1)");
+          assertFractionAlgebraicallyEqual(resultado, "0");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.multiplicar por cero conserva denominador valido",
+        run() {
+          const resultado = FraccionAlgebraica.multiplicar("(x+1)/(x-1)", "0");
+          assertFractionAlgebraicallyEqual(resultado, "0");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.dividir por uno conserva fraccion",
+        run() {
+          const resultado = FraccionAlgebraica.dividir("(x+1)/(x-1)", "1");
+          assertFractionAlgebraicallyEqual(resultado, "(x+1)/(x-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar acepta variable griega",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(\u03BB^2-1)/(\u03BB-1)");
+          assertFractionAlgebraicallyEqual(resultado, "\u03BB+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.sumar acepta variables con subindice",
+        run() {
+          const resultado = FraccionAlgebraica.sumar("1/x_1", "1/x_1");
+          assertFractionAlgebraicallyEqual(resultado, "2/x_1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "FraccionAlgebraica.esFraccionAlgebraica distingue fracciones",
+        run() {
+          const resultado = [
+            FraccionAlgebraica.esFraccionAlgebraica("(x+1)/(x-1)"),
+            FraccionAlgebraica.esFraccionAlgebraica("x+1")
+          ];
+          return assertDeepEqual(resultado, [true, false]);
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar expande potencia",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x+1)^2");
+          assertAlgebraicallyEqual(resultado, "x^2+2x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar resuelve producto implicito",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("2(x+1)");
+          assertAlgebraicallyEqual(resultado, "2x+2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar cancela division algebraica",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x^2-1)/(x-1)");
+          assertFractionAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar suma fracciones algebraicas",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("1/x+1/x");
+          assertFractionAlgebraicallyEqual(resultado, "2/x");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar eleva fraccion algebraica",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(1/x)^2");
+          assertFractionAlgebraicallyEqual(resultado, "1/x^2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarALatex convierte fraccion",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarALatex("(x+1)/(x-1)"), "\\dfrac{x+1}{x-1}");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarALatex convierte potencia",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarALatex("(x+1)^2"), "\\left(x+1\\right)^{2}");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarALatex convierte funcion trigonometrica",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarALatex("sin(x)^2"), "\\sin^{2}\\left(x\\right)");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarALatex convierte raiz",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarALatex("sqrt(x+1)"), "\\sqrt{x+1}");
+        }
+      },
+      {
+        name: "Matriz.aLatex aplica latex a cada entrada",
+        run() {
+          return assertDeepEqual(
+            Matriz.aLatex([["1/2", "x^2"], ["sin(x)", "\u03BB_1"]]),
+            [["\\dfrac{1}{2}", "x^{2}"], ["\\sin\\left(x\\right)", "\u03BB_1"]]
+          );
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.notacionConProductos inserta productos implicitos",
+        run() {
+          return assertEqual(ExpresionAlgebraica.notacionConProductos("2x(x+1)"), "2*x*(x+1)");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.notacionConProductos conserva llamada de funcion",
+        run() {
+          return assertEqual(ExpresionAlgebraica.notacionConProductos("2sin(x)"), "2*sin(x)");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.notacionConProductos acepta variable griega",
+        run() {
+          return assertEqual(ExpresionAlgebraica.notacionConProductos("2\u03BB(x+1)"), "2*\u03BB*(x+1)");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.notacionSinProductos quita productos visuales",
+        run() {
+          return assertEqual(ExpresionAlgebraica.notacionSinProductos("2*x*(x+1)"), "2x(x+1)");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarAFraccion convierte decimal",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarAFraccion("0.5x+1.25"), "1/2x+5/4");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.pasarADecimal convierte fracciones numericas",
+        run() {
+          return assertEqual(ExpresionAlgebraica.pasarADecimal("1/2+3/4"), "0.5+0.75");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.sustituir evalua producto implicito",
+        run() {
+          return assertEqual(ExpresionAlgebraica.sustituir("2x+1", "x", "3"), "7");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.sustituir acepta valor fraccionario",
+        run() {
+          const resultado = ExpresionAlgebraica.pasarAFraccion(ExpresionAlgebraica.sustituir("x^2+1", "x", "1/2"));
+          return assertEqual(resultado, "5/4");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.sustituir acepta variable griega",
+        run() {
+          return assertEqual(ExpresionAlgebraica.sustituir("\u03BB^2+1", "\u03BB", "3"), "10");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar devuelve cero en expresion vacia",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar(""), "0");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar combina terminos semejantes",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x+x"), "2x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar cancela terminos iguales",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x-x"), "0");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar combina coeficientes",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("2x+3x-1"), "5x-1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar respeta parentesis en suma",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("(x+1)+(x-1)"), "2x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar respeta parentesis en resta",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("(x+1)-(x-1)"), "2");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar distribuye producto implicito",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x(x+1)"), "x^2+x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar multiplica binomios conjugados",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("(x+1)(x-1)"), "x^2-1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar eleva binomio al cuadrado",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("(x+1)^2"), "x^2+2x+1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar potencia cero",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x^0"), "1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar potencia uno",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("(x+2)^1"), "x+2");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar calcula constantes",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("2+3*4"), "14");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar convierte decimal a fraccion",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("0.5x+0.25x"), "3/4x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar suma fracciones numericas",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("1/2+1/3"), "5/6");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar suma fracciones algebraicas",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("x/2+x/3");
+          assertFractionAlgebraicallyEqual(resultado, "5x/6");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar cancela fraccion algebraica simple",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x^2-1)/(x-1)");
+          assertAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar multiplica fracciones algebraicas",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x/2)*(4/x)");
+          assertFractionAlgebraicallyEqual(resultado, "2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar divide fracciones algebraicas",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x/2)/(x/4)");
+          assertFractionAlgebraicallyEqual(resultado, "2");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar maneja signo unario",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("-(x-1)"), "-x+1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar maneja doble negativo",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("-(-x+1)"), "x-1");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar elimina producto por cero",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("0*(x+1)"), "0");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar elimina suma con cero",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x+0"), "x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar acepta variable griega",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("2\u03BB+\u03BB"), "3\u03BB");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar acepta subindices",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("x_1+x_1-x_2"), "2x_1-x_2");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar combina variables distintas",
+        run() {
+          return assertEqual(ExpresionAlgebraica.simplificar("xy+2xy-yx"), "2xy");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada numerica",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(1/(1+1/2))/(3/4)");
+          assertFractionAlgebraicallyEqual(resultado, "8/9");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con suma en denominador",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("1/(1+1/x)");
+          assertFractionAlgebraicallyEqual(resultado, "x/(x+1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada doble",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(1/(x+1))/(1/(x-1))");
+          assertFractionAlgebraicallyEqual(resultado, "(x-1)/(x+1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con cancelacion",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("((x^2-1)/(x+1))/(x-1)");
+          assertFractionAlgebraicallyEqual(resultado, "1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada producto de sumas",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("((x+1)/(x-1))*((x-1)/(x+2))");
+          assertFractionAlgebraicallyEqual(resultado, "(x+1)/(x+2)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada cociente de cocientes",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("((x+1)/(x-1))/((x+2)/(x-1))");
+          assertFractionAlgebraicallyEqual(resultado, "(x+1)/(x+2)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con fracciones de coeficientes",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x/2+1/3)/(x/4-1/6)");
+          assertFractionAlgebraicallyEqual(resultado, "(3x+2)/(3/2x-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con resta de fracciones",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(1/(x-1))-(1/(x+1))");
+          assertFractionAlgebraicallyEqual(resultado, "2/(x^2-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con suma de tres terminos",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("1/x+1/(x+1)+1/(x(x+1))");
+          assertFractionAlgebraicallyEqual(resultado, "2/x");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con binomio cuadrado",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("((x+1)^2/(x^2-1))/(x+1)");
+          assertFractionAlgebraicallyEqual(resultado, "1/(x-1)");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con variable griega",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(1/\u03BB)/(1/(\u03BB+1))");
+          assertFractionAlgebraicallyEqual(resultado, "(\u03BB+1)/\u03BB");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.simplificar racional anidada con subindices",
+        run() {
+          const resultado = ExpresionAlgebraica.simplificar("(x_1/(x_1+1))/(1/(x_1+1))");
+          assertFractionAlgebraicallyEqual(resultado, "x_1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Matriz.sustituir evalua cada entrada",
+        run() {
+          return assertDeepEqual(Matriz.sustituir([["x", "2x+1"], ["0", "x^2"]], "x", "3"), [["3", "7"], ["0", "9"]]);
+        }
+      },
+      {
+        name: "Matriz.pasarAFraccion convierte cada entrada",
+        run() {
+          return assertDeepEqual(Matriz.pasarAFraccion([["0.5", "1.25"]]), [["1/2", "5/4"]]);
+        }
+      },
+      {
+        name: "Matriz.trasponer opera matriz rectangular",
+        run() {
+          return assertDeepEqual(Matriz.trasponer([["1", "2", "3"], ["4", "5", "6"]]), [["1", "4"], ["2", "5"], ["3", "6"]]);
+        }
+      },
+      {
+        name: "Matriz.filasNulasAbajo mueve ceros al final",
+        run() {
+          return assertDeepEqual(Matriz.filasNulasAbajo([["0", "0"], ["1", "0"], ["0", "0"], ["2", "3"]]), [["1", "0"], ["2", "3"], ["0", "0"], ["0", "0"]]);
+        }
+      },
+      {
+        name: "Matriz.eliminarFilasNulas conserva filas no nulas",
+        run() {
+          return assertDeepEqual(Matriz.eliminarFilasNulas([["0", "0"], ["x", "0"], ["0", "0"]]), [["x", "0"]]);
+        }
+      },
+      {
+        name: "Matriz.quitarFilayColumna extrae menor complementario",
+        run() {
+          return assertDeepEqual(Matriz.quitarFilayColumna([["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]], 1, 1), [["1", "3"], ["7", "9"]]);
+        }
+      },
+      {
+        name: "Matriz.menor selecciona filas y columnas",
+        run() {
+          return assertDeepEqual(Matriz.menor([["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]], [0, 2], [1, 2]), [["b", "c"], ["h", "i"]]);
+        }
+      },
+      {
+        name: "Matriz.identidad crea identidad de orden tres",
+        run() {
+          return assertDeepEqual(Matriz.identidad(3), [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]]);
+        }
+      },
+      {
+        name: "Matriz.aString convierte sin mutar original",
+        run() {
+          const original = [[1, 2], [3, 4]];
+          const resultado = Matriz.aString(original);
+          assertDeepEqual(resultado, [["1", "2"], ["3", "4"]]);
+          return assertDeepEqual(original, [[1, 2], [3, 4]]);
+        }
+      },
+      {
+        name: "Matriz.aNumerica convierte fracciones",
+        run() {
+          return assertDeepEqual(Matriz.aNumerica([["1/2", "2.5"], ["-3/4", "0"]]), [[0.5, 2.5], [-0.75, 0]]);
+        }
+      },
+      {
+        name: "Matriz.aNumerica conserva matriz no numerica",
+        run() {
+          return assertDeepEqual(Matriz.aNumerica([["x", "1"], ["2", "3"]]), [["x", "1"], ["2", "3"]]);
+        }
+      },
+      {
+        name: "Matriz.permutarFilas no muta original",
+        run() {
+          const original = [["1", "2"], ["3", "4"]];
+          const resultado = Matriz.permutarFilas(original, 0, 1);
+          assertDeepEqual(resultado, [["3", "4"], ["1", "2"]]);
+          return assertDeepEqual(original, [["1", "2"], ["3", "4"]]);
+        }
+      },
+      {
+        name: "Matriz.permutarColumnas no muta original",
+        run() {
+          const original = [["1", "2"], ["3", "4"]];
+          const resultado = Matriz.permutarColumnas(original, 0, 1);
+          assertDeepEqual(resultado, [["2", "1"], ["4", "3"]]);
+          return assertDeepEqual(original, [["1", "2"], ["3", "4"]]);
+        }
+      },
+      {
+        name: "Matriz.opuesta cambia signo y simplifica",
+        run() {
+          return assertDeepEqual(Matriz.opuesta([["x", "-2"], ["0", "x-1"]]), [["-x", "2"], ["0", "-x+1"]]);
+        }
+      },
+      {
+        name: "Monomio.parseMonomio lee coeficiente con variable griega",
+        run() {
+          return assertEqual(Monomio.obtenerCoeficiente("2\u03B1"), 2);
+        }
+      },
+      {
+        name: "Monomio.parseMonomio acepta instancia Monomio",
+        run() {
+          const original = new Monomio(3, { x: 1 });
+          return assertEqual(Monomio.parseMonomio(original).toString(), "3x");
+        }
+      },
+      {
+        name: "ExpresionAlgebraica.evaluarGradoPolinomioEIF acepta variables griegas",
+        run() {
+          return assertEqual(ExpresionAlgebraica.evaluarGradoPolinomioEIF("\u03B1^2+\u03B2"), 2);
+        }
+      },
+      {
+        name: "Polinomio.ordenarTotal ordena variables con subindice",
+        run() {
+          return assertEqual(Polinomio.ordenarTotal("x_1+x_1^3"), "x_1^3+x_1");
+        }
+      },
+      {
+        name: "Polinomio.ordenarTotal simplifica cancelaciones",
+        run() {
+          return assertEqual(Polinomio.ordenarTotal("x-x"), "0");
+        }
+      },
+      {
+        name: "Polinomio.ordenarTotal combina antes de ordenar",
+        run() {
+          return assertEqual(Polinomio.ordenarTotal("x+2x+x^2"), "x^2+3x");
+        }
+      },
+      {
+        name: "Polinomio.grado trata cancelaciones como cero",
+        run() {
+          return assertEqual(Polinomio.grado("x-x"), 0);
+        }
+      },
+      {
+        name: "Polinomio.gradoVariable trata cancelaciones como cero",
+        run() {
+          return assertEqual(Polinomio.gradoVariable("x^2-x^2", "x"), 0);
+        }
+      },
+      {
+        name: "Polinomio.coeficientesPotenciasDecrecientesVariable trata cero",
+        run() {
+          return assertDeepEqual(Polinomio.coeficientesPotenciasDecrecientesVariable("x-x", "x"), ["0"]);
+        }
+      },
+      {
+        name: "Polinomio.coeficientesPotenciasCrecientesVariable simplifica antes",
+        run() {
+          return assertDeepEqual(Polinomio.coeficientesPotenciasCrecientesVariable("x^2-x^2+1", "x"), ["1"]);
+        }
+      },
+      {
+        name: "Polinomio.ordenarPorVariable simplifica cancelaciones",
+        run() {
+          return assertEqual(Polinomio.ordenarPorVariable("x-x", "x"), "0");
+        }
+      },
+      {
+        name: "Polinomio.ordenarPorVariable ordena por exponente de variable",
+        run() {
+          return assertEqual(Polinomio.ordenarPorVariable("y+x^2+x", "x"), "x^2+x+y");
+        }
+      },
+      {
+        name: "Polinomio.monomios simplifica cancelaciones",
+        run() {
+          return assertDeepEqual(Polinomio.monomios("x-x"), []);
+        }
+      },
+      {
+        name: "Polinomio.monomiosDecrecientes simplifica y ordena",
+        run() {
+          return assertDeepEqual(Polinomio.monomiosDecrecientes("x-x+y^2+y"), ["y^2", "y"]);
+        }
+      },
+      {
+        name: "Polinomio.monomiosCrecientes simplifica y ordena",
+        run() {
+          return assertDeepEqual(Polinomio.monomiosCrecientes("x^2+x+1"), ["1", "x", "x^2"]);
+        }
+      },
+      {
+        name: "Polinomio.factorComun trata cancelaciones como cero",
+        run() {
+          return assertDeepEqual(Polinomio.factorComun("x-x"), ["0", "0"]);
+        }
+      },
+      {
+        name: "Polinomio.factorComun simplifica antes de extraer factor",
+        run() {
+          return assertDeepEqual(Polinomio.factorComun("x-x+2x"), ["2", "x"]);
+        }
+      },
+      {
+        name: "Polinomio.simplificarFactorComunCoeficientes trata cero",
+        run() {
+          return assertEqual(Polinomio.simplificarFactorComunCoeficientes("x-x"), "0");
+        }
+      },
+      {
+        name: "Polinomio.multiplicar devuelve cero si un factor se cancela",
+        run() {
+          return assertEqual(Polinomio.multiplicar("x-x", "y+1"), "0");
+        }
+      },
+      {
+        name: "Polinomio.multiplicar distribuye y simplifica",
+        run() {
+          return assertEqual(Polinomio.multiplicar("x+1", "x-1"), "x^2-1");
+        }
+      },
+      {
+        name: "Polinomio.sumar simplifica operandos antes",
+        run() {
+          return assertEqual(Polinomio.sumar("x-x", "y"), "y");
+        }
+      },
+      {
+        name: "Polinomio.restar simplifica operandos antes",
+        run() {
+          return assertEqual(Polinomio.restar("x-x", "y-y"), "0");
+        }
+      },
+      {
+        name: "Polinomio.simplificar combina monomios semejantes",
+        run() {
+          return assertEqual(Polinomio.simplificar("2x+3x-1"), "5x-1");
+        }
+      },
+      {
+        name: "Polinomio.simplificar rechaza terminos pegados",
+        run() {
+          return assertThrows(
+            () => Polinomio.simplificar("2x3"),
+            "Formato de polinomio no valido"
+          );
+        }
+      },
+      {
+        name: "Matriz.sumar opera matrices compatibles",
+        run() {
+          return assertDeepEqual(Matriz.sumar([["1", "2"]], [["3", "4"]]), [["4", "6"]]);
+        }
+      },
+      {
+        name: "Matriz.sumar rechaza dimensiones incompatibles",
+        run() {
+          return assertThrows(
+            () => Matriz.sumar([["1", "2"]], [["3"], ["4"]]),
+            "Dimensiones incompatibles para sumar matrices"
+          );
+        }
+      },
+      {
+        name: "Matriz.multiplicar opera dimensiones compatibles",
+        run() {
+          return assertDeepEqual(Matriz.multiplicar([["1", "2"]], [["3"], ["4"]]), [["11"]]);
+        }
+      },
+      {
+        name: "Matriz.multiplicar rechaza dimensiones incompatibles",
+        run() {
+          return assertThrows(
+            () => Matriz.multiplicar([["1", "2"]], [["3", "4"]]),
+            "Dimensiones incompatibles para multiplicar matrices"
+          );
+        }
+      },
+      {
+        name: "Matriz.reducida intercambia filas para encontrar pivote",
+        run() {
+          return assertDeepEqual(
+            Matriz.reducida([["0", "1"], ["2", "3"]]),
+            [["1", "0"], ["0", "1"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.reducida baja filas nulas",
+        run() {
+          return assertDeepEqual(
+            Matriz.reducida([["0", "0"], ["1", "2"]]),
+            [["1", "2"], ["0", "0"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.reducida opera matriz rectangular",
+        run() {
+          return assertDeepEqual(
+            Matriz.reducida([["1", "2", "3"], ["2", "4", "6"]]),
+            [["1", "2", "3"], ["0", "0", "0"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.reducidaNoNormalizada elimina arriba sin normalizar pivote",
+        run() {
+          return assertDeepEqual(
+            Matriz.reducidaNoNormalizada([["2", "0"], ["0", "3"]]),
+            [["2", "0"], ["0", "3"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.rangoMatrizNumerica calcula rango cero",
+        run() {
+          return assertEqual(Matriz.rangoMatrizNumerica([["0", "0"], ["0", "0"]]), 0);
+        }
+      },
+      {
+        name: "Matriz.rangoMatrizNumerica calcula rango rectangular",
+        run() {
+          return assertEqual(Matriz.rangoMatrizNumerica([["1", "0", "2"], ["0", "1", "3"]]), 2);
+        }
+      },
+      {
+        name: "Matriz.rangoMatrizNumerica respeta fracciones proporcionales",
+        run() {
+          return assertEqual(Matriz.rangoMatrizNumerica([["1/2", "1"], ["1", "2"]]), 1);
+        }
+      },
+      {
+        name: "Matriz.escalonarMatrizNumerica simplifica fracciones proporcionales",
+        run() {
+          return assertDeepEqual(
+            Matriz.escalonarMatrizNumerica([["1/2", "1"], ["1", "2"]]),
+            [["1", "2"], ["0", "0"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.escalonarMatrizNumerica intercambia fila para pivote",
+        run() {
+          return assertEqual(
+            Matriz.esMatrizEscalonada(Matriz.escalonarMatrizNumerica([["0", "1"], ["2", "3"]])),
+            true
+          );
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasos detecta caso general y excepcion",
+        run() {
+          const resultado = Matriz.rangoPorCasos([["a", "0"], ["0", "1"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=0"], rango: 2 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=0"], rango: 1 }]);
+          return assertDeepEqual(resultado[2], ["0"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasos recalcula rango de excepcion doble",
+        run() {
+          const resultado = Matriz.rangoPorCasos([["a", "0"], ["0", "a"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=0"], rango: 2 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=0"], rango: 0 }]);
+          return assertDeepEqual(resultado[2], ["0"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasos normaliza raiz desplazada",
+        run() {
+          const resultado = Matriz.rangoPorCasos([["a-1", "0"], ["0", "1"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=1"], rango: 2 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=1"], rango: 1 }]);
+          return assertDeepEqual(resultado[2], ["1"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasos calcula rango rectangular",
+        run() {
+          const resultado = Matriz.rangoPorCasos([["a", "0", "0"], ["0", "1", "0"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=0"], rango: 2 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=0"], rango: 1 }]);
+          return assertDeepEqual(resultado[2], ["0"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasosSistema detecta incompatibilidad especial",
+        run() {
+          const resultado = Matriz.rangoPorCasosSistema([["a", "1"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=0"], rangoCoef: 1, rangoAmpliada: 1 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=0"], rangoCoef: 0, rangoAmpliada: 1 }]);
+          return assertDeepEqual(resultado[2], ["0"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasosSistema detecta compatible indeterminado especial",
+        run() {
+          const resultado = Matriz.rangoPorCasosSistema([["a", "0", "0"], ["0", "1", "0"]]);
+          assertDeepEqual(resultado[0], { condiciones: ["a!=0"], rangoCoef: 2, rangoAmpliada: 2 });
+          assertDeepEqual(resultado[1], [{ condiciones: ["a=0"], rangoCoef: 1, rangoAmpliada: 1 }]);
+          return assertDeepEqual(resultado[2], ["0"]);
+        }
+      },
+      {
+        name: "Matriz.rangoPorCasosSistema conserva sistema numerico sin excepciones",
+        run() {
+          const resultado = Matriz.rangoPorCasosSistema([["1", "0", "2"], ["0", "1", "3"]]);
+          assertDeepEqual(resultado[0], { condiciones: [], rangoCoef: 2, rangoAmpliada: 2 });
+          assertDeepEqual(resultado[1], []);
+          return assertDeepEqual(resultado[2], []);
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcular no muta el array original",
+        run() {
+          const matrices = [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] }
+          ];
+          const antes = JSON.stringify(matrices);
+          const resultado = ExpresionMatricial.calcular("A+B", matrices);
+          assertDeepEqual(resultado, [["3", "3"], ["4", "6"]]);
+          return assertEqual(JSON.stringify(matrices), antes);
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcular devuelve resultado escalar",
+        run() {
+          return assertEqual(ExpresionMatricial.calcular("2+3", []), "5");
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcular multiplica escalar por matriz",
+        run() {
+          return assertDeepEqual(
+            ExpresionMatricial.calcular("2*A", [{ nombre: "A", matriz: [["1", "2"], ["3", "4"]] }]),
+            [["2", "4"], ["6", "8"]]
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcular suma identidad",
+        run() {
+          return assertDeepEqual(
+            ExpresionMatricial.calcular("A+I", [{ nombre: "A", matriz: [["1", "2"], ["3", "4"]] }]),
+            [["2", "2"], ["3", "5"]]
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcular transpone matriz",
+        run() {
+          return assertDeepEqual(
+            ExpresionMatricial.calcular("A^t", [{ nombre: "A", matriz: [["1", "2", "3"], ["4", "5", "6"]] }]),
+            [["1", "4"], ["2", "5"], ["3", "6"]]
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.sustituirIdentidades infiere suma",
+        run() {
+          return assertEqual(
+            ExpresionMatricial.sustituirIdentidades("A+I", [{ nombre: "A", matriz: [["1", "2"], ["3", "4"]] }]),
+            "A+I_2"
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.sustituirIdentidades infiere producto izquierdo",
+        run() {
+          return assertEqual(
+            ExpresionMatricial.sustituirIdentidades("I*A", [{ nombre: "A", matriz: [["1", "2", "3"], ["4", "5", "6"]] }]),
+            "I_2*A"
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.sustituirIdentidades infiere producto derecho",
+        run() {
+          return assertEqual(
+            ExpresionMatricial.sustituirIdentidades("A*I", [{ nombre: "A", matriz: [["1", "2", "3"], ["4", "5", "6"]] }]),
+            "A*I_3"
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.sustituirIdentidades acepta identidad explicita",
+        run() {
+          return assertEqual(
+            ExpresionMatricial.sustituirIdentidades("A+I_2", [{ nombre: "A", matriz: [["1", "2"], ["3", "4"]] }]),
+            "A+I_2"
+          );
+        }
+      },
+      {
+        name: "ExpresionMatricial.sustituirIdentidades rechaza suma incompatible",
+        run() {
+          return assertThrows(
+            () => ExpresionMatricial.sustituirIdentidades("A+I_3", [{ nombre: "A", matriz: [["1", "2"], ["3", "4"]] }]),
+            "Dimensiones incompatibles en suma/resta"
+          );
+        }
+      },
+      {
+        name: "Validar.expresionMatricial acepta identidad con subindice",
+        run() {
+          return assertDeepEqual(ExpresionMatricial.infijaAPostfija("A+I_2"), ["A", "I_2", "+"]);
+        }
+      },
+      {
+        name: "Validar.expresionMatricial acepta transpuesta",
+        run() {
+          return assertDeepEqual(ExpresionMatricial.infijaAPostfija("A^t"), ["A", "t", "^"]);
+        }
+      },
+      {
+        name: "Validar.expresionMatricial acepta inversa con exponente negativo",
+        run() {
+          return assertDeepEqual(ExpresionMatricial.infijaAPostfija("A^-1"), ["A", "0", "1", "-", "^"]);
+        }
+      },
+      {
+        name: "Validar.expresionMatricial acepta decimal sin cero inicial",
+        run() {
+          return assertDeepEqual(ExpresionMatricial.infijaAPostfija(".5*A"), [".5", "A", "*"]);
+        }
+      },
+      {
+        name: "Validar.expresionAlgebraica acepta variable griega con subindice",
+        run() {
+          const resultado = Validar.expresionAlgebraica("2\u03BB_1+3");
+          assertEqual(resultado[0], true);
+          return assertDeepEqual(resultado[1], ["2", "\u03BB_1", "*", "3", "+"]);
+        }
+      },
+      {
+        name: "Validar.expresionAlgebraica rechaza parentesis desbalanceados",
+        run() {
+          const resultado = Validar.expresionAlgebraica("(x+1");
+          assertEqual(resultado[0], false);
+          if (!sinAcentos(resultado[1]).includes("parentesis desbalanceados")) {
+            throw new Error(`Mensaje inesperado: ${resultado[1]}`);
+          }
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Validar.expresionMatricial rechaza operadores consecutivos",
+        run() {
+          const resultado = Validar.expresionMatricial("A++B");
+          assertEqual(resultado[0], false);
+          if (!sinAcentos(resultado[1]).includes("operadores consecutivos")) {
+            throw new Error(`Mensaje inesperado: ${resultado[1]}`);
+          }
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Validar.expresionMatricial conserva infija sin productos visibles",
+        run() {
+          const resultado = Validar.expresionMatricial("2A+I_2");
+          assertEqual(resultado[0], true);
+          return assertEqual(resultado[2], "2*A+I_2");
+        }
+      },
+      {
+        name: "Representar.expresionMatricialSustituida sustituye matriz",
+        run() {
+          const latex = Representar.expresionMatricialSustituida("A+B", [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] }
+          ]);
+          if (!latex.includes("\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}") ||
+              !latex.includes("\\begin{pmatrix}2&3\\\\4&5\\end{pmatrix}")) {
+            throw new Error(`No se sustituyeron las matrices. Recibido: ${latex}`);
+          }
+          return `Resultado: ${JSON.stringify(latex)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialSustituida sustituye identidad implicita",
+        run() {
+          const latex = Representar.expresionMatricialSustituida("A+I", [
+            { nombre: "A", matriz: [["2", "3"], ["4", "5"]] }
+          ]);
+          if (!latex.includes("\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}")) {
+            throw new Error(`No se sustituyo la identidad. Recibido: ${latex}`);
+          }
+          return `Resultado: ${JSON.stringify(latex)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialSustituida sustituye identidad explicita",
+        run() {
+          const latex = Representar.expresionMatricialSustituida("A+I_2", [
+            { nombre: "A", matriz: [["2", "3"], ["4", "5"]] }
+          ]);
+          if (!latex.includes("\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}")) {
+            throw new Error(`No se sustituyo I_2. Recibido: ${latex}`);
+          }
+          return `Resultado: ${JSON.stringify(latex)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialSustituida acepta matriz temporal griega",
+        run() {
+          const latex = Representar.expresionMatricialSustituida("\u0393_0", [
+            { nombre: "\u0393_0", matriz: [["3", "3"], ["4", "6"]] }
+          ]);
+          if (!latex.includes("\\begin{pmatrix}3&3\\\\4&6\\end{pmatrix}")) {
+            throw new Error(`No se sustituyo la matriz temporal. Recibido: ${latex}`);
+          }
+          return `Resultado: ${JSON.stringify(latex)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricial acepta propiedad array",
+        run() {
+          const katexOriginal = window.katex;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          const lugar = document.createElement("div");
+          try {
+            Representar.expresionMatricial("A", [{ nombre: "A", array: [["1", "2"], ["3", "4"]] }], lugar);
+          } finally {
+            window.katex = katexOriginal;
+          }
+          if (!lugar.textContent.includes("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}")) {
+            throw new Error(`No se pinto la matriz desde array. Recibido: ${lugar.textContent}`);
+          }
+          return `Resultado: ${JSON.stringify(lugar.textContent)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialIntermedia pinta identidad implicita",
+        run() {
+          const katexOriginal = window.katex;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          const lugar = document.createElement("div");
+          try {
+            Representar.expresionMatricialIntermedia("A+I", [{ nombre: "A", matriz: [["2", "3"], ["4", "5"]] }], lugar);
+          } finally {
+            window.katex = katexOriginal;
+          }
+          if (!lugar.textContent.includes("\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}")) {
+            throw new Error(`No se pinto la identidad implicita. Recibido: ${lugar.textContent}`);
+          }
+          return `Resultado: ${JSON.stringify(lugar.textContent)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricial muestra error si expresion no es valida",
+        run() {
+          const lugar = document.createElement("div");
+          Representar.expresionMatricial("A+", [{ nombre: "A", matriz: [["1"]] }], lugar);
+          if (!lugar.textContent.includes("Expresi\u00F3n inv\u00E1lida")) {
+            throw new Error(`No se mostro el error esperado. Recibido: ${lugar.textContent}`);
+          }
+          return `Resultado: ${JSON.stringify(lugar.textContent)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialPasoaPaso limpia matrices temporales",
+        run() {
+          const katexOriginal = window.katex;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          const matrices = [{ nombre: "A", matriz: [["2", "3"], ["4", "5"]] }];
+          const antes = JSON.stringify(matrices);
+          const lugar = document.createElement("div");
+          try {
+            Representar.expresionMatricialPasoaPaso("A+I", matrices, lugar);
+          } finally {
+            window.katex = katexOriginal;
+          }
+          assertEqual(JSON.stringify(matrices), antes);
+          if (lugar.querySelectorAll(".exp-bloque").length < 2) {
+            throw new Error("No se pintaron los pasos esperados.");
+          }
+          return `Resultado: ${JSON.stringify(matrices)}`;
+        }
+      },
+      {
+        name: "Representar.expresionMatricialPasoaPaso limpia window.matrices",
+        run() {
+          const katexOriginal = window.katex;
+          const matricesOriginales = window.matrices;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          window.matrices = [{ nombre: "A", matriz: [["2", "3"], ["4", "5"]] }];
+          const matrices = [{ nombre: "A", matriz: [["2", "3"], ["4", "5"]] }];
+          const lugar = document.createElement("div");
+          try {
+            Representar.expresionMatricialPasoaPaso("A+I", matrices, lugar);
+            assertDeepEqual(window.matrices, [{ nombre: "A", matriz: [["2", "3"], ["4", "5"]] }]);
+          } finally {
+            window.katex = katexOriginal;
+            window.matrices = matricesOriginales;
+          }
+          return "Resultado: window.matrices limpio";
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcularUnPaso crea temporal para suma",
+        run() {
+          const matrices = [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] }
+          ];
+          const siguiente = ExpresionMatricial.calcularUnPaso("A+B", matrices);
+          assertEqual(siguiente, "\u0393_0");
+          return assertDeepEqual(matrices.at(-1), { nombre: "\u0393_0", matriz: [["3", "3"], ["4", "6"]] });
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcularUnPaso respeta temporales existentes",
+        run() {
+          const matrices = [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] },
+            { nombre: "\u0393_0", matriz: [["9", "9"], ["9", "9"]] }
+          ];
+          const siguiente = ExpresionMatricial.calcularUnPaso("A+B", matrices);
+          assertEqual(siguiente, "\u0393_1");
+          return assertDeepEqual(matrices.at(-1), { nombre: "\u0393_1", matriz: [["3", "3"], ["4", "6"]] });
+        }
+      },
+      {
+        name: "ExpresionMatricial.calcularUnPaso converge como calcular",
+        run() {
+          const matricesPaso = [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] }
+          ];
+          let actual = "2*(A+B)";
+          for (let i = 0; i < 5 && ExpresionMatricial.infijaAPostfija(actual).length > 1; i++) {
+            actual = ExpresionMatricial.calcularUnPaso(actual, matricesPaso);
+          }
+          const paso = ExpresionMatricial.calcular(actual, matricesPaso);
+          const directo = ExpresionMatricial.calcular("2*(A+B)", [
+            { nombre: "A", matriz: [["1", "0"], ["0", "1"]] },
+            { nombre: "B", matriz: [["2", "3"], ["4", "5"]] }
+          ]);
+          return assertDeepEqual(paso, directo);
+        }
+      },
+      {
+        name: "Matriz.determinante calcula un determinante 2x2",
+        run() {
+          return assertEqual(Matriz.determinante([["1", "2"], ["3", "4"]]), "-2");
+        }
+      },
+      {
+        name: "Matriz.determinante calcula menor vacio como uno",
+        run() {
+          return assertEqual(Matriz.determinante([]), "1");
+        }
+      },
+      {
+        name: "Matriz.determinante rechaza matrices no cuadradas",
+        run() {
+          return assertThrows(
+            () => Matriz.determinante([["1", "2", "3"], ["4", "5", "6"]]),
+            "El determinante solo esta definido para matrices cuadradas"
+          );
+        }
+      },
+      {
+        name: "Matriz.inversa calcula una inversa 2x2",
+        run() {
+          return assertDeepEqual(Matriz.inversa([["1", "2"], ["3", "4"]]), [["-2", "1"], ["3/2", "-1/2"]]);
+        }
+      },
+      {
+        name: "Matriz.inversa calcula una inversa 1x1",
+        run() {
+          return assertDeepEqual(Matriz.inversa([["5"]]), [["1/5"]]);
+        }
+      },
+      {
+        name: "Matriz.inversa rechaza matrices singulares",
+        run() {
+          return assertThrows(
+            () => Matriz.inversa([["1", "2"], ["2", "4"]]),
+            "La matriz no es regular"
+          );
+        }
+      },
+      {
+        name: "Matriz.inversa rechaza matrices no cuadradas",
+        run() {
+          return assertThrows(
+            () => Matriz.inversa([["1", "2", "3"], ["4", "5", "6"]]),
+            "La inversa solo esta definida para matrices cuadradas"
+          );
+        }
+      },
+      {
+        name: "Matriz.potencia eleva una matriz cuadrada",
+        run() {
+          return assertDeepEqual(Matriz.potencia([["1", "1"], ["0", "1"]], 2), [["1", "2"], ["0", "1"]]);
+        }
+      },
+      {
+        name: "Matriz.potencia rechaza matrices no cuadradas",
+        run() {
+          return assertThrows(
+            () => Matriz.potencia([["1", "2", "3"], ["4", "5", "6"]], 2),
+            "La potencia solo esta definida para matrices cuadradas"
+          );
+        }
+      },
+      {
+        name: "Matriz.potencia rechaza exponente negativo",
+        run() {
+          return assertThrows(
+            () => Matriz.potencia([["1", "0"], ["0", "1"]], -1),
+            "El exponente debe ser un entero no negativo"
+          );
+        }
+      },
+      {
+        name: "Matriz.potencia rechaza exponente no entero",
+        run() {
+          return assertThrows(
+            () => Matriz.potencia([["1", "0"], ["0", "1"]], 1.5),
+            "El exponente debe ser un entero no negativo"
+          );
+        }
+      },
+      {
+        name: "Matriz.cambiarFila aplica combinacion con espacios",
+        run() {
+          return assertDeepEqual(
+            Matriz.cambiarFila([["1", "2"], ["3", "4"]], " F2 = F2 - 3F1 "),
+            [["1", "2"], ["0", "-2"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.cambiarFila acepta coeficiente fraccionario",
+        run() {
+          return assertDeepEqual(
+            Matriz.cambiarFila([["2", "4"], ["1", "1"]], "F2=1/2F1+F2"),
+            [["2", "4"], ["2", "3"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.cambiarFila acepta decimal sin cero inicial",
+        run() {
+          return assertDeepEqual(
+            Matriz.cambiarFila([["2", "4"], ["1", "1"]], "F2=.5F1+F2"),
+            [["2", "4"], ["2", "3"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.cambiarColumna aplica combinacion",
+        run() {
+          return assertDeepEqual(
+            Matriz.cambiarColumna([["1", "2"], ["3", "4"]], "C2=C2-C1"),
+            [["1", "1"], ["3", "1"]]
+          );
+        }
+      },
+      {
+        name: "Matriz.cambiarColumna rechaza columna fuera de rango",
+        run() {
+          return assertThrows(
+            () => Matriz.cambiarColumna([["1", "2"], ["3", "4"]], "C3=C1"),
+            "objetivo"
+          );
+        }
+      },
+      {
+        name: "Sistema.discutir detecta sistema compatible determinado",
+        run() {
+          return assertEqual(Sistema.discutir([["1", "1", "3"], ["1", "-1", "1"]]), "CD");
+        }
+      },
+      {
+        name: "Sistema.resolverSistema resuelve un sistema 2x2",
+        run() {
+          return assertDeepEqual(Sistema.resolverSistema([["1", "1", "3"], ["1", "-1", "1"]]), ["CD", ["2", "1"]]);
+        }
+      },
+      {
+        name: "Sistema.resolverSistemaCI parametriza una ecuacion con dos incognitas",
+        run() {
+          return assertDeepEqual(Sistema.resolverSistemaCI([["1", "1", "3"]]), [["1", "3", "-1"]]);
+        }
+      },
+      {
+        name: "Sistema.resolverSistema detecta compatible indeterminado con fila proporcional",
+        run() {
+          return assertDeepEqual(
+            Sistema.resolverSistema([["1", "1", "3"], ["2", "2", "6"]]),
+            ["CI", [["1", "3", "-1"]]]
+          );
+        }
+      },
+      {
+        name: "Sistema.discutir detecta sistema incompatible",
+        run() {
+          return assertEqual(Sistema.discutir([["1", "1", "3"], ["2", "2", "7"]]), "I");
+        }
+      },
+      {
+        name: "Sistema.discutir maneja coeficientes fraccionarios",
+        run() {
+          return assertEqual(Sistema.discutir([["1/2", "1", "3"], ["1", "2", "6"]]), "CI");
+        }
+      },
+      {
+        name: "Sistema.resolverSistema resuelve sistema con fracciones",
+        run() {
+          return assertDeepEqual(Sistema.resolverSistema([["1/2", "0", "1"], ["0", "1/3", "1"]]), ["CD", ["2", "3"]]);
+        }
+      },
+      {
+        name: "Sistema.discutir rechaza matriz vacia",
+        run() {
+          return assertThrows(
+            () => Sistema.discutir([]),
+            "matriz debe ser un array de arrays no vacio"
+          );
+        }
+      },
+      {
+        name: "Sistema.resolverSistema rechaza matriz no rectangular",
+        run() {
+          return assertThrows(
+            () => Sistema.resolverSistema([["1", "2"], ["3"]]),
+            "matriz debe ser una matriz rectangular"
+          );
+        }
+      },
+      {
+        name: "Representar.solucionesSistemaLineal resuelve antes de pintar",
+        run() {
+          const katexOriginal = window.katex;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          const lugar = document.createElement("div");
+          try {
+            Representar.solucionesSistemaLineal([["1", "1", "3"], ["1", "-1", "1"]], lugar);
+          } finally {
+            window.katex = katexOriginal;
+          }
+          if (!lugar.textContent.includes("x_{1}=2") || !lugar.textContent.includes("x_{2}=1")) {
+            throw new Error(`No se pinto la solucion esperada. Recibido: ${lugar.textContent}`);
+          }
+          return `Resultado: ${JSON.stringify(lugar.textContent)}`;
+        }
+      },
+      {
+        name: "Representar.solucionesSistemaLineal pinta sistema compatible indeterminado",
+        run() {
+          const katexOriginal = window.katex;
+          window.katex = { render(latex, lugar) { lugar.textContent = latex; } };
+          const lugar = document.createElement("div");
+          try {
+            Representar.solucionesSistemaLineal([["1", "1", "3"], ["2", "2", "6"]], lugar);
+          } finally {
+            window.katex = katexOriginal;
+          }
+          if (!lugar.textContent.includes("SISTEMA COMPATIBLE INDETERMINADO") || !lugar.textContent.includes("x_{1}=3-t") || !lugar.textContent.includes("x_{2}=t")) {
+            throw new Error(`No se pinto la parametrizacion esperada. Recibido: ${lugar.textContent}`);
+          }
+          return `Resultado: ${JSON.stringify(lugar.textContent)}`;
+        }
+      },
+      {
+        name: "Representar.solucionesSistemaLineal pinta sistema incompatible",
+        run() {
+          const lugar = document.createElement("div");
+          Representar.solucionesSistemaLineal([["1", "1", "3"], ["2", "2", "7"]], lugar);
+          return assertEqual(lugar.textContent, "SISTEMA INCOMPATIBLE");
+        }
+      },
+      {
+        name: "Resolver.ecuacionValores resuelve raices lineales de cuadratica",
+        run() {
+          return assertDeepEqual(Resolver.ecuacionValores("x^2-1").slice().sort(), ["-1", "1"]);
+        }
+      },
+      {
+        name: "Resolver.ecuacion simplifica fraccion antes de resolver",
+        run() {
+          return assertDeepEqual(Resolver.ecuacion("(x^2-1)/(x-1)"), ["x=-1"]);
+        }
+      },
+      {
+        name: "Resolver.ecuacionPolinomioValores resuelve raiz fraccionaria",
+        run() {
+          return assertDeepEqual(Resolver.ecuacionPolinomioValores("2x-1"), ["1/2"]);
+        }
+      },
+      {
+        name: "Resolver.ecuacionValores acepta variable griega",
+        run() {
+          return assertDeepEqual(Resolver.ecuacionValores("\u03BB-2"), ["2"]);
+        }
+      },
+      {
+        name: "Resolver.determinanteValores resuelve determinante con parametro",
+        run() {
+          return assertDeepEqual(Resolver.determinanteValores([["a", "0"], ["0", "1"]]), ["0"]);
+        }
+      },
+      {
+        name: "Polinomio.factorizar conserva polinomio con diferencia de cuadrados",
+        run() {
+          const factores = Polinomio.factorizar("x^2-1");
+          assertAlgebraicallyEqual(productoFactores(factores), "x^2-1");
+          return `Resultado: ${JSON.stringify(factores)}`;
+        }
+      },
+      {
+        name: "Polinomio.factorizar conserva polinomio con factor comun",
+        run() {
+          const factores = Polinomio.factorizar("2x^2-2x");
+          assertAlgebraicallyEqual(productoFactores(factores), "2x^2-2x");
+          return `Resultado: ${JSON.stringify(factores)}`;
+        }
+      },
+      {
+        name: "Polinomio.factorizar conserva monomio con potencia",
+        run() {
+          const factores = Polinomio.factorizar("3x^3");
+          assertAlgebraicallyEqual(productoFactores(factores), "3x^3");
+          return `Resultado: ${JSON.stringify(factores)}`;
+        }
+      },
+      ...generarPruebasPolinomioFactorizar(),
+      ...generarPruebasFactoresCanonicos(),
+      {
+        name: "Polinomio.raicesValores no duplica raiz repetida",
+        run() {
+          return assertDeepEqual(Polinomio.raicesValores("x^2-2x+1"), ["1"]);
+        }
+      },
+      {
+        name: "Polinomio.raicesValores acepta variable griega",
+        run() {
+          return assertDeepEqual(Polinomio.raicesValores("\u03BB^2-1").slice().sort(), ["-1", "1"]);
+        }
+      },
+      {
+        name: "Polinomio.mcdArray ignora ceros y calcula factor comun",
+        run() {
+          const resultado = Polinomio.mcdArray(["0", "x^2-1", "x^2+2x+1"]);
+          assertAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Polinomio.mcdArray devuelve uno si todos son cero",
+        run() {
+          return assertEqual(Polinomio.mcdArray(["0", "0"]), "1");
+        }
+      },
+      {
+        name: "Polinomio.mcm calcula minimo comun multiplo algebraico",
+        run() {
+          const resultado = Polinomio.mcm("x-1", "x^2-1");
+          assertAlgebraicallyEqual(resultado, "x^2-1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Polinomio.mcmArray devuelve cero si algun factor es cero",
+        run() {
+          return assertEqual(Polinomio.mcmArray(["x", "0", "x+1"]), "0");
+        }
+      },
+      {
+        name: "Polinomio.factoresCanonicos conserva coeficiente global",
+        run() {
+          return assertDeepEqual(Polinomio.factoresCanonicos("2x^2-2"), ["2", "x-1", "x+1"]);
+        }
+      },
+      {
+        name: "Polinomio.factoresCanonicos acepta variable griega",
+        run() {
+          return assertDeepEqual(Polinomio.factoresCanonicos("\u03BB^2"), ["1", "\u03BB", "\u03BB"]);
+        }
+      },
+      {
+        name: "FraccionAlgebraica.simplificar cancela factor comun",
+        run() {
+          const resultado = FraccionAlgebraica.simplificar("(x^2-1)/(x-1)");
+          assertAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      },
+      {
+        name: "Polinomio.mcd calcula maximo comun divisor monico",
+        run() {
+          const resultado = Polinomio.mcdMonico("x^2-1", "x^2+2x+1");
+          assertAlgebraicallyEqual(resultado, "x+1");
+          return `Resultado: ${JSON.stringify(resultado)}`;
+        }
+      }
+    ];
+
+    function assertEqual(actual, expected) {
+      if (actual !== expected) {
+        throw new Error(`Esperado ${JSON.stringify(expected)}, recibido ${JSON.stringify(actual)}`);
+      }
+      return `Resultado: ${JSON.stringify(actual)}`;
+    }
+
+    function assertDeepEqual(actual, expected) {
+      const a = JSON.stringify(actual);
+      const e = JSON.stringify(expected);
+      if (a !== e) {
+        throw new Error(`Esperado ${e}, recibido ${a}`);
+      }
+      return `Resultado: ${a}`;
+    }
+
+    function generarPruebasPolinomioFactorizar() {
+      const casos = [
+        "x^2-1",
+        "x^2+2x+1",
+        "x^2-2x+1",
+        "x^2+5x+6",
+        "x^2-5x+6",
+        "x^2+x-6",
+        "x^2-x-6",
+        "x^2+7x+12",
+        "x^2-7x+12",
+        "x^2+3x+2",
+        "x^2-3x+2",
+        "x^2+4x+4",
+        "x^2-4x+4",
+        "x^2+6x+9",
+        "x^2-6x+9",
+        "2x^2+4x+2",
+        "3x^2+6x+3",
+        "2x^2-8",
+        "3x^2-12",
+        "5x^2-20",
+        "2x^2+7x+3",
+        "2x^2+5x+2",
+        "3x^2+10x+3",
+        "3x^2-10x+3",
+        "4x^2-1",
+        "9x^2-4",
+        "16x^2-25",
+        "25x^2-9",
+        "x^3-1",
+        "x^3+1",
+        "x^3-3x^2+3x-1",
+        "x^3+3x^2+3x+1",
+        "x^3-x",
+        "x^3-4x",
+        "x^3+2x^2-x-2",
+        "x^3-x^2-x+1",
+        "x^3+4x^2+5x+2",
+        "x^3-6x^2+11x-6",
+        "x^3+6x^2+11x+6",
+        "2x^3-2x",
+        "3x^3+3x^2-6x",
+        "x^4-1",
+        "x^4-2x^2+1",
+        "x^4+2x^2+1",
+        "x^4-5x^2+4",
+        "x^4-10x^2+9",
+        "x^4+4x^3+6x^2+4x+1",
+        "x^4-4x^3+6x^2-4x+1",
+        "2x^4-2",
+        "3x^4-3x^2",
+        "1/2x^2-1/2",
+        "1/3x^2+2/3x+1/3",
+        "2/3x^2-2/3",
+        "3/4x^2-3",
+        "5/2x^2-5/2x",
+        "x^2-y^2",
+        "x^2+2xy+y^2",
+        "x^2-2xy+y^2",
+        "x^2+xy",
+        "x^2y+xy^2",
+        "2x^2y-2xy^2",
+        "3x^2y+6xy",
+        "x^2y^2-1",
+        "x^2y^2-y^2",
+        "xy+x+y+1",
+        "xy-x+y-1",
+        "xy+x-y-1",
+        "2xy+2x+3y+3",
+        "3xy-3x+2y-2",
+        "x^2+xy-2x-2y",
+        "x^2+2xy+y^2-1",
+        "x^2-y^2+2x-2y",
+        "x^2+2x+1-y^2",
+        "a^2-b^2",
+        "a^2+2ab+b^2",
+        "a^2-2ab+b^2",
+        "ab+a+b+1",
+        "2ab+4a+3b+6",
+        "m^2-n^2",
+        "m^2+mn",
+        "p^2+2pq+q^2",
+        "u^2-v^2+u-v",
+        "x_1^2-1",
+        "x_1^2+2x_1+1",
+        "x_1^2-y_1^2",
+        "\\u03BB^2-1",
+        "\\u03BB^2+2\\u03BB+1",
+        "\\u03BB^3-\\u03BB",
+        "x^2+1",
+        "x^2+x+1",
+        "x^4+1",
+        "x^3+2",
+        "2x^2+2x+3",
+        "x^2+xy+y^2",
+        "x^2+y^2",
+        "x^2+2y^2",
+        "x^3+y^3",
+        "x^3-y^3",
+        "x^2+3xy+2y^2",
+        "2x^2+5xy+2y^2"
+      ];
+
+      return casos.map((polinomio, indice) => ({
+        name: `Polinomio.factorizar bateria ${String(indice + 1).padStart(3, "0")} conserva ${polinomio}`,
+        run() {
+          const expresion = polinomio.replace(/\\u([0-9A-Fa-f]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+          const factores = Polinomio.factorizar(expresion);
+          assertAlgebraicallyEqual(productoFactores(factores), expresion);
+          return `Resultado: ${JSON.stringify(factores)}`;
+        }
+      }));
+    }
+
+    function generarPruebasFactoresCanonicos() {
+      const casos = [
+        // Constantes
+        "1", "2", "3", "-1", "-2", "6",
+        // Lineales
+        "x", "x-1", "x+1", "2x", "2x-2", "3x+6", "-x+1", "-2x+4", "2x-1", "3x-9",
+        // Cuadraticos cuadrado perfecto
+        "x^2", "x^2+2x+1", "x^2-2x+1", "x^2+4x+4", "x^2-4x+4",
+        "4x^2+4x+1", "9x^2-6x+1", "x^2+6x+9", "x^2-6x+9",
+        // Cuadraticos diferencia de cuadrados
+        "x^2-1", "x^2-4", "x^2-9", "4x^2-1", "9x^2-4", "16x^2-25", "25x^2-9", "x^2-3x-10",
+        // Cuadraticos generales
+        "x^2+3x+2", "x^2-3x+2", "x^2+5x+6", "x^2-5x+6",
+        "x^2+x-6", "x^2-x-6", "2x^2+4x+2", "3x^2-12",
+        "2x^2+7x+3", "2x^2+5x+2",
+        // Cubicos
+        "x^3", "x^3-1", "x^3+1", "x^3-x", "x^3-4x",
+        "x^3+3x^2+3x+1", "x^3-3x^2+3x-1",
+        "x^3-x^2-x+1", "x^3+4x^2+5x+2", "x^3-6x^2+11x-6",
+        "2x^3-2x",
+        // Cuarticos
+        "x^4-1", "x^4-2x^2+1", "x^4+4x^3+6x^2+4x+1", "2x^4-2", "3x^4-3x^2",
+        // Coeficiente lider no unario
+        "2x^2-2", "3x^2+6x+3", "4x^2-4", "-x^2+1", "-x^2-2x-1", "3x^3+3x^2-6x",
+        // Coeficientes fraccionarios
+        "1/2x^2-1/2", "1/3x^2+2/3x+1/3", "2/3x^2-2/3",
+        // Dos variables
+        "x^2-y^2", "x^2+2xy+y^2", "x^2-2xy+y^2",
+        "xy+x+y+1", "xy-x+y-1",
+        "2xy+2x+3y+3", "a^2-b^2", "m^2-n^2",
+        "x^2y-xy^2", "x^2+2xy+y^2-1",
+        "x^3+y^3", "x^3-y^3",
+        "x^2+3xy+2y^2", "2x^2+5xy+2y^2",
+        // Variables con subindice
+        "x_1^2-1", "x_1^2-y_1^2", "x_1^2+2x_1+1", "x_1^3-x_1",
+        // Variables griegas
+        "\\u03BB^2-1", "\\u03BB^2+2\\u03BB+1", "\\u03BB^3-\\u03BB", "\\u03BB^2-4",
+        // Irreducibles sobre Q
+        "x^2+1", "x^2+x+1", "x^2+4",
+        // Miscelanea
+        "x^2+xy", "x^2y+xy^2", "3x^2y+6xy",
+        "xy+x-y-1", "3xy-3x+2y-2",
+        "u^2-v^2+u-v", "p^2+2pq+q^2"
+      ];
+
+      return casos.map((polinomio, indice) => ({
+        name: `Polinomio.factoresCanonicos bateria ${String(indice + 1).padStart(3, "0")} ${polinomio}`,
+        run() {
+          const expresion = polinomio.replace(/\\u([0-9A-Fa-f]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+          const factores = Polinomio.factoresCanonicos(expresion);
+          // El producto de los factores debe ser algebraicamente igual al original
+          assertAlgebraicallyEqual(productoFactores(factores), expresion);
+          // El primer elemento debe ser un numero puro
+          const primero = factores[0];
+          if (!/^-?\d+(\/\d+)?$/.test(primero)) {
+            throw new Error(`Se esperaba coeficiente numerico al inicio, recibido: ${JSON.stringify(primero)}`);
+          }
+          // Los factores no numericos deben ser monicos (coeficiente lider = 1)
+          for (let i = 1; i < factores.length; i++) {
+            const lm = Polinomio.elegirMonomioMayorGrado(factores[i]);
+            const coef = Monomio.obtenerCoeficiente(lm);
+            if (Math.abs(coef - 1) > 1e-9) {
+              throw new Error(`Factor no monico en posicion ${i}: ${factores[i]} (coeficiente lider = ${coef})`);
+            }
+          }
+          return `Resultado: ${JSON.stringify(factores)}`;
+        }
+      }));
+    }
+
+    function assertThrows(fn, messagePart) {
+      try {
+        fn();
+      } catch (error) {
+        const message = String(error && error.message ? error.message : error);
+        if (!sinAcentos(message).includes(sinAcentos(messagePart))) {
+          throw new Error(`El error no contiene ${JSON.stringify(messagePart)}. Recibido: ${message}`);
+        }
+        return `Error esperado: ${message}`;
+      }
+      throw new Error("Se esperaba un error, pero no se lanzo ninguno.");
+    }
+
+    function assertAlgebraicallyEqual(actual, expected) {
+      const diferencia = ExpresionAlgebraica.simplificar(`(${actual})-(${expected})`);
+      if (diferencia !== "0") {
+        throw new Error(`Esperado equivalente a ${JSON.stringify(expected)}, recibido ${JSON.stringify(actual)}. Diferencia: ${diferencia}`);
+      }
+      return `Resultado equivalente: ${JSON.stringify(actual)}`;
+    }
+
+    function assertFractionAlgebraicallyEqual(actual, expected) {
+      const an = FraccionAlgebraica.numerador(actual);
+      const ad = FraccionAlgebraica.denominador(actual);
+      const en = FraccionAlgebraica.numerador(expected);
+      const ed = FraccionAlgebraica.denominador(expected);
+      const diferencia = ExpresionAlgebraica.simplificar(`((${an})*(${ed}))-((${en})*(${ad}))`);
+      if (diferencia !== "0") {
+        throw new Error(`Esperado equivalente a ${JSON.stringify(expected)}, recibido ${JSON.stringify(actual)}. Diferencia cruzada: ${diferencia}`);
+      }
+      return `Resultado equivalente: ${JSON.stringify(actual)}`;
+    }
+
+    function productoFactores(factores) {
+      return factores.reduce((acc, factor) => `(${acc})*(${factor})`, "1");
+    }
+
+    function sinAcentos(text) {
+      return String(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function runTests() {
+      const results = document.getElementById("results");
+      const summary = document.getElementById("summary");
+      results.textContent = "";
+
+      let passed = 0;
+      for (const test of tests) {
+        const row = document.createElement("tr");
+        const status = document.createElement("td");
+        const name = document.createElement("td");
+        const detail = document.createElement("td");
+
+        name.textContent = test.name;
+        try {
+          const message = test.run();
+          status.textContent = "OK";
+          status.className = "ok";
+          detail.appendChild(code(message || "Correcto"));
+          passed++;
+        } catch (error) {
+          status.textContent = "FALLO";
+          status.className = "fail";
+          detail.appendChild(code(error && error.stack ? error.stack : String(error)));
+        }
+
+        row.appendChild(status);
+        row.appendChild(name);
+        row.appendChild(detail);
+        results.appendChild(row);
+      }
+
+      const failed = tests.length - passed;
+      summary.textContent = `${passed}/${tests.length} pruebas correctas${failed ? `, ${failed} fallidas` : ""}.`;
+      summary.className = failed ? "summary fail" : "summary ok";
+    }
+
+    function code(text) {
+      const el = document.createElement("code");
+      el.textContent = text;
+      return el;
+    }
+
+    document.getElementById("runTests").addEventListener("click", runTests);
+    runTests();
+  </script>
+</body>
+</html>
