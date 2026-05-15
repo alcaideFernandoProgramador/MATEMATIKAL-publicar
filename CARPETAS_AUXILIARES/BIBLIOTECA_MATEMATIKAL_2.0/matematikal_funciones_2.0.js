@@ -1666,11 +1666,16 @@ class Matriz {constructor(array) {this.matriz = array;}
 class Sistema {constructor(matriz) {this.matriz = matriz;}
   static numeroEcuaciones(matriz) {return matriz.length;}
   static numeroIncognitas(matriz) {return matriz[0].length-1;}
-  static discutir(matri){let matri2=matri.map(function(arr){return arr.slice()}); matri2=Matriz.escalonarMatrizNumerica(matri2);matri2=Matriz.eliminarFilasNulas(matri2);
+  static _escalonarParaSistema(matri){let matri2=matri.map(function(arr){return arr.slice()});Matriz._dimensiones(matri2,"matriz");
+    if(Matriz.comprobarNumerica(matri2))matri2=Matriz.escalonarMatrizNumerica(matri2);
+    else if(!Matriz.esMatrizEscalonada(matri2))matri2=Matriz.escalonarMatriz(matri2)[0];
+    matri2=Matriz.filasNulasAbajo(matri2);matri2=Matriz.eliminarFilasNulas(matri2);
+    return matri2.map(f=>f.map(x=>Matriz._S(x)));}
+  static discutir(matri){let matri2=Sistema._escalonarParaSistema(matri);
     let tipo="";let numeroCerosIzquierda=[];for (let i=0;i<matri2.length;i++){
-    numeroCerosIzquierda[i]=0;for (let j=0;j<matri2[0].length-1;j++){if(matri2[i][j]===0||matri2[i][j]==="0"){numeroCerosIzquierda[i]=numeroCerosIzquierda[i]+1}}}
+    numeroCerosIzquierda[i]=0;for (let j=0;j<matri2[0].length-1;j++){if(Matriz._Z(matri2[i][j])){numeroCerosIzquierda[i]=numeroCerosIzquierda[i]+1}}}
     let incompatible=false;let compatibleDeterminado=false;for (let i=0;i<matri2.length;i++){
-    if(numeroCerosIzquierda[i]===matri2[0].length-1&&matri2[i][matri2[0].length-1]!==0){incompatible=true;break}
+    if(numeroCerosIzquierda[i]===matri2[0].length-1&&!Matriz._Z(matri2[i][matri2[0].length-1])){incompatible=true;break}
     else{if(matri2.length===matri2[0].length-1){compatibleDeterminado=true}}}
     if (incompatible===true){tipo="I";}else{ if(compatibleDeterminado===true){tipo="CD"}else{tipo="CI";}}return tipo;}
   static resolverSistemaCD(matriz){
@@ -1708,12 +1713,11 @@ for(let i=0;i<m;i++){let den=M[i][i];for(let j=0;j<M[0].length;j++)M[i][j]=div(M
 for(let i=0;i<m;i++)M[i][i]=""+variablesPrincipales[i];return M;
 }
 
-  static resolverSistema(matri){let matri2=matri.map(function(arr){return arr.slice()});
-    matri2=Matriz.escalonarMatrizNumerica(matri2);matri2=Matriz.eliminarFilasNulas(matri2);
+  static resolverSistema(matri){let matri2=Sistema._escalonarParaSistema(matri);
     let tipo="";let numeroCerosIzquierda=[];for (let i=0;i<matri2.length;i++){
-    numeroCerosIzquierda[i]=0;for (let j=0;j<matri2[0].length-1;j++){if(matri2[i][j]===0||matri2[i][j]==="0"){numeroCerosIzquierda[i]=numeroCerosIzquierda[i]+1}}}
+    numeroCerosIzquierda[i]=0;for (let j=0;j<matri2[0].length-1;j++){if(Matriz._Z(matri2[i][j])){numeroCerosIzquierda[i]=numeroCerosIzquierda[i]+1}}}
     let incompatible=false;let compatibleDeterminado=false;for (let i=0;i<matri2.length;i++){
-    if(numeroCerosIzquierda[i]===matri2[0].length-1&&matri2[i][matri2[0].length-1]!==0){incompatible=true;break}
+    if(numeroCerosIzquierda[i]===matri2[0].length-1&&!Matriz._Z(matri2[i][matri2[0].length-1])){incompatible=true;break}
     else{if(matri2.length===matri2[0].length-1){compatibleDeterminado=true}}}
     if (incompatible===true){tipo="I";}else{ if(compatibleDeterminado===true){tipo="CD"}else{tipo="CI";}}
     if(tipo==="I"){return ["I","Sin solución"]};

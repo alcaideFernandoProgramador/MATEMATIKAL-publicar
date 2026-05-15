@@ -1,4 +1,4 @@
-let ecuacion="",numeroEcuaciones=0,numeroIncognitas=0,nombreParametro="",contadorp=1,valores=[],matrizExpresiones=[],matrizExpresionesR=[],matrizActualExpresionesR=[],matrizActualExpresiones=[],matrizActualSustituida=[],matrizAntiguaExpresiones=[],matrizOriginal=[],matrizValoresCoeficientes=[],matrizValoresCoeficientesActual=[],primerNumeroNoNulo=[],coeficientes,expresion="",alturaPrimerHijo=0,bandera2=true,matrizActualExpresionesCopia=[],leyendaIncognitas=false,ordenLeyenda=[],primerHijo=true,numeroMatricesImprimidas=0,controlAltura=false,eliminar=false,casos=[],casosString=[],etapa="",casosAutomatico=[],filasMenor=[],columnasMenor=[],menorActual=[],matrizSustituida=[],rango=0,tipoCaso="",matrizSoluciones=[],numeroParametros=0,parametros=[],variablesPrincipales=[],casoUnico=true,pivotesUsados=[],pivotesUltimos=[];
+let ecuacion="",numeroEcuaciones=0,numeroIncognitas=0,nombreParametro="",contadorp=1,valores=[],matrizExpresiones=[],matrizExpresionesR=[],matrizActualExpresionesR=[],matrizActualExpresiones=[],matrizActualSustituida=[],matrizAntiguaExpresiones=[],matrizOriginal=[],matrizValoresCoeficientes=[],matrizValoresCoeficientesActual=[],primerNumeroNoNulo=[],coeficientes,expresion="",alturaPrimerHijo=0,bandera2=true,matrizActualExpresionesCopia=[],leyendaIncognitas=false,ordenLeyenda=[],primerHijo=true,numeroMatricesImprimidas=0,controlAltura=false,eliminar=false,casos=[],casosString=[],etapa="",casosAutomatico=[],filasMenor=[],columnasMenor=[],menorActual=[],matrizSustituida=[],rango=0,tipoCaso="",matrizSoluciones=[],numeroParametros=0,parametros=[],variablesPrincipales=[],casoUnico=true,pivotesUsados=[],pivotesUltimos=[],_primerCasoMostrado=false;
 
 function _simpl(s){try{if(typeof ExpresionAlgebraica!=="undefined"&&ExpresionAlgebraica&&typeof ExpresionAlgebraica.simplificar==="function")return ExpresionAlgebraica.simplificar(s);}catch(e){}return (s==null?"":s.toString());}
 function _esCeroExpr(x){
@@ -52,9 +52,16 @@ function _registrarDenomsCoef(coef){try{for(let d of _denomsTop(coef))if(d&&!piv
 function _registrarDivisorUsado(mRaw){mRaw=_strip(mRaw);if(!mRaw.length)return;if(!pivotesUsados.includes(mRaw))pivotesUsados.push(mRaw);_registrarDenomsCoef(mRaw);}
 function _algunPivoteUsadoSeAnula(v){if(!Array.isArray(pivotesUsados)||!pivotesUsados.length)return false;try{for(let k=0;k<pivotesUsados.length;k++){let e=pivotesUsados[k],aux=[[e]],s=Matriz.sustituir(aux,nombreParametro,v)[0][0];if(_esCeroExpr(s))return true;}}catch(err){return true;}return false;}
 function _pivotesDesdeEscalonada(mat){let out=[];if(!Array.isArray(mat))return out;for(let i=0;i<mat.length;i++){let p=_primerNoNuloFila(mat[i]);if(p!=null)out.push(p.toString());}return out;}
+function _escalonarSiHaceFalta(mat){
+  let out=mat.map(function(arr){return arr.slice();});
+  if(Matriz.esMatrizEscalonada(out))return out;
+  if(typeof Sistema!=="undefined"&&Sistema&&typeof Sistema._escalonarParaSistema==="function")return Sistema._escalonarParaSistema(out);
+  if(typeof Matriz.comprobarNumerica==="function"&&Matriz.comprobarNumerica(out))return Matriz.escalonarMatrizNumerica(out);
+  return Matriz.escalonarMatriz(out,nombreParametro)[0];
+}
 
 caja1.id="caja1";caja1.style.height="auto";caja1.style.width="99%";caja1.style.border="2px solid black";caja1.style.display="flex";caja1.style.padding="5px";caja1.style.justifyContent="center";caja1.style.alignItems="center";
-let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";caja11.style.height="auto";caja11.style.width="60%";caja11.style.padding="0px";caja11.style.display="block";caja11.style.justifyContent="center";
+let caja11=document.createElement("div");caja1.appendChild(caja11);caja11.id="caja11";caja11.style.height="auto";caja11.style.width="52%";caja11.style.padding="0px";caja11.style.display="block";caja11.style.justifyContent="center";
 let caja111=document.createElement("div");caja11.appendChild(caja111);caja111.id="caja111";caja111.style.height="auto";caja111.style.width="99%";caja111.style.display="flex";caja111.style.alignItems="center";caja111.style.padding="5px";
 let caja1111=document.createElement("div");caja111.appendChild(caja1111);caja1111.id="caja1111";caja1111.style.height="auto";caja1111.style.width="50%";caja1111.style.display="block";caja1111.style.border="1px solid black";caja1111.style.marginRight="3px";
 let caja11111=document.createElement("div");caja1111.appendChild(caja11111);caja11111.id="caja11111";caja11111.style.height="auto";caja11111.style.width="99%";caja11111.style.marginRight="3px";caja11111.style.fontWeight="bold";caja11111.style.fontSize="18px";caja11111.innerHTML="INTRODUCCIÓN DE DATOS";
@@ -64,7 +71,7 @@ let caja11121=document.createElement("div");caja1112.appendChild(caja11121);caja
 let caja11122=document.createElement("div");caja1112.appendChild(caja11122);caja11122.id="caja11122";caja11122.style.height="auto";caja11122.style.width="32%";caja11122.style.display="block";caja11122.style.marginLeft="3px";caja11122.style.display="block";
 let caja11123=document.createElement("div");caja1112.appendChild(caja11123);caja11123.id="caja11123";caja11123.style.height="auto";caja11123.style.width="32%";caja11123.style.marginLeft="3px";caja11123.style.display="block";
 let caja112=document.createElement("div");caja112.id="caja112";caja112.style.display="flex";caja112.style.alignItems="center";caja112.style.height="auto";caja112.style.width="98%";caja112.style.border="1px solid black";caja112.style.padding="5px";caja112.style.margin="3px";caja112.style.marginLeft="5px";
-let caja12=document.createElement("div");caja1.appendChild(caja12);caja12.id="caja12";caja12.style.height="auto";caja12.style.width="40%";caja12.style.display="block";caja12.style.padding="5px";caja12.style.marginRight="3px";caja12.style.marginTop="2px";caja12.style.alignItems="center";
+let caja12=document.createElement("div");caja1.appendChild(caja12);caja12.id="caja12";caja12.style.height="auto";caja12.style.width="48%";caja12.style.display="block";caja12.style.padding="5px";caja12.style.marginRight="3px";caja12.style.marginTop="2px";caja12.style.alignItems="center";
 caja2.style.marginBottom="5px";
 let texto1=document.createTextNode("Nº de Ecuaciones"),texto2=document.createTextNode("(Entre 1 y 5)"),lugarTexto1=document.createElement("p"),lugarTexto2=document.createElement("p");
 lugarTexto1.style.fontSize="12px";lugarTexto2.style.fontSize="12px";lugarTexto1.appendChild(texto1);lugarTexto2.appendChild(texto2);
@@ -216,7 +223,7 @@ function continuar(){
   caja1112.appendChild(caja11121);caja1112.appendChild(caja11122);caja1112.appendChild(caja11123);caja1112.appendChild(caja11124);
   caja112.style.height="62%";caja111.style.height="30%";
   Representar.sistemaCompleto(matrizOriginal,caja11212);
-  caja11.style.width="60%";caja12.style.width="40%";caja12.style.alignItems="center";
+  caja11.style.width="52%";caja12.style.width="48%";caja12.style.alignItems="center";
   let titulo2=document.createElement("h3");titulo2.style.fontSize="17px";titulo2.style.marginBottom="15px";titulo2.style.marginTop="7px";titulo2.innerHTML="LA MATRIZ DE GAUSS INICIAL ES:";caja11221.appendChild(titulo2);
   caja2.style.display="flex";caja2.style.alignContent="flex-start";caja2.style.flexWrap="wrap";caja2.id="caja2";caja2.style.height="auto";caja2.style.width="99%";caja2.style.border="2px solid black";caja2.style.padding="5px";caja2.style.alignItems="center";
   Representar.matrizGaussCompleta(matrizOriginal,caja11222,leyendaIncognitas,ordenLeyenda);
@@ -233,7 +240,7 @@ function continuar(){
 function crearFormulario(){
   while(caja111.firstChild)caja111.removeChild(caja111.firstChild);caja111.style.display="block";caja111.style.justifyContent="center";
   let tex1=document.createElement("h3");tex1.innerHTML="EL SISTEMA HA SIDO INTRODUCIDO";tex1.style.margin="0px";tex1.style.padding="0px";caja111.appendChild(tex1);
-  caja11.style.width="60%";caja12.style.width="40%";caja111.style.border="1px solid black";caja111.style.width="97%";caja111.style.margin="4px 0px 7px 5px";caja111.style.height="15%";
+  caja11.style.width="52%";caja12.style.width="48%";caja111.style.border="1px solid black";caja111.style.width="97%";caja111.style.margin="4px 0px 7px 5px";caja111.style.height="15%";
   caja1121.style.width="55%";caja1122.style.width="43.3%";
   let titulo=document.createElement("h3");titulo.style.margin="3px";titulo.style.padding="0px";titulo.style.justifyContent="center";titulo.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";caja12.appendChild(titulo);
   let caja121=document.createElement("div"),caja122=document.createElement("div"),caja123=document.createElement("div"),caja124=document.createElement("div"),caja125=document.createElement("div"),caja125bis=document.createElement("div");
@@ -411,7 +418,7 @@ function crearFormulario(){
   });
 }
 
-function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonada");
+function estudiarSistemaEscalonadoGauss(){_primerCasoMostrado=false;document.body.classList.add("escalonada");
   while(caja1.firstChild){caja1.removeChild(caja1.firstChild)}
   caja1.style.display="block";caja1.style.border="2px solid black";caja1.style.margin="2px";caja1.style.padding="2px";caja1.style.width="100%";
   let caja11=document.createElement("div"),caja12=document.createElement("div");caja11.id="caja11";caja12.id="caja12";caja12.style.alignItems="center";
@@ -490,6 +497,11 @@ function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonad
   }
 
   function _crearCajaCasoHeader(casoTxt){
+    if(!_primerCasoMostrado){
+      _primerCasoMostrado=true;
+      let c2t=document.getElementById("caja2"),btnT=document.getElementById("btnToggleTrabajos");
+      if(c2t&&btnT){Array.from(c2t.children).filter(x=>x!==btnT).forEach(el=>{el.style.display="none"});btnT.setAttribute("aria-expanded","false");btnT.textContent="Mostrar trabajos";}
+    }
     let caja31=document.createElement("div");caja31.id="caja31";caja31.style.display="block";caja3.appendChild(caja31);
     caja31.style.width="48%";caja31.style.height="auto";caja31.style.border="2px black solid";caja31.style.marginBottom="5px";
     let caja311=document.createElement("div"),caja312=document.createElement("div"),caja313=document.createElement("div"),caja314=document.createElement("div");
@@ -510,14 +522,14 @@ function estudiarSistemaEscalonadoGauss(){document.body.classList.add("escalonad
   let ui=_crearCajaCasoHeader(txtCaso),matInicial,matCaso;
   if(esGeneral){
     matInicial=matrizOriginal;ui.caja31211.innerHTML="EL SISTEMA INICIAL PARA ESTE CASO ES:";Representar.sistemaCompleto(matInicial,ui.caja31212);
-    matCaso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matCaso))matCaso=Matriz.escalonarMatrizNumerica(matCaso);
+    matCaso=_escalonarSiHaceFalta(matrizActualExpresiones);
     ui.caja31221.innerHTML="UNA MATRIZ ESCALONADA PARA ESTE CASO ES:";Representar.matrizGaussCompleta(matCaso,ui.caja31222,leyendaIncognitas,ordenLeyenda);
     tipoCaso=Sistema.discutir(matCaso);Representar.solucionesSistemaLineal(matCaso,ui.caja314,leyendaIncognitas,ordenLeyenda);return;
   }
   matInicial=Matriz.sustituir(matrizOriginal,nombreParametro,valorNum);ui.caja31211.innerHTML="EL SISTEMA INICIAL PARA ESTE VALOR ES:";Representar.sistemaCompleto(matInicial,ui.caja31212);
   let usarUsuario=!_algunPivoteUsadoSeAnula(valorNum);
-  if(usarUsuario){matCaso=Matriz.sustituir(matrizActualExpresiones,nombreParametro,valorNum);if(!Matriz.esMatrizEscalonada(matCaso))matCaso=Matriz.escalonarMatrizNumerica(matCaso);}
-  else{matCaso=Matriz.sustituir(matrizOriginal,nombreParametro,valorNum);matCaso=Matriz.escalonarMatrizNumerica(matCaso);}
+  if(usarUsuario){matCaso=Matriz.sustituir(matrizActualExpresiones,nombreParametro,valorNum);matCaso=_escalonarSiHaceFalta(matCaso);}
+  else{matCaso=Matriz.sustituir(matrizOriginal,nombreParametro,valorNum);matCaso=_escalonarSiHaceFalta(matCaso);}
   ui.caja31221.innerHTML="UNA MATRIZ ESCALONADA PARA ESTE VALOR ES:";Representar.matrizGaussCompleta(matCaso,ui.caja31222,leyendaIncognitas,ordenLeyenda);
   tipoCaso=Sistema.discutir(matCaso);Representar.solucionesSistemaLineal(matCaso,ui.caja314,leyendaIncognitas,ordenLeyenda);
 }
@@ -584,7 +596,7 @@ if(casosAutomatico.length===0){
 
   botonEstudiar.addEventListener("click",function(){
     let txt="CASO GENERAL";_resolverYpintarCasoValor(null,txt,true);
-    let matUso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matUso))matUso=Matriz.escalonarMatrizNumerica(matUso);
+    let matUso=_escalonarSiHaceFalta(matrizActualExpresiones);
     tipoCaso=Sistema.discutir(matUso);
     _dejarCaja124SoloParaOtrosCasos();
   });
@@ -666,8 +678,8 @@ if(casosAutomatico.length===0){
              else{casosAutomaticoCadena[i]=casosAutomatico[i]}  }
           let txt="CASO GENERAL: "+nombreParametro+" \u2260"+casosAutomaticoCadena;
           let ui=_crearCajaCasoHeader(txt);ui.caja31211.innerHTML="EL SISTEMA INICIAL PARA ESTE CASO ES:";Representar.sistemaCompleto(matrizExpresiones,ui.caja31212);
-          ui.caja31221.innerHTML="UNA MATRIZ ESCALONADA PARA ESTE CASO ES:";Representar.matrizGaussCompleta(matrizActualExpresiones,ui.caja31222,leyendaIncognitas,ordenLeyenda);
-          let matUso=matrizActualExpresiones;if(!Matriz.esMatrizEscalonada(matUso))matUso=Matriz.escalonarMatrizNumerica(matUso);
+          let matUso=_escalonarSiHaceFalta(matrizActualExpresiones);
+          ui.caja31221.innerHTML="UNA MATRIZ ESCALONADA PARA ESTE CASO ES:";Representar.matrizGaussCompleta(matUso,ui.caja31222,leyendaIncognitas,ordenLeyenda);
           tipoCaso=Sistema.discutir(matUso);Representar.solucionesSistemaLineal(matUso,ui.caja314,leyendaIncognitas,ordenLeyenda);
           _removeCaso(v);caja12412.innerHTML="CASOS: "+casosString;inputValor.value="";inputValor.focus();
 
@@ -727,4 +739,3 @@ sync();if(!window.__obsBodyCls){window.__obsBodyCls=new MutationObserver(sync);w
 function _initUIExtras(){autoScrollCaja3SiempreAbajo();setupToggleTrabajos();}
 
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",_initUIExtras,{once:true});else _initUIExtras();
-
