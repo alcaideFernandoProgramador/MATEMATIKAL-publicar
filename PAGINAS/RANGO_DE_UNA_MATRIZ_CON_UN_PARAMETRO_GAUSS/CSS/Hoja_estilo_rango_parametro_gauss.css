@@ -2,13 +2,14 @@
   --bg:#f7f9fc;--panel:#fff;--line:#111827;--line2:#cbd5e1;
   --text:#111827;--muted:#6b7280;--blue:#2563eb;--shadow:0 6px 18px rgba(15,23,42,.10);
   --r:12px;--gap:10px;--footerH:74px;
-  --sans:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+  --sans:'DM Sans',system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 }
 *{box-sizing:border-box;}
 html,body{height:100%;margin:0;}
 html{overflow:hidden;}
 body{font-family:var(--sans);color:var(--text);background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
 
 #calculadora{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden;}
 

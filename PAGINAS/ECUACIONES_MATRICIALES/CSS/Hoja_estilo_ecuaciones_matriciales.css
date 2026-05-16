@@ -10,13 +10,14 @@ body{
   margin:0;padding:0;
   background:linear-gradient(180deg,var(--bg),#ffffff);
   color:var(--ink);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-family:'DM Sans',system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;display:flex;flex-direction:column;
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
 
 /* ── BARRA SUPERIOR ── */
 #tituloinicial{
@@ -51,22 +52,31 @@ h1,h2,h3,h4,p{margin:0}
 
 /* ── CONTENEDOR PRINCIPAL ── */
 #contenedor{
-  height:calc(100vh - 76px - var(--footer-h));
+  flex:1;min-height:0;
   width:100%;padding:var(--gap);
-  display:flex;flex-direction:column;gap:var(--gap);flex:1;
+  display:flex;flex-direction:column;gap:var(--gap);
+  overflow:hidden;
 }
 
 /* ── PANEL DE ENTRADA ── */
 #caja1{
   background:var(--panel);border:1px solid var(--border);
   border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:14px 18px;flex:0 0 auto;overflow-y:auto;max-height:52vh;
+  padding:14px 18px;flex:0 0 auto;overflow:hidden;
 }
 #tituloCaja1{
   display:flex;align-items:center;justify-content:space-between;
   font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
   color:var(--muted);padding-bottom:8px;border-bottom:1px dashed var(--border);margin-bottom:12px;
 }
+.resolvedSummary{
+  padding:10px 12px;background:var(--soft);border:1px dashed var(--border);
+  border-radius:8px;overflow-x:auto;white-space:nowrap;color:var(--ink);
+}
+.resolvedSummary .katex{white-space:nowrap}
+
+/* ── CALCULADORA: reservar espacio para footer fijo ── */
+#calculadora{padding-bottom:var(--footer-h,74px);}
 
 /* ── ESPACIO DE TRABAJO ── */
 #caja2borde{background:transparent;flex:1;min-height:200px;display:flex;overflow:hidden;}
@@ -83,8 +93,16 @@ h4{
 #caja21{
   flex:1;overflow-y:auto;overflow-x:auto;padding:6px;
   border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:#fafafe;min-height:0;
+  background:#fafafe;min-height:0;width:100%!important;
 }
+
+/* ── PASO 3: reparto 65/35 entre expresión y cálculo ── */
+.tpasos col.pasoCol{width:7%!important;min-width:0!important;max-width:none!important;}
+.tpasos col:not(.pasoCol):not(.calcCol){width:61%!important;}
+.tpasos col.calcCol{width:32%!important;}
+.tpasos>tbody>tr>td.exprCell{width:61%!important;min-width:0!important;max-width:none!important;}
+.tpasos>tbody>tr>td.calcCell{width:32%!important;text-align:left!important;}
+.tpasos>tbody>tr>td.calcCell .panelCalc{justify-content:flex-start!important;}
 
 /* ── TARJETAS DE RESOLUCIÓN ── */
 .stepCard{
@@ -98,6 +116,18 @@ h4{
 }
 .stepCard.resultCard{background:#f0f4ff;border-color:rgba(59,110,248,.3);}
 .stepCard.resultCard .stepTitle{color:#1a2b6b;font-size:13px;}
+.stepCard.lockedStep{opacity:.45}
+.equationChain{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.equationToken{
+  display:inline-flex;align-items:center;min-height:34px;padding:5px 10px;
+  border:1px solid var(--border);border-radius:8px;background:#fafafe;
+}
+.equationArrow{display:inline-flex;align-items:center;color:var(--accent);font-weight:700}
+.stepEquationInput{width:min(520px,72vw)}
+.stepError,.stepOk{margin-top:10px}
+.autoSolveWrap{margin-top:12px}
+.autoSolveBtn{flex-direction:column;align-items:center;gap:1px;line-height:1.1}
+.autoSolveBtn small{font-size:10px;font-weight:700;color:var(--muted)}
 
 /* ── FILAS DE MATRICES ── */
 .matRow{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap;}
@@ -150,9 +180,25 @@ button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
 .matrizInputWrap{
   margin:10px 0 14px;padding:10px 12px;
   background:#fafafe;border:1px solid var(--border);border-radius:10px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
 }
 .matrizInputWrap .matNombreLabel{
-  font-weight:700;font-size:14px;margin-bottom:6px;display:block;color:var(--ink);
+  font-weight:700;font-size:14px;display:inline-flex;align-items:center;color:var(--ink);
+}
+.matrixInputLine{display:inline-flex;align-items:stretch;gap:4px}
+.matrixInputLine table{align-self:center}
+.matrixParen{
+  position:relative;display:inline-block;align-self:stretch;
+  width:12px;margin:2px 0;font-size:0;color:transparent;
+}
+.matrixParen::before{
+  content:"";position:absolute;inset:0;border-color:#6b7280;border-style:solid;
+}
+.matrixInputLine .matrixParen:first-child::before{
+  border-width:1px 0 1px 1px;border-radius:18px 0 0 18px;
+}
+.matrixInputLine .matrixParen:last-child::before{
+  border-width:1px 1px 1px 0;border-radius:0 18px 18px 0;
 }
 
 /* ── MENSAJES ── */
@@ -190,10 +236,8 @@ iframe{border:none;border-radius:10px}
   #controlesTop{gap:8px;flex-wrap:wrap;justify-content:flex-end;}
   #tituloinicial h1{font-size:14px;flex-basis:100%;text-align:left;}
   .inputEcuacion{width:200px}
-  #caja1{max-height:55vh}
 }
 @media(max-width:480px){
   #tituloinicial h1{font-size:13px}
   .abreVentana{font-size:12px;padding:6px 8px}
-  #caja1{max-height:60vh}
 }

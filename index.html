@@ -39,14 +39,14 @@ html,body{max-width:100%;overflow-x:hidden}
 
 .cabecera{background:#071a09;color:#fff;padding:2rem 2rem 1.8rem;margin-bottom:.75rem}
 
-.contenedor{max-width:1450px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;gap:1.15rem;align-items:flex-start}
-.menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 2.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);flex:0 0 auto;width:max-content;position:sticky;top:1rem}
+.contenedor{max-width:1200px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;gap:1.15rem;align-items:flex-start}
+.menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:280px;position:sticky;top:1rem}
 .menu-lateral h2{margin:.25rem 0 .5rem;font-size:1.25rem}
 .subtitulo-paginas{margin:0 0 .75rem;font-size:.9rem;color:#555}
 .menu-lateral ul{list-style:none;padding:0;margin:0}
 .menu-lateral li{padding-left:15pt}
 .menu-lateral li+li{margin-top:.42rem}
-.menu-lateral a{text-decoration:none;color:#283593;font-size:.95rem;white-space:nowrap}
+.menu-lateral a{text-decoration:none;color:#283593;font-size:.95rem}
 .menu-lateral a:hover{text-decoration:underline}
 
 .contenido{flex:1;background:#fff;border-radius:.75rem;padding:1.5rem 1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -124,13 +124,12 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="contenedor">
 <nav class="menu-lateral">
 <h2>Páginas</h2>
-<p class="subtitulo-paginas">2º Bachillerato. ÁLGEBRA LINEAL</p>
-<div style="padding-left:16px">
+<p class="subtitulo-paginas">Cálculo matricial, determinantes, rango y sistemas de ecuaciones</p>
 <h3>Cálculo matricial</h3>
 <ul>
 <li><a href="PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html">Operaciones con matrices</a></li>
-<li><a href="PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html">Matriz inversa (Método de Gauss-Jordan)</a></li>
-<li><a href="PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html">Matriz inversa (Fórmula de la matriz adjunta)</a></li>
+<li><a href="PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html">Matriz inversa (Gauss-Jordan)</a></li>
+<li><a href="PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html">Matriz inversa (adjunta)</a></li>
 <li><a href="PAGINAS/ECUACIONES_MATRICIALES/Ecuaciones_matriciales.html">Ecuaciones matriciales</a></li>
 </ul>
 <h3>Determinantes</h3>
@@ -139,19 +138,18 @@ html,body{max-width:100%;overflow-x:hidden}
 </ul>
 <h3>Rango de una matriz</h3>
 <ul>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">Rango de una matriz por el método de Gauss</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">Rango de una matriz por el método de los menores</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html">Rango con un parámetro (Gauss)</a></li>
-<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html">Rango con un parámetro (menores)</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">Rango por Gauss</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">Rango por menores</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_GAUSS/Rango_parametro_Gauss_intro.html">Rango con parámetro (Gauss)</a></li>
+<li><a href="PAGINAS/RANGO_DE_UNA_MATRIZ_CON_UN_PARAMETRO_MENORES/Rango_parametro_menores_intro.html">Rango con parámetro (menores)</a></li>
 </ul>
 <h3>Sistemas de ecuaciones lineales</h3>
 <ul>
-<li><a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">Sistemas lineales por el método de Gauss</a></li>
-<li><a href="PAGINAS/SISTEMAS_LINEALES_ROUCHE/Sistemas_Rouche_intro.html">Sistemas lineales por el método de Rouché-Frobenius y regla de Cramer</a></li>
-<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Sistemas lineales con un parámetro (Gauss)</a></li>
-<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">Sistemas lineales con un parámetro (Rouché-Frobenius)</a></li>
+<li><a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">Sistemas por Gauss</a></li>
+<li><a href="PAGINAS/SISTEMAS_LINEALES_ROUCHE/Sistemas_Rouche_intro.html">Sistemas por Rouché-Frobenius</a></li>
+<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Sistemas con parámetro (Gauss)</a></li>
+<li><a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">Sistemas con parámetro (Rouché-Frobenius)</a></li>
 </ul>
-</div>
 </nav>
 
 <main class="contenido">

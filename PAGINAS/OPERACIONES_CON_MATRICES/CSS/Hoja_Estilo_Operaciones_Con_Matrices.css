@@ -10,7 +10,7 @@ html,body,#contenedor{scroll-behavior:smooth;}
 
 body{
   margin:0;padding:0;background:var(--bg);color:var(--text);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-family:'DM Sans',system-ui,sans-serif;
 }
 
 /* Enlaces */
@@ -19,6 +19,7 @@ a:hover{text-decoration:underline;}
 
 /* Titulares y texto */
 h1,h2,h3,h4,p{margin:0;}
+h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif;}
 h1{font-size:22px;font-weight:700;letter-spacing:.2px;text-align:center;}
 h2{font-size:18px;font-weight:600;}
 h3{font-size:15px;font-weight:600;color:var(--muted);}
