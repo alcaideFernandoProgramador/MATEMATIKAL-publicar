@@ -12,7 +12,18 @@ let gAnalysis    = null;
 let gN           = 0;
 let gEqStr       = '';
 let gUnknownName = 'X';
+let gScalarMap   = {};
 let caja1, caja2, caja21, letreroUsuario;
+
+// Sustituye escalares (letras minúsculas) por sus valores numéricos en una expresión.
+// Inserta '*' cuando el valor sustituido queda yuxtapuesto a una letra (ej: aX → (2)X → (2)*X)
+// para evitar que la biblioteca matricial entre en un bucle infinito con multiplicación implícita.
+function substituteScalars(expr) {
+  if (!expr || !Object.keys(gScalarMap).length) return expr;
+  return expr.replace(/[A-Za-z]/g, ch =>
+    Object.prototype.hasOwnProperty.call(gScalarMap, ch) ? '(' + gScalarMap[ch] + ')' : ch
+  ).replace(/\)([A-Za-z])/g, ')*$1');
+}
 
 // =====================================================================
 // PARSEO Y ANÁLISIS
@@ -25,11 +36,11 @@ function parseSide(s, unknownName) {
   if (!s) return [];
   if (!/^[+\-]/.test(s)) s = '+' + s;
 
-  // Caracteres permitidos: mayúsculas, dígitos, +, -, ^, (, ), *
-  if (/[^+\-0-9A-Z^()*]/.test(s))
+  // Caracteres permitidos: letras (mayúsculas = matrices, minúsculas = escalares), dígitos, operadores
+  if (/[^+\-0-9A-Za-z^()*]/.test(s))
     throw 'La ecuación contiene caracteres no soportados. ' +
-          'Solo se admiten matrices (letras mayúsculas), coeficientes enteros, ' +
-          'los operadores + y −, y notaciones como A^(-1) o A^t.';
+          'Se admiten matrices (letras mayúsculas), escalares (letras minúsculas, excepto t reservada para transpuesta), ' +
+          'coeficientes enteros y notaciones como A^(-1) o A^t.';
 
   // Dividir en términos por + y - de nivel superior (fuera de paréntesis)
   const termStrs = [];
@@ -57,22 +68,41 @@ function parseSide(s, unknownName) {
     const factors = splitMatrixFactors(body);
     const xi = factors.findIndex(f => f.name === unknownName);
     if (xi >= 0) {
-      const left  = factors.slice(0, xi).map(f => f.raw).join('');
-      const right = factors.slice(xi + 1).map(f => f.raw).join('');
-      return { sign, coeff, left, right, hasX: true };
+      const xRaw = factors[xi].raw;
+      const xExp = xRaw.slice(factors[xi].name.length); // '' | '^t' | '^(-1)' | …
+      const left  = factors.slice(0, xi).map(f => f.raw).join('*');
+      const right = factors.slice(xi + 1).map(f => f.raw).join('*');
+      return { sign, coeff, left, right, xExp, hasX: true };
     }
-    return { sign, coeff, str: body, hasX: false };
+    // Para términos sin incógnita, dividir también en factores para separar escalares de matrices
+    const freeFactors = splitMatrixFactors(body);
+    const str = freeFactors.length > 0 ? freeFactors.map(f => f.raw).join('*') : body;
+    return { sign, coeff, str, hasX: false };
   });
 }
 
 // Divide una cadena de producto matricial en factores individuales.
-// Cada factor es una letra mayúscula con su exponente opcional: A, A^(-1), B^t, X^2…
+// Cada factor es una letra con su exponente opcional, o una expresión entre paréntesis.
+// Los paréntesis en posición de factor (no de exponente) se tratan como escalares compuestos.
 function splitMatrixFactors(s) {
   const factors = [];
   let i = 0;
   while (i < s.length) {
-    if (s[i] === '*') { i++; continue; }       // saltar * de multiplicación explícita
-    if (/[A-Z]/.test(s[i])) {
+    if (s[i] === '*') { i++; continue; }
+
+    if (s[i] === '(') {
+      // Expresión escalar entre paréntesis: (a-1), (2+b), etc. — factor atómico
+      let raw = '(';
+      let depth = 1;
+      i++;
+      while (i < s.length) {
+        if (s[i] === '(') { depth++; raw += s[i++]; }
+        else if (s[i] === ')') { raw += s[i++]; depth--; if (depth === 0) break; }
+        else { raw += s[i++]; }
+      }
+      factors.push({ name: null, raw });        // name=null → escalar compuesto, no puede ser incógnita
+
+    } else if (/[A-Za-z]/.test(s[i])) {
       const name = s[i];
       let raw = name;
       i++;
@@ -130,15 +160,23 @@ function analyzeEquation(lhsStr, rhsStr, unknownName) {
   // Mover todos los términos con X al primer miembro y los libres al segundo
   const xTerms = [], freeTrms = [];
   for (const t of lhs) {
-    if (t.hasX) xTerms.push({ sign:  t.sign, coeff: t.coeff || 1, left: t.left, right: t.right });
+    if (t.hasX) xTerms.push({ sign:  t.sign, coeff: t.coeff || 1, left: t.left, right: t.right, xExp: t.xExp || '' });
     else        freeTrms.push({ sign: -t.sign, coeff: t.coeff || 1, str: t.str });
   }
   for (const t of rhs) {
-    if (t.hasX) xTerms.push({ sign: -t.sign, coeff: t.coeff || 1, left: t.left, right: t.right });
+    if (t.hasX) xTerms.push({ sign: -t.sign, coeff: t.coeff || 1, left: t.left, right: t.right, xExp: t.xExp || '' });
     else        freeTrms.push({ sign:  t.sign, coeff: t.coeff || 1, str: t.str });
   }
 
   if (xTerms.length === 0) throw `La ecuación no contiene la incógnita ${unknownName}.`;
+
+  // Validar el exponente de la incógnita
+  const xExpSet = [...new Set(xTerms.map(t => t.xExp))];
+  if (xExpSet.length > 1)
+    throw `Los términos con ${unknownName} tienen exponentes distintos; no es posible despejar.`;
+  const xExp = xExpSet[0] || '';
+  if (xExp && xExp !== '^t' && xExp !== '^(-1)')
+    throw `El exponente "${xExp}" sobre la incógnita no está soportado.`;
 
   const allSameRight = xTerms.every(t => t.right === xTerms[0].right);
   const allSameLeft  = xTerms.every(t => t.left  === xTerms[0].left);
@@ -147,24 +185,36 @@ function analyzeEquation(lhsStr, rhsStr, unknownName) {
 
   const strategy = allSameRight ? 'A' : 'B';
 
-  // Nombres de matrices con la biblioteca (excluye la incógnita e I)
+  // Nombres de variables con la biblioteca (excluye la incógnita e I)
   const lhsVars = ExpresionMatricial.obtenerVariables(lhsStr);
   const rhsVars = ExpresionMatricial.obtenerVariables(rhsStr);
-  const matrixNames = [...new Set([...lhsVars, ...rhsVars])]
-    .filter(v => v !== unknownName && v !== 'I').sort();
+  const allVars = [...new Set([...lhsVars, ...rhsVars])]
+    .filter(v => v !== unknownName && v !== 'I');
+  // Mayúsculas = matrices; minúsculas = escalares numéricos
+  const matrixNames = allVars.filter(v => /^[A-Z]$/.test(v)).sort();
+  const scalarNames = allVars.filter(v => /^[a-z]$/.test(v)).sort();
 
   // Construir las expresiones de L, R y B como cadenas para la biblioteca
   const lExpr = buildLExpr(xTerms, strategy);
   const rExpr = buildRExpr(xTerms, strategy);
   const bExpr = buildBExpr(freeTrms);
 
-  return { xTerms, strategy, matrixNames, lExpr, rExpr, bExpr, unknownName };
+  return { xTerms, strategy, matrixNames, scalarNames, lExpr, rExpr, bExpr, unknownName, xExp };
+}
+
+// Returns the matrix form of a left/right factor.
+// If the raw factor is a pure scalar expression (no uppercase matrix names),
+// it must be converted to scalar*I so the matrix library can operate on it.
+function toMatrixFactor(raw) {
+  if (!raw || raw === 'I') return 'I';
+  const isScalarExpr = !/[A-Z]/.test(raw);
+  return isScalarExpr ? `(${raw})*I` : raw;
 }
 
 function buildLExpr(xTerms, strategy) {
-  if (strategy !== 'A') return xTerms[0].left || 'I';
+  if (strategy !== 'A') return toMatrixFactor(xTerms[0].left) || 'I';
   return xTerms.map((t, i) => {
-    const l = t.left || 'I';
+    const l = toMatrixFactor(t.left) || 'I';
     const c = t.coeff || 1;
     const factor = c > 1 ? `${c}*${l}` : l;
     return (i === 0 ? (t.sign === -1 ? '-' : '') : (t.sign === -1 ? '-' : '+')) + factor;
@@ -172,9 +222,9 @@ function buildLExpr(xTerms, strategy) {
 }
 
 function buildRExpr(xTerms, strategy) {
-  if (strategy !== 'B') return xTerms[0].right || 'I';
+  if (strategy !== 'B') return toMatrixFactor(xTerms[0].right) || 'I';
   return xTerms.map((t, i) => {
-    const r = t.right || 'I';
+    const r = toMatrixFactor(t.right) || 'I';
     const c = t.coeff || 1;
     const factor = c > 1 ? `${c}*${r}` : r;
     return (i === 0 ? (t.sign === -1 ? '-' : '') : (t.sign === -1 ? '-' : '+')) + factor;
@@ -199,12 +249,22 @@ function toMatrList(matMap) {
 }
 
 // Evalúa una expresión matricial con la biblioteca o devuelve identidad si es 'I'.
+// Sustituye primero los escalares (gScalarMap). Si el resultado es escalar lo trata como escalar·I.
 function calcExpr(expr, matrList, n) {
   if (!expr || expr === 'I') return Matriz.identidad(n);
-  // Incluir I como matriz nombrada para que la biblioteca evalúe expresiones como 3*I
+  const subExpr = substituteScalars(expr);
+  // Pure numeric expression (no uppercase matrix names after substitution): evaluate as scalar·I
+  if (!/[A-Z]/.test(subExpr)) {
+    try {
+      const val = ExpresionNumerica.calcular(subExpr);
+      if (val !== null && val !== undefined && isFinite(Number(val)))
+        return Matriz.multiplicarEscalar(String(val), Matriz.identidad(n));
+    } catch(_) {}
+  }
   const withI = [...matrList, { nombre: 'I', matriz: Matriz.identidad(n) }];
-  const result = ExpresionMatricial.calcular(expr, withI);
+  const result = ExpresionMatricial.calcular(subExpr, withI);
   if (!result) throw `No se pudo calcular la expresión "${expr}".`;
+  if (!Array.isArray(result)) return Matriz.multiplicarEscalar(String(result), Matriz.identidad(n));
   return result;
 }
 
@@ -236,6 +296,10 @@ function computeSolution(analysis, matMap, n) {
   let X = B;
   if (Linv) X = Matriz.multiplicar(Linv, X);
   if (Rinv) X = Matriz.multiplicar(X, Rinv);
+  // Aplicar la operación inversa al exponente de la incógnita (^t → transponer, ^(-1) → invertir)
+  const xExp = analysis.xExp || '';
+  if (xExp === '^t')   X = Matriz.trasponer(X);
+  if (xExp === '^(-1)') X = Matriz.inversa(X);
 
   return { L, R, B, Linv, Rinv, X, isLId, isRId };
 }
@@ -248,6 +312,19 @@ function exprToLatex(expr) {
   if (!expr || expr === 'I') return 'I';
   try { return ExpresionAlgebraica.pasarALatex(expr); }
   catch(e) { return expr; }
+}
+
+// Genera LaTeX correcto para la inversa de una expresión matricial.
+// Evita el doble superíndice que produce exprToLatex(inverseExpr(expr))
+// cuando la base ya contiene un exponente (p.ej. A^2 → (A^2)^(-1)).
+function matrixInverseLatex(expr) {
+  if (!expr || expr === 'I') return 'I';
+  if (/^[A-Z]\^\(-1\)$/.test(expr)) return expr[0];          // (M^{-1})^{-1} = M
+  if (/^[A-Z]$/.test(expr))         return expr + '^{-1}';   // matriz sola
+  if (/^[a-z]\^\(-1\)$/.test(expr)) return expr[0];          // (a^{-1})^{-1} = a
+  if (/^[a-z]$/.test(expr))         return expr + '^{-1}';   // escalar solo
+  const base = matrixExprToLatex(expr);
+  return `\\left(${base}\\right)^{-1}`;                      // caso general
 }
 
 function buildFactoredTex(analysis) {
@@ -263,7 +340,7 @@ function buildFactoredTex(analysis) {
 }
 
 function buildFormulaTex(analysis) {
-  const { lExpr, rExpr, bExpr, xTerms, strategy, unknownName } = analysis;
+  const { lExpr, rExpr, bExpr, xTerms, strategy, unknownName, xExp } = analysis;
   const isLId = lExpr === 'I';
   const isRId = rExpr === 'I';
   const needsLParen = xTerms.length > 1 && strategy === 'A' && /[+\-]/.test(lExpr);
@@ -274,10 +351,20 @@ function buildFormulaTex(analysis) {
   const needsBParen = bExpr && /[+\-]/.test(bExpr.slice(1)) && (!isLId || !isRId);
   const bTex  = needsBParen ? `(${bRaw})` : bRaw;
   const parts = [];
-  if (!isLId) parts.push(exprToLatex(inverseExpr(lExpr)));
+  if (!isLId) parts.push(matrixInverseLatex(lExpr));
   parts.push(bTex);
-  if (!isRId) parts.push(exprToLatex(inverseExpr(rExpr)));
-  return `${unknownName} = ` + parts.join('\\cdot ');
+  if (!isRId) parts.push(matrixInverseLatex(rExpr));
+  const rhsTex = parts.join('\\cdot ');
+  // Aplicar la operación inversa al exponente de la incógnita
+  if (xExp === '^t') {
+    const rhs = parts.length === 1 ? `${rhsTex}^{t}` : `\\left(${rhsTex}\\right)^{t}`;
+    return `${unknownName} = ${rhs}`;
+  }
+  if (xExp === '^(-1)') {
+    const rhs = parts.length === 1 ? `\\left(${rhsTex}\\right)^{-1}` : `\\left(${rhsTex}\\right)^{-1}`;
+    return `${unknownName} = ${rhs}`;
+  }
+  return `${unknownName} = ` + rhsTex;
 }
 
 // =====================================================================
@@ -426,11 +513,13 @@ function sameRref(A, B) {
 }
 
 function normalizeEquationText(eq) {
-  return eq.trim().toUpperCase().replace(/\s+/g, '').replace(/\^-\s*1/g, '^(-1)');
+  return eq.trim().replace(/\s+/g, '')
+    .replace(/\^-\s*1/g, '^(-1)')
+    .replace(/\^T(?![A-Za-z0-9])/g, '^t');  // ^T como transpuesta → ^t (minúscula)
 }
 
 function validateEquationVariables(lhsStr, rhsStr, analysis) {
-  const allowed = new Set([...analysis.matrixNames, analysis.unknownName, 'I']);
+  const allowed = new Set([...analysis.matrixNames, ...(analysis.scalarNames || []), analysis.unknownName, 'I']);
   const vars = [...new Set([
     ...ExpresionMatricial.obtenerVariables(lhsStr),
     ...ExpresionMatricial.obtenerVariables(rhsStr)
@@ -441,11 +530,11 @@ function validateEquationVariables(lhsStr, rhsStr, analysis) {
 
 function evalMatrixExpr(expr, matMap, n) {
   if (expr === 'I') return Matriz.identidad(n);
-  // Incluir I como matriz nombrada para que la biblioteca evalúe expresiones como 3*I
+  const subExpr = substituteScalars(expr);
   const matrList = [...toMatrList(matMap), { nombre: 'I', matriz: Matriz.identidad(n) }];
-  const result = ExpresionMatricial.calcular(expr, matrList);
+  const result = ExpresionMatricial.calcular(subExpr, matrList);
   if (!Array.isArray(result) && String(result).trim() === '0') return zeroMatrix(n);
-  if (!Array.isArray(result)) throw `La expresión "${expr}" no devuelve una matriz.`;
+  if (!Array.isArray(result)) return Matriz.multiplicarEscalar(String(result), Matriz.identidad(n));
   return result;
 }
 
@@ -462,21 +551,56 @@ function buildEquationSystem(eq, analysis, baseMatMap, n) {
   const { lhsStr, rhsStr } = parseAndValidate(normalizedEq);
   validateEquationVariables(lhsStr, rhsStr, analysis);
 
+  // Para la verificación numérica (RREF), sustituir escalares simbólicos y variables
+  // algebraicas en elementos de matrices por valores de prueba fijos.
+  // Fuera de esta función todo sigue siendo simbólico.
+  const savedScalarMap = gScalarMap;
+  const allAlgVars = new Set(analysis.scalarNames || []);
+  // Recoger variables algebraicas de los elementos de las matrices
+  for (const mat of Object.values(baseMatMap)) {
+    if (!Array.isArray(mat)) continue;
+    for (const row of mat) {
+      for (const cell of row) {
+        try {
+          ExpresionMatricial.obtenerVariables(String(cell || ''))
+            .filter(v => /^[a-z]$/.test(v))
+            .forEach(v => allAlgVars.add(v));
+        } catch(_) {}
+      }
+    }
+  }
+  if (allAlgVars.size) {
+    const testMap = {};
+    let idx = 0;
+    for (const name of allAlgVars) { testMap[name] = String(3 + idx * Math.PI); idx++; }
+    gScalarMap = testMap;
+  }
+  try {
+
+  // Sustituir las variables algebraicas en los elementos de las matrices conocidas
+  // para que numericValue pueda evaluar los residuos numéricamente.
+  const numBaseMatMap = {};
+  for (const [name, mat] of Object.entries(baseMatMap)) {
+    numBaseMatMap[name] = Array.isArray(mat)
+      ? mat.map(row => row.map(cell => substituteScalars(String(cell ?? '0'))))
+      : mat;
+  }
+
   const unknownName = analysis.unknownName;
-  const zeroMap = { ...baseMatMap, [unknownName]: zeroMatrix(n) };
+  const zeroMap = { ...numBaseMatMap, [unknownName]: zeroMatrix(n) };
   const b = residualVector(lhsStr, rhsStr, zeroMap, n);
   const vars = n * n;
   const rows = b.length;
   const coeffs = Array.from({ length: rows }, () => Array(vars).fill(0));
 
   for (let k = 0; k < vars; k++) {
-    const basisMap = { ...baseMatMap, [unknownName]: basisMatrix(n, k) };
+    const basisMap = { ...numBaseMatMap, [unknownName]: basisMatrix(n, k) };
     const v = residualVector(lhsStr, rhsStr, basisMap, n);
     for (let r = 0; r < rows; r++) coeffs[r][k] = v[r] - b[r];
   }
 
   const test = sampleMatrix(n);
-  const testMap = { ...baseMatMap, [unknownName]: test };
+  const testMap = { ...numBaseMatMap, [unknownName]: test };
   const actual = residualVector(lhsStr, rhsStr, testMap, n);
   const x = matrixToVector(test);
   for (let r = 0; r < rows; r++) {
@@ -491,6 +615,9 @@ function buildEquationSystem(eq, analysis, baseMatMap, n) {
     rhsStr,
     rref: rref(coeffs.map((row, i) => [...row, -b[i]]))
   };
+  } finally {
+    gScalarMap = savedScalarMap;
+  }
 }
 
 function isEquivalentSystem(a, b) {
@@ -498,7 +625,10 @@ function isEquivalentSystem(a, b) {
 }
 
 function isSolvedForUnknown(system, analysis) {
-  if (system.lhsStr !== analysis.unknownName) return false;
+  const xExp = analysis.xExp || '';
+  // Acepta "X = RHS" y, cuando hay exponente, también "X^t = RHS" o "X^(-1) = RHS"
+  const validLhs = [analysis.unknownName, analysis.unknownName + xExp].filter(Boolean);
+  if (!validLhs.includes(system.lhsStr)) return false;
   return !ExpresionMatricial.obtenerVariables(system.rhsStr).includes(analysis.unknownName);
 }
 
@@ -509,6 +639,9 @@ function renderResolvedInputSummary(analysis, matMap) {
   const parts = [
     `\\text{Ecuación: } ${exprToLatex(analysis.lhsStr)}=${exprToLatex(analysis.rhsStr)}`
   ];
+  for (const name of (analysis.scalarNames || [])) {
+    if (gScalarMap[name] !== undefined) parts.push(`${name}=${gScalarMap[name]}`);
+  }
   for (const name of analysis.matrixNames.filter(m => m !== 'I')) {
     parts.push(`${name}=${matrixToTex(matMap[name])}`);
   }
@@ -743,12 +876,18 @@ async function renderStep2(container, analysis, matMap, sol, onComplete) {
     caja21.scrollTop = caja21.scrollHeight;
   }
 
-  // Una expresión es trivial (ya conocida) si es solo una letra mayúscula
-  const isTrivial = expr => /^[A-Z]$/.test(expr);
+  // Una expresión es trivial si es solo una letra, o si no contiene letras mayúsculas (es escalar puro)
+  const isTrivial = expr => /^[A-Za-z]$/.test(expr) || !/[A-Z]/.test(expr || '');
 
-  if (hasNonTrivialB) await computeMatrix(bExpr, exprToLatex(bExpr));
-  if (!isLId) { const e = inverseExpr(lExpr); if (!isTrivial(e)) await computeMatrix(e, exprToLatex(e)); }
-  if (!isRId) { const e = inverseExpr(rExpr); if (!isTrivial(e)) await computeMatrix(e, exprToLatex(e)); }
+  if (hasNonTrivialB) await computeMatrix(substituteScalars(bExpr), exprToLatex(bExpr));
+  if (!isLId) {
+    const e = inverseExpr(lExpr);
+    if (!isTrivial(e)) await computeMatrix(substituteScalars(e), exprToLatex(e));
+  }
+  if (!isRId) {
+    const e = inverseExpr(rExpr);
+    if (!isTrivial(e)) await computeMatrix(substituteScalars(e), exprToLatex(e));
+  }
 
   onComplete();
 }
@@ -763,6 +902,7 @@ async function renderStep3(container, analysis, matMap, sol, onComplete) {
   // Sustituir I por I_n (con tamaño explícito) para que el renderizador
   // paso a paso pueda determinar el tamaño de la identidad en expresiones como 3*I o -I+B
   const rhsExpr = lastEq.slice(lastEq.indexOf('=') + 1).replace(/\bI\b/g, `I_${gN}`);
+  const rhsExprSub = substituteScalars(rhsExpr);
 
   const desc = document.createElement('p');
   desc.style.cssText = 'font-size:13px;color:#4a5270;margin:0 0 10px;';
@@ -774,9 +914,21 @@ async function renderStep3(container, analysis, matMap, sol, onComplete) {
   container.appendChild(computeDiv);
 
   try {
-    await Representar.expresionMatricialPasoaPaso3(rhsExpr, toMatrList(matMap), computeDiv);
-  } catch(e) {
-    showError(typeof e === 'string' ? e : e.message, container);
+    await Representar.expresionMatricialPasoaPaso3(rhsExprSub, toMatrList(matMap), computeDiv);
+  } catch(_) {
+    // sustituirIdentidades no maneja escalares algebraicos; se muestra resultado directamente.
+    computeDiv.remove();
+    if (sol && sol.X) {
+      const resRow = document.createElement('div');
+      resRow.style.cssText = 'margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+      const lbl = document.createElement('span');
+      renderKatex(analysis.unknownName + ' =', lbl, false);
+      resRow.appendChild(lbl);
+      const mDiv = document.createElement('div');
+      Representar.matriz(sol.X, mDiv);
+      resRow.appendChild(mDiv);
+      container.appendChild(resRow);
+    }
     onComplete();
     return;
   }
@@ -797,7 +949,7 @@ async function renderStep3(container, analysis, matMap, sol, onComplete) {
   chain.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:2px;';
 
   const chainML = [...toMatrList(matMap), { nombre: `I_${gN}`, matriz: Matriz.identidad(gN) }];
-  let actual = rhsExpr;
+  let actual = rhsExprSub;
 
   function addBlock(fn, arg) {
     const b = document.createElement('span');
@@ -960,7 +1112,9 @@ function appendEquationInput(container, analysis, matMap, n, originalSystem, sta
     appendEquationInput(container, analysis, matMap, n, originalSystem, state, err, ok, onComplete);
   }
 
-  inp.addEventListener('input', () => { inp.value = inp.value.toUpperCase(); });
+  inp.addEventListener('input', () => {
+    inp.value = inp.value.replace(/\^T(?![A-Za-z0-9])/g, '^t');
+  });
   inp.addEventListener('keydown', ev => {
     if (ev.key !== 'Enter' && ev.key !== 'Tab') return;
     ev.preventDefault();
@@ -1024,44 +1178,47 @@ function applyAutomaticDespeje(chain, analysis, matMap, n, originalSystem, state
 }
 
 function buildAutomaticDespejeEquations(analysis) {
-  const { unknownName, lExpr, rExpr, bExpr, xTerms } = analysis;
+  const { unknownName, lExpr, rExpr, bExpr, xTerms, xExp } = analysis;
   const isLId = !lExpr || lExpr === 'I';
   const isRId = !rExpr || rExpr === 'I';
   const lFull = formatFactorForEquation(lExpr); // '' si identidad
   const rFull = formatFactorForEquation(rExpr); // '' si identidad
-  const bStr  = bExpr ? formatFactorForEquation(bExpr) : '0';
+  const bStr  = !bExpr ? '0' : bExpr === 'I' ? 'I' : formatFactorForEquation(bExpr);
   const lInv  = isLId ? null : inverseExpr(lExpr);
   const rInv  = isRId ? null : inverseExpr(rExpr);
+
+  // Token de la incógnita en las ecuaciones: "X" o "X^t" / "X^(-1)"
+  const xTok = unknownName + (xExp || '');
 
   const equations = [];
 
   // Forma factorada (si difiere de la ecuación original)
-  const factored = `${lFull}${unknownName}${rFull}=${bStr}`;
+  const factored = `${lFull}${xTok}${rFull}=${bStr}`;
   if (xTerms.length > 1 || `${analysis.lhsStr}=${analysis.rhsStr}` !== factored) {
     equations.push(factored);
   }
 
   // Pasos intermedios: multiplicación por inversas + pasos identidad
   if (!isLId && !isRId) {
-    equations.push(`${lInv}*${lFull}*${unknownName}*${rFull}=${lInv}*${bStr}`);
-    equations.push(`I*${unknownName}*${rFull}=${lInv}*${bStr}`);   // L⁻¹·L = I
-    equations.push(`${unknownName}*${rFull}=${lInv}*${bStr}`);      // I·X = X
-    equations.push(`${unknownName}*${rFull}*${rInv}=${lInv}*${bStr}*${rInv}`);
-    equations.push(`${unknownName}*I=${lInv}*${bStr}*${rInv}`);     // R·R⁻¹ = I
+    equations.push(`${lInv}*${lFull}*${xTok}*${rFull}=${lInv}*${bStr}`);
+    equations.push(`I*${xTok}*${rFull}=${lInv}*${bStr}`);          // L⁻¹·L = I
+    equations.push(`${xTok}*${rFull}=${lInv}*${bStr}`);            // I·Xtok = Xtok
+    equations.push(`${xTok}*${rFull}*${rInv}=${lInv}*${bStr}*${rInv}`);
+    equations.push(`${xTok}*I=${lInv}*${bStr}*${rInv}`);           // R·R⁻¹ = I
   } else if (!isLId) {
-    equations.push(`${lInv}*${lFull}*${unknownName}=${lInv}*${bStr}`);
-    equations.push(`I*${unknownName}=${lInv}*${bStr}`);             // L⁻¹·L = I
+    equations.push(`${lInv}*${lFull}*${xTok}=${lInv}*${bStr}`);
+    equations.push(`I*${xTok}=${lInv}*${bStr}`);                   // L⁻¹·L = I
   } else if (!isRId) {
-    equations.push(`${unknownName}*${rFull}*${rInv}=${bStr}*${rInv}`);
-    equations.push(`${unknownName}*I=${bStr}*${rInv}`);             // R·R⁻¹ = I
+    equations.push(`${xTok}*${rFull}*${rInv}=${bStr}*${rInv}`);
+    equations.push(`${xTok}*I=${bStr}*${rInv}`);                   // R·R⁻¹ = I
   }
 
-  // Forma final despejada
+  // Forma final despejada (Xtok = RHS)
   const rhsParts = [];
   if (!isLId) rhsParts.push(lInv);
   rhsParts.push(bStr);
   if (!isRId) rhsParts.push(rInv);
-  equations.push(`${unknownName}=${rhsParts.join('*')}`);
+  equations.push(`${xTok}=${rhsParts.join('*')}`);
 
   return equations;
 }
@@ -1069,13 +1226,13 @@ function buildAutomaticDespejeEquations(analysis) {
 function formatFactorForEquation(expr) {
   if (!expr || expr === 'I') return '';
   // Envolver en paréntesis si empieza con '-' o si contiene +, -, * internamente
-  return expr[0] === '-' || /[+\-\*]/.test(expr.slice(1)) ? `(${expr})` : expr;
+  return expr[0] === '-' || /[+\-\*\^]/.test(expr.slice(1)) ? `(${expr})` : expr;
 }
 
 function inverseExpr(expr) {
-  // Simplificar doble inversa: M^(-1) → M (para una sola letra)
-  // Evita expresiones como (A^(-1))^(-1) que el renderizador no maneja bien
+  // Simplificar doble inversa: M^(-1) → M (para una sola letra, mayúscula o minúscula)
   if (/^[A-Z]\^\(-1\)$/.test(expr)) return expr[0];
+  if (/^[a-z]\^\(-1\)$/.test(expr)) return expr[0];
   return `${formatFactorForEquation(expr)}^(-1)`;
 }
 
@@ -1086,7 +1243,7 @@ function inverseExpr(expr) {
 function initFase1() {
   clearEl(caja1);
   clearEl(caja21);
-  gAnalysis = null; gN = 0; gEqStr = ''; gUnknownName = 'X';
+  gAnalysis = null; gN = 0; gEqStr = ''; gUnknownName = 'X'; gScalarMap = {};
 
   const titleDiv = document.createElement('div');
   titleDiv.id = 'tituloCaja1';
@@ -1097,8 +1254,8 @@ function initFase1() {
   fase.className = 'fase';
   fase.style.cssText = 'display:flex;align-items:center;gap:42px;flex-wrap:wrap;';
   fase.innerHTML = '<span><strong>Fase 1/2:</strong> Introduce la ecuación matricial.</span>' +
-    '<span>Usa <strong>mayúsculas</strong>. La incógnita por defecto es <strong>X</strong>.</span>' +
-    '<span>Ejemplos: <code>AX+BX=C</code> &nbsp; <code>AXB=C</code> &nbsp; <code>XA-XB=D</code></span>';
+    '<span>Matrices en <strong>MAYÚSCULAS</strong>, escalares algebraicos en <strong>minúsculas</strong> (excepto <em>t</em>). Incógnita por defecto: <strong>X</strong>.</span>' +
+    '<span>Ejemplos: <code>AX+BX=C</code> &nbsp; <code>aAXB=C</code> &nbsp; <code>XA-XB=D</code></span>';
   caja1.appendChild(fase);
 
   const row = document.createElement('div');
@@ -1126,7 +1283,7 @@ function initFase1() {
 
   function doAnalyze() {
     clearEl(errDiv);
-    const eq = inp.value.trim().toUpperCase();
+    const eq = inp.value.trim().replace(/\^T(?![A-Za-z0-9])/g, '^t');
     const unknownName = (unknownInp.value.trim().toUpperCase() || 'X');
     if (!/^[A-Z]$/.test(unknownName)) { showError('La incógnita debe ser una sola letra mayúscula.', errDiv); return; }
     if (unknownName === 'I') { showError('La letra I está reservada para la matriz identidad.', errDiv); return; }
@@ -1168,9 +1325,11 @@ function initFase2(analysis) {
   const fase = document.createElement('div');
   fase.className = 'fase';
   fase.style.cssText = 'display:flex;align-items:center;gap:42px;flex-wrap:wrap;';
+  const scalarInfo = analysis.scalarNames && analysis.scalarNames.length
+    ? ` &nbsp;·&nbsp; Escalares algebraicos (sin valor): <strong>${analysis.scalarNames.join(', ')}</strong>` : '';
   fase.innerHTML = `<span><strong>Fase 2/2:</strong> Ecuación: <code>${gEqStr}</code></span>` +
     `<span>Incógnita: <strong>${analysis.unknownName}</strong></span>` +
-    `<span>Matrices a introducir: <strong>${analysis.matrixNames.filter(m => m !== 'I').join(', ')}</strong></span>`;
+    `<span>Matrices a introducir: <strong>${analysis.matrixNames.filter(m => m !== 'I').join(', ') || '(ninguna)'}</strong>${scalarInfo}</span>`;
   caja1.appendChild(fase);
 
   const orderRow = document.createElement('div');
@@ -1200,6 +1359,7 @@ function initFase2(analysis) {
     if (!nConfirmed || gN < 1) {
       showError('Confirma primero el orden (pulsa ENTER en el campo).', errDiv); return;
     }
+    gScalarMap = {};
     const matMap = { 'I': Matriz.identidad(gN) };
     try {
       for (const name of analysis.matrixNames) {
@@ -1212,8 +1372,6 @@ function initFase2(analysis) {
           for (let j = 0; j < gN; j++) {
             const v = cells[i][j].value.trim().replace(',', '.');
             if (!v) { showError(`Falta un valor en ${name} (fila ${i+1}, col ${j+1}).`, errDiv); return; }
-            if (!/^[-+]?(\d+(\.\d+)?|\d+\/\d+)$/.test(v))
-              { showError(`Valor inválido "${v}" en ${name}. Usa enteros, decimales o fracciones a/b.`, errDiv); return; }
             row.push(v);
           }
           mat.push(row);
@@ -1231,9 +1389,11 @@ function initFase2(analysis) {
   function buildMatrixInputs(n) {
     clearEl(matSection);
     matInputCells = {};
-    const toInput = analysis.matrixNames.filter(name => name !== 'I');
-    if (toInput.length === 0) { doResolve(); return; }
-    for (const name of toInput) {
+    const matricesToInput = analysis.matrixNames.filter(name => name !== 'I');
+
+    if (matricesToInput.length === 0) { doResolve(); return; }
+
+    for (const name of matricesToInput) {
       const wrap = document.createElement('div');
       wrap.className = 'matrizInputWrap';
       const lbl = document.createElement('span');
@@ -1302,6 +1462,7 @@ function initFase2(analysis) {
 
 document.addEventListener('DOMContentLoaded', function() {
   caja1          = document.getElementById('caja1');
+  if (!caja1) return;   // entorno sin calculadora (p.ej. página de tests)
   caja2          = document.getElementById('caja2');
   caja21         = document.getElementById('caja21');
   letreroUsuario = document.getElementById('letreroUsuario');

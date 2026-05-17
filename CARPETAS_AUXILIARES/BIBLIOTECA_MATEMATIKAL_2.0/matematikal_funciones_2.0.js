@@ -2170,7 +2170,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
       const get=n=>(ms.find(o=>o.nombre===n)||{}).matriz;
     const esEscalar=expr=>{if(!expr)return null;for(const n of nom)if(expr.includes(n))return null;try{
     let s=String(ExpresionAlgebraica.simplificar(expr)).trim();if(s[0]==="("&&s[s.length-1]===")")s=s.slice(1,-1).trim();
-    if(!isNaN(+s))return s;if(/^-?\d+\s*\/\s*\d+$/.test(s))return s.replace(/\s+/g,"");}catch(_){}return null};
+    return s.replace(/\s+/g,"");}catch(_){}return null};
       for(let i=0;i<post.length;i++){const a=post[i-2],b=post[i-1],op=post[i],nx=post[i+1];
         if(op==="+"){if(nom.includes(a)&&nom.includes(b))return{trozo:`${a}+${b}`,mat:Matriz.sumar(get(a),get(b))}}
         if(op==="-"){if(nom.includes(a)&&nom.includes(b))return{trozo:`${a}-${b}`,mat:Matriz.restar(get(a),get(b))};
@@ -2765,9 +2765,11 @@ class ExpresionMatricial {
       if(!Array.isArray(matriz)||!Array.isArray(matriz[0]))throw new Error(`La propiedad "matriz" de ${nombre} debe ser un array de arrays.`);
       dims[nombre]=[matriz.length,matriz[0].length]}
     const pf=ExpresionMatricial.infijaAPostfija(expr);if(!Array.isArray(pf)||pf.length===0)throw new Error(`Expresión inválida: ${expr}`);
-    const RE_N=/^[A-Z](?:_\d+)?$/,esNum=t=>!isNaN(+t);
+    const RE_N=/^[A-Z](?:_\d+)?$/,esNum=t=>!isNaN(+t),
+      esEscalarAlg=t=>/^[a-z\u03B1-\u03C9](?:_\d+)?$/.test(t)&&t!=="t",
+      simpS=s=>{try{return ExpresionAlgebraica.simplificar(String(s))}catch(_){return String(s)}};
     const pila=[];const eq=(A,B)=>A.filas===B.filas&&A.columnas===B.columnas,cuad=M=>M.filas===M.columnas,toS=x=>{if(!x||x.tipo!=='E')
-      throw new Error(`Se esperaba escalar y llegó ${x?.tipo??'∅'}.`);return x.valor},pushS=n=>pila.push({tipo:'E',valor:n});
+      throw new Error(`Se esperaba escalar y llegó ${x?.tipo??'∅'}.`);return x.valor},pushS=n=>pila.push({tipo:'E',valor:String(n)});
     const textISizes=[];const bindI=(o,n)=>{if(o.filas==null){o.filas=n;o.columnas=n;if(o.text){const t=textISizes[o.tid];
       if(t!=null&&t!==n)throw new Error(`La misma identidad aparece con tamaños incompatibles (${t} y ${n}). Especifícala como I_${t} o I_${n}.`);
       textISizes[o.tid]=n}}else if(o.filas!==n)throw new Error(`La misma identidad aparece con tamaños incompatibles (${o.filas} y ${n}).`)};
@@ -2775,9 +2777,10 @@ class ExpresionMatricial {
       if(/^I_\d+$/.test(t)){const n=parseInt(t.slice(2),10);pila.push({tipo:'I',text:false,filas:n,columnas:n});continue}
       if(dims[t]){const d=dims[t];pila.push({tipo:'M',nombre:t,filas:d[0],columnas:d[1]});continue}
       if(RE_N.test(t))throw new Error(`No se han proporcionado dimensiones para la matriz ${t}.`);
-      if(esNum(t)){pushS(+t);continue};if(t==='t'){pila.push({tipo:'T'});continue}
+      if(esNum(t)){pushS(t);continue};if(t==='t'){pila.push({tipo:'T'});continue}
+      if(esEscalarAlg(t)){pushS(t);continue}
       if(t==='+'||t==='-'||t==='*'){const B=pila.pop(),A=pila.pop();if(!A||!B)throw new Error(`Expresión inválida cerca de '${t}'.`);
-        if(A.tipo==='E'&&B.tipo==='E'){pushS(t==='+'?toS(A)+toS(B):t==='-'?toS(A)-toS(B):toS(A)*toS(B));continue}
+        if(A.tipo==='E'&&B.tipo==='E'){const a=toS(A),b=toS(B);pushS(simpS(t==='+'?`(${a})+(${b})`:t==='-'?`(${a})-(${b})`:`(${a})*(${b})`));continue}
         if(t==='*'){if(A.tipo==='E'&&(B.tipo==='M'||B.tipo==='I')){
             pila.push(B.tipo==='I'?{tipo:'I',text:B.text,tid:B.tid,filas:B.filas,columnas:B.columnas}:{tipo:'M',filas:B.filas,columnas:B.columnas});continue}
           if((A.tipo==='M'||A.tipo==='I')&&B.tipo==='E'){
@@ -2816,7 +2819,7 @@ class ExpresionMatricial {
           pila.push({tipo:'M',filas:A2.filas,columnas:A2.columnas});continue}}
       if(t==="/"){
         const B=pila.pop(),A=pila.pop();if(!A||!B)throw new Error(`Expresión inválida cerca de '/'.`);
-        if(A.tipo==='E'&&B.tipo==='E'){pushS(toS(A)/toS(B));continue}
+        if(A.tipo==='E'&&B.tipo==='E'){pushS(simpS(`(${toS(A)})/(${toS(B)})`));continue}
         throw new Error(`División no soportada entre tipos ${A.tipo} y ${B.tipo}.`)}
       if(t==='^'){
         const e=pila.pop(),b=pila.pop();if(!b||!e)throw new Error(`Potencia '^' sin suficientes operandos.`);
@@ -2826,7 +2829,7 @@ class ExpresionMatricial {
           else pila.push({tipo:'M',filas:b.columnas,columnas:b.filas});continue}
         if(e.tipo!=='E')throw new Error(`Exponente no válido para potencia: tipo ${e.tipo}.`);
         const k=Number(toS(e));if(!Number.isInteger(k))throw new Error(`Solo se permiten exponentes enteros (o 't').`);
-        if(b.tipo==='E'){pila.push({tipo:'E',valor:b.valor})}
+        if(b.tipo==='E'){pila.push({tipo:'E',valor:simpS(`(${b.valor})^(${e.valor})`)})}
         else{
           if(b.filas==null||b.columnas==null)throw new Error(`No se puede elevar: tamaño de la identidad aún no determinado.`);
           if(k===0){
