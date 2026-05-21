@@ -2231,7 +2231,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
         par.remove();msg.textContent="";btnAuto.remove();btnCont.remove();
         const tail=document.createElement("span");tail.className="bloq";pintarMatrizComoExpresion(A,tail);panel.appendChild(tail);scroll();
         const siguiente=ExpresionMatricial.calcularUnPaso(actual,matr);
-        if(!siguiente||siguiente===actual){th.textContent="Resultado final";scroll();break};actual=siguiente;scroll() }}
+        if(!siguiente||Array.isArray(siguiente)||typeof siguiente!=="string"||siguiente===actual){th.textContent="Resultado final";scroll();break};actual=siguiente;scroll() }}
         finally{for(let i=matr.length-1;i>=0;i--)if(!baseLocal.has(matr[i].nombre))matr.splice(i,1);
         if(Array.isArray(window.matrices))for(let i=window.matrices.length-1;i>=0;i--)if(!baseGlobal.has(window.matrices[i].nombre))window.matrices.splice(i,1)} }
   static expresionMatricialSustituida(expresion, matrices) {matrices=(matrices||[]).map(m=>({nombre:m.nombre,matriz:m.matriz}));

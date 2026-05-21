@@ -799,6 +799,51 @@ function renderComputationRow(container, labelTex, operandMatrix, opSymbol, resu
   });
 }
 
+// =====================================================================
+// PASOS 2 Y 3 — TÉCNICA: FÓRMULA DE LA ADJUNTA + CÁLCULO PASO A PASO
+// =====================================================================
+
+function renderKatexBlock(container, tex) {
+  const div = document.createElement('div');
+  div.style.cssText = 'overflow-x:auto;margin:10px 0;padding:14px 18px;' +
+    'background:linear-gradient(135deg,#e8eeff 0%,#f0f4ff 100%);' +
+    'border:1px solid rgba(59,110,248,.14);border-radius:14px;';
+  renderKatex(tex, div, true);
+  container.appendChild(div);
+}
+
+// Muestra: exprSimbólica = [matrices sustituidas] = resultado
+function renderCompositeComputation(container, expr, matMap, result) {
+  const exprTex = exprToLatex(expr);
+  const resultTex = matrixToTex(result);
+  let subsTex = '';
+  for (const ch of expr) {
+    if (/[A-Z]/.test(ch) && matMap[ch]) subsTex += matrixToTex(matMap[ch]);
+    else if (/[A-Z]/.test(ch))           subsTex += ch;
+    else if (ch === '*')                  subsTex += '';
+    else                                  subsTex += ch;
+  }
+  renderKatexBlock(container, `${exprTex}=${subsTex}=${resultTex}`);
+}
+
+// Muestra: M^{-1} = (1/|M|)[Adj(M)]^t = (1/det)(cofactores)^t = resultado
+function renderInverseAdjoint(container, expr, mat) {
+  try {
+    const labelTex  = matrixInverseLatex(expr);
+    const baseTex   = exprToLatex(expr);
+    const det       = Matriz.determinante(mat);
+    const detTex    = ExpresionAlgebraica.pasarALatex(det);
+    const cofactors = Matriz.adjunta(mat);
+    const cofTex    = matrixToTex(cofactors);
+    const result    = Matriz.inversa(mat);
+    const resTex    = matrixToTex(result);
+    renderKatexBlock(container,
+      `${labelTex}=\\dfrac{1}{\\left|${baseTex}\\right|}\\left[\\operatorname{Adj}(${baseTex})\\right]^t` +
+      `=\\dfrac{1}{${detTex}}${cofTex}^t=${resTex}`
+    );
+  } catch(_) {}
+}
+
 async function renderStep2(container, analysis, matMap, sol, onComplete) {
   const { lExpr, rExpr, bExpr } = analysis;
   const isLId = !lExpr || lExpr === 'I';
@@ -807,86 +852,28 @@ async function renderStep2(container, analysis, matMap, sol, onComplete) {
 
   if (!bExpr || (!hasNonTrivialB && isLId && isRId)) { onComplete(); return; }
 
-  injectTableOverrideCSS();
+  const matrList = toMatrList(matMap);
 
-  const matrList = [...toMatrList(matMap), { nombre: `I_${gN}`, matriz: Matriz.identidad(gN) }];
+  const desc = document.createElement('p');
+  desc.style.cssText = 'font-size:13px;color:#4a5270;margin:0 0 10px;';
+  desc.textContent = 'Se calculan las matrices que se necesiten, es decir, las que aparecen en el segundo miembro de la ecuación despejada.';
+  container.appendChild(desc);
 
-  // Contenedor de bocadillos resumen (se va llenando al terminar cada cálculo)
-  const bocadillosDiv = document.createElement('div');
-  bocadillosDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;width:100%;';
-  container.appendChild(bocadillosDiv);
-
-  async function computeMatrix(expr, latexLabel) {
-    const exprSized = String(expr).replace(/\bI\b/g, `I_${gN}`);
-
-    // Cálculo interactivo a todo el ancho
-    const computeDiv = document.createElement('div');
-    computeDiv.style.cssText = 'width:100%;margin-bottom:4px;';
-    container.appendChild(computeDiv);
-    caja21.scrollTop = caja21.scrollHeight;
-
-    await Representar.expresionMatricialPasoaPaso3(exprSized, [...matrList], computeDiv);
-
-    // Eliminar área interactiva
-    computeDiv.remove();
-
-    // Bocadillo resumen con la cadena de pasos enlazados por =
-    const card = document.createElement('div');
-    card.style.cssText = 'border:1px solid #ccc;border-radius:6px;padding:10px 14px;' +
-                         'flex:1 1 260px;min-width:0;overflow:hidden;box-sizing:border-box;';
-
-    const title = document.createElement('div');
-    title.style.cssText = 'margin-bottom:6px;';
-    try { katex.render(latexLabel + ' =', title, { throwOnError: false }); }
-    catch(_) { title.textContent = latexLabel + ' ='; }
-    card.appendChild(title);
-
-    // Cadena: expr = paso1 = paso2 = ... = resultado
-    const chain = document.createElement('div');
-    chain.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:2px;';
-
-    function addChainBlock(fn, arg) {
-      const b = document.createElement('span');
-      b.style.cssText = 'display:inline-flex;align-items:baseline;';
-      try { fn(arg, chainML, b); } catch(_) { b.textContent = arg; }
-      chain.appendChild(b);
+  try {
+    if (hasNonTrivialB) {
+      renderCompositeComputation(container, bExpr, matMap, sol.B);
     }
-    function addChainEq() {
-      const sp = document.createElement('span');
-      sp.textContent = '=';
-      sp.style.cssText = 'margin:0 4px;align-self:center;';
-      chain.appendChild(sp);
+    if (!isLId) {
+      renderInverseAdjoint(container, lExpr, calcExpr(lExpr, matrList, gN));
     }
-
-    const chainML = [...matrList];
-    let actual = exprSized;
-    addChainBlock(Representar.expresionMatricial, actual);
-    for (let i = 0; i < 30; i++) {
-      try {
-        const next = ExpresionMatricial.calcularUnPaso(actual, chainML);
-        if (!next || next === actual) break;
-        addChainEq();
-        addChainBlock(Representar.expresionMatricialIntermedia, next);
-        actual = next;
-      } catch(_) { break; }
+    if (!isRId) {
+      renderInverseAdjoint(container, rExpr, calcExpr(rExpr, matrList, gN));
     }
-
-    card.appendChild(chain);
-    bocadillosDiv.appendChild(card);
-    caja21.scrollTop = caja21.scrollHeight;
-  }
-
-  // Una expresión es trivial si es solo una letra, o si no contiene letras mayúsculas (es escalar puro)
-  const isTrivial = expr => /^[A-Za-z]$/.test(expr) || !/[A-Z]/.test(expr || '');
-
-  if (hasNonTrivialB) await computeMatrix(substituteScalars(bExpr), exprToLatex(bExpr));
-  if (!isLId) {
-    const e = inverseExpr(lExpr);
-    if (!isTrivial(e)) await computeMatrix(substituteScalars(e), exprToLatex(e));
-  }
-  if (!isRId) {
-    const e = inverseExpr(rExpr);
-    if (!isTrivial(e)) await computeMatrix(substituteScalars(e), exprToLatex(e));
+  } catch(e) {
+    const p = document.createElement('p');
+    p.className = 'msgError';
+    p.textContent = '⚠ ' + (typeof e === 'string' ? e : e.message);
+    container.appendChild(p);
   }
 
   onComplete();
@@ -895,90 +882,56 @@ async function renderStep2(container, analysis, matMap, sol, onComplete) {
 async function renderStep3(container, analysis, matMap, sol, onComplete) {
   if (!analysis.bExpr) { onComplete(); return; }
 
-  injectTableOverrideCSS();
-
-  const autoEqs = buildAutomaticDespejeEquations(analysis);
-  const lastEq  = autoEqs[autoEqs.length - 1];
-  // Sustituir I por I_n (con tamaño explícito) para que el renderizador
-  // paso a paso pueda determinar el tamaño de la identidad en expresiones como 3*I o -I+B
-  const rhsExpr = lastEq.slice(lastEq.indexOf('=') + 1).replace(/\bI\b/g, `I_${gN}`);
-  const rhsExprSub = substituteScalars(rhsExpr);
-
   const desc = document.createElement('p');
   desc.style.cssText = 'font-size:13px;color:#4a5270;margin:0 0 10px;';
-  renderKatex('\\text{Sustituyendo: }' + buildFormulaTex(analysis), desc, false);
+  desc.textContent = 'Se sustituyen en la expresión despejada y se calcula paso a paso.';
   container.appendChild(desc);
 
-  // Cálculo interactivo a todo el ancho
-  const computeDiv = document.createElement('div');
-  container.appendChild(computeDiv);
-
   try {
-    await Representar.expresionMatricialPasoaPaso3(rhsExprSub, toMatrList(matMap), computeDiv);
-  } catch(_) {
-    // sustituirIdentidades no maneja escalares algebraicos; se muestra resultado directamente.
-    computeDiv.remove();
-    if (sol && sol.X) {
-      const resRow = document.createElement('div');
-      resRow.style.cssText = 'margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
-      const lbl = document.createElement('span');
-      renderKatex(analysis.unknownName + ' =', lbl, false);
-      resRow.appendChild(lbl);
-      const mDiv = document.createElement('div');
-      Representar.matriz(sol.X, mDiv);
-      resRow.appendChild(mDiv);
-      container.appendChild(resRow);
+    const xExp  = analysis.xExp || '';
+    const parts = [];
+    if (sol.Linv) parts.push(sol.Linv);
+    parts.push(sol.B);
+    if (sol.Rinv) parts.push(sol.Rinv);
+
+    let tex = buildFormulaTex(analysis);
+
+    if (xExp) {
+      const xExpLatex = xExp === '^t' ? '^t' : '^{-1}';
+      const innerParts = parts.map(matrixToTex).join('');
+      // Wrap matrices in parentheses before applying xExp
+      tex += parts.length === 1
+        ? '=' + innerParts + xExpLatex
+        : '=\\left(' + innerParts + '\\right)' + xExpLatex;
+      if (parts.length === 3) {
+        const partial = Matriz.multiplicar(parts[0], parts[1]);
+        tex += '=\\left(' + matrixToTex(partial) + matrixToTex(sol.Rinv) + '\\right)' + xExpLatex;
+      }
+      if (parts.length > 1) {
+        let inner = parts[0];
+        for (let k = 1; k < parts.length; k++) inner = Matriz.multiplicar(inner, parts[k]);
+        tex += '=' + matrixToTex(inner) + xExpLatex;
+      }
+      tex += '=' + matrixToTex(sol.X);
+    } else {
+      tex += '=' + parts.map(matrixToTex).join('');
+      if (parts.length === 3) {
+        const partial = Matriz.multiplicar(parts[0], parts[1]);
+        tex += '=' + matrixToTex(partial) + matrixToTex(sol.Rinv);
+      }
+      if (parts.length >= 2) {
+        tex += '=' + matrixToTex(sol.X);
+      }
     }
-    onComplete();
-    return;
+
+    renderKatexBlock(container, tex);
+  } catch(e) {
+    const p = document.createElement('p');
+    p.className = 'msgError';
+    p.textContent = '⚠ ' + (typeof e === 'string' ? e : e.message);
+    container.appendChild(p);
   }
 
-  // Eliminar área interactiva y crear bocadillo resumen a todo el ancho
-  computeDiv.remove();
-  desc.remove();
-
-  const card = document.createElement('div');
-  card.style.cssText = 'border:1px solid #ccc;border-radius:6px;padding:10px 14px;width:100%;box-sizing:border-box;overflow:hidden;';
-
-  const cardTitle = document.createElement('div');
-  cardTitle.style.cssText = 'margin-bottom:6px;';
-  renderKatex('\\text{Sustituyendo: }' + buildFormulaTex(analysis), cardTitle, false);
-  card.appendChild(cardTitle);
-
-  const chain = document.createElement('div');
-  chain.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:2px;';
-
-  const chainML = [...toMatrList(matMap), { nombre: `I_${gN}`, matriz: Matriz.identidad(gN) }];
-  let actual = rhsExprSub;
-
-  function addBlock(fn, arg) {
-    const b = document.createElement('span');
-    b.style.cssText = 'display:inline-flex;align-items:baseline;';
-    try { fn(arg, chainML, b); } catch(_) { b.textContent = arg; }
-    chain.appendChild(b);
-  }
-  function addEq() {
-    const sp = document.createElement('span');
-    sp.textContent = '=';
-    sp.style.cssText = 'margin:0 4px;align-self:center;';
-    chain.appendChild(sp);
-  }
-
-  addBlock(Representar.expresionMatricial, actual);
-  for (let i = 0; i < 30; i++) {
-    try {
-      const next = ExpresionMatricial.calcularUnPaso(actual, chainML);
-      if (!next || next === actual) break;
-      addEq();
-      addBlock(Representar.expresionMatricialIntermedia, next);
-      actual = next;
-    } catch(_) { break; }
-  }
-
-  card.appendChild(chain);
-  container.appendChild(card);
-
-  caja21.scrollTop = caja21.scrollHeight;
   onComplete();
 }
 
