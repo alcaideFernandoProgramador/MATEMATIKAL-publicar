@@ -233,6 +233,7 @@ Constructor: new Resolver(ecuacion:cadena): instancia
   (no hay métodos de instancia)
 [Métodos estáticos]
   Resolver.ecuacion(expresion:cadena): lista de cadenas  // Resuelve f(x)=0 (simplifica, toma numerador) y devuelve raíces simbólicas tipo "x=...".
+  Resolver.analizarEcuacion(expresion:cadena): objeto  // Distingue resuelta, sin soluciones reales y no resuelta por la biblioteca.
   Resolver.ecuacionValores(expresion:cadena): lista de cadenas  // Igual que arriba pero devuelve solo los valores (sin "x="), como cadenas.
   Resolver.ecuacionPolinomio(polinomio:cadena): lista de cadenas  // Raíces simbólicas del polinomio dado.
   Resolver.ecuacionPolinomioValores(polinomio:cadena): lista de cadenas  // Valores de las raíces del polinomio dado.
@@ -755,23 +756,43 @@ class Polinomio {
     polinomio.monomios.sort((m1, m2) => {const gradoM1 = Object.values(m1.variables).reduce((acc, exp) => acc + exp, 0);
     const gradoM2 = Object.values(m2.variables).reduce((acc, exp) => acc + exp, 0);return gradoM1 - gradoM2;});
     return polinomio.monomios.map(monomio => monomio.toString());} 
-  static raicesPolinomioUnaVariable(poli){let vars=Polinomio.variables(poli),letr=vars[0];if(!letr)return[];
-    poli=Polinomio.quitarDenominadores(poli)[0]; let factores=Polinomio.factorizar(poli);let raic=[];    
-    for(let i=0; i<factores.length;i++){if(Polinomio.grado(factores[i])===1){let primerM="";let segundoM="";let factorParse=Polinomio.parsePolinomio(factores[i]);
-    for (let j=0;j<factorParse.monomios.length;j++){
-        if(factorParse.monomios[j].toString().includes(letr)){primerM=primerM+factorParse.monomios[j].toString()}
-        else{segundoM=segundoM+factorParse.monomios[j].toString()};}; 
-    if(segundoM===""){segundoM="0"};let rai="-("+segundoM+")/("+Monomio.obtenerCoeficiente(primerM).toString()+")"; 
-    rai=FraccionAlgebraica.simplificar(rai);
-    raic.push(rai);}};for (let i=0;i<raic.length;i++){raic[i]=FraccionNumerica.simplificar(raic[i]);raic[i]=letr+"="+raic[i]};return raic}
-  static raicesPolinomioUnaVariableValores(poli){let vars=Polinomio.variables(poli),letr=vars[0];if(!letr)return[];
-    poli=Polinomio.quitarDenominadores(poli)[0]; let factores=Polinomio.factorizar(poli);let raic=[];    
-    for(let i=0; i<factores.length;i++){if(Polinomio.grado(factores[i])===1){let primerM="";let segundoM="";let factorParse=Polinomio.parsePolinomio(factores[i]);
-    for (let j=0;j<factorParse.monomios.length;j++){
-        if(factorParse.monomios[j].toString().includes(letr)){primerM=primerM+factorParse.monomios[j].toString()}
-        else{segundoM=segundoM+factorParse.monomios[j].toString()};}; 
-    if(segundoM===""){segundoM="0"};let rai="-("+segundoM+")/("+Monomio.obtenerCoeficiente(primerM).toString()+")"; rai=FraccionAlgebraica.simplificar(rai);
-    raic.push(rai);}};for (let i=0;i<raic.length;i++){raic[i]=FraccionNumerica.simplificar(raic[i]).toString()};return raic}
+  static _raizFactorLineal(factor, variable){let primerM="";let segundoM="";let factorParse=Polinomio.parsePolinomio(factor);
+    for(let j=0;j<factorParse.monomios.length;j++){
+      if(factorParse.monomios[j].toString().includes(variable)){primerM=primerM+factorParse.monomios[j].toString()}
+      else{segundoM=segundoM+factorParse.monomios[j].toString()};}
+    if(segundoM===""){segundoM="0"};let raiz="-("+segundoM+")/("+Monomio.obtenerCoeficiente(primerM).toString()+")";
+    raiz=FraccionAlgebraica.simplificar(raiz);return FraccionNumerica.simplificar(raiz).toString()}
+  static _raicesFactorCuadraticoReal(factor, variable){let normalizado=Polinomio.quitarDenominadores(factor)[0];
+    let coef=Polinomio.coeficientesPotenciasCrecientesVariable(normalizado,variable).map(Number);
+    while(coef.length<3){coef.push(0)};let c=coef[0],b=coef[1],a=coef[2];
+    if(![a,b,c].every(Number.isFinite)||a===0||![a,b,c].every(Number.isSafeInteger)){
+      return {completa:false,sinSolucionesReales:false,valores:[]}}
+    if(a<0){a=-a;b=-b;c=-c};let discriminante=b*b-4*a*c;
+    if(!Number.isSafeInteger(discriminante)){return {completa:false,sinSolucionesReales:false,valores:[]}}
+    if(discriminante<0){return {completa:true,sinSolucionesReales:true,valores:[]}}
+    let LONG_FC=(typeof long!=="undefined")?long:12;let denominador=2*a;
+    let racional=(numerador)=>fraccionContinua((numerador/denominador).toString(),LONG_FC);
+    let raizDiscriminante=Math.sqrt(discriminante);
+    if(Number.isInteger(raizDiscriminante)){
+      return {completa:true,sinSolucionesReales:false,valores:[...new Set([racional(-b+raizDiscriminante),racional(-b-raizDiscriminante)])]}}
+    let fuera=1;for(let k=Math.floor(raizDiscriminante);k>=2;k--){if(discriminante%(k*k)===0){fuera=k;break}}
+    let dentro=discriminante/(fuera*fuera);let divisor=mcd(mcd(Math.abs(b),fuera),denominador)||1;
+    let constante=-b/divisor;let coefRadical=fuera/divisor;denominador=denominador/divisor;
+    let radical=(coefRadical===1?"":coefRadical+"*")+"sqrt("+dentro+")";
+    let numeradorMas=(constante===0?"":constante+"+")+radical;
+    let numeradorMenos=(constante===0?"":constante.toString())+"-"+radical;
+    let dividir=(numerador)=>denominador===1?numerador:(constante===0?numerador+"/"+denominador:"("+numerador+")/"+denominador);
+    return {completa:true,sinSolucionesReales:false,valores:[...new Set([dividir(numeradorMas),dividir(numeradorMenos)])]}}
+  static raicesPolinomioUnaVariable(poli){let vars=Polinomio.variables(poli),letr=vars[0];if(!letr||vars.length!==1)return[];
+    return Polinomio.raicesPolinomioUnaVariableValores(poli).map(valor=>letr+"="+valor)}
+  static raicesPolinomioUnaVariableValores(poli){let vars=Polinomio.variables(poli),letr=vars[0];if(!letr||vars.length!==1)return[];
+    poli=Polinomio.quitarDenominadores(poli)[0];let factores=Polinomio.factorizar(poli);let raic=[];
+    for(let i=0;i<factores.length;i++){let varsFactor=Polinomio.variables(factores[i]);let grado=Polinomio.grado(factores[i]);
+      if(varsFactor.length!==1){continue}
+      if(grado===1){raic.push(Polinomio._raizFactorLineal(factores[i],letr))}
+      else if(grado===2){let analisis=Polinomio._raicesFactorCuadraticoReal(factores[i],letr);
+        if(analisis.completa){raic=[...raic,...analisis.valores]}}}
+    return [...new Set(raic)]}
   static raices(poli){let factores=Polinomio.factorizar(poli); let raic=[];for (let i=0;i<factores.length;i++){
     if(Polinomio.variables(factores[i]).length===1){let raicAux=Polinomio.raicesPolinomioUnaVariable(factores[i]); raic=[...raic,...raicAux]}
     if(Polinomio.variables(factores[i]).length===2&&Polinomio.grado(factores[i])===1){let primerM="";let segundoM=""; let factor=Polinomio.parsePolinomio(factores[i]);
@@ -1730,6 +1751,22 @@ for(let i=0;i<m;i++)M[i][i]=""+variablesPrincipales[i];return M;
 class Resolver {constructor(ecuacion) {this.ecuacion = ecuacion;}
   static ecuacion(expresion) {let soluciones=[]; expresion=FraccionAlgebraica.numerador(ExpresionAlgebraica.simplificar(expresion));
     soluciones=Polinomio.raices(expresion);return soluciones}
+  static analizarEcuacion(expresion) {let simplificada=FraccionAlgebraica.numerador(ExpresionAlgebraica.simplificar(expresion));
+    let variables=Polinomio.variables(simplificada);let soluciones=Polinomio.raices(simplificada);
+    if(variables.length===0){let estado=simplificada==="0"?"identidad":"sin_soluciones_reales";
+      return {estado:estado,expresion:simplificada,variables:variables,soluciones:soluciones}}
+    if(variables.length!==1){let estado=Polinomio.grado(simplificada)<=1&&soluciones.length?"resuelta":
+      (soluciones.length?"resuelta_parcialmente":"no_resuelta_por_la_biblioteca");
+      return {estado:estado,expresion:simplificada,variables:variables,soluciones:soluciones}}
+    let factores=Polinomio.factorizar(Polinomio.quitarDenominadores(simplificada)[0]);let completa=true;
+    for(let i=0;i<factores.length;i++){let varsFactor=Polinomio.variables(factores[i]);if(varsFactor.length===0){continue}
+      let grado=Polinomio.grado(factores[i]);if(grado===1){continue}
+      if(grado===2&&varsFactor.length===1){let analisis=Polinomio._raicesFactorCuadraticoReal(factores[i],variables[0]);
+        if(!analisis.completa){completa=false};continue}
+      completa=false}
+    let estado=completa?(soluciones.length?"resuelta":"sin_soluciones_reales"):
+      (soluciones.length?"resuelta_parcialmente":"no_resuelta_por_la_biblioteca");
+    return {estado:estado,expresion:simplificada,variables:variables,soluciones:soluciones}}
   static ecuacionValores(expresion) {let soluciones=[]; expresion=FraccionAlgebraica.numerador(ExpresionAlgebraica.simplificar(expresion));
     soluciones=Polinomio.raicesValores(expresion);return soluciones}
   static ecuacionPolinomio(polinomio) {let soluciones=[]; soluciones=Polinomio.raices(polinomio);return soluciones}

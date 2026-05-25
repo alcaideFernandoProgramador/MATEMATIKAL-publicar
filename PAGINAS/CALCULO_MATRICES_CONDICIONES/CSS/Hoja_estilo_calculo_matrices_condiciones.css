@@ -1,0 +1,83 @@
+.heroDesc{max-width:100%}
+.enunciado{background:linear-gradient(135deg,#eef2ff 0%,#f0f4ff 100%);border:1.5px solid rgba(59,110,248,.3);border-radius:14px;padding:14px 20px;margin:0 0 20px;position:relative}
+.enunciado p{margin:0;color:#0f1629;font-weight:500;line-height:1.65}
+.compactFormulaGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.modeGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 12px}
+.compactModeGrid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px}
+.modeBtn{min-height:58px;text-align:left;justify-content:flex-start;align-items:flex-start;flex-direction:column;background:#f8fafc}
+.modeBtn strong{font-size:13px;color:#0f1629}
+.modeBtn small{font-size:11px;color:#64748b;font-weight:700;line-height:1.3}
+.modeBtn.active{background:#e8eeff;border-color:#93a7ff;box-shadow:0 0 0 3px rgba(59,110,248,.12)}
+.condForm{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px;align-items:end;margin-top:10px}
+.condField{grid-column:span 4;min-width:0}
+.condField.wide{grid-column:span 8}
+.condField.equationField{grid-column:span 4}
+.condField.full{grid-column:span 12}
+.condField label{display:block;margin:0 0 5px;font-size:12px;font-weight:800;color:#374151}
+.condField .inputEcuacion{width:40%}
+.templateMatrixWrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.templateMatrixWrap table{border-spacing:6px}
+.resultMatrixBlock{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-top:12px}
+.resultMatrixBox{border:1px solid var(--border);background:#fff;border-radius:10px;padding:14px 16px;overflow-x:auto;max-width:100%}
+.resultMatrixBox .resultMatrixTitle{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#2d4faa;margin-bottom:10px}
+.linearSystemPreview{overflow-x:auto;padding:8px 0}
+.solutionKind{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;background:#ecfdf5;color:#166534;border:1px solid #bbf7d0;margin-bottom:10px}
+.solutionKind.none{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+.solutionKind.infinite{background:#eef2ff;color:#1e40af;border-color:#c7d2fe}
+.varList{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
+.varChip{border:1px solid var(--border);background:#fafafe;border-radius:8px;padding:8px 10px;min-height:38px;display:flex;align-items:center;overflow-x:auto}
+.quickActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.summaryPill{border:1px solid rgba(30,50,150,.1);border-radius:14px;padding:12px 16px;background:#fff;box-shadow:0 2px 12px rgba(20,40,120,.06);overflow-x:auto}
+.summaryPillTitle{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#3b6ef8;margin-bottom:8px}
+.problemSummaryRow{display:flex;align-items:center;gap:12px;flex-wrap:nowrap;padding:4px 0;overflow-x:auto}
+.problemSummaryRow .summaryPill{flex:0 0 auto}
+.conditionSummary{display:inline-flex;align-items:center;gap:14px;padding:8px 14px}
+.conditionSummary .summaryPillTitle{margin-bottom:0}
+.conditionMath{display:inline-flex;align-items:center}
+.matrixSummary{display:inline-flex;align-items:center;gap:14px;padding:8px 14px}
+.matrixSummary .summaryPillTitle{margin-bottom:0}
+.knownInputSummary{padding:8px 14px}
+.knownMatricesPrompt{margin:0 0 4px;font-size:12px;font-weight:700;color:#374151}
+.knownMatricesInputs,.knownMatricesValues{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.knownInputSummary .matrizInputWrap{display:inline-flex;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.conditionEquality{padding:8px 0 2px;overflow-x:auto}
+.conditionEquality .katex-display{margin:0}
+.conditionDetailActions{display:flex;justify-content:flex-start;margin:8px 0 2px}
+.conditionDetailsToggle{font-size:12px;padding:7px 12px}
+.conditionMembersDetail[hidden]{display:none}
+.conditionMemberCalc{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border)}
+.conditionMemberTitle{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#2d4faa;margin-bottom:6px}
+.conditionMemberWork{overflow-x:auto}
+.linearSystemChain{display:flex;align-items:center;gap:12px;overflow-x:auto;padding:2px 0 8px;white-space:nowrap}
+.linearStaticSystem{display:inline-flex;align-items:center;flex:0 0 auto}
+.linearStaticSystem .katex-display{margin:0}
+.systemEquivalence{display:inline-flex;align-items:center;color:var(--accent);flex:0 0 auto}
+.linearInputSystem{display:inline-flex;align-items:center;flex:0 0 auto}
+.linearInputBrace{font:normal 54px/1 Georgia,serif;color:#1a2b6b;padding-right:6px;align-self:stretch;display:flex;align-items:center}
+.linearEquationFields{display:inline-flex;flex-direction:column;justify-content:center;gap:5px}
+.linearEquationInput{width:196px;height:30px;font-size:14px}
+.linearSystemErrors .msgError{margin:4px 0 0}
+.parameterMatrixChain{display:flex;align-items:center;gap:12px;overflow-x:auto;padding:4px 0 8px;white-space:nowrap}
+.parameterMatrixInput{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto}
+.parameterMatrixLabel,.parameterStaticMatrix{display:inline-flex;align-items:center;flex:0 0 auto}
+.parameterInputMatrix{display:inline-flex;align-items:center}
+.parameterInputMatrix table{border-spacing:5px}
+.parameterMatrixCell{width:54px}
+.parameterMatrixErrors .msgError{margin:4px 0 0}
+.solutionSummary{border-color:rgba(37,99,235,.25);background:#f0f4ff}
+.summarySolutionStatus{margin-bottom:0}
+#caja1 .pasoSection{margin-top:12px}
+.stepCard .stepTitle{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stepTitleAutoBtn{flex-direction:column;align-items:center;gap:1px;font-size:11px;padding:5px 10px;background:#f5f3ff;border-color:#c4b5fd;color:#7c3aed;flex-shrink:0}
+.stepTitleAutoBtn:hover{background:#ede9fe;border-color:#a78bfa}
+.stepTitleAutoNote{font-size:9px;font-weight:700;color:#9ca3af}
+.unknownNameControl{display:flex;align-items:center;gap:6px}
+.unknownNameControl label{font-size:11px;font-weight:800;color:var(--muted);white-space:nowrap;margin:0}
+.unknownNameInput{width:32px;height:26px;text-align:center;font-size:14px;font-weight:800;text-transform:uppercase;border:1px solid var(--border);border-radius:6px;background:var(--soft);color:var(--accent);padding:0;outline:none;cursor:pointer}
+.unknownNameInput:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+@media(max-width:900px){
+  .compactFormulaGrid,.modeGrid{grid-template-columns:1fr}
+  .condField,.condField.wide,.condField.equationField,.condField.full{grid-column:span 12}
+  .problemSummaryRow{align-items:flex-start}
+  .linearEquationInput{width:170px}
+}
