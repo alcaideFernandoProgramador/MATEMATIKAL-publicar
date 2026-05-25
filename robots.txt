@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 
+# Bloquear URLs con parámetros de versión/caché que generan duplicados
+Disallow: /*?v=*
+Disallow: /*?v=
+
+# Bloquear archivos internos que no deben indexarse
+Disallow: /CARPETAS_AUXILIARES/
+Disallow: /*.js$
+Disallow: /*.css$
+
 Sitemap: https://matematikal.com/sitemap.xml
