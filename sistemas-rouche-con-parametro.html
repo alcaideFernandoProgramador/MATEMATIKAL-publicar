@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistemas de ecuaciones con parámetro: Rouché-Frobenius | Matematikal</title>
+<meta name="description" content="Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el teorema de Rouché-Frobenius: valores críticos, rangos, tabla de clasificación y ejemplos resueltos completos.">
+<meta name="author" content="Fernando Alcaide Guindo">
+<link rel="canonical" href="https://matematikal.com/sistemas-rouche-con-parametro.html"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/sistemas-rouche-con-parametro.html"/>
+<meta property="og:title" content="Sistemas de ecuaciones con parámetro: Rouché-Frobenius | Matematikal"/>
+<meta property="og:description" content="Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el teorema de Rouché-Frobenius: valores críticos, rangos, tabla de clasificación y ejemplos resueltos completos."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Sistemas de ecuaciones con parámetro: Rouché-Frobenius",
+  "description": "Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el teorema de Rouché-Frobenius: valores críticos, rangos, tabla de clasificación y ejemplos resueltos completos.",
+  "url": "https://matematikal.com/sistemas-rouche-con-parametro.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "Article",
+  "teaches": "Discusión y resolución de sistemas de ecuaciones lineales con parámetro mediante el teorema de Rouché-Frobenius",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
+<link href="/common.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<!-- KaTeX -->
+<link rel="stylesheet" href="CARPETAS_AUXILIARES/katex/katex.min.css">
+<script defer src="CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer src="CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+
+<style>
+:root{
+  --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
+  --blue-light:#e8eeff;
+  --text-primary:#0f1629;--text-secondary:#4a5270;--text-muted:#7b839e;
+  --bg-page:#f4f6fd;--bg-card:#ffffff;--border-card:rgba(30,50,150,.08);
+  --radius-card:20px;
+  --shadow-card:0 4px 24px rgba(20,40,120,.07),0 1px 4px rgba(20,40,120,.04);
+  --shadow-btn:0 8px 28px rgba(43,79,170,.28);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0}
+
+/* CABECERA */
+.cabecera-art{background:#071a09;color:#fff;padding:1.2rem 2rem;margin-bottom:0}
+.cabecera-art-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo-link{text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.logo-nombre{font-family:var(--font-body);font-weight:700;font-size:1.15rem;color:#fff;letter-spacing:-.02em}
+.btn-herramienta{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:#fff;color:var(--blue-deep);font-weight:700;font-size:.88rem;text-decoration:none;box-shadow:var(--shadow-btn);transition:transform .15s,box-shadow .18s}
+.btn-herramienta:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(43,79,170,.32)}
+
+/* WRAP ARTÍCULO */
+.art-wrap{max-width:1030px;margin:0 auto;padding:36px 24px 64px}
+
+/* HERO ARTÍCULO */
+.art-hero{margin-bottom:36px}
+.art-breadcrumb{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
+.art-breadcrumb a{color:var(--text-muted);text-decoration:none}
+.art-breadcrumb a:hover{color:var(--blue-mid)}
+.art-breadcrumb span{margin:0 6px}
+h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem);font-weight:400;color:var(--blue-deep);margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}
+.art-bajada{font-size:1.05rem;color:var(--text-secondary);line-height:1.7;margin:0 0 8px}
+.art-bajada-lista{list-style:none;margin:4px 0 20px;padding-left:2cm;color:var(--text-secondary);font-size:1.05rem;line-height:1.7;counter-reset:bajada}
+.art-bajada-lista li{margin:3px 0;display:flex;align-items:flex-start;gap:9px}
+.art-bajada-lista li::before{counter-increment:bajada;content:counter(bajada,lower-alpha);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:5px;background:rgba(59,110,248,.1);color:var(--blue-mid);font-size:.71rem;font-weight:700;flex-shrink:0;margin-top:3px}
+.art-meta{font-size:.83rem;color:var(--text-muted)}
+
+/* ÍNDICE */
+.art-indice{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:22px 24px;margin-bottom:36px;box-shadow:var(--shadow-card)}
+.art-indice h2{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-bright);margin:0 0 16px}
+.art-indice ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:4px 20px;counter-reset:indice}
+.art-indice ol li{display:flex;align-items:flex-start;gap:9px;padding:5px 8px;border-radius:8px;transition:background .15s}
+.art-indice ol li::before{counter-increment:indice;content:counter(indice);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:5px;background:rgba(59,110,248,.1);color:var(--blue-mid);font-size:.71rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.art-indice ol li a{color:var(--text-secondary);text-decoration:none;font-size:.92rem;line-height:1.42;transition:color .15s}
+.art-indice ol li:hover{background:rgba(59,110,248,.05)}
+.art-indice ol li:hover a{color:var(--blue-bright)}
+@media(max-width:600px){.art-indice ol{grid-template-columns:1fr}}
+
+/* SECCIONES */
+.art-seccion{margin-bottom:40px}
+.art-seccion h2{font-family:var(--font-display);font-size:1.55rem;font-weight:400;color:var(--blue-deep);margin:0 0 14px;letter-spacing:-.01em;padding-bottom:10px;border-bottom:2px solid var(--blue-light)}
+.art-seccion h3{font-size:1.1rem;font-weight:700;color:var(--blue-mid);margin:24px 0 10px}
+.art-seccion p{color:var(--text-secondary);line-height:1.75;margin:0 0 12px}
+.art-seccion p strong{color:var(--text-primary)}
+
+/* BLOQUES FÓRMULA */
+.k{background:linear-gradient(135deg,var(--blue-light) 0%,#f0f4ff 100%);border:1px solid rgba(59,110,248,.14);border-radius:14px;padding:18px 20px;overflow-x:auto;margin:14px 0;text-align:center}
+.k-par{display:flex;gap:16px;align-items:center;margin:14px 0;flex-wrap:wrap}
+.k-par>.k{flex:1;min-width:200px;margin:0}
+
+/* TABLA ROUCHÉ */
+.tablaClas{width:100%;border-collapse:collapse;margin:16px 0;font-size:.93rem}
+.tablaClas th{background:var(--blue-mid);color:#fff;padding:9px 14px;text-align:center;font-weight:700}
+.tablaClas td{padding:8px 14px;border:1px solid rgba(30,50,150,.1);text-align:center;color:var(--text-secondary)}
+.tablaClas tr:nth-child(even) td{background:#f4f6fd}
+.tablaClas td strong{color:var(--text-primary)}
+
+/* TIPOS DE SISTEMA */
+.tipos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.tipo-box{border-radius:12px;padding:14px 16px;font-size:.92rem;line-height:1.55;border:1px solid var(--border-card)}
+.tipo-det{background:#edf7ed;border-color:#b7ddb7;color:#1a4d1a}
+.tipo-det strong{color:#145214}
+.tipo-indet{background:#fff8e6;border-color:#f5d97a;color:#5a420a}
+.tipo-indet strong{color:#3d2c05}
+.tipo-incomp{background:#fdecea;border-color:#f5b8b5;color:#6b1a18}
+.tipo-incomp strong{color:#4a1110}
+.tipo-box strong{display:block;margin-bottom:4px;font-size:.95rem}
+
+/* OPERACIONES */
+.ops-grid{display:flex;flex-direction:column;gap:6px;margin:14px 0}
+.op-box{border:1px solid var(--border-card);border-radius:12px;padding:11px 16px;background:#f4f6fd}
+.op-box strong{display:inline;margin-right:6px;color:var(--text-primary);font-size:.88rem;text-transform:uppercase;letter-spacing:.03em}
+.op-box span{color:var(--text-secondary);font-size:.93rem}
+
+/* PASOS */
+.pasos-lista{margin:0;padding-left:22px}
+.pasos-lista li{margin:12px 0;line-height:1.7;color:var(--text-secondary)}
+.pasos-lista li strong{color:var(--text-primary)}
+
+/* EJEMPLOS */
+.ejemplo-bloque{background:var(--bg-card);border:1px solid var(--border-card);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--shadow-card)}
+.ejemplo-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.06em;margin-bottom:12px}
+.badge-det{background:#edf7ed;color:#145214}
+.badge-indet{background:#fff8e6;color:#3d2c05}
+.badge-incomp{background:#fdecea;color:#4a1110}
+.ejemplo-bloque h3{font-size:1.1rem;font-weight:700;color:var(--blue-deep);margin:0 0 14px}
+.ejemplo-paso{margin:14px 0 6px;font-size:.9rem;font-weight:700;color:var(--blue-mid);text-transform:uppercase;letter-spacing:.04em}
+.resultado-final{display:inline-flex;align-items:center;margin-top:14px;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.9rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+
+/* BLOQUES DE CASO */
+.caso-bloque{margin:14px 0;padding:16px 20px;border-radius:12px;border-left:4px solid}
+.caso-titulo{font-size:.95rem;font-weight:700;margin:0 0 8px}
+.caso-bloque p{margin:4px 0;font-size:.93rem;line-height:1.7}
+.caso-det{background:#edf7ed;border-color:#4caf50}
+.caso-det .caso-titulo{color:#145214}
+.caso-indet{background:#fff8e6;border-color:#f9a825}
+.caso-indet .caso-titulo{color:#5a420a}
+.caso-incomp{background:#fdecea;border-color:#e53935}
+.caso-incomp .caso-titulo{color:#6b1a18}
+.caso-general{background:#eef2ff;border-color:var(--blue-bright)}
+.caso-general .caso-titulo{color:var(--blue-deep)}
+
+/* AVISO */
+.aviso-box{background:#eef2ff;border:1px solid #dbe3ff;border-radius:12px;padding:16px 20px;margin:20px 0}
+.aviso-box p{margin:4px 0;color:var(--text-secondary)}
+.aviso-box p strong{color:var(--blue-deep)}
+
+/* ERRORES */
+.lista-errores{margin:0;padding-left:22px}
+.lista-errores li{margin:10px 0;line-height:1.7;color:var(--text-secondary)}
+.lista-errores li strong{color:var(--text-primary)}
+
+/* EJERCICIOS */
+.mk-ejercicios{margin-top:8px}
+.mk-ejercicios>h2{font-family:var(--font-display);font-size:1.45rem;font-weight:400;color:var(--blue-deep);border-left:5px solid var(--blue-bright);padding-left:.8rem;margin-bottom:.3rem}
+.mk-subtitulo{font-size:.94rem;color:var(--text-secondary);margin-bottom:1.6rem}
+.mk-ejercicio{background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-card);margin-bottom:1.2rem;overflow:hidden;box-shadow:var(--shadow-card)}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;padding:.85rem 1.2rem;background:#f4f6fd;border-bottom:1px solid var(--border-card)}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .65rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;background:rgba(59,110,248,.1);color:var(--blue-deep)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page);font-size:.94rem;line-height:1.8;color:var(--text-primary)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+
+/* CTA HERRAMIENTA */
+.cta-herramienta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin:40px 0;flex-wrap:wrap}
+.cta-herramienta p{margin:0;color:rgba(255,255,255,.88);font-size:1rem;line-height:1.6;max-width:560px}
+.cta-herramienta p strong{color:#fff}
+.cta-btn{display:inline-flex;align-items:center;padding:11px 24px;border-radius:999px;background:#fff;color:var(--blue-deep);text-decoration:none;font-weight:800;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn);white-space:nowrap;transition:transform .15s}
+.cta-btn:hover{transform:translateY(-2px)}
+
+/* ENLACES RELACIONADOS */
+.relacionados{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.rel-card{background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:16px 18px;text-decoration:none;transition:box-shadow .2s,transform .2s;box-shadow:var(--shadow-card)}
+.rel-card:hover{box-shadow:0 8px 28px rgba(20,40,120,.1);transform:translateY(-1px)}
+.rel-card strong{display:block;color:var(--blue-deep);font-size:.95rem;margin-bottom:4px}
+.rel-card span{color:var(--text-muted);font-size:.85rem}
+
+@media(max-width:700px){
+  .tipos-grid,.relacionados{grid-template-columns:1fr}
+  .art-wrap{padding:24px 16px 48px}
+  .cabecera-art{padding:1rem}
+  .cta-herramienta{flex-direction:column}
+  .ejemplo-bloque{padding:18px 16px}
+  .tablaClas{font-size:.82rem}
+  .tablaClas th,.tablaClas td{padding:6px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<header class="cabecera-art">
+  <div class="cabecera-art-inner">
+    <a class="logo-link" href="/">
+      <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="14" cy="14" rx="11" ry="13" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+        <polyline points="8,17 11,17 14,5 17,22 20,13 22,13" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-nombre">Matematikal</span>
+    </a>
+    <a class="btn-herramienta" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">
+      Ir a la calculadora →
+    </a>
+  </div>
+</header>
+
+<div class="art-wrap">
+
+  <!-- HERO -->
+  <div class="art-hero">
+    <p class="art-breadcrumb">
+      <a href="/">Inicio</a><span>›</span>
+      <a href="/">Sistemas de ecuaciones</a><span>›</span>
+      Rouché-Frobenius con parámetro
+    </p>
+    <h1 class="art-titulo">Sistemas de ecuaciones con un parámetro: teorema de Rouché-Frobenius</h1>
+    <p class="art-bajada">Todo lo que necesitas para discutir y resolver sistemas con un parámetro usando el teorema de Rouché-Frobenius:</p>
+    <ol class="art-bajada-lista">
+      <li>Cómo calcular los rangos de \(A\) y \((A\,|\,b)\) con el parámetro presente.</li>
+      <li>Cómo encontrar los valores críticos e identificar el tipo de sistema en cada caso.</li>
+      <li>Ejemplos resueltos completos con discusión, tabla de rangos y solución.</li>
+    </ol>
+    <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
+  </div>
+
+  <!-- ÍNDICE -->
+  <nav class="art-indice" aria-label="Índice de contenidos">
+    <h2>Contenidos</h2>
+    <ol>
+      <li><a href="#que-es">¿Qué es un sistema con parámetro?</a></li>
+      <li><a href="#teorema">El teorema de Rouché-Frobenius</a></li>
+      <li><a href="#valores-criticos">Los valores críticos del parámetro</a></li>
+      <li><a href="#algoritmo">El método paso a paso</a></li>
+      <li><a href="#ejemplos">Ejemplos resueltos</a></li>
+      <li><a href="#errores">Errores frecuentes</a></li>
+      <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. QUÉ ES -->
+  <section class="art-seccion" id="que-es">
+    <h2>1. ¿Qué es un sistema de ecuaciones con un parámetro?</h2>
+    <p>Un <strong>sistema de ecuaciones lineales con un parámetro</strong> es un sistema en el que uno o varios coeficientes, o algún término independiente, dependen de una variable simbólica —generalmente llamada \(a\), \(k\) o \(\lambda\)— que puede tomar cualquier valor real.</p>
+    <p>Dado que el parámetro aparece en la matriz de coeficientes \(A\) o en la matriz ampliada \((A\,|\,b)\), el rango de estas matrices varía según el valor del parámetro, y con él <strong>cambia la clasificación del sistema</strong>. El objetivo no es solo resolver el sistema para un valor concreto, sino <strong>discutirlo</strong>: determinar para qué valores del parámetro el sistema es compatible determinado, indeterminado o incompatible, y dar la solución en los casos en que exista.</p>
+    <div class="aviso-box">
+      <p><strong>Ejemplo:</strong> en el sistema \(\left\{\begin{aligned}x+y&=1\\ax+y&=a\end{aligned}\right.\), si \(a=1\) ambas ecuaciones son iguales y hay infinitas soluciones; para \(a\neq 1\) el sistema tiene solución única \(x=1,\; y=0\). El tipo depende del valor del parámetro \(a\).</p>
+    </div>
+    <h3>¿Por qué usar el método de Rouché-Frobenius?</h3>
+    <p>A diferencia del método de Gauss —que escala la matriz operando fila a fila—, el <strong>método de Rouché-Frobenius clasifica el sistema comparando rangos calculados mediante determinantes de menores</strong>. Esto lo hace especialmente cómodo cuando el parámetro aparece en varios coeficientes a la vez, ya que el determinante de la matriz de coeficientes es una expresión polinómica en el parámetro que se puede factorizar con facilidad.</p>
+  </section>
+
+  <!-- 2. TEOREMA -->
+  <section class="art-seccion" id="teorema">
+    <h2>2. El teorema de Rouché-Frobenius</h2>
+    <p>El teorema de Rouché-Frobenius relaciona el tipo del sistema con los rangos de la matriz de coeficientes \(A\) y de la matriz ampliada \((A\,|\,b)\), comparándolos con el número de incógnitas \(n\):</p>
+    <table class="tablaClas">
+      <tr>
+        <th>\(\text{rg}(A)\)</th>
+        <th>\(\text{rg}(A\,|\,b)\)</th>
+        <th>vs. \(n\)</th>
+        <th>Tipo del sistema</th>
+      </tr>
+      <tr>
+        <td>\(r\)</td>
+        <td>\(r' \neq r\)</td>
+        <td>—</td>
+        <td><strong>Incompatible (SI)</strong> · sin solución</td>
+      </tr>
+      <tr>
+        <td>\(r\)</td>
+        <td>\(r' = r\)</td>
+        <td>\(r = n\)</td>
+        <td><strong>Compatible determinado (SCD)</strong> · solución única</td>
+      </tr>
+      <tr>
+        <td>\(r\)</td>
+        <td>\(r' = r\)</td>
+        <td>\(r &lt; n\)</td>
+        <td><strong>Compatible indeterminado (SCI)</strong> · \(n-r\) parámetros libres</td>
+      </tr>
+    </table>
+    <p>De forma compacta:</p>
+    <div class="k">\[
+    \text{El sistema es compatible} \iff \text{rg}(A) = \text{rg}(A\,|\,b)
+    \]</div>
+    <p>Cuando el sistema es compatible, el número de <strong>grados de libertad</strong> (parámetros libres en la solución) es \(n - \text{rg}(A)\). Si vale 0, la solución es única; si es positivo, hay infinitas soluciones.</p>
+    <h3>Cómo se calcula el rango con el parámetro presente</h3>
+    <p>El rango de una matriz es el <strong>orden del mayor menor no nulo</strong>. Con un parámetro, los menores son polinomios en ese parámetro. La estrategia es:</p>
+    <div class="ops-grid">
+      <div class="op-box">
+        <strong>1. Menor de orden máximo de \(A\)</strong>
+        <span>Se calcula \(\det(A)\) (si \(A\) es cuadrada) o el determinante del mayor menor cuadrado posible. Igualar a cero da los valores críticos.</span>
+      </div>
+      <div class="op-box">
+        <strong>2. Rango de \(A\) en cada caso</strong>
+        <span>Si el determinante del menor de orden máximo es no nulo, el rango es máximo. Si es nulo, se busca un menor de orden inferior no nulo para determinar el rango exacto.</span>
+      </div>
+      <div class="op-box">
+        <strong>3. Rango de \((A\,|\,b)\)</strong>
+        <span>Se repite el proceso añadiendo la columna de términos independientes. Un menor de orden \(r+1\) no nulo en la ampliada (cuando \(A\) tiene rango \(r\)) delata la incompatibilidad.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. VALORES CRÍTICOS -->
+  <section class="art-seccion" id="valores-criticos">
+    <h2>3. Los valores críticos del parámetro</h2>
+    <p>Se llaman <strong>valores críticos</strong> a los valores del parámetro que anulan el determinante de la matriz de coeficientes (o de su mayor menor cuadrado). Son los únicos valores para los que el rango puede bajar respecto al caso general, alterando la clasificación del sistema.</p>
+    <div class="aviso-box">
+      <p><strong>Cómo se obtienen:</strong> se calcula \(\det(A)\) como polinomio en el parámetro y se resuelve \(\det(A) = 0\). Cada raíz de esa ecuación es un valor crítico que hay que estudiar por separado.</p>
+    </div>
+    <p>Una vez identificados los valores críticos, el análisis distingue:</p>
+    <div class="tipos-grid">
+      <div class="tipo-box tipo-det">
+        <strong>Caso general</strong>
+        Cualquier valor del parámetro distinto de todos los valores críticos. El rango de \(A\) es máximo y la clasificación se hace directamente.
+      </div>
+      <div class="tipo-box tipo-indet">
+        <strong>Cada valor crítico</strong>
+        Se sustituye el valor en \(A\) y \((A\,|\,b)\) y se recalcula el rango. El sistema puede ser compatible indeterminado o incompatible.
+      </div>
+      <div class="tipo-box tipo-incomp">
+        <strong>Regla general</strong>
+        Si \(\text{rg}(A) = \text{rg}(A\,|\,b)\) el sistema es compatible; si difieren, es incompatible. Nunca puede ocurrir \(\text{rg}(A) > \text{rg}(A\,|\,b)\).
+      </div>
+    </div>
+    <p>La resolución de los casos compatibles se hace habitualmente con la <strong>regla de Cramer</strong> (si el sistema es SCD) o expresando \(n - r\) incógnitas en función de las \(n - r\) libres (si es SCI).</p>
+  </section>
+
+  <!-- 4. ALGORITMO -->
+  <section class="art-seccion" id="algoritmo">
+    <h2>4. El método paso a paso</h2>
+    <ol class="pasos-lista">
+      <li>
+        <strong>Escribir la matriz de coeficientes \(A\) y la ampliada \((A\,|\,b)\) con el parámetro.</strong>
+        Se construyen igual que en cualquier sistema; el parámetro aparece en las casillas correspondientes sin simplificar.
+      </li>
+      <li>
+        <strong>Calcular \(\det(A)\) como polinomio en el parámetro.</strong>
+        Si \(A\) no es cuadrada, se toma el mayor menor cuadrado posible. El determinante se factoriza para encontrar sus raíces.
+      </li>
+      <li>
+        <strong>Identificar los valores críticos.</strong>
+        Son las raíces de \(\det(A) = 0\). Cada uno puede cambiar la clasificación del sistema.
+      </li>
+      <li>
+        <strong>Analizar el caso general</strong> (parámetro distinto de todos los críticos).
+        Como \(\det(A) \neq 0\), el rango de \(A\) es máximo. El mismo menor está en \((A\,|\,b)\), por lo que \(\text{rg}(A) = \text{rg}(A\,|\,b)\). Si el rango coincide con \(n\), el sistema es SCD y se resuelve por Cramer.
+      </li>
+      <li>
+        <strong>Analizar cada valor crítico por separado.</strong>
+        Se sustituye el valor en \(A\) y en \((A\,|\,b)\), se calcula el rango de ambas matrices (buscando el mayor menor no nulo) y se aplica la tabla de Rouché-Frobenius. Si el sistema es compatible, se da la solución.
+      </li>
+    </ol>
+  </section>
+
+  <!-- CTA INTERMEDIO -->
+  <div class="cta-herramienta">
+    <p><strong>¿Quieres practicar lo que acabas de leer?</strong> La calculadora de Rouché-Frobenius con parámetro te permite introducir tu propio sistema, calcular los menores simbólicamente y obtener la discusión y la solución para cada valor del parámetro.</p>
+    <a class="cta-btn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">Usar la calculadora →</a>
+  </div>
+
+  <!-- 5. EJEMPLOS -->
+  <section class="art-seccion" id="ejemplos">
+    <h2>5. Ejemplos resueltos</h2>
+
+    <!-- EJEMPLO 1 -->
+    <h3>Ejemplo 1 — Sistema 2×2 con un valor crítico</h3>
+    <p>Discutir y resolver según los valores del parámetro \(k\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x + 2y &= 3 \\
+      kx + 4y &= k
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Matrices de coeficientes y ampliada</p>
+      <div class="k">\[
+      A=\begin{pmatrix}1&2\\k&4\end{pmatrix},\qquad
+      (A\,|\,b)=\left(\begin{array}{cc|c}1&2&3\\k&4&k\end{array}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valor crítico</p>
+      <div class="k">\[
+      \det(A)=\begin{vmatrix}1&2\\k&4\end{vmatrix}=4-2k=2(2-k)
+      \]</div>
+      <p>Igualando a cero: \(4-2k=0 \Rightarrow \boldsymbol{k=2}\). Un único valor crítico.</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(k \neq 2\) — caso general</p>
+        <p>\(\det(A) = 4-2k \neq 0 \Rightarrow \text{rg}(A) = 2\). El mismo menor aparece en la ampliada, por lo que \(\text{rg}(A\,|\,b) = 2\). Como \(\text{rg}(A) = \text{rg}(A\,|\,b) = 2 = n\): <strong>sistema compatible determinado</strong>.</p>
+        <p>Solución única por la regla de Cramer:</p>
+        <div class="k">\[
+        x=\frac{\begin{vmatrix}3&2\\k&4\end{vmatrix}}{4-2k}=\frac{12-2k}{4-2k}=\frac{2(6-k)}{2(2-k)}=\frac{6-k}{2-k}
+        \qquad
+        y=\frac{\begin{vmatrix}1&3\\k&k\end{vmatrix}}{4-2k}=\frac{k-3k}{4-2k}=\frac{-2k}{2(2-k)}=\frac{-k}{2-k}
+        \]</div>
+        <div class="resultado-final">Solución única: \(x=\dfrac{6-k}{2-k},\quad y=\dfrac{-k}{2-k}\quad(k\neq 2)\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(k = 2\)</p>
+        <p>Sustituimos \(k=2\):</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad
+        (A\,|\,b)=\left(\begin{array}{cc|c}1&2&3\\2&4&2\end{array}\right)
+        \]</div>
+        <p>Las filas de \(A\) son proporcionales \((F_2=2F_1)\), así que \(\text{rg}(A)=1\). En la ampliada, el menor de orden 2 formado por las columnas 1 y 3 es:</p>
+        <div class="k">\[
+        \begin{vmatrix}1&3\\2&2\end{vmatrix}=2-6=-4\neq 0 \;\Rightarrow\; \text{rg}(A\,|\,b)=2
+        \]</div>
+        <p>Como \(\text{rg}(A)=1\neq 2=\text{rg}(A\,|\,b)\): <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución para \(k=2\)</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO 2 -->
+    <h3>Ejemplo 2 — Sistema 3×3 simétrico con dos valores críticos</h3>
+    <p>Discutir y resolver según los valores del parámetro \(a\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x + y + az &= 1 \\
+      ax + y + z &= 1 \\
+      x + ay + z &= 1
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Matrices</p>
+      <div class="k">\[
+      A=\begin{pmatrix}1&1&a\\a&1&1\\1&a&1\end{pmatrix},\qquad
+      (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&a&1\\a&1&1&1\\1&a&1&1\end{array}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valores críticos</p>
+      <p>Desarrollando por la regla de Sarrus:</p>
+      <div class="k">\[
+      \det(A)=\underbrace{(1\cdot1\cdot1+1\cdot1\cdot1+a\cdot a\cdot a)}_{\text{diag. positivas}}-\underbrace{(a\cdot1\cdot1+1\cdot1\cdot1+1\cdot a\cdot a\phantom{X})}_{\text{diag. negativas}}
+      =2+a^3-(a+1+a^2)=a^3-a^2-a+1...
+      \]</div>
+      <p>Calculado directamente: \(\det(A)=a^3-3a+2\). Comprobamos que \(a=1\) es raíz: \(1-3+2=0\;\checkmark\). Dividimos:</p>
+      <div class="k">\[
+      a^3-3a+2=(a-1)(a^2+a-2)=(a-1)(a-1)(a+2)=(a-1)^2(a+2)
+      \]</div>
+      <p>Los <strong>valores críticos</strong> son \(\boldsymbol{a=1}\) y \(\boldsymbol{a=-2}\).</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(a \neq 1\) y \(a \neq -2\) — caso general</p>
+        <p>\(\det(A)=(a-1)^2(a+2)\neq 0\Rightarrow\text{rg}(A)=3=n\). El mismo menor de orden 3 garantiza \(\text{rg}(A\,|\,b)=3\). <strong>Sistema compatible determinado.</strong></p>
+        <p>Por la simetría del sistema (las tres columnas de \(b\) son iguales), las tres incógnitas resultan iguales. Calculamos \(x\) por Cramer (los cálculos de \(y\) y \(z\) son análogos):</p>
+        <div class="k">\[
+        \det(A_x)=\begin{vmatrix}1&1&a\\1&1&1\\1&a&1\end{vmatrix}=(1-a)^2
+        \;\Rightarrow\;
+        x=\frac{(1-a)^2}{(a-1)^2(a+2)}=\frac{1}{a+2}
+        \]</div>
+        <p>Por simetría, \(y=z=\dfrac{1}{a+2}\).</p>
+        <div class="resultado-final">Solución única: \(x=y=z=\dfrac{1}{a+2}\quad(a\neq1,\;a\neq-2)\)</div>
+      </div>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(a = 1\)</p>
+        <p>Con \(a=1\) las tres ecuaciones son idénticas (\(x+y+z=1\)):</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&1\\1&1&1\\1&1&1\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&1&1\\1&1&1&1\\1&1&1&1\end{array}\right)
+        \]</div>
+        <p>El único menor de orden 1 no nulo es \(a_{11}=1\), luego \(\text{rg}(A)=1\). En la ampliada ocurre lo mismo: \(\text{rg}(A\,|\,b)=1\).</p>
+        <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=1&lt;n=3\): <strong>sistema compatible indeterminado</strong> con \(3-1=2\) parámetros libres.</p>
+        <p>La única ecuación válida es \(x+y+z=1\). Dejamos \(y=s\) y \(z=t\) libres:</p>
+        <div class="resultado-final">Infinitas soluciones: \(x=1-s-t,\quad y=s,\quad z=t\quad(s,t\in\mathbb{R})\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(a = -2\)</p>
+        <p>Con \(a=-2\):</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&-2\\-2&1&1\\1&-2&1\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&-2&1\\-2&1&1&1\\1&-2&1&1\end{array}\right)
+        \]</div>
+        <p>\(\det(A)=0\). El menor de orden 2 formado por las filas 1 y 2 y las columnas 1 y 2 es \(\begin{vmatrix}1&1\\-2&1\end{vmatrix}=3\neq 0\), luego \(\text{rg}(A)=2\).</p>
+        <p>Para la ampliada, se busca un menor de orden 3 no nulo usando las columnas 1, 2 y 4:</p>
+        <div class="k">\[
+        \begin{vmatrix}1&1&1\\-2&1&1\\1&-2&1\end{vmatrix}=1(1+2)-1(-2-1)+1(4-1)=3+3+3=9\neq 0
+        \;\Rightarrow\;\text{rg}(A\,|\,b)=3
+        \]</div>
+        <p>\(\text{rg}(A)=2\neq 3=\text{rg}(A\,|\,b)\): <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución para \(a=-2\)</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO 3 -->
+    <h3>Ejemplo 3 — Sistema 3×3 con parámetro en coeficiente y como potencia</h3>
+    <p>Discutir y resolver según los valores del parámetro \(a\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x + y + z &= 3 \\
+      x + 2y + az &= 4 \\
+      x + 4y + a^2z &= 6
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Matrices</p>
+      <div class="k">\[
+      A=\begin{pmatrix}1&1&1\\1&2&a\\1&4&a^2\end{pmatrix},\qquad
+      (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&1&3\\1&2&a&4\\1&4&a^2&6\end{array}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valores críticos</p>
+      <div class="k">\[
+      \det(A)=\begin{vmatrix}1&1&1\\1&2&a\\1&4&a^2\end{vmatrix}
+      =1(2a^2-4a)-1(a^2-a)+1(4-2)
+      =2a^2-4a-a^2+a+2
+      =a^2-3a+2=(a-1)(a-2)
+      \]</div>
+      <p>Los <strong>valores críticos</strong> son \(\boldsymbol{a=1}\) y \(\boldsymbol{a=2}\).</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(a \neq 1\) y \(a \neq 2\) — caso general</p>
+        <p>\(\det(A)=(a-1)(a-2)\neq 0\Rightarrow\text{rg}(A)=\text{rg}(A\,|\,b)=3=n\): <strong>sistema compatible determinado</strong>.</p>
+        <p>Calculamos por Cramer:</p>
+        <div class="k">\[
+        \det(A_x)=\begin{vmatrix}3&1&1\\4&2&a\\6&4&a^2\end{vmatrix}=2(a-1)(a-2)
+        \;\Rightarrow\;
+        x=\frac{2(a-1)(a-2)}{(a-1)(a-2)}=2
+        \]</div>
+        <div class="k">\[
+        \det(A_y)=\begin{vmatrix}1&3&1\\1&4&a\\1&6&a^2\end{vmatrix}=(a-1)(a-2)
+        \;\Rightarrow\;
+        y=\frac{(a-1)(a-2)}{(a-1)(a-2)}=1
+        \]</div>
+        <div class="k">\[
+        \det(A_z)=\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=0
+        \;\Rightarrow\;
+        z=0
+        \]</div>
+        <div class="resultado-final">Solución única: \(x=2,\quad y=1,\quad z=0\quad(a\neq1,\;a\neq2)\)</div>
+      </div>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(a = 1\)</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&1\\1&2&1\\1&4&1\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&1&3\\1&2&1&4\\1&4&1&6\end{array}\right)
+        \]</div>
+        <p>El menor de orden 2 de las filas 1 y 2 y las columnas 1 y 2 vale \(\begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq 0\Rightarrow\text{rg}(A)=2\).</p>
+        <p>El menor de orden 3 de la ampliada con las columnas 1, 2 y 4 es \(\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=0\), y el resto de menores de orden 3 disponibles también se anulan, por lo que \(\text{rg}(A\,|\,b)=2\).</p>
+        <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=2&lt;n=3\): <strong>sistema compatible indeterminado</strong> con 1 parámetro libre. Tomamos \(z=t\). El subsistema en \(x,y\) queda:</p>
+        <div class="k">\[
+        \left\{\begin{aligned}x+y&=3-t\\x+2y&=4-t\end{aligned}\right.
+        \;\Rightarrow\;
+        y=1,\quad x=(3-t)-y=2-t
+        \]</div>
+        <div class="resultado-final">Infinitas soluciones: \(x=2-t,\quad y=1,\quad z=t\quad(t\in\mathbb{R})\)</div>
+      </div>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(a = 2\)</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&1\\1&2&2\\1&4&4\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&1&3\\1&2&2&4\\1&4&4&6\end{array}\right)
+        \]</div>
+        <p>El mismo menor de orden 2 que antes vale \(1\neq 0\Rightarrow\text{rg}(A)=2\). Los menores de orden 3 de la ampliada se anulan igualmente (la tercera ecuación es combinación lineal de las dos primeras), por lo que \(\text{rg}(A\,|\,b)=2\).</p>
+        <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=2&lt;n=3\): <strong>sistema compatible indeterminado</strong> con 1 parámetro libre. Tomamos \(z=t\). El subsistema en \(x,y\) queda:</p>
+        <div class="k">\[
+        \left\{\begin{aligned}x+y&=3-t\\x+2y&=4-2t\end{aligned}\right.
+        \;\Rightarrow\;
+        y=1-t,\quad x=(3-t)-y=2
+        \]</div>
+        <div class="resultado-final">Infinitas soluciones: \(x=2,\quad y=1-t,\quad z=t\quad(t\in\mathbb{R})\)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ERRORES -->
+  <section class="art-seccion" id="errores">
+    <h2>6. Errores frecuentes</h2>
+    <ul class="lista-errores">
+      <li><strong>Calcular solo el rango de \(A\) y olvidar el de \((A\,|\,b)\).</strong> El teorema de Rouché-Frobenius requiere comparar ambos rangos. Si solo se calcula \(\text{rg}(A)\) no se puede concluir la compatibilidad.</li>
+      <li><strong>No sustituir el valor crítico en la columna de términos independientes.</strong> Un valor crítico puede hacer que \(\det(A)=0\) pero que \(\text{rg}(A\,|\,b)\) siga siendo máximo, dando incompatibilidad. Si no se evalúa \((A\,|\,b)\) con ese valor crítico se puede concluir erróneamente que el sistema es compatible.</li>
+      <li><strong>Confundir el orden del mayor menor no nulo con el rango.</strong> El rango es el orden del <em>mayor</em> menor no nulo, no cualquier menor no nulo. Si existe un menor de orden 3 no nulo el rango es al menos 3, aunque haya menores de orden 2 nulos.</li>
+      <li><strong>No factorizar el determinante antes de igualar a cero.</strong> Factorizar \(\det(A)\) es imprescindible para encontrar todos los valores críticos. Una ecuación cúbica sin factorizar puede hacer perder raíces enteras o racionales.</li>
+      <li><strong>Dar la solución del caso general con el valor crítico incluido.</strong> La solución obtenida en el caso general solo vale para los valores del parámetro que no son críticos. Hay que indicar siempre \(a\neq a_1,\,a_2,\ldots\).</li>
+      <li><strong>Aplicar Cramer cuando el sistema es SCI.</strong> La regla de Cramer solo funciona cuando \(\det(A)\neq 0\), es decir, cuando el sistema es SCD. En el caso indeterminado hay que despejar directamente con el subsistema de ecuaciones no redundantes.</li>
+    </ul>
+  </section>
+
+  <!-- 7. EJERCICIOS -->
+  <section class="art-seccion" id="ejercicios">
+    <h2>7. Ejercicios propuestos</h2>
+    <div class="mk-ejercicios">
+      <p class="mk-subtitulo">Discute la compatibilidad del sistema según el parámetro y, cuando tenga solución, exprésala.</p>
+
+      <!-- Ejercicio 1 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Sistema 2×2 · parámetro a</span><span class="mk-ej-level">SCD / SCI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(a\):
+        \[\left\{\begin{aligned}3x+ay&=6\\x+y&=2\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Matrices y determinante</h4>
+          \[A=\begin{pmatrix}3&a\\1&1\end{pmatrix},\quad(A|b)=\left(\begin{array}{cc|c}3&a&6\\1&1&2\end{array}\right)\]
+          \[\det(A)=3-a\;\Rightarrow\;\text{valor crítico: }a=3\]
+          <h4>Casos</h4>
+          <ul>
+            <li><strong>Si \(a\neq3\):</strong> \(\text{rg}(A)=\text{rg}(A|b)=2=n\) → <strong>SCD</strong>. Por Cramer:
+              \(x=\dfrac{\begin{vmatrix}6&a\\2&1\end{vmatrix}}{3-a}=\dfrac{6-2a}{3-a}=2,\quad y=\dfrac{\begin{vmatrix}3&6\\1&2\end{vmatrix}}{3-a}=\dfrac{0}{3-a}=0\).</li>
+            <li><strong>Si \(a=3\):</strong> \(A=\begin{pmatrix}3&3\\1&1\end{pmatrix}\), filas proporcionales, \(\text{rg}(A)=1\). En la ampliada: \(\begin{pmatrix}3&3&6\\1&1&2\end{pmatrix}\), también proporcionales, \(\text{rg}(A|b)=1\). Como \(\text{rg}=\text{rg}=1&lt;n=2\) → <strong>SCI</strong>. De \(x+y=2\), con \(y=t\): \(x=2-t\).</li>
+          </ul>
+          <span class="mk-resultado">SCD si a ≠ 3: x = 2, y = 0</span>
+          <span class="mk-resultado">SCI si a = 3: x = 2−t, y = t (t∈ℝ)</span>
+        </div>
+      </div>
+
+      <!-- Ejercicio 2 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Sistema 3×3 · parámetro k</span><span class="mk-ej-level">SCD / SCI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(k\):
+        \[\left\{\begin{aligned}x+y+z&=1\\x+ky+z&=1\\x+y+kz&=1\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Matrices y determinante</h4>
+          \[A=\begin{pmatrix}1&1&1\\1&k&1\\1&1&k\end{pmatrix}\]
+          \[\det(A)=\begin{vmatrix}1&1&1\\1&k&1\\1&1&k\end{vmatrix}=k^2+1+1-k-k-1=k^2-2k+1=(k-1)^2\]
+          Valor crítico: \(k=1\).
+          <h4>Casos</h4>
+          <ul>
+            <li><strong>Si \(k\neq1\):</strong> \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>SCD</strong>. Por Cramer: \(\det(A_x)=\begin{vmatrix}1&1&1\\1&k&1\\1&1&k\end{vmatrix}=(k-1)^2\Rightarrow x=1\). Las matrices \(A_y\) y \(A_z\) tienen filas repetidas: \(\det(A_y)=\det(A_z)=0\Rightarrow y=z=0\).</li>
+            <li><strong>Si \(k=1\):</strong> Las tres ecuaciones son \(x+y+z=1\). \(\text{rg}(A)=\text{rg}(A|b)=1&lt;3\) → <strong>SCI</strong> (2 parámetros libres). Con \(y=s,\,z=t\): \(x=1-s-t\).</li>
+          </ul>
+          <span class="mk-resultado">SCD si k ≠ 1: x = 1, y = 0, z = 0</span>
+          <span class="mk-resultado">SCI si k = 1: x = 1−s−t, y = s, z = t (s,t∈ℝ)</span>
+        </div>
+      </div>
+
+      <!-- Ejercicio 3 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Sistema 3×3 · parámetro a</span><span class="mk-ej-level">SCD / SCI / SI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(a\):
+        \[\left\{\begin{aligned}x+y+z&=1\\x+ay+z&=a\\x+y+az&=1\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Matrices y determinante</h4>
+          \[A=\begin{pmatrix}1&1&1\\1&a&1\\1&1&a\end{pmatrix}\]
+          \[\det(A)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=a^2+1+1-a-a-1=a^2-2a+1=(a-1)^2\]
+          Valor crítico: \(a=1\).
+          <h4>Caso general \(a\neq1\)</h4>
+          \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>SCD</strong>.
+          \[\det(A_y)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=(a-1)^2\;\Rightarrow\;y=1\]
+          \[\det(A_z)=\begin{vmatrix}1&1&1\\1&a&a\\1&1&1\end{vmatrix}=0\;\Rightarrow\;z=0\]
+          De la primera ecuación: \(x=1-y-z=0\).
+          <span class="mk-resultado">SCD si a ≠ 1: x = 0, y = 1, z = 0</span>
+          <h4>Caso \(a=1\)</h4>
+          Con \(a=1\): la primera y tercera ecuaciones son \(x+y+z=1\); la segunda es \(x+y+z=1\) también. Las tres son idénticas.
+          \(\text{rg}(A)=\text{rg}(A|b)=1&lt;3\) → <strong>SCI</strong> (2 parámetros libres).
+          Con \(y=s,\,z=t\): \(x=1-s-t\).
+          <span class="mk-resultado">SCI si a = 1: x = 1−s−t, y = s, z = t (s,t∈ℝ)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-herramienta">
+    <p><strong>¿Quieres practicar con tus propios sistemas?</strong> La calculadora de Rouché-Frobenius con parámetro te permite introducir cualquier sistema, calcular los rangos simbólicamente y obtener la discusión y la solución para cada valor del parámetro.</p>
+    <a class="cta-btn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">Ir a la calculadora →</a>
+  </div>
+
+  <!-- PÁGINAS RELACIONADAS -->
+  <section class="art-seccion">
+    <h2>Páginas relacionadas</h2>
+    <div class="relacionados">
+      <a class="rel-card" href="/sistemas-rouche-frobenius.html">
+        <strong>Rouché-Frobenius (sin parámetro)</strong>
+        <span>Clasificación y resolución de sistemas por rangos y menores</span>
+      </a>
+      <a class="rel-card" href="/sistemas-gauss-con-parametro.html">
+        <strong>Sistemas con parámetro (Gauss)</strong>
+        <span>Discusión de sistemas con parámetro por el método de Gauss</span>
+      </a>
+      <a class="rel-card" href="/metodo-gauss-sistemas-ecuaciones.html">
+        <strong>Sistemas por Gauss (sin parámetro)</strong>
+        <span>Resolución de sistemas lineales por eliminación de Gauss</span>
+      </a>
+      <a class="rel-card" href="/PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">
+        <strong>Rango de una matriz por menores</strong>
+        <span>Cálculo del rango mediante determinantes de submatrices</span>
+      </a>
+    </div>
+  </section>
+
+</div><!-- fin art-wrap -->
+
+<footer class="siteFooter">
+  <div class="footerInner">
+    <a href="/about.html">Acerca de</a>
+    <a href="/contacto.html">Contacto</a>
+    <a href="/privacy.html">Privacidad</a>
+    <a href="/cookies.html">Cookies</a>
+    <a href="/aviso_legal.html">Aviso legal</a>
+  </div>
+</footer>
+
+<script>
+function mkToggle(btn){
+  var sol = btn.nextElementSibling;
+  var open = sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open", open);
+  btn.textContent = open ? "Ocultar solución" : "Ver solución";
+}
+document.addEventListener("DOMContentLoaded", function(){
+  if(window.renderMathInElement){
+    renderMathInElement(document.body, {
+      delimiters:[
+        {left:"\\[", right:"\\]", display:true},
+        {left:"\\(", right:"\\)", display:false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+<script src="/common.js"></script>
+</body>
+</html>

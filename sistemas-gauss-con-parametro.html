@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
+<script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistemas de ecuaciones lineales con parámetro: método de Gauss | Matematikal</title>
+<meta name="description" content="Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el método de Gauss: valores críticos, clasificación por casos y ejemplos resueltos completos.">
+<meta name="author" content="Fernando Alcaide Guindo">
+<link rel="canonical" href="https://matematikal.com/sistemas-gauss-con-parametro.html"/>
+<!-- Open Graph -->
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Matematikal"/>
+<meta property="og:url" content="https://matematikal.com/sistemas-gauss-con-parametro.html"/>
+<meta property="og:title" content="Sistemas de ecuaciones lineales con parámetro: método de Gauss | Matematikal"/>
+<meta property="og:description" content="Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el método de Gauss: valores críticos, clasificación por casos y ejemplos resueltos completos."/>
+<meta property="og:locale" content="es_ES"/>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Sistemas de ecuaciones lineales con parámetro: método de Gauss",
+  "description": "Aprende a discutir y resolver sistemas de ecuaciones lineales con un parámetro usando el método de Gauss: valores críticos, clasificación por casos y ejemplos resueltos completos.",
+  "url": "https://matematikal.com/sistemas-gauss-con-parametro.html",
+  "inLanguage": "es",
+  "educationalLevel": "Bachillerato",
+  "learningResourceType": "Article",
+  "teaches": "Discusión y resolución de sistemas de ecuaciones lineales con parámetro por el método de Gauss",
+  "author": {
+    "@type": "Person",
+    "name": "Fernando Alcaide Guindo"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Matematikal",
+    "url": "https://matematikal.com"
+  }
+}
+</script>
+<link href="/common.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<!-- KaTeX -->
+<link rel="stylesheet" href="CARPETAS_AUXILIARES/katex/katex.min.css">
+<script defer src="CARPETAS_AUXILIARES/katex/katex.min.js"></script>
+<script defer src="CARPETAS_AUXILIARES/katex/contrib/auto-render.min.js"></script>
+
+<style>
+:root{
+  --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
+  --blue-light:#e8eeff;
+  --text-primary:#0f1629;--text-secondary:#4a5270;--text-muted:#7b839e;
+  --bg-page:#f4f6fd;--bg-card:#ffffff;--border-card:rgba(30,50,150,.08);
+  --radius-card:20px;
+  --shadow-card:0 4px 24px rgba(20,40,120,.07),0 1px 4px rgba(20,40,120,.04);
+  --shadow-btn:0 8px 28px rgba(43,79,170,.28);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0}
+
+/* CABECERA */
+.cabecera-art{background:#071a09;color:#fff;padding:1.2rem 2rem;margin-bottom:0}
+.cabecera-art-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo-link{text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.logo-nombre{font-family:var(--font-body);font-weight:700;font-size:1.15rem;color:#fff;letter-spacing:-.02em}
+.btn-herramienta{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:#fff;color:var(--blue-deep);font-weight:700;font-size:.88rem;text-decoration:none;box-shadow:var(--shadow-btn);transition:transform .15s,box-shadow .18s}
+.btn-herramienta:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(43,79,170,.32)}
+
+/* WRAP ARTÍCULO */
+.art-wrap{max-width:1030px;margin:0 auto;padding:36px 24px 64px}
+
+/* HERO ARTÍCULO */
+.art-hero{margin-bottom:36px}
+.art-breadcrumb{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
+.art-breadcrumb a{color:var(--text-muted);text-decoration:none}
+.art-breadcrumb a:hover{color:var(--blue-mid)}
+.art-breadcrumb span{margin:0 6px}
+h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem);font-weight:400;color:var(--blue-deep);margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}
+.art-bajada{font-size:1.05rem;color:var(--text-secondary);line-height:1.7;margin:0 0 8px}
+.art-bajada-lista{list-style:none;margin:4px 0 20px;padding-left:2cm;color:var(--text-secondary);font-size:1.05rem;line-height:1.7;counter-reset:bajada}
+.art-bajada-lista li{margin:3px 0;display:flex;align-items:flex-start;gap:9px}
+.art-bajada-lista li::before{counter-increment:bajada;content:counter(bajada,lower-alpha);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:5px;background:rgba(59,110,248,.1);color:var(--blue-mid);font-size:.71rem;font-weight:700;flex-shrink:0;margin-top:3px}
+.art-meta{font-size:.83rem;color:var(--text-muted)}
+
+/* ÍNDICE */
+.art-indice{background:var(--bg-card);border:1px solid var(--border-card);border-radius:14px;padding:22px 24px;margin-bottom:36px;box-shadow:var(--shadow-card)}
+.art-indice h2{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-bright);margin:0 0 16px}
+.art-indice ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:4px 20px;counter-reset:indice}
+.art-indice ol li{display:flex;align-items:flex-start;gap:9px;padding:5px 8px;border-radius:8px;transition:background .15s}
+.art-indice ol li::before{counter-increment:indice;content:counter(indice);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:5px;background:rgba(59,110,248,.1);color:var(--blue-mid);font-size:.71rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.art-indice ol li a{color:var(--text-secondary);text-decoration:none;font-size:.92rem;line-height:1.42;transition:color .15s}
+.art-indice ol li:hover{background:rgba(59,110,248,.05)}
+.art-indice ol li:hover a{color:var(--blue-bright)}
+@media(max-width:600px){.art-indice ol{grid-template-columns:1fr}}
+
+/* SECCIONES */
+.art-seccion{margin-bottom:40px}
+.art-seccion h2{font-family:var(--font-display);font-size:1.55rem;font-weight:400;color:var(--blue-deep);margin:0 0 14px;letter-spacing:-.01em;padding-bottom:10px;border-bottom:2px solid var(--blue-light)}
+.art-seccion h3{font-size:1.1rem;font-weight:700;color:var(--blue-mid);margin:24px 0 10px}
+.art-seccion p{color:var(--text-secondary);line-height:1.75;margin:0 0 12px}
+.art-seccion p strong{color:var(--text-primary)}
+
+/* BLOQUES FÓRMULA */
+.k{background:linear-gradient(135deg,var(--blue-light) 0%,#f0f4ff 100%);border:1px solid rgba(59,110,248,.14);border-radius:14px;padding:18px 20px;overflow-x:auto;margin:14px 0;text-align:center}
+.k-par{display:flex;gap:16px;align-items:center;margin:14px 0;flex-wrap:wrap}
+.k-par>.k{flex:1;min-width:200px;margin:0}
+
+/* TIPOS DE SISTEMA */
+.tipos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.tipo-box{border-radius:12px;padding:14px 16px;font-size:.92rem;line-height:1.55;border:1px solid var(--border-card)}
+.tipo-det{background:#edf7ed;border-color:#b7ddb7;color:#1a4d1a}
+.tipo-det strong{color:#145214}
+.tipo-indet{background:#fff8e6;border-color:#f5d97a;color:#5a420a}
+.tipo-indet strong{color:#3d2c05}
+.tipo-incomp{background:#fdecea;border-color:#f5b8b5;color:#6b1a18}
+.tipo-incomp strong{color:#4a1110}
+.tipo-box strong{display:block;margin-bottom:4px;font-size:.95rem}
+
+/* OPERACIONES */
+.ops-grid{display:flex;flex-direction:column;gap:6px;margin:14px 0}
+.op-box{border:1px solid var(--border-card);border-radius:12px;padding:11px 16px;background:#f4f6fd}
+.op-box strong{display:inline;margin-right:6px;color:var(--text-primary);font-size:.88rem;text-transform:uppercase;letter-spacing:.03em}
+.op-box span{color:var(--text-secondary);font-size:.93rem}
+
+/* PASOS */
+.pasos-lista{margin:0;padding-left:22px}
+.pasos-lista li{margin:12px 0;line-height:1.7;color:var(--text-secondary)}
+.pasos-lista li strong{color:var(--text-primary)}
+
+/* EJEMPLOS */
+.ejemplo-bloque{background:var(--bg-card);border:1px solid var(--border-card);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--shadow-card)}
+.ejemplo-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.06em;margin-bottom:12px}
+.badge-det{background:#edf7ed;color:#145214}
+.badge-indet{background:#fff8e6;color:#3d2c05}
+.badge-incomp{background:#fdecea;color:#4a1110}
+.ejemplo-bloque h3{font-size:1.1rem;font-weight:700;color:var(--blue-deep);margin:0 0 14px}
+.ejemplo-paso{margin:14px 0 6px;font-size:.9rem;font-weight:700;color:var(--blue-mid);text-transform:uppercase;letter-spacing:.04em}
+.resultado-final{display:inline-flex;align-items:center;margin-top:14px;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.9rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+
+/* BLOQUES DE CASO (valores críticos) */
+.caso-bloque{margin:14px 0;padding:16px 20px;border-radius:12px;border-left:4px solid}
+.caso-titulo{font-size:.95rem;font-weight:700;margin:0 0 8px}
+.caso-bloque p{margin:4px 0;font-size:.93rem;line-height:1.7}
+.caso-det{background:#edf7ed;border-color:#4caf50}
+.caso-det .caso-titulo{color:#145214}
+.caso-indet{background:#fff8e6;border-color:#f9a825}
+.caso-indet .caso-titulo{color:#5a420a}
+.caso-incomp{background:#fdecea;border-color:#e53935}
+.caso-incomp .caso-titulo{color:#6b1a18}
+.caso-general{background:#eef2ff;border-color:var(--blue-bright)}
+.caso-general .caso-titulo{color:var(--blue-deep)}
+
+/* AVISO */
+.aviso-box{background:#eef2ff;border:1px solid #dbe3ff;border-radius:12px;padding:16px 20px;margin:20px 0}
+.aviso-box p{margin:4px 0;color:var(--text-secondary)}
+.aviso-box p strong{color:var(--blue-deep)}
+
+/* ERRORES Y FAQ */
+.lista-errores,.lista-faq{margin:0;padding-left:22px}
+.lista-errores li,.lista-faq li{margin:10px 0;line-height:1.7;color:var(--text-secondary)}
+.lista-errores li strong,.lista-faq li strong{color:var(--text-primary)}
+
+/* EJERCICIOS */
+.mk-ejercicios{margin-top:8px}
+.mk-ejercicios>h2{font-family:var(--font-display);font-size:1.45rem;font-weight:400;color:var(--blue-deep);border-left:5px solid var(--blue-bright);padding-left:.8rem;margin-bottom:.3rem}
+.mk-subtitulo{font-size:.94rem;color:var(--text-secondary);margin-bottom:1.6rem}
+.mk-ejercicio{background:var(--bg-card);border:1px solid var(--border-card);border-radius:var(--radius-card);margin-bottom:1.2rem;overflow:hidden;box-shadow:var(--shadow-card)}
+.mk-ej-head{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;padding:.85rem 1.2rem;background:#f4f6fd;border-bottom:1px solid var(--border-card)}
+.mk-ej-num{font-weight:700;font-size:.95rem;color:var(--blue-deep);min-width:2rem}
+.mk-badge{display:inline-block;padding:.18rem .65rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;background:rgba(59,110,248,.1);color:var(--blue-deep)}
+.mk-ej-level{font-size:.78rem;color:var(--text-muted)}
+.mk-enunciado{padding:1rem 1.2rem .5rem;color:var(--text-primary);font-size:.96rem;line-height:1.72}
+.mk-toggle{display:block;width:calc(100% - 2.4rem);margin:.7rem 1.2rem .9rem;padding:.5rem 1rem;background:var(--blue-mid);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:background .18s}
+.mk-toggle:hover{background:var(--blue-deep)}
+.mk-toggle::after{content:" ▾";float:right}
+.mk-toggle.mk-open::after{content:" ▴"}
+.mk-sol{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px dashed rgba(59,110,248,.18);background:var(--bg-page);font-size:.94rem;line-height:1.8;color:var(--text-primary)}
+.mk-sol.mk-visible{display:block}
+.mk-sol h4{color:var(--blue-mid);margin:.85rem 0 .25rem;font-size:.91rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mk-resultado{display:inline-block;margin-top:.75rem;padding:.4rem .95rem;border-radius:8px;font-weight:700;font-size:.88rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+
+/* CTA HERRAMIENTA */
+.cta-herramienta{background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin:40px 0;flex-wrap:wrap}
+.cta-herramienta p{margin:0;color:rgba(255,255,255,.88);font-size:1rem;line-height:1.6;max-width:560px}
+.cta-herramienta p strong{color:#fff}
+.cta-btn{display:inline-flex;align-items:center;padding:11px 24px;border-radius:999px;background:#fff;color:var(--blue-deep);text-decoration:none;font-weight:800;font-size:.88rem;letter-spacing:.02em;box-shadow:var(--shadow-btn);white-space:nowrap;transition:transform .15s}
+.cta-btn:hover{transform:translateY(-2px)}
+
+/* ENLACES RELACIONADOS */
+.relacionados{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.rel-card{background:var(--bg-card);border:1px solid var(--border-card);border-radius:12px;padding:16px 18px;text-decoration:none;transition:box-shadow .2s,transform .2s;box-shadow:var(--shadow-card)}
+.rel-card:hover{box-shadow:0 8px 28px rgba(20,40,120,.1);transform:translateY(-1px)}
+.rel-card strong{display:block;color:var(--blue-deep);font-size:.95rem;margin-bottom:4px}
+.rel-card span{color:var(--text-muted);font-size:.85rem}
+
+@media(max-width:700px){
+  .tipos-grid,.relacionados{grid-template-columns:1fr}
+  .art-wrap{padding:24px 16px 48px}
+  .cabecera-art{padding:1rem}
+  .cta-herramienta{flex-direction:column}
+  .ejemplo-bloque{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<header class="cabecera-art">
+  <div class="cabecera-art-inner">
+    <a class="logo-link" href="/">
+      <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="14" cy="14" rx="11" ry="13" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
+        <polyline points="8,17 11,17 14,5 17,22 20,13 22,13" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-nombre">Matematikal</span>
+    </a>
+    <a class="btn-herramienta" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">
+      Ir a la calculadora →
+    </a>
+  </div>
+</header>
+
+<div class="art-wrap">
+
+  <!-- HERO -->
+  <div class="art-hero">
+    <p class="art-breadcrumb">
+      <a href="/">Inicio</a><span>›</span>
+      <a href="/">Sistemas de ecuaciones</a><span>›</span>
+      Gauss con parámetro
+    </p>
+    <h1 class="art-titulo">Sistemas de ecuaciones lineales con un parámetro: método de Gauss</h1>
+    <p class="art-bajada">Todo lo que necesitas para discutir y resolver sistemas de ecuaciones lineales con un parámetro por el método de Gauss:</p>
+    <ol class="art-bajada-lista">
+      <li>Cómo encontrar los valores críticos del parámetro.</li>
+      <li>Cómo clasificar el sistema en cada caso (SCD, SCI o incompatible).</li>
+      <li>Ejemplos resueltos completos con discusión y solución.</li>
+    </ol>
+    <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
+  </div>
+
+  <!-- ÍNDICE -->
+  <nav class="art-indice" aria-label="Índice de contenidos">
+    <h2>Contenidos</h2>
+    <ol>
+      <li><a href="#que-es">¿Qué es un sistema con parámetro?</a></li>
+      <li><a href="#tipos">Tipos de sistemas según el parámetro</a></li>
+      <li><a href="#valores-criticos">Los valores críticos del parámetro</a></li>
+      <li><a href="#algoritmo">El método paso a paso</a></li>
+      <li><a href="#ejemplos">Ejemplos resueltos</a></li>
+      <li><a href="#errores">Errores frecuentes</a></li>
+      <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. QUÉ ES -->
+  <section class="art-seccion" id="que-es">
+    <h2>1. ¿Qué es un sistema de ecuaciones con un parámetro?</h2>
+    <p>Un <strong>sistema de ecuaciones lineales con un parámetro</strong> es un sistema en el que uno o varios coeficientes, o algún término independiente, dependen de una variable simbólica —generalmente llamada \(a\), \(k\), \(m\)…— que puede tomar cualquier valor real o racional.</p>
+    <p>Dado que el parámetro aparece en la matriz ampliada, la clasificación del sistema (compatible determinado, indeterminado o incompatible) <strong>puede cambiar según el valor que tome el parámetro</strong>. Por eso, el objetivo no es únicamente <em>resolver</em> el sistema, sino <strong>discutirlo</strong>: determinar para qué valores del parámetro el sistema pertenece a cada tipo y, en los casos compatibles, calcular la solución.</p>
+    <p>Un sistema con parámetro tiene la misma forma general que cualquier sistema lineal:</p>
+    <div class="k">\[
+    \left\{\begin{aligned}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \\
+    &\vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &= b_m
+    \end{aligned}\right.
+    \]</div>
+    <p>con la diferencia de que algunos \(a_{ij}\) o \(b_i\) son expresiones que dependen del parámetro.</p>
+    <div class="aviso-box">
+      <p><strong>Ejemplo:</strong> en el sistema \(\left\{\begin{aligned}x+ay&=2\\ax+y&=2\end{aligned}\right.\), el coeficiente \(a\) aparece tanto en la primera como en la segunda ecuación. Si \(a=1\) el sistema tiene infinitas soluciones; si \(a=-1\) no tiene ninguna; para cualquier otro valor de \(a\) existe exactamente una solución.</p>
+    </div>
+  </section>
+
+  <!-- 2. TIPOS -->
+  <section class="art-seccion" id="tipos">
+    <h2>2. Tipos de sistemas según el valor del parámetro</h2>
+    <p>Como en cualquier sistema lineal, el resultado siempre es uno de estos tres tipos. La diferencia es que <strong>cada valor del parámetro puede situar al sistema en un tipo distinto</strong>, lo que obliga a estudiar todos los casos posibles.</p>
+    <div class="tipos-grid">
+      <div class="tipo-box tipo-det">
+        <strong>Compatible determinado (SCD)</strong>
+        Exactamente una solución. En la forma escalonada, el número de filas no nulas coincide con el número de incógnitas.
+      </div>
+      <div class="tipo-box tipo-indet">
+        <strong>Compatible indeterminado (SCI)</strong>
+        Infinitas soluciones. El número de filas no nulas es menor que el de incógnitas.
+      </div>
+      <div class="tipo-box tipo-incomp">
+        <strong>Incompatible (SI)</strong>
+        Ninguna solución. Aparece una fila de la forma \((0\;\cdots\;0 \mid b)\) con \(b \neq 0\).
+      </div>
+    </div>
+    <p>La discusión completa del sistema consiste en determinar qué tipo corresponde a cada valor posible del parámetro y expresar la solución cuando la haya.</p>
+  </section>
+
+  <!-- 3. VALORES CRÍTICOS -->
+  <section class="art-seccion" id="valores-criticos">
+    <h2>3. Los valores críticos del parámetro</h2>
+    <p>Al escalonar la matriz ampliada de un sistema con parámetro, en algún momento aparecerán <strong>pivotes que son expresiones en el parámetro</strong>. Cuando uno de esos pivotes se anula para un cierto valor del parámetro, la estructura del sistema cambia: una fila que normalmente aporta un pivote pasa a ser nula o imposible.</p>
+    <p>Se llaman <strong>valores críticos</strong> a los valores del parámetro que anulan al menos uno de esos pivotes. Son precisamente los valores que hay que estudiar por separado, pues en ellos el tipo del sistema puede diferir del caso general.</p>
+    <div class="aviso-box">
+      <p><strong>Cómo se obtienen:</strong> tras escalonar, se igualan a cero todas las expresiones en el parámetro que aparezcan en posiciones de pivote. Cada raíz de esas ecuaciones es un valor crítico.</p>
+    </div>
+    <p>Una vez identificados los valores críticos, el método requiere estudiar tres tipos de casos:</p>
+    <div class="ops-grid">
+      <div class="op-box">
+        <strong>Cada valor crítico obtenido directamente</strong>
+        <span>Se sustituye en la matriz escalonada ya calculada. Aparece una fila nula o imposible que cambia la clasificación.</span>
+      </div>
+      <div class="op-box">
+        <strong>Valores críticos generados durante el escalonamiento</strong>
+        <span>Si el coeficiente de combinación lineal dependía del parámetro y se anuló, hay que volver a escalonar desde la matriz original con ese valor sustituido.</span>
+      </div>
+      <div class="op-box">
+        <strong>Caso general</strong>
+        <span>Cualquier valor del parámetro distinto de todos los críticos. Se usa directamente la forma escalonada general, donde todos los pivotes son no nulos.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ALGORITMO -->
+  <section class="art-seccion" id="algoritmo">
+    <h2>4. El método paso a paso</h2>
+    <ol class="pasos-lista">
+      <li>
+        <strong>Escribir la matriz ampliada \((A\,|\,b)\).</strong>
+        Se construye igual que en cualquier sistema, colocando 0 donde una incógnita no aparezca. Si el parámetro aparece en los coeficientes, se opera con él como si fuera un número.
+      </li>
+      <li>
+        <strong>Escalonar mediante operaciones elementales por filas.</strong>
+        Las tres operaciones permitidas son: intercambio de filas \((F_i \leftrightarrow F_j)\), multiplicación por escalar no nulo \((F_i \to k\cdot F_i)\) y combinación lineal de filas \((F_i \to \alpha F_i + \beta F_j)\). Si en algún paso el coeficiente de la combinación lineal depende del parámetro, hay que anotar los valores que lo anulan para estudiarlos por separado. Si conviene, se pueden intercambiar columnas de incógnitas para facilitar el escalonamiento, pero hay que registrar el cambio; nunca se puede mover la columna de términos independientes.
+      </li>
+      <li>
+        <strong>Localizar los pivotes que dependen del parámetro.</strong>
+        Igualando a cero cada pivote expresado en el parámetro se obtienen los <strong>valores críticos</strong>. Cada uno de ellos puede cambiar la clasificación del sistema.
+      </li>
+      <li>
+        <strong>Estudiar cada caso por separado.</strong>
+        Para los valores críticos, se sustituye el parámetro y se reclasifica el sistema (a veces hay que recalcular la forma escalonada desde el principio). Para el caso general (parámetro distinto de todos los críticos) se usa la forma escalonada ya obtenida.
+      </li>
+      <li>
+        <strong>Resolver los casos compatibles por sustitución regresiva.</strong>
+        Si el sistema es SCD se obtiene una única solución; si es SCI se expresan las infinitas soluciones con \(n - r\) parámetros libres, donde \(n\) es el número de incógnitas y \(r\) el número de filas no nulas.
+      </li>
+    </ol>
+  </section>
+
+  <!-- CTA INTERMEDIO -->
+  <div class="cta-herramienta">
+    <p><strong>¿Quieres practicar lo que acabas de leer?</strong> La calculadora de sistemas con parámetro te permite introducir tu propio sistema, seguir el escalonamiento paso a paso y obtener la discusión y la solución para cada caso.</p>
+    <a class="cta-btn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Usar la calculadora →</a>
+  </div>
+
+  <!-- 5. EJEMPLOS -->
+  <section class="art-seccion" id="ejemplos">
+    <h2>5. Ejemplos resueltos</h2>
+    <h3>Ejemplo 1 — Sistema 2×2 con parámetro \(k\)</h3>
+    <p>Discutir y resolver según los valores del parámetro \(k\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x + ky &= 2 \\
+      kx + y &= 2
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Escalonamiento</p>
+      <p>Aplicamos \(F_2 \to F_2 - kF_1\):</p>
+      <div class="k">\[
+      \left(\begin{matrix}1&k\\k&1\end{matrix}\,\middle|\,\begin{matrix}2\\2\end{matrix}\right)
+      \underset{F_2\to F_2-kF_1}{\sim}
+      \left(\begin{matrix}1&k\\0&1-k^2\end{matrix}\,\middle|\,\begin{matrix}2\\2-2k\end{matrix}\right)
+      \]</div>
+      <p>Donde \(1-k^2 = (1-k)(1+k)\) y \(2-2k = 2(1-k)\).</p>
+
+      <p class="ejemplo-paso">Paso 2 — Valores críticos</p>
+      <div class="k">\[1 - k^2 = 0 \;\Rightarrow\; k = 1 \quad \text{o} \quad k = -1\]</div>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(k = 1\)</p>
+        <p>La fila 2 queda \((0,\;0 \mid 0)\): <strong>sistema compatible indeterminado</strong> con 1 parámetro libre.</p>
+        <p>La única ecuación que permanece es \(x + y = 2\). Con \(y = \lambda\):</p>
+        <div class="resultado-final">Infinitas soluciones: \(x = 2 - \lambda,\quad y = \lambda\quad(\lambda\in\mathbb{R})\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(k = -1\)</p>
+        <p>La fila 2 queda \((0,\;0 \mid 4)\): <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución</div>
+      </div>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(k \neq 1\) y \(k \neq -1\) — caso general</p>
+        <p>El pivote \(1-k^2 \neq 0\). <strong>Sistema compatible determinado.</strong></p>
+        <div class="k">\[
+        y = \frac{2(1-k)}{(1-k)(1+k)} = \frac{2}{1+k}
+        \qquad
+        x = 2 - k\cdot\frac{2}{1+k} = \frac{2+2k-2k}{1+k} = \frac{2}{1+k}
+        \]</div>
+        <div class="resultado-final">Solución única: \(x = \dfrac{2}{1+k},\quad y = \dfrac{2}{1+k}\)</div>
+      </div>
+    </div>
+
+    <h3>Ejemplo 2 — Sistema 3×3 con parámetro \(a\)</h3>
+    <p>Discutir y resolver según los valores del parámetro \(a\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      2x_1 + ax_2 - 3x_3 &= 1 \\
+      -3x_1 + 2x_2 + ax_3 &= 2 \\
+      -x_1 + 5x_2 \phantom{{}+ax_3} &= 3
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Escalonamiento de la matriz ampliada</p>
+      <p>Aplicamos \(F_2 \to 2F_2 + 3F_1\) y después \(F_3 \to 2F_3 + F_1\) para eliminar la primera columna:</p>
+      <div class="k">\[
+      \left(\begin{matrix}2&a&-3\\-3&2&a\\-1&5&0\end{matrix}\,\middle|\,\begin{matrix}1\\2\\3\end{matrix}\right)
+      \underset{F_2\to 2F_2+3F_1}{\sim}
+      \left(\begin{matrix}2&a&-3\\0&3a+4&2a-9\\-1&5&0\end{matrix}\,\middle|\,\begin{matrix}1\\7\\3\end{matrix}\right)
+      \underset{F_3\to 2F_3+F_1}{\sim}
+      \left(\begin{matrix}2&a&-3\\0&3a+4&2a-9\\0&a+10&-3\end{matrix}\,\middle|\,\begin{matrix}1\\7\\7\end{matrix}\right)
+      \]</div>
+      <p>Intercambiamos \(F_2 \leftrightarrow F_3\) e intercambiamos las columnas de \(x_2\) y \(x_3\) \((C_2 \leftrightarrow C_3)\) para facilitar el escalonamiento:</p>
+      <div class="k">\[
+      \underset{F_2\leftrightarrow F_3}{\sim}
+      \left(\begin{matrix}2&a&-3\\0&a+10&-3\\0&3a+4&2a-9\end{matrix}\,\middle|\,\begin{matrix}1\\7\\7\end{matrix}\right)
+      \underset{C_2\leftrightarrow C_3}{\approx}
+      \left(\begin{matrix}2&-3&a\\0&-3&a+10\\0&2a-9&3a+4\end{matrix}\,\middle|\,\begin{matrix}1\\7\\7\end{matrix}\right)
+      \begin{matrix}\phantom{X}\\x_1,\,x_3,\,x_2\end{matrix}
+      \]</div>
+      <p>Eliminamos el término \((3,2)\) con \(F_3 \to 3F_3 + (2a-9)F_2\):</p>
+      <div class="k">\[
+      \underset{F_3\to 3F_3+(2a-9)F_2}{\sim}
+      \left(\begin{matrix}2&-3&a\\0&-3&a+10\\0&0&2a^2+20a-78\end{matrix}\,\middle|\,\begin{matrix}1\\7\\14a-42\end{matrix}\right)
+      \begin{matrix}\phantom{X}\\x_1,\,x_3,\,x_2\end{matrix}
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Valores críticos</p>
+      <p>Igualamos a cero el pivote que depende de \(a\):</p>
+      <div class="k">\[
+      2a^2 + 20a - 78 = 0 \;\Rightarrow\; a^2 + 10a - 39 = 0 \;\Rightarrow\; (a-3)(a+13) = 0
+      \;\Rightarrow\; a = 3 \quad \text{o} \quad a = -13
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(a = 3\)</p>
+        <p>El pivote \(2a^2+20a-78 = 0\) y el término independiente \(14(3)-42 = 0\), luego la tercera fila queda \((0,0,0\mid 0)\). Hay 2 filas no nulas y 3 incógnitas: <strong>sistema compatible indeterminado</strong> con 1 parámetro libre.</p>
+        <div class="k">\[
+        \left(\begin{matrix}2&-3&3\\0&-3&13\\0&0&0\end{matrix}\,\middle|\,\begin{matrix}1\\7\\0\end{matrix}\right)
+        \quad x_1,\,x_3,\,x_2
+        \]</div>
+        <p>Tomamos \(x_2 = t\) como parámetro libre. De la fila 2: \(-3x_3 + 13t = 7 \Rightarrow x_3 = \dfrac{13t-7}{3}\). De la fila 1: \(2x_1 = 1 + 3x_3 - 3t = 10t - 6 \Rightarrow x_1 = 5t - 3\).</p>
+        <div class="resultado-final">Infinitas soluciones: \(x_1 = 5t-3,\quad x_2 = t,\quad x_3 = \dfrac{13t-7}{3}\quad(t\in\mathbb{R})\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(a = -13\)</p>
+        <p>El pivote se anula, pero el término independiente \(14(-13)-42 = -224 \neq 0\). La tercera fila queda \((0,0,0\mid -224)\): <strong>sistema incompatible</strong>.</p>
+        <div class="k">\[
+        \left(\begin{matrix}2&-3&-13\\0&-3&-3\\0&0&0\end{matrix}\,\middle|\,\begin{matrix}1\\7\\-224\end{matrix}\right)
+        \]</div>
+        <div class="resultado-final">El sistema no tiene solución</div>
+      </div>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(a \neq 3\) y \(a \neq -13\) — caso general</p>
+        <p>El pivote \(2a^2+20a-78 \neq 0\). Hay 3 filas no nulas y 3 incógnitas: <strong>sistema compatible determinado</strong>.</p>
+        <p>Sustitución regresiva (recordando que la columna 2 es \(x_3\) y la 3 es \(x_2\) tras el intercambio):</p>
+        <div class="k">\[
+        x_2 = \frac{14a-42}{2a^2+20a-78} = \frac{14(a-3)}{2(a-3)(a+13)} = \frac{7}{a+13}
+        \]</div>
+        <div class="k">\[
+        x_3 = \frac{7 - (a+10)\cdot\dfrac{7}{a+13}}{-3} = \frac{7\cdot\dfrac{3}{a+13}}{3} = \frac{-7}{a+13}
+        \]</div>
+        <div class="k">\[
+        x_1 = \frac{1 + 3x_3 - a\cdot x_2}{2} = \frac{1 - \dfrac{21}{a+13} - \dfrac{7a}{a+13}}{2} = \frac{-3a-4}{a+13}
+        \]</div>
+        <div class="resultado-final">Solución única: \(x_1 = \dfrac{-3a-4}{a+13},\quad x_2 = \dfrac{7}{a+13},\quad x_3 = \dfrac{-7}{a+13}\)</div>
+      </div>
+    </div>
+
+    <h3>Ejemplo 3 — Sistema 4×3 con parámetro \(a\)</h3>
+    <p>Discutir y resolver según los valores del parámetro \(a\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x - y + az &= 2 \\
+      (a-1)x + y + z &= 1 \\
+      x - 5y + z &= 4 \\
+      -3y + az &= 3
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Escalonamiento de la matriz ampliada</p>
+      <p>Eliminamos la primera columna con \(F_2 \to F_2 - (a-1)F_1\) y \(F_3 \to F_3 - F_1\):</p>
+      <div class="k">\[
+      \left(\begin{matrix}1&-1&a\\a-1&1&1\\1&-5&1\\0&-3&a\end{matrix}\,\middle|\,\begin{matrix}2\\1\\4\\3\end{matrix}\right)
+      \underset{\substack{F_2\to F_2-(a-1)F_1\\F_3\to F_3-F_1}}{\sim}
+      \left(\begin{matrix}1&-1&a\\0&a&1+a-a^2\\0&-4&1-a\\0&-3&a\end{matrix}\,\middle|\,\begin{matrix}2\\3-2a\\2\\3\end{matrix}\right)
+      \]</div>
+      <p>Intercambiamos \(F_2 \leftrightarrow F_3\) para tener un pivote numérico en la segunda columna, y luego eliminamos esa columna de \(F_3\) y \(F_4\) con \(F_3 \to 4F_3 + aF_2\) y \(F_4 \to 4F_4 - 3F_2\):</p>
+      <div class="k">\[
+      \underset{F_2\leftrightarrow F_3}{\sim}
+      \left(\begin{matrix}1&-1&a\\0&-4&1-a\\0&a&1+a-a^2\\0&-3&a\end{matrix}\,\middle|\,\begin{matrix}2\\2\\3-2a\\3\end{matrix}\right)
+      \underset{\substack{F_3\to 4F_3+aF_2\\F_4\to 4F_4-3F_2}}{\sim}
+      \left(\begin{matrix}1&-1&a\\0&-4&1-a\\0&0&4+5a-5a^2\\0&0&7a-3\end{matrix}\,\middle|\,\begin{matrix}2\\2\\12-6a\\6\end{matrix}\right)
+      \]</div>
+      <p>Intercambiamos \(F_3 \leftrightarrow F_4\) para colocar el pivote lineal antes del cuadrático:</p>
+      <div class="k">\[
+      \underset{F_3\leftrightarrow F_4}{\sim}
+      \left(\begin{matrix}1&-1&a\\0&-4&1-a\\0&0&7a-3\\0&0&4+5a-5a^2\end{matrix}\,\middle|\,\begin{matrix}2\\2\\6\\12-6a\end{matrix}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Valores críticos</p>
+      <p>El pivote de \(F_3\) depende de \(a\): igualándolo a cero obtenemos el primer valor crítico:</p>
+      <div class="k">\[7a - 3 = 0 \;\Rightarrow\; a = \tfrac{3}{7}\]</div>
+      <p>Para \(a \neq \tfrac{3}{7}\), eliminamos la tercera columna de \(F_4\) con \(F_4 \to (7a-3)F_4 - (4+5a-5a^2)F_3\):</p>
+      <div class="k">\[
+      \text{rhs de }F_4 = (7a-3)(12-6a) - 6(4+5a-5a^2)
+      = -42a^2+102a-36 - 24-30a+30a^2
+      = -12a^2+72a-60 = -12(a-1)(a-5)
+      \]</div>
+      <div class="k">\[
+      \left(\begin{matrix}1&-1&a\\0&-4&1-a\\0&0&7a-3\\0&0&0\end{matrix}\,\middle|\,\begin{matrix}2\\2\\6\\-12(a-1)(a-5)\end{matrix}\right)
+      \]</div>
+      <p>La última fila aporta otros dos valores críticos: \(a = 1\) y \(a = 5\).</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(a = \tfrac{3}{7}\)</p>
+        <p>\(F_3\) se convierte en \((0,0,0\mid 6)\): ecuación imposible. <strong>Sistema incompatible.</strong></p>
+        <div class="resultado-final">El sistema no tiene solución</div>
+      </div>
+
+      <div class="caso-bloque caso-det">
+        <p class="caso-titulo">Para \(a = 1\)</p>
+        <p>La última fila queda \((0,0,0\mid 0)\) y \(F_3 = (0,0,4\mid 6)\). Hay 3 filas no nulas y 3 incógnitas: <strong>sistema compatible determinado</strong>.</p>
+        <div class="k">\[
+        \left(\begin{matrix}1&-1&1\\0&-4&0\\0&0&4\\0&0&0\end{matrix}\,\middle|\,\begin{matrix}2\\2\\6\\0\end{matrix}\right)
+        \]</div>
+        <p>Sustitución regresiva: \(z = \tfrac{6}{4} = \tfrac{3}{2}\); \(-4y = 2 \Rightarrow y = -\tfrac{1}{2}\); \(x + \tfrac{1}{2} + \tfrac{3}{2} = 2 \Rightarrow x = 0\).</p>
+        <div class="resultado-final">Solución única: \(x = 0,\quad y = -\tfrac{1}{2},\quad z = \tfrac{3}{2}\)</div>
+      </div>
+
+      <div class="caso-bloque caso-det">
+        <p class="caso-titulo">Para \(a = 5\)</p>
+        <p>La última fila queda \((0,0,0\mid 0)\) y \(F_3 = (0,0,32\mid 6)\). Hay 3 filas no nulas y 3 incógnitas: <strong>sistema compatible determinado</strong>.</p>
+        <div class="k">\[
+        \left(\begin{matrix}1&-1&5\\0&-4&-4\\0&0&32\\0&0&0\end{matrix}\,\middle|\,\begin{matrix}2\\2\\6\\0\end{matrix}\right)
+        \]</div>
+        <p>Sustitución regresiva: \(z = \tfrac{6}{32} = \tfrac{3}{16}\); \(-4y - \tfrac{3}{4} = 2 \Rightarrow y = -\tfrac{11}{16}\); \(x + \tfrac{11}{16} + \tfrac{15}{16} = 2 \Rightarrow x = \tfrac{3}{8}\).</p>
+        <div class="resultado-final">Solución única: \(x = \tfrac{3}{8},\quad y = -\tfrac{11}{16},\quad z = \tfrac{3}{16}\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(a \neq \tfrac{3}{7}\), \(a \neq 1\) y \(a \neq 5\) — caso general</p>
+        <p>La última fila es \((0,0,0\mid -12(a-1)(a-5))\) con término independiente distinto de cero: <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ERRORES -->
+  <section class="art-seccion" id="errores">
+    <h2>6. Errores frecuentes</h2>
+    <ul class="lista-errores">
+      <li><strong>No igualar a cero todos los pivotes que dependen del parámetro.</strong> Si hay varios pivotes con expresiones en el parámetro hay que considerar todas las raíces. Pasar por alto un valor crítico hace que la discusión quede incompleta.</li>
+      <li><strong>Confundir fila de ceros con fila imposible.</strong> Una fila \((0\;\cdots\;0\mid 0)\) indica que el sistema es compatible (ecuación redundante). Solo es incompatible si el término independiente es distinto de cero.</li>
+      <li><strong>Dividir por una expresión que puede anularse.</strong> Antes de simplificar \(\dfrac{f(a)}{f(a)}\) hay que asegurarse de que \(f(a)\neq 0\), o tratar ese caso por separado. Si ese valor ya está entre los críticos, todo va bien; si no, hay que añadirlo.</li>
+      <li><strong>Olvidar el intercambio de columnas al leer la solución.</strong> Si se intercambiaron columnas durante el escalonamiento, el orden de las incógnitas en la forma escalonada es diferente al del sistema original. La solución hay que expresarla con los nombres correctos.</li>
+      <li><strong>No dar la solución en todos los casos compatibles.</strong> En Bachillerato se exige tanto la discusión como la resolución de los sistemas compatibles. No basta clasificar.</li>
+      <li><strong>Confundir el número de parámetros libres.</strong> Con \(n\) incógnitas y \(r\) filas no nulas tal que \(r < n\), hay \(n - r\) parámetros libres, no necesariamente uno.</li>
+    </ul>
+  </section>
+
+  <!-- 7. EJERCICIOS PROPUESTOS -->
+  <section class="art-seccion" id="ejercicios">
+    <h2>7. Ejercicios propuestos</h2>
+    <div class="mk-ejercicios">
+      <p class="mk-subtitulo">Discute la compatibilidad del sistema según el parámetro y, cuando tenga solución, exprésala.</p>
+
+      <!-- Ejercicio 1 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Sistema 2×2 · parámetro a</span><span class="mk-ej-level">SCD / SCI / SI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(a\):
+        \[\left\{\begin{aligned}x+ay&=2\\ax+y&=2\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Escalonamiento</h4>
+          \[\left(\begin{matrix}1&a\\a&1\end{matrix}\middle|\begin{matrix}2\\2\end{matrix}\right)\underset{F_2\to F_2-aF_1}{\sim}\left(\begin{matrix}1&a\\0&1-a^2\end{matrix}\middle|\begin{matrix}2\\2-2a\end{matrix}\right)\]
+          Donde \(1-a^2=(1-a)(1+a)\) y \(2-2a=2(1-a)\). Valores críticos: \(a=1\) y \(a=-1\).
+          <h4>Casos</h4>
+          <ul>
+            <li><strong>Si \(a=1\):</strong> fila 2 → \((0,0\mid 0)\) → <strong>SCI</strong>. De \(x+y=2\), con \(y=\lambda\): \(x=2-\lambda,\;y=\lambda\quad(\lambda\in\mathbb{R})\).</li>
+            <li><strong>Si \(a=-1\):</strong> fila 2 → \((0,0\mid 4)\) → <strong>SI</strong>. Sin solución.</li>
+            <li><strong>Si \(a\neq\pm1\):</strong> \(y=\dfrac{2(1-a)}{(1-a)(1+a)}=\dfrac{2}{1+a}\), \(x=\dfrac{2}{1+a}\) → <strong>SCD</strong>.</li>
+          </ul>
+          <span class="mk-resultado">SCD si a ≠ ±1 · solución única x = y = 2/(1+a)</span>
+          <span class="mk-resultado">SCI si a = 1 · solución x = 2−λ, y = λ</span>
+          <span class="mk-resultado">SI si a = −1</span>
+        </div>
+      </div>
+
+      <!-- Ejercicio 2 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Sistema 3×3 · parámetro k</span><span class="mk-ej-level">SCD / SI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(k\):
+        \[\left\{\begin{aligned}x+y+z&=1\\x+ky+z&=2\\x+y+kz&=1\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Escalonamiento</h4>
+          \[\left(\begin{matrix}1&1&1\\1&k&1\\1&1&k\end{matrix}\middle|\begin{matrix}1\\2\\1\end{matrix}\right)\underset{\substack{F_2\to F_2-F_1\\F_3\to F_3-F_1}}{\sim}\left(\begin{matrix}1&1&1\\0&k-1&0\\0&0&k-1\end{matrix}\middle|\begin{matrix}1\\1\\0\end{matrix}\right)\]
+          Valor crítico: \(k-1=0\Rightarrow k=1\).
+          <h4>Casos</h4>
+          <ul>
+            <li><strong>Si \(k=1\):</strong> fila 2 → \((0,0,0\mid 1)\) → <strong>SI</strong>. Sin solución.</li>
+            <li><strong>Si \(k\neq 1\):</strong> de fila 3, \(z=0\); de fila 2, \(y=\dfrac{1}{k-1}\); de fila 1, \(x=1-y=\dfrac{k-2}{k-1}\) → <strong>SCD</strong>.</li>
+          </ul>
+          <span class="mk-resultado">SCD si k ≠ 1 · x = (k−2)/(k−1), y = 1/(k−1), z = 0</span>
+          <span class="mk-resultado">SI si k = 1</span>
+        </div>
+      </div>
+
+      <!-- Ejercicio 3 -->
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Sistema 3×3 · parámetro a</span><span class="mk-ej-level">SCD / SCI</span></div>
+        <div class="mk-enunciado">Discute y resuelve según el valor de \(a\):
+        \[\left\{\begin{aligned}x+y+z&=2\\x+2y+az&=3\\x+y+(a-1)z&=a\end{aligned}\right.\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Escalonamiento</h4>
+          \[\left(\begin{matrix}1&1&1\\1&2&a\\1&1&a-1\end{matrix}\middle|\begin{matrix}2\\3\\a\end{matrix}\right)\underset{\substack{F_2\to F_2-F_1\\F_3\to F_3-F_1}}{\sim}\left(\begin{matrix}1&1&1\\0&1&a-1\\0&0&a-2\end{matrix}\middle|\begin{matrix}2\\1\\a-2\end{matrix}\right)\]
+          Valor crítico: \(a-2=0\Rightarrow a=2\).
+          <h4>Casos</h4>
+          <ul>
+            <li><strong>Si \(a=2\):</strong> fila 3 → \((0,0,0\mid 0)\) → <strong>SCI</strong> con 1 parámetro libre.<br>Con \(z=\lambda\): de fila 2, \(y=1-(a-1)\lambda=1-\lambda\); de fila 1, \(x=2-y-z=1\).</li>
+            <li><strong>Si \(a\neq 2\):</strong> \(z=\dfrac{a-2}{a-2}=1\); \(y=1-(a-1)=2-a\); \(x=2-y-z=2-(2-a)-1=a-1\) → <strong>SCD</strong>.</li>
+          </ul>
+          <span class="mk-resultado">SCD si a ≠ 2 · x = a−1, y = 2−a, z = 1</span>
+          <span class="mk-resultado">SCI si a = 2 · x = 1, y = 1−λ, z = λ (λ∈ℝ)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-herramienta">
+    <p><strong>¿Quieres practicar con tus propios sistemas?</strong> La calculadora de sistemas con parámetro te permite introducir cualquier sistema con coeficientes numéricos o racionales, seguir el escalonamiento paso a paso y verificar la clasificación y la solución para cada valor del parámetro.</p>
+    <a class="cta-btn" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Ir a la calculadora →</a>
+  </div>
+
+  <!-- PÁGINAS RELACIONADAS -->
+  <section class="art-seccion">
+    <h2>Páginas relacionadas</h2>
+    <div class="relacionados">
+      <a class="rel-card" href="/metodo-gauss-sistemas-ecuaciones.html">
+        <strong>Sistemas por Gauss (sin parámetro)</strong>
+        <span>Resolución de sistemas lineales por eliminación de Gauss</span>
+      </a>
+      <a class="rel-card" href="/sistemas-rouche-frobenius.html">
+        <strong>Sistemas por Rouché-Frobenius</strong>
+        <span>Clasificación y resolución mediante el teorema de Rouché-Frobenius</span>
+      </a>
+      <a class="rel-card" href="/PAGINAS/SISTEMAS_CON_UN_PARAMETRO_ROUCHE/Sistemas_param_rouche_intro.html">
+        <strong>Sistemas con parámetro (Rouché)</strong>
+        <span>Discusión de sistemas con parámetro por el método de Rouché-Frobenius</span>
+      </a>
+      <a class="rel-card" href="/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">
+        <strong>Matriz escalonada</strong>
+        <span>Transformaciones elementales y forma escalonada paso a paso</span>
+      </a>
+    </div>
+  </section>
+
+</div><!-- fin art-wrap -->
+
+<footer class="siteFooter">
+  <div class="footerInner">
+    <a href="/about.html">Acerca de</a>
+    <a href="/contacto.html">Contacto</a>
+    <a href="/privacy.html">Privacidad</a>
+    <a href="/cookies.html">Cookies</a>
+    <a href="/aviso_legal.html">Aviso legal</a>
+  </div>
+</footer>
+
+<script>
+function mkToggle(btn){
+  var sol = btn.nextElementSibling;
+  var open = sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open", open);
+  btn.textContent = open ? "Ocultar solución" : "Ver solución";
+}
+document.addEventListener("DOMContentLoaded", function(){
+  if(window.renderMathInElement){
+    renderMathInElement(document.body, {
+      delimiters:[
+        {left:"\\[", right:"\\]", display:true},
+        {left:"\\(", right:"\\)", display:false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+<script src="/common.js"></script>
+</body>
+</html>
