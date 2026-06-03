@@ -41,246 +41,13 @@
 <link href="../ECUACIONES_MATRICIALES/CSS/Hoja_estilo_ecuaciones_matriciales.css" rel="stylesheet"/>
 <link href="../SISTEMAS_ECUACIONES_MATRICIALES/CSS/Hoja_estilo_sistemas_ecuaciones_matriciales.css" rel="stylesheet"/>
 <link href="CSS/Hoja_estilo_calculo_matrices_condiciones.css" rel="stylesheet"/>
+<style>body{display:flex;flex-direction:column;overflow:hidden;height:100vh}</style>
 </head>
 <body>
-<div id="introPrincipal">
-<div class="introWrap">
-
-<section class="hero">
-<div class="heroTopBar">
-<a class="volverBtn" href="/">← Volver</a>
-<div style="display:flex;align-items:center;gap:14px">
-<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
-<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
-<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="0">Matematikal</text>
-<line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
-<text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
-</svg>
-<a class="trabajoBtn js-show-calc" href="#calculadora">IR A LA HERRAMIENTA →</a>
-</div>
-</div>
-<h1 style="font-family:var(--font-display);font-size:clamp(1.55rem,3.6vw,2.55rem);font-weight:400;letter-spacing:0;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
-  CÁLCULO DE MATRICES QUE CUMPLEN CIERTAS CONDICIONES
-</h1>
-<div class="heroBadge">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
-  Álgebra lineal · Bachillerato
-</div>
-<div class="heroDesc">
-  <p>Resuelve ejercicios en los que la incógnita matricial no se puede despejar directamente. Por ejemplo:</p>
-  <ol type="a" style="margin:8px 0 0 2cm;padding:0;line-height:1.8">
-    <li>Matrices que conmutan con una matriz dada</li>
-    <li>Resolución de ecuaciones matriciales del tipo \(AX+XB=C\)</li>
-    <li>Matrices con parámetros sometidos a una condición.</li>
-  </ol>
-</div>
-<div class="heroLinks">
-  <a class="heroLinkBtn" href="/PAGINAS/ECUACIONES_MATRICIALES/Ecuaciones_matriciales.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Ecuaciones matriciales</a>
-  <a class="heroLinkBtn" href="/PAGINAS/SISTEMAS_ECUACIONES_MATRICIALES/Sistemas_ecuaciones_matriciales.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Sistemas matriciales</a>
-  <a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
-</div>
-</section>
-
-<div class="grid">
-<section class="accentCard span8">
-  <p class="miniTitle">Idea principal</p>
-  <h2>1. Cuando no se puede despejar la matriz</h2>
-  <p>En \(AX+XB=C\) o en \(AX=XA\), la matriz \(X\) está multiplicada por la izquierda en un término y por la derecha en otro, por lo que no se puede extraer \(X\) como factor común de forma directa.</p>
-  <p>El procedimiento para resolver el problema consiste en escribir la matriz incógnita con entradas desconocidas, o parámetros, y transformar la condición matricial en un sistema de ecuaciones lineales con esos parámetros.</p>
-  <div class="k">Si \(X=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) y \(AX=XA\), se realizan los cálculos para obtener los dos miembros \(AX\) y \(XA\) y se igualan las matrices obtenidas término a término, obteniéndose de esta forma un sistema de ecuaciones lineales.</div>
-</section>
-<section class="card span4">
-  <p class="miniTitle">Qué calcula</p>
-  <h2>Una ecuación para la matriz X</h2>
-  <p>\(X\) puede ser una matriz general.</p>
-  <p>La condición puede ser, por ejemplo:</p>
-  <ol type="a" style="margin:8px 0 0 1cm;padding:0;line-height:1.8">
-    <li>\(AX=XA\)</li>
-    <li>\(AX+XB=C\)</li>
-    <li>\(X^t=X\)</li>
-  </ol>
-  <p class="muted">La herramienta indica si hay solución única, infinitas soluciones o ninguna solución.</p>
-</section>
-</div>
-
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Método</p>
-  <p>Se nombra cada entrada desconocida de la matriz. Para orden \(2\), se usa por ejemplo \(X=\begin{pmatrix}a&b\\c&d\end{pmatrix}\) o la matriz que indique el enunciado del problema.</p>
-  <div class="formulaGrid compactFormulaGrid">
-    <div class="formulaBox">
-      <strong>Paso 1</strong>
-      En la condición, por ejemplo \(AX=XA\) o \(AX+XB=C\), se sustituye la matriz \(X\) y las matrices conocidas y se realizan los cálculos para simplificar los dos miembros.
-    </div>
-    <div class="formulaBox">
-      <strong>Paso 2</strong>
-      Se igualan las matrices obtenidas en los dos miembros término a término para obtener un sistema de ecuaciones lineales.
-    </div>
-    <div class="formulaBox">
-      <strong>Paso 3</strong>
-      Se simplifica el sistema obtenido para dejar el menor número de parámetros posible.
-    </div>
-    <div class="formulaBox">
-      <strong>Paso 4</strong>
-      Se escribe la solución final de la matriz \(X\) en función de los parámetros que queden (o de ninguno si no quedan).
-    </div>
-  </div>
-</section>
-</div>
-
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Ejercicio 1</p>
-  <h2>Matrices que conmutan con \(A\)</h2>
-  <div class="enunciado">
-    <p>Calcula todas las matrices que conmutan con \(A=\begin{pmatrix}1&1\\0&1\end{pmatrix}\)</p>
-  </div>
-  <div style="margin-left:1cm">
-  <p>Se considera una matriz genérica cuadrada de orden 2: \(X=\begin{pmatrix}a&b\\c&d\end{pmatrix}\)</p>
-  <p>La matriz debe verificar la condición: \(AX=XA\)</p>
-  <div class="exampleStep">
-    <p><strong>Paso 1:</strong> Se realizan los cálculos de los dos miembros de la condición.</p>
-    <p><strong>Primer miembro</strong></p>
-    <div class="k">\[AX=\begin{pmatrix}1&1\\0&1\end{pmatrix}\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{pmatrix}a+c&b+d\\c&d\end{pmatrix}\]</div>
-    <p><strong>Segundo miembro</strong></p>
-    <div class="k">\[XA=\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}=\begin{pmatrix}a&a+b\\c&c+d\end{pmatrix}\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 2:</strong> Se igualan los dos miembros y se construye el sistema de ecuaciones.</p>
-    <div class="k">\[\begin{pmatrix}a+c&b+d\\c&d\end{pmatrix}=\begin{pmatrix}a&a+b\\c&c+d\end{pmatrix}\Rightarrow\left\{\begin{aligned}&a+c=a\\&b+d=a+b\\&c=c\\&d=c+d\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 3:</strong> Se simplifica el sistema todo lo posible.</p>
-    <div class="k">\[\left\{\begin{aligned}&a+c=a\\&b+d=a+b\\&c=c\\&d=c+d\end{aligned}\right.\Rightarrow\left\{\begin{aligned}&c=0\\&d=a\\&c=c\\&c=0\end{aligned}\right.\Rightarrow\left\{\begin{aligned}&c=0\\&d=a\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 4:</strong> Se escribe la solución final con el menor número de parámetros posible.</p>
-    <div class="k">\[X=\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{pmatrix}a&b\\0&a\end{pmatrix}\]</div>
-  </div>
-  <div class="solutionFinal">
-    <p>Todas las matrices que sean de la forma \(\begin{pmatrix}a&b\\0&a\end{pmatrix},\;a,b\in\mathbb{R}\) conmutan con \(A=\begin{pmatrix}1&1\\0&1\end{pmatrix}\)</p>
-  </div>
-  </div><!-- /margin-left:1cm -->
-</section>
-<section class="card span12">
-  <p class="miniTitle">Ejercicio 2</p>
-  <h2>Ecuaciones en las que no se puede despejar la incógnita</h2>
-  <div class="enunciado">
-    <p>Resolver la ecuación \(AX+XB=C\) con \(A=\begin{pmatrix}1&0\\0&2\end{pmatrix}\), \(B=\begin{pmatrix}3&0\\0&4\end{pmatrix}\) y \(C=\begin{pmatrix}4&5\\6&7\end{pmatrix}\)</p>
-  </div>
-  <div style="margin-left:1cm">
-  <p>Se considera una matriz genérica cuadrada de orden 2: \(X=\begin{pmatrix}a&b\\c&d\end{pmatrix}\)</p>
-  <p>La matriz debe verificar la condición: \(AX+XB=C\)</p>
-  <div class="exampleStep">
-    <p><strong>Paso 1:</strong> Se realizan los cálculos de los dos miembros de la condición.</p>
-    <p><strong>Primer miembro</strong></p>
-    <div class="k">\[AX+XB=\begin{pmatrix}1&0\\0&2\end{pmatrix}\begin{pmatrix}a&b\\c&d\end{pmatrix}+\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}3&0\\0&4\end{pmatrix}=\begin{pmatrix}a&b\\2c&2d\end{pmatrix}+\begin{pmatrix}3a&4b\\3c&4d\end{pmatrix}=\begin{pmatrix}4a&5b\\5c&6d\end{pmatrix}\]</div>
-    <p><strong>Segundo miembro</strong></p>
-    <div class="k">\[C=\begin{pmatrix}4&5\\6&7\end{pmatrix}\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 2:</strong> Se igualan los dos miembros y se construye el sistema de ecuaciones.</p>
-    <div class="k">\[\begin{pmatrix}4a&5b\\5c&6d\end{pmatrix}=\begin{pmatrix}4&5\\6&7\end{pmatrix}\Rightarrow\left\{\begin{aligned}&4a=4\\&5b=5\\&5c=6\\&6d=7\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 3:</strong> Se simplifica el sistema todo lo posible.</p>
-    <div class="k">\[\left\{\begin{aligned}&4a=4\\&5b=5\\&5c=6\\&6d=7\end{aligned}\right.\Rightarrow\left\{\begin{aligned}&a=1\\&b=1\\&c=\dfrac{6}{5}\\&d=\dfrac{7}{6}\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 4:</strong> Se escribe la solución final.</p>
-    <div class="k">\[X=\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{pmatrix}1&1\\\dfrac{6}{5}&\dfrac{7}{6}\end{pmatrix}\]</div>
-  </div>
-  <div class="solutionFinal">
-    <p>La solución es:</p>
-    <div class="k">\[X=\begin{pmatrix}1&1\\\dfrac{6}{5}&\dfrac{7}{6}\end{pmatrix}\]</div>
-  </div>
-  </div><!-- /margin-left:1cm -->
-</section>
-<section class="card span12">
-  <p class="miniTitle">Ejercicio 3</p>
-  <h2>Matrices con una forma previamente determinada</h2>
-  <div class="enunciado">
-    <p>Encuentra todas las matrices de la forma \(A=\begin{pmatrix}1&0\\a&b\end{pmatrix}\) que sean idempotentes, es decir, que verifiquen \(A^2=A\)</p>
-  </div>
-  <div style="margin-left:1cm">
-  <p>La matriz tiene la forma \(A=\begin{pmatrix}1&0\\a&b\end{pmatrix}\) y debe verificar la condición: \(A^2=A\)</p>
-  <div class="exampleStep">
-    <p><strong>Paso 1:</strong> Se calcula \(A^2\).</p>
-    <div class="k">\[A^2=\begin{pmatrix}1&0\\a&b\end{pmatrix}\begin{pmatrix}1&0\\a&b\end{pmatrix}=\begin{pmatrix}1&0\\a+ab&b^2\end{pmatrix}\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 2:</strong> Se igualan los dos miembros y se construye el sistema de ecuaciones.</p>
-    <div class="k">\[\begin{pmatrix}1&0\\a+ab&b^2\end{pmatrix}=\begin{pmatrix}1&0\\a&b\end{pmatrix}\Rightarrow\left\{\begin{aligned}&a+ab=a\\&b^2=b\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 3:</strong> Se simplifica el sistema todo lo posible.</p>
-    <div class="k">\[\left\{\begin{aligned}&a+ab=a\\&b^2=b\end{aligned}\right.\Rightarrow\left\{\begin{aligned}&ab=0\\&b(b-1)=0\end{aligned}\right.\Rightarrow b=0\;\text{o}\;b=1\]</div>
-    <p>Se estudian los dos casos:</p>
-    <ul style="margin:8px 0;line-height:1.8">
-      <li>Si \(b=0\): la condición \(ab=0\) se cumple para cualquier valor de \(a\).</li>
-      <li>Si \(b=1\): la condición \(ab=0\) exige \(a=0\).</li>
-    </ul>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 4:</strong> Se escriben las soluciones para cada caso.</p>
-    <p><strong>Caso 1</strong> \((b=0)\):</p>
-    <div class="k">\[A=\begin{pmatrix}1&0\\a&0\end{pmatrix},\quad a\in\mathbb{R}\]</div>
-    <p><strong>Caso 2</strong> \((b=1,\;a=0)\):</p>
-    <div class="k">\[A=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I\]</div>
-  </div>
-  <div class="solutionFinal">
-    <p>Las matrices de la forma \(\begin{pmatrix}1&0\\a&b\end{pmatrix}\) que son idempotentes son:</p>
-    <div class="k">\[\begin{pmatrix}1&0\\a&0\end{pmatrix}\;(a\in\mathbb{R})\qquad\text{y}\qquad\begin{pmatrix}1&0\\0&1\end{pmatrix}=I\]</div>
-  </div>
-  </div><!-- /margin-left:1cm -->
-</section>
-<section class="card span12">
-  <p class="miniTitle">Ejercicio 4</p>
-  <h2>Matrices no cuadradas con una forma previamente determinada</h2>
-  <div class="enunciado">
-    <p>Encuentra todas las matrices de la forma \(A=\begin{pmatrix}a&b&0\\1&0&c\end{pmatrix}\) que verifican \(A\cdot B=C\), con \(B=\begin{pmatrix}1&2\\0&1\\1&0\end{pmatrix}\) y \(C=\begin{pmatrix}2&5\\2&2\end{pmatrix}\)</p>
-  </div>
-  <div style="margin-left:1cm">
-  <p>La matriz incógnita es de orden \(2\times3\) y tiene la forma \(A=\begin{pmatrix}a&b&0\\1&0&c\end{pmatrix}\). La condición es: \(A\cdot B=C\)</p>
-  <div class="exampleStep">
-    <p><strong>Paso 1:</strong> Se calcula el producto \(A\cdot B\) sustituyendo la forma de \(A\).</p>
-    <div class="k">\[A\cdot B=\begin{pmatrix}a&b&0\\1&0&c\end{pmatrix}\begin{pmatrix}1&2\\0&1\\1&0\end{pmatrix}=\begin{pmatrix}a&2a+b\\1+c&2\end{pmatrix}\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 2:</strong> Se iguala con \(C\) y se construye el sistema de ecuaciones.</p>
-    <div class="k">\[\begin{pmatrix}a&2a+b\\1+c&2\end{pmatrix}=\begin{pmatrix}2&5\\2&2\end{pmatrix}\Rightarrow\left\{\begin{aligned}&a=2\\&2a+b=5\\&1+c=2\\&2=2\end{aligned}\right.\]</div>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 3:</strong> Se simplifica el sistema todo lo posible.</p>
-    <div class="k">\[\left\{\begin{aligned}&a=2\\&2a+b=5\\&1+c=2\\&2=2\end{aligned}\right.\Rightarrow\left\{\begin{aligned}&a=2\\&b=1\\&c=1\end{aligned}\right.\]</div>
-    <p>La cuarta ecuación es una identidad y no aporta información.</p>
-  </div>
-  <div class="exampleStep">
-    <p><strong>Paso 4:</strong> Se escribe la solución final.</p>
-    <div class="k">\[A=\begin{pmatrix}a&b&0\\1&0&c\end{pmatrix}=\begin{pmatrix}2&1&0\\1&0&1\end{pmatrix}\]</div>
-  </div>
-  <div class="solutionFinal">
-    <p>La solución es:</p>
-    <div class="k">\[A=\begin{pmatrix}2&1&0\\1&0&1\end{pmatrix}\]</div>
-  </div>
-  </div><!-- /margin-left:1cm -->
-</section>
-</div>
-
-<div class="herramienta-cta">
-  <p><strong>¿Quieres practicar?</strong> Escribe la ecuación que debe cumplir \(X\), decide si \(X\) es general o tiene una forma con parámetros, e introduce las matrices conocidas.</p>
-  <a class="trabajoBtn js-show-calc" href="#calculadora">IR A LA HERRAMIENTA →</a>
-</div>
-
-</div>
-</div>
-
-<div id="calculadora" style="display:none">
 <div id="tituloinicial">
   <h2>MATRICES QUE CUMPLEN CONDICIONES</h2>
   <div id="controlesTop">
-    <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
+    <a class="abreVentana" href="/matrices-con-condiciones.html" id="btnVolverExplicacion">← TEORÍA</a>
     <a class="abreVentana" href="#" id="btnReset">OTRO EJERCICIO</a>
     <a class="abreVentana" href="#" id="abreVentana1">AYUDA</a>
     <a aria-label="Volver a inicio" href="/" id="btnHome" title="Inicio">
@@ -316,7 +83,18 @@
 
 <footer class="siteFooter"><div class="footerInner"><a href="/about.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/privacy.html">Privacidad</a><a href="/cookies.html">Cookies</a><a href="/aviso_legal.html">Aviso legal</a></div></footer>
 <script src="/common.js"></script>
-</div>
-
+<script>
+window.addEventListener('load', function(){
+  var btn = document.getElementById('btnVolverExplicacion');
+  if(btn){
+    var clone = btn.cloneNode(true);
+    btn.parentNode.replaceChild(clone, btn);
+    clone.addEventListener('click', function(e){
+      e.preventDefault();
+      window.location.href = '/matrices-con-condiciones.html';
+    });
+  }
+});
+</script>
 </body>
 </html>

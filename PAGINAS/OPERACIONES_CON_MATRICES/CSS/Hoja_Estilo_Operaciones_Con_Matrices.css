@@ -94,11 +94,12 @@ button:hover,input[type="button"]:hover,input[type="submit"]:hover{
   display:flex;align-items:center;gap:16px;
 }
 
-#abreVentana1{
+.btnTeoria,#abreVentana1,#otrasMatrices{
   font-size:13px;font-weight:600;padding:6px 10px;
-  background:var(--soft);border:1px solid transparent;border-radius:8px;
+  background:var(--soft);border:1px solid var(--border);border-radius:8px;
+  text-decoration:none;color:var(--text);cursor:pointer;
 }
-#abreVentana1:hover{background:#e0e7ff;text-decoration:none;}
+.btnTeoria:hover,#abreVentana1:hover,#otrasMatrices:hover{background:#e0e7ff;text-decoration:none;}
 
 /* Botón VOLVER */
 #btnHome{

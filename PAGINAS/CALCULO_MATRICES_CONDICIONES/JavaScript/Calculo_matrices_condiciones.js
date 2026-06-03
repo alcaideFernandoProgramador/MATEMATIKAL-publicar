@@ -1581,6 +1581,31 @@
     });
   }
 
+  function displayNonLinearWarning(problem, knownMap){
+    clearEl(caja21);
+    addStep(caja21, 'Paso 1: Calcular los miembros de la condición', false, card => {
+      return renderCalculationStep(card, problem, knownMap, () => {
+        addStep(caja21, 'Paso 2: Sistema de ecuaciones resultante', false, sysCard => {
+          try {
+            const rows = conditionSystemRows(problem, knownMap);
+            const sysEl = document.createElement('div');
+            renderKatex(rawSystemTex(rows), sysEl, true);
+            sysCard.appendChild(sysEl);
+          } catch(e) {
+            showError('No se pudo calcular el sistema: ' + (typeof e === 'string' ? e : e.message), sysCard);
+          }
+        });
+        addStep(caja21, 'Paso 3: Resolución', true, warnCard => {
+          const p = document.createElement('p');
+          p.className = 'msgError';
+          p.textContent = 'El sistema obtenido no es lineal en la incógnita. Esta calculadora no resuelve sistemas no lineales.';
+          warnCard.appendChild(p);
+        });
+        caja21.scrollTop = caja21.scrollHeight;
+      });
+    });
+  }
+
   function runSolve(problem, knownMap, errDiv){
     let result;
     try {
@@ -1588,13 +1613,8 @@
     } catch(linErr){
       const msg = typeof linErr === 'string' ? linErr : linErr.message;
       if(msg && (msg.includes('no es lineal') || msg.includes('productos entre parámetros'))){
-        try {
-          const solutions = solveProblemNonLinear(problem, knownMap);
-          renderResolvedSummary(problem, knownMap);
-          displayNonLinearSolution(problem, knownMap, solutions);
-        } catch(nlErr){
-          showError(typeof nlErr === 'string' ? nlErr : nlErr.message, errDiv);
-        }
+        renderResolvedSummary(problem, knownMap);
+        displayNonLinearWarning(problem, knownMap);
         return;
       }
       showError(msg, errDiv); return;

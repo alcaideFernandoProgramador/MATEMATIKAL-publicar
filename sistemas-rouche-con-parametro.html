@@ -111,11 +111,14 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 .k-par>.k{flex:1;min-width:200px;margin:0}
 
 /* TABLA ROUCHÉ */
-.tablaClas{width:100%;border-collapse:collapse;margin:16px 0;font-size:.93rem}
-.tablaClas th{background:var(--blue-mid);color:#fff;padding:9px 14px;text-align:center;font-weight:700}
-.tablaClas td{padding:8px 14px;border:1px solid rgba(30,50,150,.1);text-align:center;color:var(--text-secondary)}
+.tablaClas{width:100%;border-collapse:collapse;margin:16px 0 20px;font-size:.95rem}
+.tablaClas th{background:var(--blue-mid);color:#fff;padding:10px 14px;text-align:center;font-weight:700;font-size:.88rem;letter-spacing:.02em}
+.tablaClas td{border:1px solid rgba(59,110,248,.18);padding:10px 14px;text-align:center;color:var(--text-secondary)}
 .tablaClas tr:nth-child(even) td{background:#f4f6fd}
-.tablaClas td strong{color:var(--text-primary)}
+.tablaClas tr:nth-child(odd) td{background:#fff}
+.tablaClas .td-incomp{color:#6b1a18;font-weight:700}
+.tablaClas .td-det{color:#145214;font-weight:700}
+.tablaClas .td-indet{color:#5a420a;font-weight:700}
 
 /* TIPOS DE SISTEMA */
 .tipos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
@@ -271,9 +274,27 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
   <section class="art-seccion" id="que-es">
     <h2>1. ¿Qué es un sistema de ecuaciones con un parámetro?</h2>
     <p>Un <strong>sistema de ecuaciones lineales con un parámetro</strong> es un sistema en el que uno o varios coeficientes, o algún término independiente, dependen de una variable simbólica —generalmente llamada \(a\), \(k\) o \(\lambda\)— que puede tomar cualquier valor real.</p>
+    <p>Dado un sistema con \(m\) ecuaciones y \(n\) incógnitas, se trabaja con tres objetos en paralelo:</p>
+    <div class="k-par">
+      <div class="k">\[
+      \left\{\begin{aligned}
+      a_{11}x_1 + \cdots + a_{1n}x_n &= b_1 \\
+      a_{21}x_1 + \cdots + a_{2n}x_n &= b_2 \\
+      &\vdots \\
+      a_{m1}x_1 + \cdots + a_{mn}x_n &= b_m
+      \end{aligned}\right.
+      \]<p style="font-size:.82rem;color:var(--text-muted);margin:6px 0 0;font-style:italic;text-align:center">Sistema</p></div>
+      <div class="k">\[A = \begin{pmatrix}a_{11} & \cdots & a_{1n}\\\vdots & \ddots & \vdots\\a_{m1} & \cdots & a_{mn}\end{pmatrix}\]
+      <p style="font-size:.82rem;color:var(--text-muted);margin:6px 0 0;font-style:italic;text-align:center">Matriz de coeficientes A (m×n)</p></div>
+      <div class="k">\[(A\,|\,b) = \left(\begin{matrix}a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{matrix}\,\middle|\,\begin{matrix}b_1\\\vdots\\b_m\end{matrix}\right)\]
+      <p style="font-size:.82rem;color:var(--text-muted);margin:6px 0 0;font-style:italic;text-align:center">Matriz ampliada (A|b) (m×(n+1))</p></div>
+    </div>
     <p>Dado que el parámetro aparece en la matriz de coeficientes \(A\) o en la matriz ampliada \((A\,|\,b)\), el rango de estas matrices varía según el valor del parámetro, y con él <strong>cambia la clasificación del sistema</strong>. El objetivo no es solo resolver el sistema para un valor concreto, sino <strong>discutirlo</strong>: determinar para qué valores del parámetro el sistema es compatible determinado, indeterminado o incompatible, y dar la solución en los casos en que exista.</p>
     <div class="aviso-box">
-      <p><strong>Ejemplo:</strong> en el sistema \(\left\{\begin{aligned}x+y&=1\\ax+y&=a\end{aligned}\right.\), si \(a=1\) ambas ecuaciones son iguales y hay infinitas soluciones; para \(a\neq 1\) el sistema tiene solución única \(x=1,\; y=0\). El tipo depende del valor del parámetro \(a\).</p>
+      <p><strong>Ejemplo:</strong> en el sistema \(\left\{\begin{aligned}x+y&=1\\ax+y&=a\end{aligned}\right.\).</p>
+      <p style="margin-left:1.2rem">Si \(a=1\) ambas ecuaciones son iguales y hay infinitas soluciones: \((x=1-t,\; y=t)\) con \(t\in\mathbb{R}\).</p>
+      <p style="margin-left:1.2rem">Para \(a\neq 1\) el sistema tiene solución única \((x=1,\; y=0)\).</p>
+      <p>El tipo depende del valor del parámetro \(a\).</p>
     </div>
     <h3>¿Por qué usar el método de Rouché-Frobenius?</h3>
     <p>A diferencia del método de Gauss —que escala la matriz operando fila a fila—, el <strong>método de Rouché-Frobenius clasifica el sistema comparando rangos calculados mediante determinantes de menores</strong>. Esto lo hace especialmente cómodo cuando el parámetro aparece en varios coeficientes a la vez, ya que el determinante de la matriz de coeficientes es una expresión polinómica en el parámetro que se puede factorizar con facilidad.</p>
@@ -284,30 +305,34 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <h2>2. El teorema de Rouché-Frobenius</h2>
     <p>El teorema de Rouché-Frobenius relaciona el tipo del sistema con los rangos de la matriz de coeficientes \(A\) y de la matriz ampliada \((A\,|\,b)\), comparándolos con el número de incógnitas \(n\):</p>
     <table class="tablaClas">
-      <tr>
-        <th>\(\text{rg}(A)\)</th>
-        <th>\(\text{rg}(A\,|\,b)\)</th>
-        <th>vs. \(n\)</th>
-        <th>Tipo del sistema</th>
-      </tr>
-      <tr>
-        <td>\(r\)</td>
-        <td>\(r' \neq r\)</td>
-        <td>—</td>
-        <td><strong>Incompatible (SI)</strong> · sin solución</td>
-      </tr>
-      <tr>
-        <td>\(r\)</td>
-        <td>\(r' = r\)</td>
-        <td>\(r = n\)</td>
-        <td><strong>Compatible determinado (SCD)</strong> · solución única</td>
-      </tr>
-      <tr>
-        <td>\(r\)</td>
-        <td>\(r' = r\)</td>
-        <td>\(r &lt; n\)</td>
-        <td><strong>Compatible indeterminado (SCI)</strong> · \(n-r\) parámetros libres</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>\(\operatorname{rg}(A) = r\)</th>
+          <th>\(\operatorname{rg}(A\,|\,b) = r'\)</th>
+          <th>Comparación con \(n\) = nº de incógnitas</th>
+          <th>Tipo de sistema</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(r\)</td>
+          <td>\(r' = r+1\)</td>
+          <td>—</td>
+          <td class="td-incomp">Incompatible (SI)</td>
+        </tr>
+        <tr>
+          <td>\(r\)</td>
+          <td>\(r' = r\)</td>
+          <td>\(r = n\)</td>
+          <td class="td-det">Compatible Determinado (SCD)</td>
+        </tr>
+        <tr>
+          <td>\(r\)</td>
+          <td>\(r' = r\)</td>
+          <td>\(r &lt; n\)</td>
+          <td class="td-indet">Compatible Indeterminado (SCI)</td>
+        </tr>
+      </tbody>
     </table>
     <p>De forma compacta:</p>
     <div class="k">\[
@@ -337,7 +362,9 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <h2>3. Los valores críticos del parámetro</h2>
     <p>Se llaman <strong>valores críticos</strong> a los valores del parámetro que anulan el determinante de la matriz de coeficientes (o de su mayor menor cuadrado). Son los únicos valores para los que el rango puede bajar respecto al caso general, alterando la clasificación del sistema.</p>
     <div class="aviso-box">
-      <p><strong>Cómo se obtienen:</strong> se calcula \(\det(A)\) como polinomio en el parámetro y se resuelve \(\det(A) = 0\). Cada raíz de esa ecuación es un valor crítico que hay que estudiar por separado.</p>
+      <p><strong>Cómo se obtienen:</strong></p>
+      <p style="margin-left:1cm"><strong>a)</strong> Cuando el sistema es cuadrado (nº de ecuaciones = nº de incógnitas), los valores críticos son las raíces de la ecuación que resulta al igualar a cero el determinante de \(A\).</p>
+      <p style="margin-left:1cm"><strong>b)</strong> Si \(A\) no es cuadrada, se igualan a cero todos los menores de orden máximo tanto de \(A\) como de \((A\,|\,b)\).</p>
     </div>
     <p>Una vez identificados los valores críticos, el análisis distingue:</p>
     <div class="tipos-grid">
@@ -363,19 +390,17 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ol class="pasos-lista">
       <li>
         <strong>Escribir la matriz de coeficientes \(A\) y la ampliada \((A\,|\,b)\) con el parámetro.</strong>
-        Se construyen igual que en cualquier sistema; el parámetro aparece en las casillas correspondientes sin simplificar.
       </li>
       <li>
         <strong>Calcular \(\det(A)\) como polinomio en el parámetro.</strong>
-        Si \(A\) no es cuadrada, se toma el mayor menor cuadrado posible. El determinante se factoriza para encontrar sus raíces.
+        Si \(A\) no es cuadrada, se igualan a cero todos los menores de orden máximo tanto de \(A\) como de \((A\,|\,b)\).
       </li>
       <li>
-        <strong>Identificar los valores críticos.</strong>
-        Son las raíces de \(\det(A) = 0\). Cada uno puede cambiar la clasificación del sistema.
+        <strong>Identificar los valores críticos</strong> de la forma indicada en el apartado anterior.
       </li>
       <li>
         <strong>Analizar el caso general</strong> (parámetro distinto de todos los críticos).
-        Como \(\det(A) \neq 0\), el rango de \(A\) es máximo. El mismo menor está en \((A\,|\,b)\), por lo que \(\text{rg}(A) = \text{rg}(A\,|\,b)\). Si el rango coincide con \(n\), el sistema es SCD y se resuelve por Cramer.
+        El sistema se resuelve por Cramer.
       </li>
       <li>
         <strong>Analizar cada valor crítico por separado.</strong>
@@ -429,7 +454,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         \qquad
         y=\frac{\begin{vmatrix}1&3\\k&k\end{vmatrix}}{4-2k}=\frac{k-3k}{4-2k}=\frac{-2k}{2(2-k)}=\frac{-k}{2-k}
         \]</div>
-        <div class="resultado-final">Solución única: \(x=\dfrac{6-k}{2-k},\quad y=\dfrac{-k}{2-k}\quad(k\neq 2)\)</div>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=\dfrac{6-k}{2-k},\quad y=\dfrac{-k}{2-k}\right)\quad(k\neq 2)\)</div>
       </div>
 
       <div class="caso-bloque caso-incomp">
@@ -470,10 +495,9 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valores críticos</p>
       <p>Desarrollando por la regla de Sarrus:</p>
       <div class="k">\[
-      \det(A)=\underbrace{(1\cdot1\cdot1+1\cdot1\cdot1+a\cdot a\cdot a)}_{\text{diag. positivas}}-\underbrace{(a\cdot1\cdot1+1\cdot1\cdot1+1\cdot a\cdot a\phantom{X})}_{\text{diag. negativas}}
-      =2+a^3-(a+1+a^2)=a^3-a^2-a+1...
+      \det(A)=1+1+a^3-a-a-a=a^3-3a+2
       \]</div>
-      <p>Calculado directamente: \(\det(A)=a^3-3a+2\). Comprobamos que \(a=1\) es raíz: \(1-3+2=0\;\checkmark\). Dividimos:</p>
+      <p>Comprobamos que \(a=1\) es raíz: \(1-3+2=0\;\checkmark\). Dividimos:</p>
       <div class="k">\[
       a^3-3a+2=(a-1)(a^2+a-2)=(a-1)(a-1)(a+2)=(a-1)^2(a+2)
       \]</div>
@@ -486,12 +510,12 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         <p>\(\det(A)=(a-1)^2(a+2)\neq 0\Rightarrow\text{rg}(A)=3=n\). El mismo menor de orden 3 garantiza \(\text{rg}(A\,|\,b)=3\). <strong>Sistema compatible determinado.</strong></p>
         <p>Por la simetría del sistema (las tres columnas de \(b\) son iguales), las tres incógnitas resultan iguales. Calculamos \(x\) por Cramer (los cálculos de \(y\) y \(z\) son análogos):</p>
         <div class="k">\[
-        \det(A_x)=\begin{vmatrix}1&1&a\\1&1&1\\1&a&1\end{vmatrix}=(1-a)^2
+        \det(A_x)=\begin{vmatrix}1&1&a\\1&1&1\\1&a&1\end{vmatrix}=1+1+a^2-a-a-1=a^2-2a+1=(1-a)^2
         \;\Rightarrow\;
         x=\frac{(1-a)^2}{(a-1)^2(a+2)}=\frac{1}{a+2}
         \]</div>
         <p>Por simetría, \(y=z=\dfrac{1}{a+2}\).</p>
-        <div class="resultado-final">Solución única: \(x=y=z=\dfrac{1}{a+2}\quad(a\neq1,\;a\neq-2)\)</div>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=y=z=\dfrac{1}{a+2}\right)\quad(a\neq1,\;a\neq-2)\)</div>
       </div>
 
       <div class="caso-bloque caso-indet">
@@ -504,7 +528,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         <p>El único menor de orden 1 no nulo es \(a_{11}=1\), luego \(\text{rg}(A)=1\). En la ampliada ocurre lo mismo: \(\text{rg}(A\,|\,b)=1\).</p>
         <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=1&lt;n=3\): <strong>sistema compatible indeterminado</strong> con \(3-1=2\) parámetros libres.</p>
         <p>La única ecuación válida es \(x+y+z=1\). Dejamos \(y=s\) y \(z=t\) libres:</p>
-        <div class="resultado-final">Infinitas soluciones: \(x=1-s-t,\quad y=s,\quad z=t\quad(s,t\in\mathbb{R})\)</div>
+        <div class="resultado-final">Infinitas soluciones:&ensp;\(\left(x=1-s-t,\quad y=s,\quad z=t\right)\quad(s,t\in\mathbb{R})\)</div>
       </div>
 
       <div class="caso-bloque caso-incomp">
@@ -517,7 +541,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         <p>\(\det(A)=0\). El menor de orden 2 formado por las filas 1 y 2 y las columnas 1 y 2 es \(\begin{vmatrix}1&1\\-2&1\end{vmatrix}=3\neq 0\), luego \(\text{rg}(A)=2\).</p>
         <p>Para la ampliada, se busca un menor de orden 3 no nulo usando las columnas 1, 2 y 4:</p>
         <div class="k">\[
-        \begin{vmatrix}1&1&1\\-2&1&1\\1&-2&1\end{vmatrix}=1(1+2)-1(-2-1)+1(4-1)=3+3+3=9\neq 0
+        \begin{vmatrix}1&1&1\\-2&1&1\\1&-2&1\end{vmatrix}=1+1+4-1+2+2=9\neq 0
         \;\Rightarrow\;\text{rg}(A\,|\,b)=3
         \]</div>
         <p>\(\text{rg}(A)=2\neq 3=\text{rg}(A\,|\,b)\): <strong>sistema incompatible</strong>.</p>
@@ -547,9 +571,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valores críticos</p>
       <div class="k">\[
       \det(A)=\begin{vmatrix}1&1&1\\1&2&a\\1&4&a^2\end{vmatrix}
-      =1(2a^2-4a)-1(a^2-a)+1(4-2)
-      =2a^2-4a-a^2+a+2
-      =a^2-3a+2=(a-1)(a-2)
+      =2a^2+a+4-2-4a-a^2=a^2-3a+2=(a-1)(a-2)
       \]</div>
       <p>Los <strong>valores críticos</strong> son \(\boldsymbol{a=1}\) y \(\boldsymbol{a=2}\).</p>
 
@@ -560,21 +582,21 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         <p>\(\det(A)=(a-1)(a-2)\neq 0\Rightarrow\text{rg}(A)=\text{rg}(A\,|\,b)=3=n\): <strong>sistema compatible determinado</strong>.</p>
         <p>Calculamos por Cramer:</p>
         <div class="k">\[
-        \det(A_x)=\begin{vmatrix}3&1&1\\4&2&a\\6&4&a^2\end{vmatrix}=2(a-1)(a-2)
+        \det(A_x)=\begin{vmatrix}3&1&1\\4&2&a\\6&4&a^2\end{vmatrix}=6a^2+6a+16-12-12a-4a^2=2a^2-6a+4=2(a-1)(a-2)
         \;\Rightarrow\;
         x=\frac{2(a-1)(a-2)}{(a-1)(a-2)}=2
         \]</div>
         <div class="k">\[
-        \det(A_y)=\begin{vmatrix}1&3&1\\1&4&a\\1&6&a^2\end{vmatrix}=(a-1)(a-2)
+        \det(A_y)=\begin{vmatrix}1&3&1\\1&4&a\\1&6&a^2\end{vmatrix}=4a^2+3a+6-4-6a-3a^2=a^2-3a+2=(a-1)(a-2)
         \;\Rightarrow\;
         y=\frac{(a-1)(a-2)}{(a-1)(a-2)}=1
         \]</div>
         <div class="k">\[
-        \det(A_z)=\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=0
+        \det(A_z)=\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=12+4+12-6-16-6=0
         \;\Rightarrow\;
         z=0
         \]</div>
-        <div class="resultado-final">Solución única: \(x=2,\quad y=1,\quad z=0\quad(a\neq1,\;a\neq2)\)</div>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=2,\quad y=1,\quad z=0\right)\quad(a\neq1,\;a\neq2)\)</div>
       </div>
 
       <div class="caso-bloque caso-indet">
@@ -584,14 +606,14 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&1&3\\1&2&1&4\\1&4&1&6\end{array}\right)
         \]</div>
         <p>El menor de orden 2 de las filas 1 y 2 y las columnas 1 y 2 vale \(\begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq 0\Rightarrow\text{rg}(A)=2\).</p>
-        <p>El menor de orden 3 de la ampliada con las columnas 1, 2 y 4 es \(\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=0\), y el resto de menores de orden 3 disponibles también se anulan, por lo que \(\text{rg}(A\,|\,b)=2\).</p>
+        <p>El menor de orden 3 de la ampliada con las columnas 1, 2 y 4 es \(\begin{vmatrix}1&1&3\\1&2&4\\1&4&6\end{vmatrix}=12+4+12-6-16-6=0\), y el resto de menores de orden 3 disponibles también se anulan, por lo que \(\text{rg}(A\,|\,b)=2\).</p>
         <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=2&lt;n=3\): <strong>sistema compatible indeterminado</strong> con 1 parámetro libre. Tomamos \(z=t\). El subsistema en \(x,y\) queda:</p>
         <div class="k">\[
         \left\{\begin{aligned}x+y&=3-t\\x+2y&=4-t\end{aligned}\right.
         \;\Rightarrow\;
         y=1,\quad x=(3-t)-y=2-t
         \]</div>
-        <div class="resultado-final">Infinitas soluciones: \(x=2-t,\quad y=1,\quad z=t\quad(t\in\mathbb{R})\)</div>
+        <div class="resultado-final">Infinitas soluciones:&ensp;\(\left(x=2-t,\quad y=1,\quad z=t\right)\quad(t\in\mathbb{R})\)</div>
       </div>
 
       <div class="caso-bloque caso-indet">
@@ -607,7 +629,144 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
         \;\Rightarrow\;
         y=1-t,\quad x=(3-t)-y=2
         \]</div>
-        <div class="resultado-final">Infinitas soluciones: \(x=2,\quad y=1-t,\quad z=t\quad(t\in\mathbb{R})\)</div>
+        <div class="resultado-final">Infinitas soluciones:&ensp;\(\left(x=2,\quad y=1-t,\quad z=t\right)\quad(t\in\mathbb{R})\)</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO 4 -->
+    <h3>Ejemplo 4 — Sistema no cuadrado con más ecuaciones que incógnitas</h3>
+    <p>Discutir y resolver según los valores del parámetro \(k\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      kx + 3y &= 4 \\
+      3x - y &= 2 \\
+      2x - y &= k
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Matrices</p>
+      <div class="k">\[
+      A=\begin{pmatrix}k&3\\3&-1\\2&-1\end{pmatrix},\qquad
+      (A\,|\,b)=\left(\begin{array}{cc|c}k&3&4\\3&-1&2\\2&-1&k\end{array}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Rango de \(A\) y valores críticos</p>
+      <p>El sistema tiene 3 ecuaciones y 2 incógnitas (\(A\) es 3×2). El menor de orden 2 formado por las filas 2 y 3 de \(A\) vale:</p>
+      <div class="k">\[
+      \begin{vmatrix}3&-1\\2&-1\end{vmatrix}=-3+2=-1\neq 0 \;\Rightarrow\; \text{rg}(A)=2 \text{ para todo } k
+      \]</div>
+      <p>Para que el sistema sea compatible se necesita \(\text{rg}(A\,|\,b)=2\), lo que exige \(\det(A\,|\,b)=0\):</p>
+      <div class="k">\[
+      \det(A\,|\,b)=\begin{vmatrix}k&3&4\\3&-1&2\\2&-1&k\end{vmatrix}=-k^2+12-12+8+2k-9k=-k^2-7k+8=-(k-1)(k+8)
+      \]</div>
+      <p>Los <strong>valores críticos</strong> son \(\boldsymbol{k=1}\) y \(\boldsymbol{k=-8}\).</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(k \neq 1\) y \(k \neq -8\) — caso general</p>
+        <p>\(\det(A\,|\,b)\neq 0\Rightarrow\text{rg}(A\,|\,b)=3\neq 2=\text{rg}(A)\): <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución para \(k\neq 1\) y \(k\neq -8\)</div>
+      </div>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(k = 1\)</p>
+        <p>\(\det(A\,|\,b)=0\Rightarrow\text{rg}(A\,|\,b)=2=\text{rg}(A)=n\): <strong>sistema compatible determinado</strong>.</p>
+        <p>Tomamos las ecuaciones 2 y 3: \(3x-y=2\) y \(2x-y=1\). Restando: \(x=1\), luego \(y=3(1)-2=1\).</p>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=1,\quad y=1\right)\quad(k=1)\)</div>
+      </div>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(k = -8\)</p>
+        <p>\(\det(A\,|\,b)=0\Rightarrow\text{rg}(A\,|\,b)=2=\text{rg}(A)=n\): <strong>sistema compatible determinado</strong>.</p>
+        <p>Tomamos las ecuaciones 2 y 3: \(3x-y=2\) y \(2x-y=-8\). Restando: \(x=10\), luego \(y=3(10)-2=28\).</p>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=10,\quad y=28\right)\quad(k=-8)\)</div>
+      </div>
+    </div>
+
+    <!-- EJEMPLO 5 -->
+    <h3>Ejemplo 5 — Sistema 3×3 con parámetro en \(A\) y en \(b\)</h3>
+    <p>Discutir y resolver según los valores del parámetro \(a\):</p>
+    <div class="ejemplo-bloque">
+      <h3>Sistema:</h3>
+      <div class="k">\[
+      \left\{\begin{aligned}
+      x + y + 2z &= 1 \\
+      x + 2y + az &= 3 \\
+      x + ay + 4z &= a+2
+      \end{aligned}\right.
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 1 — Matrices</p>
+      <div class="k">\[
+      A=\begin{pmatrix}1&1&2\\1&2&a\\1&a&4\end{pmatrix},\qquad
+      (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&2&1\\1&2&a&3\\1&a&4&a+2\end{array}\right)
+      \]</div>
+
+      <p class="ejemplo-paso">Paso 2 — Determinante de \(A\) y valores críticos</p>
+      <div class="k">\[
+      \det(A)=\begin{vmatrix}1&1&2\\1&2&a\\1&a&4\end{vmatrix}=8+a+2a-4-a^2-4=3a-a^2=a(3-a)
+      \]</div>
+      <p>Los <strong>valores críticos</strong> son \(\boldsymbol{a=0}\) y \(\boldsymbol{a=3}\).</p>
+
+      <p class="ejemplo-paso">Paso 3 — Estudio de cada caso</p>
+
+      <div class="caso-bloque caso-general">
+        <p class="caso-titulo">Para \(a \neq 0\) y \(a \neq 3\) — caso general</p>
+        <p>\(\det(A)=a(3-a)\neq 0\Rightarrow\text{rg}(A)=\text{rg}(A\,|\,b)=3=n\): <strong>sistema compatible determinado</strong>.</p>
+        <p>Por la regla de Cramer:</p>
+        <div class="k">\[
+        \det(A_x)=\begin{vmatrix}1&1&2\\3&2&a\\a+2&a&4\end{vmatrix}=8+a(a+2)+6a-4(a+2)-a^2-12=4(a-3)
+        \;\Rightarrow\;
+        x=\frac{4(a-3)}{-a(a-3)}=\frac{-4}{a}
+        \]</div>
+        <div class="k">\[
+        \det(A_y)=\begin{vmatrix}1&1&2\\1&3&a\\1&a+2&4\end{vmatrix}=12+a+2(a+2)-6-a(a+2)-4=-(a-3)(a+2)
+        \;\Rightarrow\;
+        y=\frac{-(a-3)(a+2)}{-a(a-3)}=\frac{a+2}{a}
+        \]</div>
+        <div class="k">\[
+        \det(A_z)=\begin{vmatrix}1&1&1\\1&2&3\\1&a&a+2\end{vmatrix}=2(a+2)+3+a-2-3(a+2)-a=3-a
+        \;\Rightarrow\;
+        z=\frac{3-a}{a(3-a)}=\frac{1}{a}
+        \]</div>
+        <div class="resultado-final">Solución única:&ensp;\(\left(x=\dfrac{-4}{a},\quad y=\dfrac{a+2}{a},\quad z=\dfrac{1}{a}\right)\quad(a\neq0,\;a\neq3)\)</div>
+      </div>
+
+      <div class="caso-bloque caso-incomp">
+        <p class="caso-titulo">Para \(a = 0\)</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&2\\1&2&0\\1&0&4\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&2&1\\1&2&0&3\\1&0&4&2\end{array}\right)
+        \]</div>
+        <p>\(\det(A)=0\). El menor de orden 2 de las filas 1 y 2 vale \(\begin{vmatrix}1&1\\1&2\end{vmatrix}=1\neq 0\Rightarrow\text{rg}(A)=2\).</p>
+        <p>Para la ampliada, el menor de orden 3 con las columnas 1, 2 y 4:</p>
+        <div class="k">\[
+        \begin{vmatrix}1&1&1\\1&2&3\\1&0&2\end{vmatrix}=4+3+0-2-0-2=3\neq 0\;\Rightarrow\;\text{rg}(A\,|\,b)=3
+        \]</div>
+        <p>\(\text{rg}(A)=2\neq3=\text{rg}(A\,|\,b)\): <strong>sistema incompatible</strong>.</p>
+        <div class="resultado-final">El sistema no tiene solución para \(a=0\)</div>
+      </div>
+
+      <div class="caso-bloque caso-indet">
+        <p class="caso-titulo">Para \(a = 3\)</p>
+        <div class="k">\[
+        A=\begin{pmatrix}1&1&2\\1&2&3\\1&3&4\end{pmatrix},\quad
+        (A\,|\,b)=\left(\begin{array}{ccc|c}1&1&2&1\\1&2&3&3\\1&3&4&5\end{array}\right)
+        \]</div>
+        <p>Escalonando con \(F_2\leftarrow F_2-F_1\) y \(F_3\leftarrow F_3-F_1\):</p>
+        <div class="k">\[
+        \left(\begin{array}{ccc|c}1&1&2&1\\0&1&1&2\\0&2&2&4\end{array}\right)
+        \xrightarrow{F_3\leftarrow F_3-2F_2}
+        \left(\begin{array}{ccc|c}1&1&2&1\\0&1&1&2\\0&0&0&0\end{array}\right)
+        \]</div>
+        <p>\(\text{rg}(A)=\text{rg}(A\,|\,b)=2&lt;n=3\): <strong>sistema compatible indeterminado</strong> con 1 parámetro libre. Tomamos \(z=t\):</p>
+        <div class="k">\[
+        y=2-t,\quad x=1-y-2z=1-(2-t)-2t=-1-t
+        \]</div>
+        <div class="resultado-final">Infinitas soluciones:&ensp;\(\left(x=-1-t,\quad y=2-t,\quad z=t\right)\quad(t\in\mathbb{R})\)</div>
       </div>
     </div>
   </section>
@@ -647,8 +806,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
               \(x=\dfrac{\begin{vmatrix}6&a\\2&1\end{vmatrix}}{3-a}=\dfrac{6-2a}{3-a}=2,\quad y=\dfrac{\begin{vmatrix}3&6\\1&2\end{vmatrix}}{3-a}=\dfrac{0}{3-a}=0\).</li>
             <li><strong>Si \(a=3\):</strong> \(A=\begin{pmatrix}3&3\\1&1\end{pmatrix}\), filas proporcionales, \(\text{rg}(A)=1\). En la ampliada: \(\begin{pmatrix}3&3&6\\1&1&2\end{pmatrix}\), también proporcionales, \(\text{rg}(A|b)=1\). Como \(\text{rg}=\text{rg}=1&lt;n=2\) → <strong>SCI</strong>. De \(x+y=2\), con \(y=t\): \(x=2-t\).</li>
           </ul>
-          <span class="mk-resultado">SCD si a ≠ 3: x = 2, y = 0</span>
-          <span class="mk-resultado">SCI si a = 3: x = 2−t, y = t (t∈ℝ)</span>
+          <span class="mk-resultado">SCD si a ≠ 3:&ensp;(x = 2, y = 0)</span>
+          <span class="mk-resultado">SCI si a = 3:&ensp;(x = 2−t, y = t) (t∈ℝ)</span>
         </div>
       </div>
 
@@ -665,11 +824,11 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           Valor crítico: \(k=1\).
           <h4>Casos</h4>
           <ul>
-            <li><strong>Si \(k\neq1\):</strong> \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>SCD</strong>. Por Cramer: \(\det(A_x)=\begin{vmatrix}1&1&1\\1&k&1\\1&1&k\end{vmatrix}=(k-1)^2\Rightarrow x=1\). Las matrices \(A_y\) y \(A_z\) tienen filas repetidas: \(\det(A_y)=\det(A_z)=0\Rightarrow y=z=0\).</li>
+            <li><strong>Si \(k\neq1\):</strong> \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>SCD</strong>. Por Cramer: \(\det(A_x)=\begin{vmatrix}1&1&1\\1&k&1\\1&1&k\end{vmatrix}=k^2+1+1-k-1-k=(k-1)^2\Rightarrow x=1\). Las matrices \(A_y\) y \(A_z\) tienen filas repetidas: \(\det(A_y)=\det(A_z)=0\Rightarrow y=z=0\).</li>
             <li><strong>Si \(k=1\):</strong> Las tres ecuaciones son \(x+y+z=1\). \(\text{rg}(A)=\text{rg}(A|b)=1&lt;3\) → <strong>SCI</strong> (2 parámetros libres). Con \(y=s,\,z=t\): \(x=1-s-t\).</li>
           </ul>
-          <span class="mk-resultado">SCD si k ≠ 1: x = 1, y = 0, z = 0</span>
-          <span class="mk-resultado">SCI si k = 1: x = 1−s−t, y = s, z = t (s,t∈ℝ)</span>
+          <span class="mk-resultado">SCD si k ≠ 1:&ensp;(x = 1, y = 0, z = 0)</span>
+          <span class="mk-resultado">SCI si k = 1:&ensp;(x = 1−s−t, y = s, z = t) (s,t∈ℝ)</span>
         </div>
       </div>
 
@@ -686,15 +845,15 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           Valor crítico: \(a=1\).
           <h4>Caso general \(a\neq1\)</h4>
           \(\text{rg}(A)=\text{rg}(A|b)=3=n\) → <strong>SCD</strong>.
-          \[\det(A_y)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=(a-1)^2\;\Rightarrow\;y=1\]
-          \[\det(A_z)=\begin{vmatrix}1&1&1\\1&a&a\\1&1&1\end{vmatrix}=0\;\Rightarrow\;z=0\]
+          \[\det(A_y)=\begin{vmatrix}1&1&1\\1&a&1\\1&1&a\end{vmatrix}=a^2+1+1-a-1-a=(a-1)^2\;\Rightarrow\;y=1\]
+          \[\det(A_z)=\begin{vmatrix}1&1&1\\1&a&a\\1&1&1\end{vmatrix}=a+a+1-a-a-1=0\;\Rightarrow\;z=0\]
           De la primera ecuación: \(x=1-y-z=0\).
-          <span class="mk-resultado">SCD si a ≠ 1: x = 0, y = 1, z = 0</span>
+          <span class="mk-resultado">SCD si a ≠ 1:&ensp;(x = 0, y = 1, z = 0)</span>
           <h4>Caso \(a=1\)</h4>
           Con \(a=1\): la primera y tercera ecuaciones son \(x+y+z=1\); la segunda es \(x+y+z=1\) también. Las tres son idénticas.
           \(\text{rg}(A)=\text{rg}(A|b)=1&lt;3\) → <strong>SCI</strong> (2 parámetros libres).
           Con \(y=s,\,z=t\): \(x=1-s-t\).
-          <span class="mk-resultado">SCI si a = 1: x = 1−s−t, y = s, z = t (s,t∈ℝ)</span>
+          <span class="mk-resultado">SCI si a = 1:&ensp;(x = 1−s−t, y = s, z = t) (s,t∈ℝ)</span>
         </div>
       </div>
 

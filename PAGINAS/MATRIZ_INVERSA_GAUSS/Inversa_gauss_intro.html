@@ -50,7 +50,6 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<style>body{overflow-y:auto!important;display:block!important}#introPrincipal{overflow:visible!important}</style>
 <style id="mk-design-v2">
 :root{
   --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
@@ -144,277 +143,14 @@ html,body{overflow-x:clip;max-width:100%}
 }
 
 </style>
+<style>body{display:flex;flex-direction:column;overflow:hidden;height:100vh}</style>
 </head>
-<body><div id="introPrincipal">
-<div class="introWrap">
-
-<!-- HERO -->
-<section class="hero">
-<div class="heroTopBar">
-<a class="volverBtn" href="/">← Volver</a>
-<div style="display:flex;align-items:center;gap:14px">
-<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
-<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
-<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
-<line x1="42" y1="24" x2="148" y2="24" stroke="rgba(74,222,128,0.35)" stroke-width="0.8" stroke-linecap="round"/>
-<text x="43" y="36" font-family="system-ui,-apple-system,sans-serif" font-size="8.5" fill="#4ade80" letter-spacing="1">ESO · Bachillerato</text>
-</svg>
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora">IR A LA HERRAMIENTA →</a>
-</div>
-</div>
-<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
-  MATRIZ INVERSA<br>
-  <span style="font-size:clamp(1.3rem,2.8vw,2rem);letter-spacing:.04em;font-style:italic">Método de Gauss-Jordan</span>
-</h1>
-<div class="heroBadge">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
-  Álgebra lineal · Bachillerato
-</div>
-<div class="heroLinks">
-  <a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
-  <a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a>
-  <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Matriz escalonada</a>
-  <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Inversa por adjunta</a>
-</div>
-</section>
-
-<!-- BLOQUE 1: Qué es + existencia -->
-<div class="grid">
-<section class="accentCard span6">
-  <p class="miniTitle">Definición</p>
-  <h2>1. ¿Qué es la matriz inversa?</h2>
-  <p>Dada una matriz cuadrada \(A\) de orden \(n\), se llama <strong>matriz inversa de \(A\)</strong> a la matriz \(A^{-1}\) que cumple:</p>
-  <div class="k">\[A \cdot A^{-1} = A^{-1} \cdot A = I_n\]</div>
-  <p>donde \(I_n\) es la matriz identidad de orden \(n\). La inversa, cuando existe, es <strong>única</strong>.</p>
-</section>
-
-<section class="card span6">
-  <p class="miniTitle">Condición de existencia</p>
-  <h2>¿Cuándo existe?</h2>
-  <p>La matriz \(A\) tiene inversa si y solo si su determinante es distinto de cero:</p>
-  <div class="k">\[\det(A) \neq 0 \implies \exists\, A^{-1}\]</div>
-  <ul class="notesList">
-    <li>Si \(\det(A) = 0\), la matriz se llama <strong>singular</strong> y no tiene inversa.</li>
-    <li>Si \(\det(A) \neq 0\), la matriz se llama <strong>regular</strong> o <strong>invertible</strong>.</li>
-  </ul>
-</section>
-</div>
-
-<!-- BLOQUE 2: El método -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Método</p>
-  <h2>2. El método de Gauss-Jordan para la inversa</h2>
-  <p>La <strong>matriz ampliada \([A \mid I]\)</strong> es una matriz de orden \(n \times 2n\) que se construye colocando la matriz identidad \(I_n\) a la derecha de \(A\), separadas por una línea vertical. Por ejemplo, para una matriz \(3\times 3\):</p>
-  <div class="k">\[\left[A \mid I\right] = \left(\begin{array}{ccc|ccc} a_{11}&a_{12}&a_{13}&1&0&0\\ a_{21}&a_{22}&a_{23}&0&1&0\\ a_{31}&a_{32}&a_{33}&0&0&1 \end{array}\right)\]</div>
-  <p>La idea del método es sencilla: si se aplican las mismas operaciones elementales por filas sobre la identidad que las que transforman \(A\) en \(I\), el resultado es \(A^{-1}\). Para hacerlo de forma organizada, se trabaja con la <strong>matriz ampliada</strong>:</p>
-  <div class="k">\[\left[A \mid I\right] \xrightarrow{\text{operaciones elementales}} \left[I \mid A^{-1}\right]\]</div>
-  <p>El proceso tiene tres fases:</p>
-  <ol class="stepsList">
-    <li><strong>Triangularización hacia abajo</strong> (eliminación directa): se convierte la parte izquierda en una matriz triangular superior, anulando los elementos situados por debajo de la diagonal.</li>
-    <li><strong>Triangularización hacia arriba</strong> (sustitución regresiva): se anulan los elementos situados por encima de la diagonal.</li>
-    <li><strong>Normalización</strong>: se divide cada fila por su elemento pivote para que la diagonal sea de unos. En ese momento la parte izquierda es \(I\) y la derecha es \(A^{-1}\).</li>
-  </ol>
-  <p class="muted">En la práctica las tres fases se pueden intercalar: normalizar el pivote antes de eliminar simplifica los cálculos al evitar fracciones acumuladas.</p>
-</section>
-</div>
-
-<!-- BLOQUE 3: Operaciones -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Herramientas del método</p>
-  <h2>3. Las tres operaciones elementales por filas</h2>
-  <p>Las únicas operaciones permitidas son las que no alteran el conjunto de soluciones asociado a la matriz:</p>
-  <div class="ops">
-    <div class="op">
-      <strong>Permutación de filas</strong>
-      <span>Intercambiar dos filas: \(F_i \leftrightarrow F_j\). Útil cuando el pivote en la posición \((i,i)\) es cero.</span>
-    </div>
-    <div class="op">
-      <strong>Multiplicación por escalar</strong>
-      <span>Dividir (o multiplicar) todos los elementos de una fila por un número no nulo: \(F_i \to \frac{1}{k}\,F_i\). Se usa para normalizar el pivote a 1.</span>
-    </div>
-    <div class="op">
-      <strong>Combinación lineal de filas</strong>
-      <span>Sustituir una fila por una combinación lineal de ella misma y otra: \(F_i \to m\,F_i + n\,F_j\). Es la operación principal para anular elementos.</span>
-    </div>
-    <div class="op">
-      <strong>Aplicadas siempre a toda la fila</strong>
-      <span>Cada operación se aplica simultáneamente a la parte izquierda \(A\) y a la parte derecha \(I\) de la matriz ampliada \([A\mid I]\).</span>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- BLOQUE 4: Ejemplo 2×2 -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Ejemplo resuelto</p>
-  <h2>4. Ejemplo 2×2</h2>
-  <p>Calcular la inversa de \(A = \begin{pmatrix}2 & 1 \\ 5 & 3\end{pmatrix}\).</p>
-  <p><strong>Paso 1.</strong> Construir la matriz ampliada:</p>
-  <div class="k">\[\left(\begin{array}{cc|cc}2&1&1&0\\5&3&0&1\end{array}\right)\]</div>
-  <p><strong>Paso 2.</strong> Normalizar \(F_1\) dividiendo por 2:</p>
-  <div class="k">\[F_1\to\tfrac{1}{2}F_1\qquad\left(\begin{array}{cc|cc}1&\frac{1}{2}&\frac{1}{2}&0\\5&3&0&1\end{array}\right)\]</div>
-  <p><strong>Paso 3.</strong> Eliminar el 5 de la columna 1:</p>
-  <div class="k">\[F_2\to F_2-5F_1\qquad\left(\begin{array}{cc|cc}1&\frac{1}{2}&\frac{1}{2}&0\\0&\frac{1}{2}&-\frac{5}{2}&1\end{array}\right)\]</div>
-  <p><strong>Paso 4.</strong> Normalizar \(F_2\):</p>
-  <div class="k">\[F_2\to 2F_2\qquad\left(\begin{array}{cc|cc}1&\frac{1}{2}&\frac{1}{2}&0\\0&1&-5&2\end{array}\right)\]</div>
-  <p><strong>Paso 5.</strong> Eliminar \(\frac{1}{2}\) de la columna 2:</p>
-  <div class="k">\[F_1\to F_1-\tfrac{1}{2}F_2\qquad\left(\begin{array}{cc|cc}1&0&3&-1\\0&1&-5&2\end{array}\right)\]</div>
-  <p>La parte derecha es la inversa:</p>
-  <div class="k">\[A^{-1}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix}\]</div>
-  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}2&1\\5&3\end{pmatrix}\begin{pmatrix}3&-1\\-5&2\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}\checkmark\)</p>
-</section>
-
-<!-- BLOQUE 5: Ejemplo 3×3 -->
-<section class="accentCard span12">
-  <p class="miniTitle">Ejemplo resuelto</p>
-  <h2>5. Ejemplo 3×3</h2>
-  <p>Calcular la inversa de \(A = \begin{pmatrix}1&0&1\\2&1&0\\-1&1&1\end{pmatrix}\).</p>
-  <p><strong>Paso 1.</strong> Construir la matriz ampliada:</p>
-  <div class="k">\[\left(\begin{array}{ccc|ccc}1&0&1&1&0&0\\2&1&0&0&1&0\\-1&1&1&0&0&1\end{array}\right)\]</div>
-  <p><strong>Paso 2.</strong> Eliminar columna 1 (el pivote ya es 1):</p>
-  <div class="k">\[\underset{F_3\to F_3+F_1}{F_2\to F_2-2F_1}\quad\left(\begin{array}{ccc|ccc}1&0&1&1&0&0\\0&1&-2&-2&1&0\\0&1&2&1&0&1\end{array}\right)\]</div>
-  <p><strong>Paso 3.</strong> Eliminar columna 2:</p>
-  <div class="k">\[F_3\to F_3-F_2\quad\left(\begin{array}{ccc|ccc}1&0&1&1&0&0\\0&1&-2&-2&1&0\\0&0&4&3&-1&1\end{array}\right)\]</div>
-  <p><strong>Paso 4.</strong> Normalizar \(F_3\) y eliminar columna 3:</p>
-  <div class="k">\[F_3\to\tfrac{1}{4}F_3\quad\left(\begin{array}{ccc|ccc}1&0&1&1&0&0\\0&1&-2&-2&1&0\\0&0&1&\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{array}\right)\]</div>
-  <div class="k">\[\underset{F_2\to F_2+2F_3}{F_1\to F_1-F_3}\quad\left(\begin{array}{ccc|ccc}1&0&0&\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\0&1&0&-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\0&0&1&\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{array}\right)\]</div>
-  <p>La inversa es:</p>
-  <div class="k">\[A^{-1}=\begin{pmatrix}\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\[4pt]-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\[4pt]\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{pmatrix}\]</div>
-  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}1&0&1\\2&1&0\\-1&1&1\end{pmatrix}\begin{pmatrix}\frac{1}{4}&\frac{1}{4}&-\frac{1}{4}\\[2pt]-\frac{1}{2}&\frac{1}{2}&\frac{1}{2}\\[2pt]\frac{3}{4}&-\frac{1}{4}&\frac{1}{4}\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\)</p>
-</section>
-</div>
-
-<!-- BLOQUE 6: Errores frecuentes -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Errores frecuentes</p>
-  <h2>6. Errores más comunes al calcular la inversa</h2>
-  <ul class="notesList">
-    <li><strong>No comprobar que el determinante es distinto de cero</strong> antes de empezar. Si \(\det(A)=0\), la inversa no existe y el método no converge.</li>
-    <li><strong>Realizar transformaciones de columnas</strong>: el método de Gauss-Jordan solo permite operaciones elementales por <strong>filas</strong>. Aplicar operaciones sobre columnas altera la inversa y produce un resultado incorrecto.</li>
-    <li><strong>Aplicar la operación solo a la parte izquierda</strong> (la matriz \(A\)) y olvidar aplicarla también a la parte derecha (la identidad). Toda operación elemental afecta a las \(2n\) columnas de la matriz ampliada.</li>
-    <li><strong>Cometer errores al operar con fracciones</strong> en los pasos intermedios. Es recomendable trabajar con fracciones exactas en lugar de decimales para evitar acumulación de errores.</li>
-    <li><strong>No comprobar el resultado</strong>. Siempre es conveniente verificar que \(A\cdot A^{-1}=I\) al final.</li>
-  </ul>
-</section>
-</div>
-
-<!-- FAQ -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Preguntas frecuentes</p>
-  <h2>FAQ</h2>
-  <ul class="notesList">
-    <li><strong>¿Tiene sentido hablar de inversa de una matriz no cuadrada?</strong> No en el sentido habitual. La inversa solo se define para matrices cuadradas.</li>
-    <li><strong>¿Puede una matriz cuadrada no tener inversa?</strong> Sí: exactamente cuando su determinante es cero (matriz singular).</li>
-    <li><strong>¿El método de Gauss-Jordan da siempre fracciones exactas?</strong> Sí, mientras se trabaje con fracciones exactas en cada paso. La herramienta de esta página lo hace automáticamente.</li>
-    <li><strong>¿Hay otro método para calcular la inversa?</strong> Sí: el método de la matriz adjunta. Se basa en calcular los cofactores de \(A\) y dividir por el determinante. Está disponible en la <a href="/PAGINAS/MATRIZ_INVERSA_ADJUNTA/Inversa_adjunta_intro.html">página de Inversa por adjunta</a>.</li>
-    <li><strong>¿La inversa sirve para resolver sistemas?</strong> Sí: si \(Ax=b\) y \(A\) es invertible, entonces \(x=A^{-1}b\). Sin embargo, para sistemas de pocas incógnitas la regla de Cramer puede ser más cómoda, y para sistemas grandes el método de Gauss o el de Rouché-Frobenius son más eficientes.</li>
-  </ul>
-</section>
-</div>
-
-<!-- EJERCICIOS -->
-<section class="mk-ejercicios">
-<h2>Ejercicios propuestos</h2>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 2×2</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}3&1\\7&2\end{pmatrix}\).</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Matriz ampliada y eliminación</h4>
-\[\left(\begin{array}{cc|cc}3&1&1&0\\7&2&0&1\end{array}\right)\underset{F_2\to 3F_2-7F_1}{\sim}\left(\begin{array}{cc|cc}3&1&1&0\\0&-1&-7&3\end{array}\right)\]
-\[\underset{F_2\to -F_2}{\sim}\left(\begin{array}{cc|cc}3&1&1&0\\0&1&7&-3\end{array}\right)\underset{F_1\to F_1-F_2}{\sim}\left(\begin{array}{cc|cc}3&0&-6&3\\0&1&7&-3\end{array}\right)\underset{F_1\to\frac{1}{3}F_1}{\sim}\left(\begin{array}{cc|cc}1&0&-2&1\\0&1&7&-3\end{array}\right)\]
-<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}-2&1\\7&-3\end{pmatrix}\)</span>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 3×3</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}1&2&0\\0&1&3\\2&0&1\end{pmatrix}\).</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Eliminación directa</h4>
-\[\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\2&0&1&0&0&1\end{array}\right)\underset{F_3\to F_3-2F_1}{\sim}\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\0&-4&1&-2&0&1\end{array}\right)\underset{F_3\to F_3+4F_2}{\sim}\left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&3&0&1&0\\0&0&13&-2&4&1\end{array}\right)\]
-<h4>Normalización y sustitución regresiva</h4>
-\[F_3\to\tfrac{1}{13}F_3\Rightarrow F_2\to F_2-3F_3\Rightarrow F_1\to F_1-2F_2\]
-\[\left(\begin{array}{ccc|ccc}1&0&0&\frac{1}{13}&-\frac{2}{13}&\frac{6}{13}\\[4pt]0&1&0&\frac{6}{13}&\frac{1}{13}&-\frac{3}{13}\\[4pt]0&0&1&-\frac{2}{13}&\frac{4}{13}&\frac{1}{13}\end{array}\right)\]
-<span class="mk-resultado">\(A^{-1}=\frac{1}{13}\begin{pmatrix}1&-2&6\\6&1&-3\\-2&4&1\end{pmatrix}\)</span>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Singular</span><span class="mk-ej-level">Matriz 3×3</span></div>
-<div class="mk-enunciado">Intenta calcular la inversa de \(A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\) y determina qué ocurre.</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>El método revela que no tiene inversa</h4>
-\[\left(\begin{array}{ccc|ccc}1&2&3&1&0&0\\4&5&6&0&1&0\\7&8&9&0&0&1\end{array}\right)\underset{\substack{F_2\to F_2-4F_1\\F_3\to F_3-7F_1}}{\sim}\left(\begin{array}{ccc|ccc}1&2&3&1&0&0\\0&-3&-6&-4&1&0\\0&-6&-12&-7&0&1\end{array}\right)\underset{F_3\to F_3-2F_2}{\sim}\left(\begin{array}{ccc|ccc}1&2&3&1&0&0\\0&-3&-6&-4&1&0\\0&0&0&1&-2&1\end{array}\right)\]
-La fila 3 de la parte izquierda es de ceros, por lo que \(\text{rg}(A)=2<3\). El determinante es 0 y <strong>la matriz no tiene inversa</strong>.
-<span class="mk-resultado">Matriz singular: no existe \(A^{-1}\)</span>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 4×4</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}1&1&1&1\\1&2&2&2\\1&2&3&3\\1&2&3&4\end{pmatrix}\).</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Paso 1 — Matriz ampliada</h4>
-\[\left(\begin{array}{cccc|cccc}1&1&1&1&1&0&0&0\\1&2&2&2&0&1&0&0\\1&2&3&3&0&0&1&0\\1&2&3&4&0&0&0&1\end{array}\right)\]
-<h4>Paso 2 — Eliminación directa</h4>
-\[F_2\to F_2-F_1,\quad F_3\to F_3-F_1,\quad F_4\to F_4-F_1\]
-\[\left(\begin{array}{cccc|cccc}1&1&1&1&1&0&0&0\\0&1&1&1&-1&1&0&0\\0&1&2&2&-1&0&1&0\\0&1&2&3&-1&0&0&1\end{array}\right)\]
-\[F_3\to F_3-F_2,\quad F_4\to F_4-F_2\]
-\[\left(\begin{array}{cccc|cccc}1&1&1&1&1&0&0&0\\0&1&1&1&-1&1&0&0\\0&0&1&1&0&-1&1&0\\0&0&1&2&0&-1&0&1\end{array}\right)\]
-\[F_4\to F_4-F_3\]
-\[\left(\begin{array}{cccc|cccc}1&1&1&1&1&0&0&0\\0&1&1&1&-1&1&0&0\\0&0&1&1&0&-1&1&0\\0&0&0&1&0&0&-1&1\end{array}\right)\]
-<h4>Paso 3 — Sustitución regresiva</h4>
-\[F_3\to F_3-F_4,\quad F_2\to F_2-F_4,\quad F_1\to F_1-F_4\]
-\[\left(\begin{array}{cccc|cccc}1&1&1&0&1&0&1&-1\\0&1&1&0&-1&1&1&-1\\0&0&1&0&0&-1&2&-1\\0&0&0&1&0&0&-1&1\end{array}\right)\]
-\[F_2\to F_2-F_3,\quad F_1\to F_1-F_3\]
-\[\left(\begin{array}{cccc|cccc}1&1&0&0&1&1&-1&0\\0&1&0&0&-1&2&-1&0\\0&0&1&0&0&-1&2&-1\\0&0&0&1&0&0&-1&1\end{array}\right)\]
-\[F_1\to F_1-F_2\]
-\[\left(\begin{array}{cccc|cccc}1&0&0&0&2&-1&0&0\\0&1&0&0&-1&2&-1&0\\0&0&1&0&0&-1&2&-1\\0&0&0&1&0&0&-1&1\end{array}\right)\]
-<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}2&-1&0&0\\-1&2&-1&0\\0&-1&2&-1\\0&0&-1&1\end{pmatrix}\)</span>
-</div></div>
-
-</section>
-
-<!-- CTA herramienta -->
-<div class="herramienta-cta">
-  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz 2×2, 3×3 o 4×4, seguir el método de Gauss-Jordan paso a paso y obtener la inversa.</p>
-  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">IR A LA HERRAMIENTA →</a>
-</div>
-
-</div>
-
-<script>
-function mkToggle(btn){
-  var sol=btn.nextElementSibling;
-  var open=sol.classList.toggle("mk-visible");
-  btn.classList.toggle("mk-open",open);
-  btn.textContent=open?"Ocultar solución":"Ver solución";
-}
-document.addEventListener("DOMContentLoaded",function(){
-  if(window.renderMathInElement){
-    renderMathInElement(document.body,{
-      delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],
-      throwOnError:false
-    });
-  }
-});
-</script>
-</div>
-
+<body>
 <!-- HERRAMIENTA -->
-<div id="calculadora" style="display:none">
 <div id="tituloinicial">
 <h2>MATRIZ INVERSA — Método de Gauss-Jordan</h2>
 <div id="controlesTop">
-<a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
+<a class="abreVentana" href="/matriz-inversa-gauss.html" id="btnVolverExplicacion">← TEORÍA</a>
 <a aria-label="Volver a inicio" href="/" id="btnHome" title="Inicio">
 <svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18">
 <path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"></path>
@@ -467,32 +203,13 @@ document.addEventListener("DOMContentLoaded",function(){
 <a href="/aviso_legal.html">Aviso legal</a>
 </div></footer>
 <script src="/common.js"></script>
-</div>
-
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  var intro=document.getElementById('introPrincipal');
-  var calc=document.getElementById('calculadora');
-  function mostrarCalc(ev){
-    if(ev) ev.preventDefault();
-    if(intro) intro.style.display='none';
-    if(calc){ calc.style.display='flex'; calc.style.flexDirection='column'; calc.style.height='100vh';
-      document.body.style.overflow='hidden'; document.body.style.display='flex'; document.body.style.flexDirection='column';
-      window.scrollTo(0,0); }
-  }
-  function mostrarIntro(ev){
-    if(ev) ev.preventDefault();
-    if(calc) calc.style.display='none';
-    if(intro){ intro.style.display='block'; document.body.style.overflow='auto'; document.body.style.display='block'; window.scrollTo(0,0); }
-  }
-  document.querySelectorAll("a[href='#calculadora'],#btnMostrarCalculadora,#btnMostrarCalculadora2").forEach(function(btn){
-    btn.addEventListener('click', mostrarCalc);
-  });
-  var btn2=document.getElementById('btnVolverExplicacion');
-  if(btn2) btn2.addEventListener('click', mostrarIntro);
-  if(location.hash==='calculadora') mostrarCalc();
-  else{ document.body.style.overflow='auto'; document.body.style.display='block'; }
-});
+function mkToggle(btn){
+  var sol=btn.nextElementSibling;
+  var open=sol.classList.toggle("mk-visible");
+  btn.classList.toggle("mk-open",open);
+  btn.textContent=open?"Ocultar solución":"Ver solución";
+}
 </script>
 </body>
 </html>

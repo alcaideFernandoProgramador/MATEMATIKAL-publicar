@@ -48,7 +48,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<style>body{overflow-y:auto!important;display:block!important}#introPrincipal{overflow:visible!important}</style>
+<style>body{display:flex;flex-direction:column;overflow:hidden;height:100vh}</style>
 <style id="mk-design-v2">
 :root{
   --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
@@ -149,295 +149,11 @@ html,body{overflow-x:clip;max-width:100%}
 
 </style>
 </head>
-<body><div id="introPrincipal">
-<div class="introWrap">
-
-<!-- HERO -->
-<section class="hero">
-<div class="heroTopBar">
-<a class="volverBtn" href="/">← Volver</a>
-<div style="display:flex;align-items:center;gap:10px">
-<a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora" style="font-size:.82rem;padding:9px 18px">IR A LA HERRAMIENTA →</a>
-<svg class="logoMini" width="150" height="46" viewBox="0 0 150 46" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="18" cy="23" rx="14" ry="21" fill="rgba(74,222,128,0.1)" stroke="#4ade80" stroke-width="1.2"/>
-<polyline points="9,27 13,27 17,7 22,34 26,20 29,20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="miter"/>
-<text x="42" y="19" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="15" fill="#ffffff" letter-spacing="-0.5">Matematikal</text>
-<text x="42" y="36" font-family="system-ui,-apple-system,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.65)" letter-spacing="0.5">MATEMÁTICAS INTERACTIVAS</text>
-</svg>
-</div>
-</div>
-<h1 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:400;letter-spacing:-.02em;color:#fff;margin:0 0 14px;text-shadow:0 2px 12px rgba(0,0,0,.18);position:relative;z-index:1;text-align:center">
-  MATRIZ INVERSA<br>
-  <span style="font-size:clamp(1.3rem,2.8vw,2rem);letter-spacing:.04em;font-style:italic">Fórmula de la adjunta</span>
-</h1>
-<div class="heroBadge">
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="rgba(255,255,255,.6)"/></svg>
-  Álgebra lineal · Bachillerato
-</div>
-<div class="heroDesc">
-  <p>La <strong style="color:#fff">fórmula de la adjunta</strong> calcula la inversa de una matriz a partir de sus adjuntos y su determinante. Es el método clásico para matrices de orden 2 y 3, y permite entender la estructura algebraica de la inversa.</p>
-</div>
-<div class="heroLinks">
-  <a class="heroLinkBtn" href="/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Inversa por Gauss-Jordan</a>
-  <a class="heroLinkBtn" href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Determinantes</a>
-  <a class="heroLinkBtn" href="/PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Operaciones con matrices</a>
-</div>
-</section>
-
-<!-- BLOQUE 1: Qué es + existencia -->
-<div class="grid">
-<section class="accentCard span6">
-  <p class="miniTitle">Definición</p>
-  <h2>1. ¿Qué es la matriz inversa?</h2>
-  <p>Dada una matriz cuadrada \(A\) de orden \(n\), se llama <strong>matriz inversa de \(A\)</strong> a la matriz \(A^{-1}\) que cumple:</p>
-  <div class="k">\[A \cdot A^{-1} = A^{-1} \cdot A = I_n\]</div>
-  <p>donde \(I_n\) es la matriz identidad de orden \(n\). La inversa, cuando existe, es <strong>única</strong>.</p>
-  <div class="miniBubble">
-    <span>Fórmula de la adjunta:</span>
-    <div class="k">\[A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\]</div>
-  </div>
-</section>
-
-<section class="card span6">
-  <p class="miniTitle">Condición de existencia</p>
-  <h2>¿Cuándo existe?</h2>
-  <p>La matriz \(A\) tiene inversa si y solo si su determinante es distinto de cero:</p>
-  <div class="k">\[\det(A) \neq 0 \implies \exists\, A^{-1}\]</div>
-  <ul class="notesList">
-    <li>Si \(\det(A) = 0\), la matriz se llama <strong>singular</strong> y no tiene inversa.</li>
-    <li>Si \(\det(A) \neq 0\), la matriz se llama <strong>regular</strong> o <strong>invertible</strong>.</li>
-  </ul>
-</section>
-</div>
-
-<!-- BLOQUE 2: Cofactores -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Conceptos previos</p>
-  <h2>2. Adjuntos y matriz adjunta</h2>
-  <p>Para aplicar la fórmula de la adjunta es necesario calcular los <strong>adjuntos</strong> de cada elemento de la matriz.</p>
-  <div class="ops">
-    <div class="op">
-      <strong>Menor complementario \(M_{ij}\)</strong>
-      <span>El determinante de la submatriz que se obtiene eliminando la fila \(i\) y la columna \(j\) de \(A\).</span>
-    </div>
-    <div class="op">
-      <strong>Adjunto \(A_{ij}\)</strong>
-      <span>El menor complementario con el signo correspondiente a su posición: \(A_{ij} = (-1)^{i+j} M_{ij}\).</span>
-    </div>
-    <div class="op">
-      <strong>Matriz de signos</strong>
-      <span>La matriz \((-1)^{i+j}\) que determina el signo de cada cofactor. Para orden 3: \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\).</span>
-    </div>
-    <div class="op">
-      <strong>Matriz adjunta \(\text{Adj}(A)\)</strong>
-      <span>La matriz formada por todos los adjuntos \(A_{ij}\) en su posición \((i,j)\).</span>
-    </div>
-  </div>
-  <p class="muted" style="margin-top:14px">Para una matriz 3×3 hay que calcular 9 adjuntos, cada uno como el determinante de una submatriz 2×2 con su signo correspondiente.</p>
-</section>
-</div>
-
-<!-- BLOQUE 3: La fórmula -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Método</p>
-  <h2>3. La fórmula de la adjunta</h2>
-  <p>La <strong>matriz adjunta</strong> de \(A\), denotada \(\text{Adj}(A)\), está formada por los <strong>adjuntos</strong> \(A_{ij}\) de cada elemento de \(A\).</p>
-  <p>La fórmula de la inversa es:</p>
-  <div class="k">\[A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\]</div>
-  <p>El proceso tiene cuatro pasos:</p>
-  <ol class="stepsList">
-    <li><strong>Calcular \(\det(A)\).</strong> Si es cero, la inversa no existe. Si es distinto de cero, continuar.</li>
-    <li><strong>Calcular la matriz adjunta \(\text{Adj}(A)\).</strong> Para cada posición \((i,j)\), calcular el adjunto \(A_{ij} = (-1)^{i+j} M_{ij}\).</li>
-    <li><strong>Trasponer la adjunta.</strong> Calcular \(\text{Adj}(A)^t\).</li>
-    <li><strong>Dividir por el determinante.</strong> \(A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\).</li>
-  </ol>
-  <p class="muted">Para matrices 2×2 existe una fórmula directa que evita calcular los adjuntos uno a uno. Para matrices 3×3 es necesario el proceso completo.</p>
-</section>
-</div>
-
-<!-- BLOQUE 4: Fórmula 2×2 -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Caso especial</p>
-  <h2>4. Fórmula directa para matrices 2×2</h2>
-  <p>Para una matriz \(A = \begin{pmatrix}a&b\\c&d\end{pmatrix}\) con \(\det(A)=ad-bc\neq 0\), la fórmula de la adjunta se simplifica directamente a:</p>
-  <div class="k">\[A^{-1} = \dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\]</div>
-  <p>Es decir: se intercambian los elementos de la diagonal principal, se cambian de signo los de la diagonal secundaria, y se divide todo por el determinante. No hace falta calcular cofactores explícitamente.</p>
-</section>
-</div>
-
-<!-- BLOQUE 5: Ejemplo 2×2 -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Ejemplo resuelto</p>
-  <h2>5. Ejemplo 2×2</h2>
-  <p>Calcular la inversa de \(A = \begin{pmatrix}3&1\\5&2\end{pmatrix}\).</p>
-  <p><strong>Paso 1.</strong> Determinante:</p>
-  <div class="k">\[\det(A)=3\cdot2-1\cdot5=6-5=1\neq 0\]</div>
-  <p><strong>Paso 2.</strong> Aplicar la fórmula directa 2×2:</p>
-  <div class="k">\[A^{-1}=\dfrac{1}{1}\begin{pmatrix}2&-1\\-5&3\end{pmatrix}=\begin{pmatrix}2&-1\\-5&3\end{pmatrix}\]</div>
-  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}3&1\\5&2\end{pmatrix}\begin{pmatrix}2&-1\\-5&3\end{pmatrix}=\begin{pmatrix}6-5&-3+3\\10-10&-5+6\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}\checkmark\)</p>
-</section>
-</div>
-
-<!-- BLOQUE 6: Ejemplo 3×3 -->
-<div class="grid">
-<section class="accentCard span12">
-  <p class="miniTitle">Ejemplo resuelto</p>
-  <h2>6. Ejemplo 3×3</h2>
-  <p>Calcular la inversa de \(A=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\).</p>
-
-  <p><strong>Paso 1. Determinante.</strong></p>
-  <div class="k">\[\det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=1\cdot2-2\cdot(-1)=2+2=4\neq 0\]</div>
-
-  <p><strong>Paso 2. Matriz adjunta.</strong> Aplicando \(A_{ij}=(-1)^{i+j}M_{ij}\):</p>
-  <div class="k">\[
-  \text{Adj}(A)=\begin{bmatrix}
-  +\begin{vmatrix}1&1\\0&2\end{vmatrix} & -\begin{vmatrix}0&1\\1&2\end{vmatrix} & +\begin{vmatrix}0&1\\1&0\end{vmatrix}\\[18pt]
-  -\begin{vmatrix}2&0\\0&2\end{vmatrix} & +\begin{vmatrix}1&0\\1&2\end{vmatrix} & -\begin{vmatrix}1&2\\1&0\end{vmatrix}\\[18pt]
-  +\begin{vmatrix}2&0\\1&1\end{vmatrix} & -\begin{vmatrix}1&0\\0&1\end{vmatrix} & +\begin{vmatrix}1&2\\0&1\end{vmatrix}
-  \end{bmatrix}
-  =\begin{bmatrix}2&1&-1\\-4&2&2\\2&-1&1\end{bmatrix}
-  \]</div>
-
-  <p><strong>Paso 3. Traspuesta de la adjunta:</strong></p>
-  <div class="k">\[\text{Adj}(A)^t=\begin{pmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{pmatrix}\]</div>
-
-  <p><strong>Paso 4. Inversa:</strong></p>
-  <div class="k">\[A^{-1}=\dfrac{1}{4}\begin{pmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{pmatrix}=\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}\]</div>
-
-  <p class="muted">Comprobación: \(A\cdot A^{-1}=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\)</p>
-</section>
-</div>
-
-<!-- BLOQUE 7: Errores -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Atención</p>
-  <h2>7. Errores más comunes al calcular la inversa por adjunta</h2>
-  <ul class="notesList">
-    <li><strong>Olvidar aplicar el signo \((-1)^{i+j}\).</strong> El cofactor no es el menor solo: lleva el signo de su posición. La matriz de signos \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\) ayuda a no cometer este error.</li>
-    <li><strong>Eliminar la fila y columna incorrectas.</strong> Para calcular \(M_{ij}\) se elimina la fila \(i\) y la columna \(j\), no la fila \(j\) y la columna \(i\).</li>
-    <li><strong>Orden entre trasponer y dividir.</strong> Ambas operaciones son intercambiables: se puede trasponer primero y luego dividir, o dividir primero y luego trasponer. El resultado es el mismo.</li>
-    <li><strong>No comprobar el resultado.</strong> Siempre conviene verificar que \(A \cdot A^{-1} = I\), al menos para uno o dos elementos.</li>
-    <li><strong>Aplicar este método a matrices de orden 4 o superior.</strong> Para órdenes altos el método de Gauss-Jordan es mucho más eficiente. La fórmula de la adjunta es práctica sobre todo para órdenes 2 y 3.</li>
-  </ul>
-</section>
-</div>
-
-<!-- FAQ -->
-<div class="grid">
-<section class="card span12">
-  <p class="miniTitle">Preguntas frecuentes</p>
-  <h2>FAQ</h2>
-  <ul class="notesList">
-    <li><strong>¿Qué diferencia hay entre este método y el de Gauss-Jordan?</strong> Con Gauss-Jordan se aplican operaciones elementales sobre la matriz ampliada \([A\mid I]\). Con la adjunta se trabaja con determinantes de submatrices. Ambos dan el mismo resultado, pero Gauss-Jordan es más eficiente para matrices grandes y la adjunta es más ilustrativa para entender la estructura algebraica de la inversa.</li>
-    <li><strong>¿Qué es exactamente la matriz adjunta?</strong> La matriz adjunta \(\text{Adj}(A)\) está formada por los adjuntos \(A_{ij}\) de cada elemento. Para obtener la inversa se usa su traspuesta: \(A^{-1} = \dfrac{1}{\det(A)}\,\text{Adj}(A)^t\).</li>
-    <li><strong>¿Puede una matriz cuadrada no tener inversa?</strong> Sí: exactamente cuando \(\det(A)=0\) (matriz singular). En ese caso la fórmula no es aplicable porque implica dividir por cero.</li>
-    <li><strong>¿Tiene sentido hablar de inversa de una matriz no cuadrada?</strong> No en el sentido habitual. La inversa solo se define para matrices cuadradas.</li>
-    <li><strong>¿La inversa sirve para resolver sistemas?</strong> Sí: si \(Ax=b\) y \(A\) es invertible, entonces \(x=A^{-1}b\). Para sistemas de pocas incógnitas la regla de Cramer puede ser más cómoda, y para sistemas grandes el método de Gauss es más eficiente.</li>
-    <li><strong>¿Hay relación entre la adjunta y los determinantes?</strong> Sí. El producto \(A \cdot \text{Adj}(A)^t = \det(A) \cdot I\). Esta identidad es la base de la fórmula de la inversa y también se usa para demostrar que la inversa es única.</li>
-  </ul>
-</section>
-</div>
-
-<!-- EJERCICIOS -->
-<section class="mk-ejercicios">
-<h2>Ejercicios propuestos</h2>
-<p class="mk-subtitulo">Calcula la inversa de cada matriz usando la fórmula de la adjunta. Intenta resolverlo antes de ver la solución.</p>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 1</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 2×2 · Nivel básico</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}4&3\\3&2\end{pmatrix}\) usando la fórmula de la adjunta.</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Determinante</h4>
-\[\det(A)=4\cdot2-3\cdot3=8-9=-1\neq 0\]
-<h4>Fórmula directa 2×2</h4>
-\[A^{-1}=\dfrac{1}{-1}\begin{pmatrix}2&-3\\-3&4\end{pmatrix}=\begin{pmatrix}-2&3\\3&-4\end{pmatrix}\]
-<h4>Comprobación</h4>
-\[A\cdot A^{-1}=\begin{pmatrix}4&3\\3&2\end{pmatrix}\begin{pmatrix}-2&3\\3&-4\end{pmatrix}=\begin{pmatrix}-8+9&12-12\\-6+6&9-8\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}\checkmark\]
-<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}-2&3\\3&-4\end{pmatrix}\)</span>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 2</span><span class="mk-badge">Singular</span><span class="mk-ej-level">Matriz 2×2 · Nivel básico</span></div>
-<div class="mk-enunciado">Determina si \(A=\begin{pmatrix}6&4\\3&2\end{pmatrix}\) tiene inversa. Si no la tiene, explica por qué.</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Determinante</h4>
-\[\det(A)=6\cdot2-4\cdot3=12-12=0\]
-La matriz es <strong>singular</strong>: su determinante es cero, por lo que no existe \(A^{-1}\).
-<div class="mk-tip"><strong>Observación:</strong> La fila 2 es la mitad de la fila 1 (\(F_2=\tfrac{1}{2}F_1\)), lo que confirma que las filas son linealmente dependientes y el determinante es nulo.</div>
-<span class="mk-resultado">La matriz no tiene inversa.</span>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 3</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 3×3 · Nivel medio</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}1&0&0\\2&1&0\\3&2&1\end{pmatrix}\).</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Determinante</h4>
-La matriz es triangular inferior, por lo que \(\det(A)=1\cdot1\cdot1=1\neq 0\).
-<h4>Matriz adjunta</h4>
-\[\text{Adj}(A)=\begin{bmatrix}
-+\begin{vmatrix}1&0\\2&1\end{vmatrix} & -\begin{vmatrix}2&0\\3&1\end{vmatrix} & +\begin{vmatrix}2&1\\3&2\end{vmatrix}\\[18pt]
--\begin{vmatrix}0&0\\2&1\end{vmatrix} & +\begin{vmatrix}1&0\\3&1\end{vmatrix} & -\begin{vmatrix}1&0\\3&2\end{vmatrix}\\[18pt]
-+\begin{vmatrix}0&0\\1&0\end{vmatrix} & -\begin{vmatrix}1&0\\2&0\end{vmatrix} & +\begin{vmatrix}1&0\\2&1\end{vmatrix}
-\end{bmatrix}=\begin{bmatrix}1&-2&1\\0&1&-2\\0&0&1\end{bmatrix}\]
-<h4>Traspuesta de la adjunta</h4>
-\[\text{Adj}(A)^t=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\]
-<h4>Inversa</h4>
-\[A^{-1}=\dfrac{1}{1}\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\]
-<h4>Comprobación</h4>
-\[\begin{pmatrix}1&0&0\\2&1&0\\3&2&1\end{pmatrix}\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\checkmark\]
-<span class="mk-resultado">\(A^{-1}=\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}\)</span>
-<div class="mk-tip"><strong>Observación:</strong> La inversa de una matriz triangular inferior es también triangular inferior. La diagonal de la inversa es el inverso de cada elemento diagonal de \(A\); como todos valen 1, la diagonal de \(A^{-1}\) también es de unos.</div>
-</div></div>
-
-<div class="mk-ejercicio">
-<div class="mk-ej-head"><span class="mk-ej-num">Ej. 4</span><span class="mk-badge">Invertible</span><span class="mk-ej-level">Matriz 3×3 · Nivel medio-alto</span></div>
-<div class="mk-enunciado">Calcula la inversa de \(A=\begin{pmatrix}2&1&1\\1&2&1\\1&1&2\end{pmatrix}\).</div>
-<button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
-<div class="mk-sol">
-<h4>Determinante</h4>
-\[\det(A)=2(4-1)-1(2-1)+1(1-2)=6-1-1=4\neq 0\]
-<h4>Matriz adjunta</h4>
-\[\text{Adj}(A)=\begin{bmatrix}
-+\begin{vmatrix}2&1\\1&2\end{vmatrix} & -\begin{vmatrix}1&1\\1&2\end{vmatrix} & +\begin{vmatrix}1&2\\1&1\end{vmatrix}\\[18pt]
--\begin{vmatrix}1&1\\1&2\end{vmatrix} & +\begin{vmatrix}2&1\\1&2\end{vmatrix} & -\begin{vmatrix}2&1\\1&1\end{vmatrix}\\[18pt]
-+\begin{vmatrix}1&1\\2&1\end{vmatrix} & -\begin{vmatrix}2&1\\1&1\end{vmatrix} & +\begin{vmatrix}2&1\\1&2\end{vmatrix}
-\end{bmatrix}=\begin{bmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{bmatrix}\]
-<h4>Traspuesta de la adjunta</h4>
-En este caso \(\text{Adj}(A)\) es simétrica, por lo que \(\text{Adj}(A)^t=\text{Adj}(A)\):
-\[\text{Adj}(A)=\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\]
-<h4>Inversa</h4>
-\[A^{-1}=\dfrac{1}{4}\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\]
-<h4>Comprobación (primera fila × primera columna)</h4>
-\[\tfrac{1}{4}(3\cdot2+(-1)\cdot1+(-1)\cdot1)=\tfrac{1}{4}(6-1-1)=\tfrac{4}{4}=1\checkmark\]
-<span class="mk-resultado">\(A^{-1}=\dfrac{1}{4}\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\)</span>
-<div class="mk-tip"><strong>Observación:</strong> La matriz \(A\) es simétrica y su inversa también lo es. Además la matriz adjunta coincide con su propia traspuesta, lo que simplifica el cálculo.</div>
-</div></div>
-
-</section>
-
-<!-- CTA herramienta -->
-<div class="herramienta-cta" style="max-width:1060px;margin:0 auto 40px">
-  <p><strong>¿Quieres practicar?</strong> Usa la herramienta interactiva para introducir tu propia matriz, calcular la inversa por la fórmula de la adjunta paso a paso y obtener el resultado automáticamente.</p>
-  <a class="trabajoBtn" href="#calculadora" id="btnMostrarCalculadora2">USAR LA CALCULADORA →</a>
-</div>
-
-</div>
-</div>
-
-<!-- CALCULADORA -->
-<div id="calculadora" style="display:none">
+<body>
 <header id="tituloinicial">
   <h2>MATRIZ INVERSA — Fórmula de la Adjunta</h2>
   <div id="controlesTop">
-    <a class="abreVentana" href="#" id="btnVolverExplicacion">VOLVER A LA EXPLICACIÓN</a>
+    <a class="abreVentana" href="/matriz-inversa-adjunta.html" id="btnVolverExplicacion">← TEORÍA</a>
     <a aria-label="Volver a inicio" href="/" id="btnHome" title="Inicio">
       <svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18"><path d="M12 3 3 10h2v9h6v-6h2v6h6v-9h2L12 3z"/></svg>
       <span>VOLVER</span>
@@ -524,12 +240,10 @@ En este caso \(\text{Adj}(A)\) es simétrica, por lo que \(\text{Adj}(A)^t=\text
 <a href="/cookies.html">Cookies</a>
 <a href="/aviso_legal.html">Aviso legal</a>
 </div></footer>
-</div>
 
 <style>
 /* ── Calculadora adjunta — estilo idéntico a Rango por menores ──────────── */
-#calculadora{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--accent-2:#0ea5a4;--border:#d1d5db;--soft:#eef2f7;--shadow:0 6px 18px rgba(0,0,0,.08);--radius:12px;--radius-sm:8px;--gap:10px}
-#calculadora *{box-sizing:border-box}
+body{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--accent-2:#0ea5a4;--border:#d1d5db;--soft:#eef2f7;--shadow:0 6px 18px rgba(0,0,0,.08);--radius:12px;--radius-sm:8px;--gap:10px}
 #tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px}
 /* ── Rango-style layout (igual que Hoja_estilo_rango_menores.css) ────────── */
 #tituloinicial h2{font-size:18px;font-weight:800;letter-spacing:.2px;flex:1;text-align:left;margin:0;color:var(--ink)}
@@ -554,15 +268,15 @@ En este caso \(\text{Adj}(A)\) es simétrica, por lo que \(\text{Adj}(A)^t=\text
 #caja2 h4{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin:6px 0 4px}
 #caja21{min-height:160px;border:1px solid var(--border);border-radius:var(--radius-sm);background:linear-gradient(180deg,#fff,var(--soft));margin:4px 0 10px;padding:10px;display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:10px;overflow:auto}
 /* Buttons */
-#calculadora button{appearance:none;border:1px solid var(--border);background:var(--soft);padding:7px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer;transition:.12s;color:var(--ink)}
-#calculadora button:hover{transform:translateY(-1px);background:#e9eef9;border-color:#c7d2fe}
+#contenedor button{appearance:none;border:1px solid var(--border);background:var(--soft);padding:7px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer;transition:.12s;color:var(--ink)}
+#contenedor button:hover{transform:translateY(-1px);background:#e9eef9;border-color:#c7d2fe}
 #btnSeleccionar{background:var(--soft)!important}
 #btnAuto{background:linear-gradient(90deg,var(--accent),var(--accent-2))!important;color:#fff!important;border-color:transparent!important}
 #btnAuto:hover{filter:brightness(1.06)!important}
 /* Matrix input */
-#calculadora input[type="text"]{font-family:inherit;font-size:13px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:4px 7px;outline:none;width:50px;text-align:center;transition:.12s}
-#calculadora input[type="text"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-#calculadora table{border-collapse:separate;border-spacing:5px;font-size:13px}
+#contenedor input[type="text"]{font-family:inherit;font-size:13px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:4px 7px;outline:none;width:50px;text-align:center;transition:.12s}
+#contenedor input[type="text"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+#contenedor table{border-collapse:separate;border-spacing:5px;font-size:13px}
 /* Options panel */
 #cajaOpcTitulo{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
 .adjCell{cursor:pointer;padding:3px 7px;border-radius:4px;font-size:12px;font-weight:700;border:1.5px solid var(--accent);color:var(--accent);background:#fff;transition:.12s;line-height:1.4}
@@ -651,14 +365,6 @@ document.addEventListener('DOMContentLoaded',function(){
     r.addEventListener('change',function(){actualizarParams(parseInt(this.value));});
   });
 
-  // Navegación intro/calc
-  var intro=document.getElementById('introPrincipal');
-  var calc=document.getElementById('calculadora');
-  function mostrarCalc(ev){if(ev)ev.preventDefault();intro.style.display='none';calc.style.display='flex';calc.style.flexDirection='column';calc.style.minHeight='100vh';document.body.style.overflow='auto';window.scrollTo(0,0);}
-  function mostrarIntro(ev){if(ev)ev.preventDefault();calc.style.display='none';intro.style.display='block';window.scrollTo(0,0);}
-  document.querySelectorAll("a[href='#calculadora'],#btnMostrarCalculadora,#btnMostrarCalculadora2").forEach(function(b){b.addEventListener('click',mostrarCalc);});
-  var bv=document.getElementById('btnVolverExplicacion');
-  if(bv)bv.addEventListener('click',mostrarIntro);
 });
 
 // ── Fases de la interfaz ─────────────────────────────────────────────────
