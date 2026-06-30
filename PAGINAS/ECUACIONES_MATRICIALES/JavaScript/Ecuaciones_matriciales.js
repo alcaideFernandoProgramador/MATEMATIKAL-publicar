@@ -639,9 +639,6 @@ function renderResolvedInputSummary(analysis, matMap) {
   const parts = [
     `\\text{Ecuación: } ${exprToLatex(analysis.lhsStr)}=${exprToLatex(analysis.rhsStr)}`
   ];
-  for (const name of (analysis.scalarNames || [])) {
-    if (gScalarMap[name] !== undefined) parts.push(`${name}=${gScalarMap[name]}`);
-  }
   for (const name of analysis.matrixNames.filter(m => m !== 'I')) {
     parts.push(`${name}=${matrixToTex(matMap[name])}`);
   }
@@ -1420,9 +1417,6 @@ document.addEventListener('DOMContentLoaded', function() {
   caja21         = document.getElementById('caja21');
   letreroUsuario = document.getElementById('letreroUsuario');
 
-  const btnVolver = document.getElementById('btnVolverExplicacion');
-  if (btnVolver) btnVolver.addEventListener('click', e => { e.preventDefault(); mostrarIntro(); });
-
   const btnReset = document.getElementById('btnReset');
   if (btnReset) btnReset.addEventListener('click', e => { e.preventDefault(); initFase1(); });
 
@@ -1448,41 +1442,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
   initFase1();
 });
-
-// =====================================================================
-// TOGGLE INTRO / CALCULADORA
-// =====================================================================
-
-function mostrarCalc(ev) {
-  if (ev) ev.preventDefault();
-  const intro = document.getElementById('introPrincipal');
-  const calc  = document.getElementById('calculadora');
-  if (intro) intro.style.display = 'none';
-  if (calc) {
-    calc.style.display = 'flex';
-    calc.style.flexDirection = 'column';
-    calc.style.height = '100vh';
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    document.body.style.display = 'flex';
-    document.body.style.flexDirection = 'column';
-    window.scrollTo(0, 0);
-    requestAnimationFrame(function() {
-      var f = calc.querySelector('input'); if (f) try { f.focus(); } catch(e) {}
-    });
-  }
-}
-
-function mostrarIntro(ev) {
-  if (ev) ev.preventDefault();
-  const intro = document.getElementById('introPrincipal');
-  const calc  = document.getElementById('calculadora');
-  if (calc) calc.style.display = 'none';
-  if (intro) {
-    intro.style.display = 'block';
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = 'auto';
-    document.body.style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-}

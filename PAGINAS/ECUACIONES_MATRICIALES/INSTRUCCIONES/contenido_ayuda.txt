@@ -1,0 +1,136 @@
+CONTENIDO PARA Ayuda.docx — Ecuaciones matriciales
+(Mismo formato que PAGINAS/MATRIZ_ESCALONADA/INSTRUCCIONES/Ayuda.docx)
+
+Indicación entre [corchetes] = estilo de Word a aplicar a esa línea.
+Una vez maquetado en Word, guarda como Ayuda.docx y exporta/guarda como PDF
+(Archivo > Exportar > Crear PDF/XPS) con el nombre Ayuda.pdf, ambos en esta
+misma carpeta (PAGINAS/ECUACIONES_MATRICIALES/INSTRUCCIONES/). Después puedes
+borrar este .txt.
+
+--------------------------------------------------------------------------
+
+[Título]
+Ecuaciones matriciales
+
+[Normal]
+Esta página permite introducir una ecuación matricial con una matriz incógnita
+(X, por defecto) y resolverla paso a paso: se factoriza la incógnita, se
+calculan las matrices necesarias y se obtiene la solución. El proceso se
+realiza en dos fases: introducción de datos (ecuación y matrices) y
+resolución, que puede completarse a mano o de forma automática.
+
+[Heading 1]
+1) Introducción de la ecuación
+
+[Heading 2]
+1.1) Incógnita
+
+[Normal]
+Se indica con una sola letra mayúscula. Por defecto es X. La letra I está
+reservada para la matriz identidad y no puede usarse como incógnita.
+
+[Heading 2]
+1.2) Escribir la ecuación
+
+[Normal]
+Se escribe la ecuación y se valida con la tecla ENTER. Las matrices conocidas
+se representan con letras mayúsculas (A, B, C…) y los escalares algebraicos
+con letras minúsculas, excepto la t, reservada para indicar la transposición.
+La incógnita puede llevar el exponente ^t (transpuesta) o ^(-1) (inversa),
+pero debe ser el mismo en todos los términos en los que aparezca.
+
+[Heading 3]
+Formato admitido
+
+[Normal]
+AX + BX = C
+
+[Normal]
+aAXB = C
+
+[Normal]
+XA - XB = D
+
+[Normal]
+AX^t = B
+
+[Heading 1]
+2) Introducción de las matrices
+
+[Heading 2]
+2.1) Orden de las matrices
+
+[Normal]
+Todas las matrices de la ecuación deben ser cuadradas y del mismo orden n.
+Se escribe n (un entero entre 1 y 5) y se valida con ENTER.
+
+[Heading 2]
+2.2) Elementos de las matrices
+
+[Normal]
+Los elementos de cada matriz se introducen uno a uno y se validan con ENTER
+o con TAB, que además avanza a la siguiente celda.
+
+[Heading 3]
+Formato admitido
+
+[Normal]
+Enteros: 0, 5, -12
+
+[Normal]
+Decimales: 0.5, -3.25 (también 0,5)
+
+[Normal]
+Fracciones: 1/2, -7/3
+
+[Heading 1]
+3) Paso 1: despejar la matriz incógnita
+
+[Normal]
+Partiendo de la ecuación introducida, se escribe en la caja una ecuación
+equivalente (resultado de aplicar una operación válida, como multiplicar
+ambos miembros por una inversa) y se valida con ENTER. El programa comprueba
+automáticamente que la nueva ecuación es equivalente a la original; si no lo
+es, se muestra un aviso en rojo. Se repite el proceso hasta llegar a la forma
+«incógnita = …». También existe el botón «Resolución automática» (no
+recomendado), que completa este paso entero sin que el usuario participe.
+
+[Heading 1]
+4) Paso 2: calcular las matrices necesarias
+
+[Normal]
+Se muestran los cálculos necesarios para el segundo miembro de la ecuación
+despejada: las sumas o restas de matrices, y las inversas mediante la
+fórmula de la matriz adjunta.
+
+[Heading 1]
+5) Paso 3: sustituir y calcular
+
+[Normal]
+Se sustituyen las matrices ya calculadas en la expresión despejada y se
+realiza el producto (o productos) indicado, paso a paso, hasta obtener la
+matriz incógnita.
+
+[Heading 1]
+6) Solución
+
+[Normal]
+Se presenta la matriz incógnita ya calculada.
+
+[Heading 1]
+7) Botón OTRA ECUACIÓN
+
+[Normal]
+Reinicia la herramienta por completo y permite introducir una nueva
+ecuación desde el principio.
+
+[Heading 1]
+8) Avisos y errores
+
+[Normal]
+La herramienta avisa cuando: un factor que debe invertirse tiene
+determinante 0 (no existe solución por este método); la ecuación no
+contiene la incógnita; los términos con la incógnita no comparten ningún
+factor común por la izquierda ni por la derecha (por ejemplo, AX + XB = C,
+ecuaciones de Sylvester, que esta herramienta no resuelve); o los términos
+con la incógnita llevan exponentes distintos (^t y ^(-1) mezclados).

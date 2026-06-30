@@ -61,7 +61,8 @@
 }
 *{box-sizing:border-box}
 html,body{overflow-x:clip;max-width:100%}
-body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0}
+body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--text-primary);background:var(--bg-page);background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(59,110,248,.09) 0%,transparent 70%);min-height:100vh;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+.katex{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
 /* CABECERA */
 .cabecera-art{background:#071a09;color:#fff;padding:1.2rem 2rem;margin-bottom:0}
@@ -72,14 +73,10 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .btn-herramienta:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(43,79,170,.32)}
 
 /* WRAP ARTÍCULO */
-.art-wrap{max-width:1030px;margin:0 auto;padding:36px 24px 64px}
+.art-wrap{max-width:1340px;margin:0 auto;padding:36px 24px 64px}
 
 /* HERO ARTÍCULO */
 .art-hero{margin-bottom:36px}
-.art-breadcrumb{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
-.art-breadcrumb a{color:var(--text-muted);text-decoration:none}
-.art-breadcrumb a:hover{color:var(--blue-mid)}
-.art-breadcrumb span{margin:0 6px}
 h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem);font-weight:400;color:var(--blue-deep);margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}
 .art-bajada{font-size:1.05rem;color:var(--text-secondary);line-height:1.7;margin:0 0 8px}
 .art-bajada-lista{list-style:none;margin:4px 0 20px;padding-left:2cm;color:var(--text-secondary);font-size:1.05rem;line-height:1.7;counter-reset:bajada}
@@ -129,6 +126,14 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 .ejemplo-bloque h3{font-size:1.1rem;font-weight:700;color:var(--blue-deep);margin:0 0 14px}
 .ejemplo-paso{margin:14px 0 6px;font-size:.9rem;font-weight:700;color:var(--blue-mid);text-transform:uppercase;letter-spacing:.04em}
 .resultado-final{display:inline-flex;align-items:center;margin-top:14px;padding:8px 18px;border-radius:8px;font-weight:700;font-size:.9rem;background:rgba(59,110,248,.08);border:1px solid rgba(59,110,248,.2);color:var(--blue-deep)}
+
+/* EJEMPLOS PROPUESTOS */
+.propuesto-solucion summary.btn-solucion{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:10px 22px;border-radius:999px;background:var(--blue-mid);color:#fff;font-weight:700;font-size:.88rem;letter-spacing:.02em;cursor:pointer;list-style:none;user-select:none;width:fit-content}
+.propuesto-solucion summary.btn-solucion::-webkit-details-marker{display:none}
+.propuesto-solucion summary.btn-solucion:hover{background:var(--blue-deep)}
+.propuesto-solucion summary.btn-solucion::after{content:"Ver solución ▾"}
+.propuesto-solucion[open] summary.btn-solucion::after{content:"Ocultar solución ▴"}
+.propuesto-solucion-contenido{margin-top:18px;padding-top:18px;border-top:1px dashed var(--border-card)}
 
 /* ERRORES */
 .lista-errores{margin:0;padding-left:22px}
@@ -180,18 +185,14 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 
   <!-- HERO -->
   <div class="art-hero">
-    <p class="art-breadcrumb">
-      <a href="/">Inicio</a><span>›</span>
-      Ecuaciones matriciales
-    </p>
-    <h1 class="art-titulo">Ecuaciones matriciales: método de resolución</h1>
+    <h1 class="art-titulo">Ecuaciones matriciales</h1>
     <p class="art-bajada">Todo lo que necesitas para resolver ecuaciones matriciales:</p>
     <ol class="art-bajada-lista">
       <li>Qué es una ecuación matricial y cuándo tiene solución.</li>
       <li>Los cuatro tipos principales y cómo factorizar la incógnita.</li>
       <li>Ejemplos resueltos paso a paso de cada tipo.</li>
     </ol>
-    <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
+    <p class="art-meta">Por Fernando Alcaide · MATEMATIKAL</p>
   </div>
 
   <!-- ÍNDICE -->
@@ -203,6 +204,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><a href="#tipos">Tipos de ecuaciones matriciales</a></li>
       <li><a href="#metodo">El método paso a paso</a></li>
       <li><a href="#ejemplos">Ejemplos resueltos</a></li>
+      <li><a href="#propuestos">Ejemplos propuestos</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
       <li><a href="#faq">Preguntas frecuentes</a></li>
     </ol>
@@ -211,8 +213,9 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
   <!-- 1. QUÉ ES -->
   <section class="art-seccion" id="que-es">
     <h2>1. ¿Qué es una ecuación matricial?</h2>
-    <p>Una <strong>ecuación matricial</strong> es una ecuación en la que la incógnita es una matriz, habitualmente llamada \(X\). Las restantes matrices (conocidas) se representan con letras mayúsculas \(A, B, C\ldots\)</p>
-    <p>El objetivo es encontrar la matriz \(X\) que satisface la ecuación. La herramienta de esta página resuelve ecuaciones que pueden despejarse siguiendo tres pasos:</p>
+    <p>Una <strong>ecuación matricial</strong> es una ecuación en la que la incógnita es una matriz, habitualmente llamada \(X\). Las restantes matrices (matrices conocidas) se representan con letras mayúsculas \(A, B, C\ldots\)</p>
+    <p>El objetivo es encontrar la matriz \(X\) que satisface la ecuación.</p>
+    <p>La herramienta de esta página resuelve ecuaciones que pueden despejarse siguiendo tres pasos:</p>
     <ol class="pasos-lista">
       <li><strong>Pasar todos los sumandos con X al primer miembro</strong> y los demás al segundo.</li>
       <li><strong>Extraer X como factor común</strong> por la izquierda o por la derecha, obteniendo una ecuación de la forma \(L \cdot X \cdot R = B\).</li>
@@ -303,7 +306,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ol class="pasos-lista">
       <li><strong>Identificar el tipo de ecuación.</strong></li>
       <li><strong>Pasar todos los sumandos con X al primer miembro.</strong></li>
-      <li><strong>Extraer X como factor común</strong>, obteniendo \(L \cdot X \cdot R = B\).</li>
+      <li><strong>Extraer factor común</strong>, obteniendo \(L \cdot X \cdot R = B\).</li>
       <li><strong>Verificar que L y R son invertibles</strong> (\(\det \neq 0\)).</li>
       <li><strong>Calcular \(L^{-1}\) y \(R^{-1}\).</strong></li>
       <li><strong>Calcular \(X = L^{-1} \cdot B \cdot R^{-1}\).</strong></li>
@@ -321,72 +324,234 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <h2>5. Ejemplos resueltos</h2>
 
     <div class="ejemplo-bloque">
-      <h3>Ejemplo 1 — AX = B (2×2)</h3>
+      <h3>Ejemplo 1 → AX = B (Todas las matrices son cuadradas de orden 2)</h3>
       <div class="k">\[A=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad B=\begin{pmatrix}5&4\\3&2\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 1: plantear el despeje</p>
+      <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AX = B \Rightarrow X = A^{-1}B\)</p>
       <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
       <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X = A⁻¹B</p>
       <div class="k">\[X = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}5&4\\3&2\end{pmatrix} = \begin{pmatrix}5-3&4-2\\-5+6&-4+4\end{pmatrix} = \begin{pmatrix}2&2\\1&0\end{pmatrix}\]</div>
-      <div class="resultado-final">\(X = \begin{pmatrix}2&2\\1&0\end{pmatrix}\)</div>
+      <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&2\\1&0\end{pmatrix}\)</div>
     </div>
 
     <div class="ejemplo-bloque">
-      <h3>Ejemplo 2 — AX + BX = C (2×2)</h3>
+      <h3>Ejemplo 2 → AX + BX = C (Todas las matrices son cuadradas de orden 2)</h3>
       <div class="k">\[A=\begin{pmatrix}2&0\\0&1\end{pmatrix},\quad B=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad C=\begin{pmatrix}4&3\\2&3\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 1: factorizar por la izquierda</p>
+      <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la izquierda de X</p>
       <p>\((A+B)X = C \Rightarrow X = (A+B)^{-1}C\)</p>
       <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
-      <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+      <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X</p>
-      <div class="k">\[X = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}4&3\\2&3\end{pmatrix} = \begin{pmatrix}4-2&3-3\\-4+4&-3+6\end{pmatrix} = \begin{pmatrix}2&0\\0&3\end{pmatrix}\]</div>
-      <div class="resultado-final">\(X = \begin{pmatrix}2&0\\0&3\end{pmatrix}\)</div>
+      <div class="k">\[X = (A+B)^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}4&3\\2&3\end{pmatrix} = \begin{pmatrix}4-2&3-3\\-4+4&-3+6\end{pmatrix} = \begin{pmatrix}2&0\\0&3\end{pmatrix}\]</div>
+      <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&0\\0&3\end{pmatrix}\)</div>
     </div>
 
     <div class="ejemplo-bloque">
-      <h3>Ejemplo 3 — AXB = C (2×2)</h3>
+      <h3>Ejemplo 3 → AXB = C (Todas las matrices son cuadradas de orden 2)</h3>
       <div class="k">\[A=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad B=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad C=\begin{pmatrix}3&5\\2&3\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 1: plantear el despeje</p>
+      <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AXB = C \Rightarrow X = A^{-1}CB^{-1}\)</p>
       <p class="ejemplo-paso">Paso 2: calcular A⁻¹ y B⁻¹</p>
-      <div class="k">\[A^{-1} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix},\qquad B^{-1} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,\text{adj}(B)^T = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X = A⁻¹CB⁻¹</p>
-      <div class="k">\[A^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}3&5\\2&3\end{pmatrix} = \begin{pmatrix}1&2\\1&1\end{pmatrix}\]</div>
-      <div class="k">\[X = \begin{pmatrix}1&2\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&1\\1&0\end{pmatrix}\]</div>
-      <div class="resultado-final">\(X = \begin{pmatrix}1&1\\1&0\end{pmatrix}\)</div>
+      <div class="k">\[X = A^{-1}CB^{-1} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}3&5\\2&3\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&2\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&1\\1&0\end{pmatrix}\]</div>
+      <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&1\\1&0\end{pmatrix}\)</div>
     </div>
 
     <div class="ejemplo-bloque">
-      <h3>Ejemplo 4 — AX + B = C, orden 3×3</h3>
+      <h3>Ejemplo 4 → AX + B = C (Todas las matrices son cuadradas de orden 3)</h3>
       <div class="k">\[A=\begin{pmatrix}2&0&0\\0&1&0\\0&0&3\end{pmatrix},\quad B=\begin{pmatrix}1&2&0\\0&-1&2\\3&0&1\end{pmatrix},\quad C=\begin{pmatrix}3&2&4\\3&0&1\\3&6&4\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 1: despejar X</p>
+      <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AX = C - B \Rightarrow X = A^{-1}(C-B)\)</p>
       <p class="ejemplo-paso">Paso 2: calcular C − B y A⁻¹</p>
-      <div class="k">\[C-B = \begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix},\qquad A^{-1} = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\]</div>
+      <div class="k">\[C-B = \begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix},\qquad A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1\cdot3}\begin{pmatrix}3&0&0\\0&6&0\\0&0&2\end{pmatrix} = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X</p>
-      <div class="k">\[X = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix} = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\]</div>
-      <div class="resultado-final">\(X = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\)</div>
+      <div class="k">\[X = A^{-1}(C-B) = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix} = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\]</div>
+      <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\)</div>
     </div>
 
     <div class="ejemplo-bloque">
-      <h3>Ejemplo 5 — AXB = AXC + D, orden 3×3</h3>
+      <h3>Ejemplo 5 → AXB = AXC + D (Todas las matrices son cuadradas de orden 3)</h3>
       <div class="k">\[A=\begin{pmatrix}1&0&0\\2&1&0\\0&1&1\end{pmatrix},\quad B=\begin{pmatrix}2&1&0\\0&2&2\\0&0&2\end{pmatrix},\quad C=I_3,\quad D=\begin{pmatrix}1&1&2\\1&2&6\\-1&2&7\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 1: factorizar</p>
+      <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la derecha de X</p>
       <p>\(AXB - AXC = D \Rightarrow AX(B-C) = D \Rightarrow X = A^{-1}D(B-C)^{-1}\)</p>
       <p class="ejemplo-paso">Paso 2: calcular B − C, A⁻¹ y (B−C)⁻¹</p>
-      <div class="k">\[B-C = \begin{pmatrix}1&1&0\\0&1&2\\0&0&1\end{pmatrix},\qquad A^{-1}=\begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix},\qquad (B-C)^{-1}=\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix}\]</div>
-      <p class="ejemplo-paso">Paso 3: calcular X = A⁻¹D(B−C)⁻¹</p>
-      <div class="k">\[A^{-1}D = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\begin{pmatrix}1&1&2\\1&2&6\\-1&2&7\end{pmatrix} = \begin{pmatrix}1&1&2\\-1&0&2\\0&2&5\end{pmatrix}\]</div>
-      <div class="k">\[X = \begin{pmatrix}1&1&2\\-1&0&2\\0&2&5\end{pmatrix}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\]</div>
-      <div class="resultado-final">\(X = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\)</div>
+      <div class="k">\[B-C = \begin{pmatrix}1&1&0\\0&1&2\\0&0&1\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\]</div>
+      <div class="k">\[(B-C)^{-1} = \frac{1}{\det(B-C)}\,\text{adj}(B-C)^T = \frac{1}{1}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix}\]</div>
+      <p class="ejemplo-paso">Paso 3: calcular X</p>
+      <div class="k">\[X = A^{-1}D(B-C)^{-1} = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\begin{pmatrix}1&1&2\\1&2&6\\-1&2&7\end{pmatrix}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&1&2\\-1&0&2\\0&2&5\end{pmatrix}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\]</div>
+      <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\)</div>
     </div>
 
   </section>
 
-  <!-- 6. ERRORES -->
+  <!-- 6. EJEMPLOS PROPUESTOS -->
+  <section class="art-seccion" id="propuestos">
+    <h2>6. Ejemplos propuestos</h2>
+    <p>Intenta resolverlos tú mismo antes de comprobar la solución.</p>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 1 → AX = B (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}3&1\\2&1\end{pmatrix},\quad B=\begin{pmatrix}7&4\\5&3\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
+          <p>\(AX = B \Rightarrow X = A^{-1}B\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{3\cdot1-1\cdot2}\begin{pmatrix}1&-1\\-2&3\end{pmatrix} = \begin{pmatrix}1&-1\\-2&3\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = A^{-1}B = \begin{pmatrix}1&-1\\-2&3\end{pmatrix}\begin{pmatrix}7&4\\5&3\end{pmatrix} = \begin{pmatrix}7-5&4-3\\-14+15&-8+9\end{pmatrix} = \begin{pmatrix}2&1\\1&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&1\\1&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 2 → XA = B (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad B=\begin{pmatrix}4&3\\7&4\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
+          <p>\(XA = B \Rightarrow X = BA^{-1}\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = BA^{-1} = \begin{pmatrix}4&3\\7&4\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}4-3&-4+6\\7-4&-7+8\end{pmatrix} = \begin{pmatrix}1&2\\3&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\3&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 3 → AX + BX = C (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad B=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad C=\begin{pmatrix}8&3\\5&2\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la izquierda de X</p>
+          <p>\(AX + BX = C \Rightarrow (A+B)X = C \Rightarrow X = (A+B)^{-1}C\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
+          <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = (A+B)^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}8&3\\5&2\end{pmatrix} = \begin{pmatrix}8-5&3-2\\-8+10&-3+4\end{pmatrix} = \begin{pmatrix}3&1\\2&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}3&1\\2&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 4 → AXB = C (Todas las matrices son cuadradas de orden 3)</h3>
+      <div class="k">\[A=\begin{pmatrix}1&0&0\\1&1&0\\0&1&1\end{pmatrix},\quad B=\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix},\quad C=\begin{pmatrix}1&1&1\\3&4&2\\2&4&3\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
+          <p>\(AXB = C \Rightarrow X = A^{-1}CB^{-1}\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular A⁻¹ y B⁻¹</p>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,\text{adj}(B)^T = \frac{1}{1}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = A^{-1}CB^{-1} = \begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix}\begin{pmatrix}1&1&1\\3&4&2\\2&4&3\end{pmatrix}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&1&1\\2&3&1\\0&1&2\end{pmatrix}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&0&1\\2&1&0\\0&1&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&1\\2&1&0\\0&1&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 5 → AX − BX + CX = D (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}3&2\\2&2\end{pmatrix},\quad B=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad C=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad D=\begin{pmatrix}10&5\\6&4\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la izquierda de X</p>
+          <p>\(AX - BX + CX = D \Rightarrow (A-B+C)X = D \Rightarrow X = (A-B+C)^{-1}D\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular (A−B+C)⁻¹</p>
+          <div class="k">\[A-B+C = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A-B+C)^{-1} = \frac{1}{\det(A-B+C)}\,\text{adj}(A-B+C)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = (A-B+C)^{-1}D = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}10&5\\6&4\end{pmatrix} = \begin{pmatrix}10-6&5-4\\-10+12&-5+8\end{pmatrix} = \begin{pmatrix}4&1\\2&3\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}4&1\\2&3\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 6 → XA + XB = C (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad B=\begin{pmatrix}0&1\\0&0\end{pmatrix},\quad C=\begin{pmatrix}2&3\\1&4\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la derecha de X</p>
+          <p>\(XA + XB = C \Rightarrow X(A+B) = C \Rightarrow X = C(A+B)^{-1}\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
+          <div class="k">\[A+B = \begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = C(A+B)^{-1} = \begin{pmatrix}2&3\\1&4\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}2+0&-2+3\\1+0&-1+4\end{pmatrix} = \begin{pmatrix}2&1\\1&3\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&1\\1&3\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 7 → AXB + AXC = D (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad B=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad C=\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad D=\begin{pmatrix}5&4\\1&1\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común a la derecha de X</p>
+          <p>\(AXB + AXC = D \Rightarrow AX(B+C) = D \Rightarrow X = A^{-1}D(B+C)^{-1}\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular B + C, A⁻¹ y (B+C)⁻¹</p>
+          <div class="k">\[B+C = \begin{pmatrix}2&1\\1&1\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+          <div class="k">\[(B+C)^{-1} = \frac{1}{\det(B+C)}\,\text{adj}(B+C)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = A^{-1}D(B+C)^{-1} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\begin{pmatrix}5&4\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}4&3\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&2\\0&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\0&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 8 → AX + B = CX + D (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}3&1\\1&1\end{pmatrix},\quad B=\begin{pmatrix}1&1\\0&2\end{pmatrix},\quad C=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad D=\begin{pmatrix}6&9\\2&5\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X (aparece en ambos miembros)</p>
+          <p>\(AX + B = CX + D \Rightarrow (A-C)X = D-B \Rightarrow X = (A-C)^{-1}(D-B)\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular A−C, D−B y (A−C)⁻¹</p>
+          <div class="k">\[A-C = \begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad D-B = \begin{pmatrix}5&8\\2&3\end{pmatrix}\]</div>
+          <div class="k">\[(A-C)^{-1} = \frac{1}{\det(A-C)}\,\text{adj}(A-C)^T = \frac{1}{2\cdot0-1\cdot1}\begin{pmatrix}0&-1\\-1&2\end{pmatrix} = \begin{pmatrix}0&1\\1&-2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = (A-C)^{-1}(D-B) = \begin{pmatrix}0&1\\1&-2\end{pmatrix}\begin{pmatrix}5&8\\2&3\end{pmatrix} = \begin{pmatrix}2&3\\1&2\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&3\\1&2\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <h3>Propuesto 9 → AX^t = B (Todas las matrices son cuadradas de orden 2)</h3>
+      <div class="k">\[A=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad B=\begin{pmatrix}4&7\\3&4\end{pmatrix}\]</div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Paso 1: Despejar la incógnita X (transpuesta)</p>
+          <p>\(AX^t = B \Rightarrow X^t = A^{-1}B \Rightarrow X = \left(A^{-1}B\right)^t\)</p>
+          <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <p class="ejemplo-paso">Paso 3: calcular X</p>
+          <div class="k">\[X = \left(A^{-1}B\right)^t = \left(\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}4&7\\3&4\end{pmatrix}\right)^t = \begin{pmatrix}1&3\\2&1\end{pmatrix}^t = \begin{pmatrix}1&2\\3&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\3&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 7. ERRORES -->
   <section class="art-seccion" id="errores">
-    <h2>6. Errores frecuentes</h2>
+    <h2>7. Errores frecuentes</h2>
     <ul class="lista-errores">
       <li><strong>Invertir el orden al multiplicar:</strong> si \(AX = B\) entonces \(X = A^{-1}B\), no \(BA^{-1}\).</li>
       <li><strong>Creer que \((AB)^{-1} = A^{-1}B^{-1}\).</strong> La inversa del producto se invierte: \((AB)^{-1} = B^{-1}A^{-1}\).</li>
@@ -402,9 +567,9 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <a class="cta-btn" href="/PAGINAS/ECUACIONES_MATRICIALES/Ecuaciones_matriciales.html">Ir a la calculadora →</a>
   </div>
 
-  <!-- 7. PREGUNTAS FRECUENTES -->
+  <!-- 8. PREGUNTAS FRECUENTES -->
   <section class="art-seccion" id="faq">
-    <h2>7. Preguntas frecuentes</h2>
+    <h2>8. Preguntas frecuentes</h2>
     <ul class="pasos-lista">
       <li><strong>¿Qué ocurre si X aparece en los dos miembros?</strong> Se pasan al primer miembro: \(AX + B = CX + D \Rightarrow (A-C)X = D-B\).</li>
       <li><strong>¿Puede haber más de una solución?</strong> Si los factores son invertibles, la solución es única. Si alguno es singular, pueden existir infinitas o ninguna.</li>
