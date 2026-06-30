@@ -1202,10 +1202,9 @@ function initFase1() {
 
   const fase = document.createElement('div');
   fase.className = 'fase';
-  fase.style.cssText = 'display:flex;align-items:center;gap:42px;flex-wrap:wrap;';
-  fase.innerHTML = '<span><strong>Fase 1/2:</strong> Introduce la ecuación matricial.</span>' +
-    '<span>Matrices en <strong>MAYÚSCULAS</strong>, escalares algebraicos en <strong>minúsculas</strong> (excepto <em>t</em>). Incógnita por defecto: <strong>X</strong>.</span>' +
-    '<span>Ejemplos: <code>AX+BX=C</code> &nbsp; <code>aAXB=C</code> &nbsp; <code>XA-XB=D</code></span>';
+  fase.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;gap:8px;';
+  fase.innerHTML = '<span><strong>Introduce la ecuación matricial</strong></span>' +
+    '<span>Ejemplos: <code>AX+BX=C</code> &nbsp; <code>XA-XB=D</code> &nbsp; <code>AXB=C</code></span>';
   caja1.appendChild(fase);
 
   const row = document.createElement('div');
@@ -1221,10 +1220,13 @@ function initFase1() {
   unknownInp.autocomplete = 'off';
   unknownInp.spellcheck = false;
   unknownInp.addEventListener('input', () => { unknownInp.value = unknownInp.value.toUpperCase(); });
+  const eqLabel = document.createElement('label');
+  eqLabel.textContent = 'Ecuación:';
+  eqLabel.style.cssText = 'font-size:13px;font-weight:700;color:#374151;margin-left:16px;';
   const inp = document.createElement('input');
   inp.type = 'text'; inp.className = 'inputEcuacion';
   inp.placeholder = 'Ej: AX + BX = C'; inp.autocomplete = 'off'; inp.spellcheck = false;
-  row.appendChild(unknownLabel); row.appendChild(unknownInp); row.appendChild(inp);
+  row.appendChild(unknownLabel); row.appendChild(unknownInp); row.appendChild(eqLabel); row.appendChild(inp);
   caja1.appendChild(row);
 
   const errDiv = document.createElement('div');
@@ -1269,17 +1271,14 @@ function initFase2(analysis) {
 
   const titleDiv = document.createElement('div');
   titleDiv.id = 'tituloCaja1';
-  titleDiv.innerHTML = '<span>INTRODUCCIÓN DE DATOS</span>';
+  titleDiv.innerHTML = `<span>INTRODUCCIÓN DE DATOS</span><span class="tituloEq">Ecuación: <code>${gEqStr}</code></span>`;
   caja1.appendChild(titleDiv);
 
   const fase = document.createElement('div');
   fase.className = 'fase';
-  fase.style.cssText = 'display:flex;align-items:center;gap:42px;flex-wrap:wrap;';
-  const scalarInfo = analysis.scalarNames && analysis.scalarNames.length
-    ? ` &nbsp;·&nbsp; Escalares algebraicos (sin valor): <strong>${analysis.scalarNames.join(', ')}</strong>` : '';
-  fase.innerHTML = `<span><strong>Fase 2/2:</strong> Ecuación: <code>${gEqStr}</code></span>` +
-    `<span>Incógnita: <strong>${analysis.unknownName}</strong></span>` +
-    `<span>Matrices a introducir: <strong>${analysis.matrixNames.filter(m => m !== 'I').join(', ') || '(ninguna)'}</strong>${scalarInfo}</span>`;
+  fase.style.cssText = 'display:flex;align-items:center;gap:18px;flex-wrap:wrap;';
+  fase.innerHTML = '<span><strong>Introduce las matrices conocidas del ejercicio</strong></span>' +
+    `<span><strong>${analysis.matrixNames.filter(m => m !== 'I').join(', ') || '(ninguna)'}</strong></span>`;
   caja1.appendChild(fase);
 
   const orderRow = document.createElement('div');

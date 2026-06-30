@@ -64,3 +64,19 @@ body{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-
 @media (max-width: 520px){
   .pg-determinantes #tituloinicial h1{font-size:13px;}
 }
+
+/* Improve thin KaTeX symbols on low-density displays and small formulas. */
+.katex,.katex *{-webkit-font-smoothing:auto!important;-moz-osx-font-smoothing:auto!important;text-rendering:auto!important;}
+.katex{color:var(--mk-math-color,var(--text-primary,var(--ink,#111827)));}
+.katex .mrel{font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre","Segoe UI Symbol",Arial,sans-serif!important;font-style:normal!important;font-weight:400!important;}
+
+/* Keep plain-text algebra labels crisp when they are bold and small. */
+html body .op-box strong,
+html body .op strong,
+html body .typeBox strong,
+html body .formulaBox strong{
+  font-family:Arial,"Segoe UI",system-ui,sans-serif!important;
+  font-weight:700!important;
+  font-size:.9rem!important;
+  letter-spacing:0!important;
+}

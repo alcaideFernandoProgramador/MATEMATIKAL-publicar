@@ -65,9 +65,16 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
   padding:14px 18px;flex:0 0 auto;overflow:hidden;
 }
 #tituloCaja1{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:flex-start;gap:36px;flex-wrap:wrap;
   font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
   color:var(--muted);padding-bottom:8px;border-bottom:1px dashed var(--border);margin-bottom:12px;
+}
+#tituloCaja1 .tituloEq{
+  margin-left:0;color:var(--ink);letter-spacing:0;text-transform:none;white-space:nowrap;
+}
+#tituloCaja1 .tituloEq code{
+  font-family:monospace;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.12);
+  border-radius:5px;padding:2px 7px;color:var(--accent);
 }
 .resolvedSummary{
   padding:10px 12px;background:var(--soft);border:1px dashed var(--border);
