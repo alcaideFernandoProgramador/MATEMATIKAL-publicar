@@ -77,10 +77,26 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
   border-radius:5px;padding:2px 7px;color:var(--accent);
 }
 .resolvedSummary{
-  padding:10px 12px;background:var(--soft);border:1px dashed var(--border);
-  border-radius:8px;overflow-x:auto;white-space:nowrap;color:var(--ink);
+  display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
+  overflow-x:auto;white-space:nowrap;color:var(--ink);
 }
 .resolvedSummary .katex{white-space:nowrap}
+.resolvedSummaryBubble{
+  flex:0 0 auto;padding:10px 12px;background:var(--soft);
+  border:1px dashed var(--border);border-radius:8px;
+}
+.resolvedSolutionBubble{
+  display:inline-flex;align-items:center;gap:14px;
+  padding-right:16px;
+  background:#eef4ff;border-color:rgba(37,99,235,.35);
+  box-shadow:0 1px 0 rgba(37,99,235,.06);
+}
+.resolvedSolutionLabel{
+  flex:0 0 auto;font-weight:800;color:#1a2b6b;
+}
+.resolvedSolutionFormula{
+  display:inline-flex;align-items:center;min-width:max-content;
+}
 
 /* ── CALCULADORA: reservar espacio para footer fijo ── */
 #calculadora{padding-bottom:var(--footer-h,74px);}
@@ -118,12 +134,19 @@ h4{
   background:#fff;overflow-x:auto;
 }
 .stepCard .stepTitle{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;
   font-size:11px;font-weight:800;color:#2d4faa;
   text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;
 }
+.stepTitleAutoBtn{
+  flex-direction:column;align-items:center;gap:1px;flex-shrink:0;
+  padding:5px 10px;background:#eef2ff;border-color:#bfdbfe;color:var(--accent);
+  font-size:11px;line-height:1.1;letter-spacing:0;text-transform:none;
+}
+.stepTitleAutoBtn:hover{background:#dbeafe;border-color:#93c5fd}
+.stepTitleAutoNote{font-size:9px;font-weight:700;color:var(--muted)}
 .stepCard.resultCard{background:#f0f4ff;border-color:rgba(59,110,248,.3);}
 .stepCard.resultCard .stepTitle{color:#1a2b6b;font-size:13px;}
-.stepCard.lockedStep{opacity:.45}
 .equationChain{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .equationToken{
   display:inline-flex;align-items:center;min-height:34px;padding:5px 10px;
@@ -135,6 +158,20 @@ h4{
 .autoSolveWrap{margin-top:12px}
 .autoSolveBtn{flex-direction:column;align-items:center;gap:1px;line-height:1.1}
 .autoSolveBtn small{font-size:10px;font-weight:700;color:var(--muted)}
+.step3Formula{
+  margin:8px 0;padding:10px 12px;border:1px solid rgba(37,99,235,.12);
+  border-radius:8px;background:#f8faff;overflow-x:auto;
+}
+.step3Interactivo{margin-top:8px}
+.step3OperationRow{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin:8px 0;padding:10px 12px;border:1px solid var(--border);
+  border-radius:8px;background:#fff;
+}
+.step3OperationLabel{font-size:13px;font-weight:800;color:var(--muted)}
+.step3OperationSymbol{font-size:16px;color:var(--ink)}
+.step3MatrixOperand{display:inline-flex;align-items:flex-start;gap:2px}
+.step3MatrixExponent{font-size:17px;line-height:1}
 
 /* ── FILAS DE MATRICES ── */
 .matRow{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap;}
@@ -182,6 +219,14 @@ button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
   padding:8px 12px;font-size:13px;color:var(--muted);margin:8px 0;
 }
 .fase strong{color:var(--ink)}
+.fase .ejemplosEcuacion{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.fase .ejemploEq{
+  display:inline-flex;align-items:center;
+  padding:5px 10px;border:1px solid rgba(37,99,235,.18);border-radius:999px;
+  background:#fff;color:var(--accent);font-size:14px;font-weight:800;line-height:1.1;
+}
 
 /* ── BLOQUE DE ENTRADA DE MATRIZ ── */
 .matrizInputWrap{
