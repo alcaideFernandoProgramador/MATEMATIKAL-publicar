@@ -40,7 +40,7 @@ function _contieneParam(expr) {
   if (!nombreParam) return false;
   let s = String(expr || "");
   // Check for the param letter as a whole word/token
-  let re = new RegExp("(?<![a-zA-Z_])" + nombreParam + "(?![a-zA-Z_0-9])");
+  let re = new RegExp("(?:^|[^a-zA-Z_])" + nombreParam + "(?![a-zA-Z_0-9])");
   return re.test(s);
 }
 

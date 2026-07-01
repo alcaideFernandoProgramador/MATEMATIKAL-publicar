@@ -65,6 +65,13 @@ body{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-
   .pg-determinantes #tituloinicial h1{font-size:13px;}
 }
 
+/* Artículos editoriales: en móvil, reducir la sangría de 2cm de la lista
+   introductoria (ol.art-bajada-lista). Selector con elemento para ganar
+   en especificidad al estilo inline de cada página. */
+@media (max-width: 700px){
+  ol.art-bajada-lista{padding-left:1.2rem;}
+}
+
 /* Improve thin KaTeX symbols on low-density displays and small formulas. */
 .katex,.katex *{-webkit-font-smoothing:auto!important;-moz-osx-font-smoothing:auto!important;text-rendering:auto!important;}
 .katex{color:var(--mk-math-color,var(--text-primary,var(--ink,#111827)));}
