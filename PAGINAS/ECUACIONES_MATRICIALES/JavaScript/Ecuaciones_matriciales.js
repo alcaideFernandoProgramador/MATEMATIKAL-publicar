@@ -340,7 +340,13 @@ function buildFactoredTex(analysis) {
 }
 
 function buildFormulaTex(analysis) {
-  const { lExpr, rExpr, bExpr, xTerms, strategy, unknownName, xExp } = analysis;
+  const { lExpr, rExpr, bExpr, xTerms, strategy, unknownName, xExp, step3Factors } = analysis;
+  if (Array.isArray(step3Factors) && step3Factors.length) {
+    const rhsTex = step3Factors.map(f => f.label).join('\\cdot ');
+    if (xExp === '^t') return `${unknownName} = ${step3Factors.length === 1 ? rhsTex : `\\left(${rhsTex}\\right)`}^{t}`;
+    if (xExp === '^(-1)') return `${unknownName} = \\left(${rhsTex}\\right)^{-1}`;
+    return `${unknownName} = ${rhsTex}`;
+  }
   const isLId = lExpr === 'I';
   const isRId = rExpr === 'I';
   const needsLParen = xTerms.length > 1 && strategy === 'A' && /[+\-]/.test(lExpr);
@@ -373,10 +379,27 @@ function buildFormulaTex(analysis) {
 
 function clearEl(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 
+const CONDITIONS_CALCULATOR_URL = '/PAGINAS/CALCULO_MATRICES_CONDICIONES/Calculo_matrices_condiciones.html';
+
+function shouldSuggestConditionsCalculator(msg) {
+  return /El factor (izquierdo|derecho) [LR] no es invertible/.test(String(msg));
+}
+
+function appendConditionsCalculatorLink(container) {
+  container.appendChild(document.createElement('br'));
+  container.appendChild(document.createTextNode('Puedes utilizar la p\u00e1gina de c\u00e1lculo de matrices con condiciones de este sitio: '));
+  const link = document.createElement('a');
+  link.href = CONDITIONS_CALCULATOR_URL;
+  link.textContent = 'C\u00e1lculo de matrices con condiciones';
+  container.appendChild(link);
+  container.appendChild(document.createTextNode('.'));
+}
+
 function showError(msg, where) {
   const p = document.createElement('p');
   p.className = 'msgError';
   p.textContent = '⚠ ' + msg;
+  if (shouldSuggestConditionsCalculator(msg)) appendConditionsCalculatorLink(p);
   where.appendChild(p);
 }
 
@@ -632,7 +655,9 @@ function isSolvedForUnknown(system, analysis) {
   return !ExpresionMatricial.obtenerVariables(system.rhsStr).includes(analysis.unknownName);
 }
 
-function renderResolvedInputSummary(analysis, matMap, sol) {
+function renderResolvedInputSummary(analysis, matMap, options) {
+  options = options || {};
+  const sol = options.sol;
   clearEl(caja1);
   const summary = document.createElement('div');
   summary.className = 'resolvedSummary';
@@ -646,7 +671,7 @@ function renderResolvedInputSummary(analysis, matMap, sol) {
   }
   renderKatex(parts.join('\\qquad '), dataBubble, false);
   summary.appendChild(dataBubble);
-  if (sol && sol.X) {
+  if (options.sol && options.sol.X) {
     const solutionBubble = document.createElement('div');
     solutionBubble.className = 'resolvedSummaryBubble resolvedSolutionBubble';
     renderKatex(`\\text{SoluciÃ³n: } ${analysis.unknownName}= ${matrixToTex(sol.X)}`, solutionBubble, false);
@@ -656,12 +681,41 @@ function renderResolvedInputSummary(analysis, matMap, sol) {
     solutionLabel.textContent = 'Solución:';
     const solutionFormula = document.createElement('span');
     solutionFormula.className = 'resolvedSolutionFormula';
-    renderKatex(`${analysis.unknownName}=\\;${matrixToTex(sol.X)}`, solutionFormula, false);
+    renderKatex(buildSolutionSummaryTex(analysis, options.sol), solutionFormula, false);
     solutionBubble.appendChild(solutionLabel);
     solutionBubble.appendChild(solutionFormula);
     summary.appendChild(solutionBubble);
   }
+  if (typeof options.onSolveAll === 'function') {
+    const solveAllBtn = document.createElement('button');
+    solveAllBtn.type = 'button';
+    solveAllBtn.className = 'resolvedSolveAllBtn';
+    solveAllBtn.innerHTML = '<span>Resolver todo</span><small>No recomendado</small>';
+    solveAllBtn.addEventListener('click', () => {
+      solveAllBtn.disabled = true;
+      options.onSolveAll();
+    });
+    summary.appendChild(solveAllBtn);
+  }
   caja1.appendChild(summary);
+}
+
+function appendResolvedSolutionSummary(analysis, sol) {
+  const summary = caja1 ? caja1.querySelector('.resolvedSummary') : null;
+  if (!summary || !sol || !sol.X || summary.querySelector('.resolvedSolutionBubble')) return;
+  const solutionBubble = document.createElement('div');
+  solutionBubble.className = 'resolvedSummaryBubble resolvedSolutionBubble';
+  const solutionLabel = document.createElement('span');
+  solutionLabel.className = 'resolvedSolutionLabel';
+  solutionLabel.textContent = 'Solución:';
+  const solutionFormula = document.createElement('span');
+  solutionFormula.className = 'resolvedSolutionFormula';
+  renderKatex(buildSolutionSummaryTex(analysis, sol), solutionFormula, false);
+  solutionBubble.appendChild(solutionLabel);
+  solutionBubble.appendChild(solutionFormula);
+  const solveAllBtn = summary.querySelector('.resolvedSolveAllBtn');
+  if (solveAllBtn) summary.insertBefore(solutionBubble, solveAllBtn);
+  else summary.appendChild(solutionBubble);
 }
 
 function addStepAutoButton(titleEl, fn) {
@@ -682,7 +736,8 @@ function addStepAutoButton(titleEl, fn) {
   titleEl.appendChild(btn);
 }
 
-function addStep(container, title, isResult, renderFn) {
+function addStep(container, title, isResult, renderFn, options) {
+  options = options || {};
   const card = document.createElement('div');
   card.className = 'stepCard' + (isResult ? ' resultCard' : '');
   const h = document.createElement('div');
@@ -693,7 +748,7 @@ function addStep(container, title, isResult, renderFn) {
   card.appendChild(h);
   container.appendChild(card);
   const autoFn = typeof renderFn === 'function' ? renderFn(card) : null;
-  if (typeof autoFn === 'function') addStepAutoButton(h, autoFn);
+  if (typeof autoFn === 'function' && options.showAutoButton !== false) addStepAutoButton(h, autoFn);
   return card;
 }
 
@@ -853,10 +908,12 @@ function renderMatrixOperationRow(container, title, operands, resultMatrix, opti
     const row = document.createElement('div');
     row.className = 'step3OperationRow';
 
-    const lbl = document.createElement('span');
-    lbl.className = 'step3OperationLabel';
-    lbl.textContent = title;
-    row.appendChild(lbl);
+    if (title && !options.preferSymbolTitle) {
+      const lbl = document.createElement('span');
+      lbl.className = 'step3OperationLabel';
+      lbl.textContent = title;
+      row.appendChild(lbl);
+    }
 
     if (options.symbolTex) {
       const symbol = document.createElement('span');
@@ -1065,7 +1122,15 @@ function stepScalarToTex(expr) {
 }
 
 function needsStepParens(tex) {
-  return /(^|[^\\])[+\-]/.test(String(tex || ''));
+  const s = String(tex || '');
+  let depth = 0;
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    if (ch === '{' || ch === '(' || ch === '[') depth++;
+    else if (ch === '}' || ch === ')' || ch === ']') depth = Math.max(0, depth - 1);
+    else if ((ch === '+' || ch === '-') && depth === 0) return true;
+  }
+  return false;
 }
 
 function factorStepTex(tex) {
@@ -1250,7 +1315,7 @@ async function renderExpressionStepRows(container, expr, baseMatrList, finalMatr
 
     rendered = true;
     await renderMatrixOperationRow(container, preview.title, preview.operands, preview.mat, {
-      showAutoButton: false,
+      showAutoButton: true,
       registerAuto,
       operatorTex: preview.operatorTex,
       symbolTex: preview.symbolTex
@@ -1266,7 +1331,7 @@ async function renderExpressionStepRows(container, expr, baseMatrList, finalMatr
 
   if (!rendered) {
     await renderComputationRow(container, exprToLatex(expr), null, null, finalMatrix, {
-      showAutoButton: false,
+      showAutoButton: true,
       registerAuto
     });
   }
@@ -1303,7 +1368,7 @@ function renderStep2(container, analysis, matMap, sol, onComplete) {
         pushExpressionTasks(lExpr, L);
       }
       taskFns.push(() => renderComputationRow(container, matrixInverseLatex(lExpr), L, '^{-1}', sol.Linv, {
-        showAutoButton: false,
+        showAutoButton: true,
         registerAuto
       }));
     }
@@ -1316,7 +1381,7 @@ function renderStep2(container, analysis, matMap, sol, onComplete) {
         pushExpressionTasks(rExpr, R);
       }
       taskFns.push(() => renderComputationRow(container, matrixInverseLatex(rExpr), R, '^{-1}', sol.Rinv, {
-        showAutoButton: false,
+        showAutoButton: true,
         registerAuto
       }));
     }
@@ -1383,6 +1448,44 @@ function buildStep3AutoTex(analysis, sol) {
   return tex;
 }
 
+function step3ProductSymbolTex(leftTex, rightTex) {
+  return `${factorStepTex(leftTex)}\\cdot ${factorStepTex(rightTex)}`;
+}
+
+function isIdentityMatrix(mat) {
+  if (!Array.isArray(mat) || !Array.isArray(mat[0]) || mat.length !== mat[0].length) return false;
+  for (let i = 0; i < mat.length; i++) {
+    for (let j = 0; j < mat[i].length; j++) {
+      const expected = i === j ? '1' : '0';
+      try {
+        if (ExpresionAlgebraica.simplificar(`(${mat[i][j]})-(${expected})`) !== '0') return false;
+      } catch(_) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function buildStep3Factors(analysis, sol) {
+  const factors = [];
+  if (sol.Linv) factors.push({ matrix: sol.Linv, label: matrixInverseLatex(analysis.lExpr) });
+  factors.push({ matrix: sol.B, label: analysis.bExpr ? exprToLatex(analysis.bExpr) : '\\mathbf{0}' });
+  if (sol.Rinv) factors.push({ matrix: sol.Rinv, label: matrixInverseLatex(analysis.rExpr) });
+  const visible = factors.filter(factor => !isIdentityMatrix(factor.matrix));
+  return visible.length ? visible : factors.slice(0, 1);
+}
+
+function buildSolutionSummaryTex(analysis, sol) {
+  const formulaAnalysis = {
+    ...analysis,
+    step3Factors: Array.isArray(analysis.step3Factors) && analysis.step3Factors.length
+      ? analysis.step3Factors
+      : buildStep3Factors(analysis, sol)
+  };
+  return `${buildFormulaTex(formulaAnalysis)}=\\;${matrixToTex(sol.X)}`;
+}
+
 function renderStep3(container, analysis, matMap, sol, onComplete) {
   const desc = document.createElement('p');
   desc.style.cssText = 'font-size:13px;color:#4a5270;margin:0 0 10px;';
@@ -1391,6 +1494,8 @@ function renderStep3(container, analysis, matMap, sol, onComplete) {
 
   const formula = document.createElement('div');
   formula.className = 'step3Formula';
+  const step3Factors = buildStep3Factors(analysis, sol);
+  analysis.step3Factors = step3Factors;
   renderKatex(buildFormulaTex(analysis), formula, true);
   container.appendChild(formula);
 
@@ -1413,39 +1518,44 @@ function renderStep3(container, analysis, matMap, sol, onComplete) {
 
   async function runInteractiveStep() {
     try {
-      const parts = [];
-      if (sol.Linv) parts.push(sol.Linv);
-      parts.push(sol.B);
-      if (sol.Rinv) parts.push(sol.Rinv);
+      const parts = step3Factors.map(factor => factor.matrix);
+      const partLabels = step3Factors.map(factor => factor.label);
 
       let current = parts[0];
+      let currentLabel = partLabels[0];
       let hasWork = false;
       for (let i = 1; i < parts.length; i++) {
         const result = Matriz.multiplicar(current, parts[i]);
+        const symbolTex = step3ProductSymbolTex(currentLabel, partLabels[i]);
         hasWork = true;
         await renderMatrixOperationRow(calcDiv, i === 1 ? 'Calcula:' : 'Después:', [
           { matrix: current },
           { matrix: parts[i] }
-        ], result, { showAutoButton: false, registerAuto });
+        ], result, { showAutoButton: true, registerAuto, symbolTex, preferSymbolTitle: true });
         current = result;
+        currentLabel = symbolTex;
       }
 
       const xExp = analysis.xExp || '';
       if (xExp === '^t') {
         const result = Matriz.trasponer(current);
+        const symbolTex = powerStepTex(currentLabel, 't');
         hasWork = true;
         await renderMatrixOperationRow(calcDiv, 'Transpuesta:', [
           { matrix: current, exponentTex: '^t' }
-        ], result, { showAutoButton: false, registerAuto });
+        ], result, { showAutoButton: true, registerAuto, symbolTex, preferSymbolTitle: true });
         current = result;
+        currentLabel = symbolTex;
       }
       if (xExp === '^(-1)') {
         const result = Matriz.inversa(current);
+        const symbolTex = powerStepTex(currentLabel, '-1');
         hasWork = true;
         await renderMatrixOperationRow(calcDiv, 'Inversa:', [
           { matrix: current, exponentTex: '^{-1}' }
-        ], result, { showAutoButton: false, registerAuto });
+        ], result, { showAutoButton: true, registerAuto, symbolTex, preferSymbolTitle: true });
         current = result;
+        currentLabel = symbolTex;
       }
 
       if (!hasWork) {
@@ -1495,6 +1605,46 @@ function renderSolutionCard(container, sol, unknownName) {
 
 function displaySolution(analysis, matMap, n, sol, lhsStr, rhsStr) {
   clearEl(caja21);
+  const stepAutos = { step1: null, step2: null, step3: null };
+  let solveAllMode = false;
+  const runIfSolveAll = fn => {
+    if (solveAllMode && typeof fn === 'function') setTimeout(fn, 0);
+  };
+  const solveAll = () => {
+    solveAllMode = true;
+    runIfSolveAll(stepAutos.step1);
+    runIfSolveAll(stepAutos.step2);
+    runIfSolveAll(stepAutos.step3);
+  };
+
+  renderResolvedInputSummary(analysis, matMap, { onSolveAll: solveAll });
+
+  addStep(caja21, 'Paso 1: Despejar la matriz incógnita', false, div => {
+    stepAutos.step1 = renderDespejeStep(div, analysis, matMap, n, () => {
+      addStep(caja21, 'Paso 2: Calcular las matrices necesarias', false, step2Card => {
+        caja21.scrollTop = caja21.scrollHeight;
+        stepAutos.step2 = renderStep2(step2Card, analysis, matMap, sol, () => {
+          addStep(caja21, 'Paso 3: Sustituir las matrices y realizar los cálculos paso a paso', false, step3Card => {
+            stepAutos.step3 = renderStep3(step3Card, analysis, matMap, sol, () => {
+              addStep(caja21, 'Solución', true, solutionCard => {
+                renderSolutionCard(solutionCard, sol, analysis.unknownName);
+                appendResolvedSolutionSummary(analysis, sol);
+              });
+              caja21.scrollTop = caja21.scrollHeight;
+            });
+            runIfSolveAll(stepAutos.step3);
+            return stepAutos.step3;
+          }, { showAutoButton: false });
+          caja21.scrollTop = caja21.scrollHeight;
+        });
+        runIfSolveAll(stepAutos.step2);
+        return stepAutos.step2;
+      }, { showAutoButton: false });
+    }, { showAutoButton: false });
+    runIfSolveAll(stepAutos.step1);
+    return stepAutos.step1;
+  }, { showAutoButton: false });
+  return;
 
   addStep(caja21, 'Paso 1: Despejar la matriz incógnita', false, div => {
     renderDespejeStep(div, analysis, matMap, n, () => {
@@ -1516,7 +1666,8 @@ function displaySolution(analysis, matMap, n, sol, lhsStr, rhsStr) {
   });
 }
 
-function renderDespejeStep(container, analysis, matMap, n, onComplete) {
+function renderDespejeStep(container, analysis, matMap, n, onComplete, options) {
+  options = options || {};
   const baseEq = `${analysis.lhsStr}=${analysis.rhsStr}`;
   const originalSystem = buildEquationSystem(baseEq, analysis, matMap, n);
   const chain = document.createElement('div');
@@ -1540,6 +1691,7 @@ function renderDespejeStep(container, analysis, matMap, n, onComplete) {
   appendArrow(chain);
   const wrappedComplete = () => { autoWrap.remove(); if (typeof onComplete === 'function') onComplete(); };
   appendEquationInput(chain, analysis, matMap, n, originalSystem, state, err, ok, wrappedComplete);
+  const runAutomaticDespeje = () => { if (!state.completed) autoBtn.click(); };
   autoBtn.addEventListener('click', () => {
     if (state.completed) return;
     try {
@@ -1551,9 +1703,10 @@ function renderDespejeStep(container, analysis, matMap, n, onComplete) {
     }
   });
   container.appendChild(chain);
-  container.appendChild(autoWrap);
+  if (options.showAutoButton !== false) container.appendChild(autoWrap);
   container.appendChild(err);
   container.appendChild(ok);
+  return runAutomaticDespeje;
 }
 
 function appendArrow(container) {
@@ -1745,7 +1898,7 @@ function initFase1() {
 
   const fase = document.createElement('div');
   fase.className = 'fase';
-  fase.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;gap:8px;';
+  fase.style.cssText = 'display:flex;align-items:center;gap:14px;flex-wrap:wrap;';
   fase.innerHTML = '<span><strong>Introduce la ecuación matricial</strong></span>' +
     '<span class="ejemplosEcuacion"><span>Ejemplos:</span><code class="ejemploEq">AX+BX=C</code><code class="ejemploEq">XA-XB=D</code><code class="ejemploEq">AXB=C</code><code class="ejemploEq">AX+B=2C-DX</code></span>';
   caja1.appendChild(fase);
@@ -1871,7 +2024,6 @@ function initFase2(analysis) {
         matMap[name] = mat;
       }
       const sol = computeSolution(analysis, matMap, gN);
-      renderResolvedInputSummary(analysis, matMap, sol);
       displaySolution(analysis, matMap, gN, sol, analysis.lhsStr, analysis.rhsStr);
     } catch(e) {
       showError(typeof e === 'string' ? e : e.message, errDiv);

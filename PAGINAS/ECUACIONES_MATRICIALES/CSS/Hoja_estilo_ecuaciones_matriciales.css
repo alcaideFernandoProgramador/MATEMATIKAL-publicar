@@ -5,14 +5,14 @@
   --footer-h:74px;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{height:100%;overflow:hidden}
 body{
   margin:0;padding:0;
   background:linear-gradient(180deg,var(--bg),#ffffff);
   color:var(--ink);
   font-family:'DM Sans',system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
-  min-height:100vh;display:flex;flex-direction:column;
+  height:100vh;min-height:0;display:flex;flex-direction:column;overflow:hidden;
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -97,14 +97,23 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
 .resolvedSolutionFormula{
   display:inline-flex;align-items:center;min-width:max-content;
 }
+.resolvedSolveAllBtn{
+  flex:0 0 auto;margin-left:auto;position:sticky;right:0;z-index:1;
+  flex-direction:column;align-items:center;gap:1px;
+  padding:7px 12px;background:#eef2ff;border-color:#bfdbfe;color:var(--accent);
+  line-height:1.1;white-space:nowrap;
+}
+.resolvedSolveAllBtn small{
+  font-size:9px;font-weight:700;color:var(--muted);
+}
 
-/* ── CALCULADORA: reservar espacio para footer fijo ── */
-#calculadora{padding-bottom:var(--footer-h,74px);}
+/* ── CALCULADORA ── */
+#calculadora{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding-bottom:0;}
 
 /* ── ESPACIO DE TRABAJO ── */
-#caja2borde{background:transparent;flex:1;min-height:200px;display:flex;overflow:hidden;}
+#caja2borde{background:transparent;flex:1 1 auto;min-height:0;display:flex;overflow:hidden;}
 #caja2{
-  flex:1;background:var(--panel);border:1px solid var(--border);
+  flex:1 1 auto;min-height:0;background:var(--panel);border:1px solid var(--border);
   border-radius:var(--radius);box-shadow:var(--shadow);
   padding:10px;display:flex;flex-direction:column;overflow:hidden;
 }
@@ -220,12 +229,12 @@ button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
 }
 .fase strong{color:var(--ink)}
 .fase .ejemplosEcuacion{
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);
 }
 .fase .ejemploEq{
   display:inline-flex;align-items:center;
-  padding:5px 10px;border:1px solid rgba(37,99,235,.18);border-radius:999px;
-  background:#fff;color:var(--accent);font-size:14px;font-weight:800;line-height:1.1;
+  padding:5px 10px;border:1px solid var(--border);border-radius:999px;
+  background:#fff;color:var(--ink);font-size:14px;font-weight:800;line-height:1.1;
 }
 
 /* ── BLOQUE DE ENTRADA DE MATRIZ ── */
@@ -255,6 +264,7 @@ button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
 
 /* ── MENSAJES ── */
 .msgError{color:#dc2626;font-size:12px;font-weight:700;margin-top:6px;}
+.msgError a{color:#1d4ed8;text-decoration:underline;text-underline-offset:2px;}
 .msgOk{color:#16a34a;font-size:12px;font-weight:700;margin-top:6px;}
 
 /* ── MODAL ── */
