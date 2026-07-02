@@ -2517,12 +2517,12 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
           for (let j = 0; j < columnas; j++) { const celda = document.createElement("td"); celda.style.border = "1px solid #ccc"; celda.style.padding = "2px"; 
           const input = document.createElement("input"); input.type = "text"; input.style.width = "40px"; filaDatos.push(null); 
           input.addEventListener("keydown", (ev) => { if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault(); ev.preventDefault(); const filaIdx = input.parentNode.parentNode.rowIndex; 
-          const colIdx = input.parentNode.cellIndex; try { Validar.expresionParentesisBalanceadosYCaracteresValidos(input.value); 
-          matrizCreada[filaIdx][colIdx] = input.value; const idxPlano = filaIdx * columnas + colIdx; const total = filas * columnas; 
+          const colIdx = input.parentNode.cellIndex; const valorNormalizado = input.value.replace(/(\d),(\d)/g, "$1.$2"); try { Validar.expresionParentesisBalanceadosYCaracteresValidos(valorNormalizado); 
+          matrizCreada[filaIdx][colIdx] = valorNormalizado; const idxPlano = filaIdx * columnas + colIdx; const total = filas * columnas; 
           if (idxPlano < total - 1) { const inputs = tabla.querySelectorAll("input"); inputs[idxPlano + 1].focus(); } 
           else { resolve(clonarMatriz(matrizCreada)); } } 
-          catch (err) { const errores = { errorC: "Se ha introducido una expresión errónea.", errorB: "No has introducido nada.", 
-                          errorA: "Los paréntesis no están balanceados." }; Representar.mostrarError(cajaError, errores[err.message] || "Error desconocido"); 
+          catch (err) { const errores = { "Parentesis no balanceados": "Los paréntesis no están balanceados.", "Expresion vacía": "No has introducido nada.", 
+                          "Caracteres no válidos": "Se ha introducido una expresión errónea." }; Representar.mostrarError(cajaError, errores[err.message] || "Error desconocido"); 
           input.value = ""; input.focus(); } } }); celda.appendChild(input); fila.appendChild(celda); } 
           matrizCreada.push(filaDatos); tabla.appendChild(fila); } 
           contenedor.appendChild(tabla); Representar.cerrarParentesis(filas * 1.25, contenedor); const first = tabla.querySelector("input"); if (first) first.focus(); 
@@ -2568,11 +2568,12 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
             for(let i=0;i<filas;i++){const tr=document.createElement("tr"),filaDatos=[];for(let j=0;j<columnas;j++){
                 const td=document.createElement("td"),inp=document.createElement("input");td.style.border="1px solid #ccc";inp.style.width="40px";filaDatos.push(null);
                 inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();const fi=inp.parentNode.parentNode.rowIndex,co=inp.parentNode.cellIndex;
-                    try{Validar.expresionParentesisBalanceadosYCaracteresValidos(inp.value);
-                      matrizCreada[fi][co]=inp.value;const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
+                    const valorNormalizado=inp.value.replace(/(\d),(\d)/g,"$1.$2");
+                    try{Validar.expresionParentesisBalanceadosYCaracteresValidos(valorNormalizado);
+                      matrizCreada[fi][co]=valorNormalizado;const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
                       if(idx<inputs.length-1)inputs[idx+1].focus();else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});}
-                    catch(err){const e={errorC:"Expresión errónea",errorB:"Entrada vacía",errorA:"Paréntesis no balanceados"};
-                      if(err?.message&&e[err.message])Representar.mostrarError(cajaError,e[err.message]);inp.value="";inp.focus();}}});
+                    catch(err){const e={"Parentesis no balanceados":"Los paréntesis no están balanceados.","Expresion vacía":"No has introducido nada.","Caracteres no válidos":"Se ha introducido una expresión errónea."};
+                      Representar.mostrarError(cajaError,e[err.message]||"Error desconocido");inp.value="";inp.focus();}}});
                 td.appendChild(inp);tr.appendChild(td);};matrizCreada.push(filaDatos);tabla.appendChild(tr);}
             cont.appendChild(tabla);Representar.cerrarParentesis(filas*1.25,cont);tabla.querySelector("input")?.focus();}
           catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.")}}});});}
