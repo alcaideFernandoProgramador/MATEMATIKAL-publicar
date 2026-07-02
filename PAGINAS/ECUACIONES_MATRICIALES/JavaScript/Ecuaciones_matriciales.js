@@ -65,19 +65,26 @@ function parseSide(s, unknownName) {
     body = cm ? cm[2] : body;
 
     // Dividir el cuerpo en factores matriciales y localizar la incógnita
-    const factors = splitMatrixFactors(body);
+    const rawFactors = splitMatrixFactors(body);
+    // Plegar los factores numéricos puros en el coeficiente del término
+    // (los escalares conmutan con las matrices: A2X ≡ 2AX, X2 ≡ 2X)
+    let coeffFold = coeff;
+    const factors = [];
+    for (const f of rawFactors) {
+      if (f.name === null && /^[0-9]+$/.test(f.raw)) coeffFold *= parseInt(f.raw, 10);
+      else factors.push(f);
+    }
     const xi = factors.findIndex(f => f.name === unknownName);
     if (xi >= 0) {
       const xRaw = factors[xi].raw;
       const xExp = xRaw.slice(factors[xi].name.length); // '' | '^t' | '^(-1)' | …
       const left  = factors.slice(0, xi).map(f => f.raw).join('*');
       const right = factors.slice(xi + 1).map(f => f.raw).join('*');
-      return { sign, coeff, left, right, xExp, hasX: true };
+      return { sign, coeff: coeffFold, left, right, xExp, hasX: true };
     }
-    // Para términos sin incógnita, dividir también en factores para separar escalares de matrices
-    const freeFactors = splitMatrixFactors(body);
-    const str = freeFactors.length > 0 ? freeFactors.map(f => f.raw).join('*') : body;
-    return { sign, coeff, str, hasX: false };
+    // Términos sin incógnita: mismos factores ya separados y plegados
+    const str = factors.length > 0 ? factors.map(f => f.raw).join('*') : body;
+    return { sign, coeff: coeffFold, str, hasX: false };
   });
 }
 
@@ -1752,6 +1759,26 @@ function appendEquationInput(container, analysis, matMap, n, originalSystem, sta
     state.seen.add(value);
 
     if (isSolvedForUnknown(system, analysis)) {
+      // Si el despeje del alumno no coincide con la forma canónica que usan
+      // los pasos 2 y 3, se añade un eslabón equivalente para mantener la
+      // continuidad de la resolución.
+      try {
+        const canonEqs = buildAutomaticDespejeEquations(analysis);
+        if (canonEqs.length) {
+          const canonSystem = buildEquationSystem(canonEqs[canonEqs.length - 1], analysis, matMap, n);
+          if (canonSystem.eq !== system.eq) {
+            appendArrow(container);
+            appendEquationToken(container, canonSystem.eq);
+            const nota = document.createElement('span');
+            nota.className = 'chainCanonNote';
+            nota.textContent = '(forma equivalente con la que continúa la resolución)';
+            nota.style.cssText = 'font-size:11px;color:#7b839e;align-self:center;';
+            container.appendChild(nota);
+            state.currentSystem = canonSystem;
+            state.seen.add(canonSystem.eq);
+          }
+        }
+      } catch(e) { /* si no puede construirse la forma canónica, se continúa sin eslabón extra */ }
       state.completed = true;
       if (typeof onComplete === 'function') onComplete();
       return;
