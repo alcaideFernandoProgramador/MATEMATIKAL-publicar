@@ -124,8 +124,13 @@ function splitMatrixFactors(s) {
         }
       }
       factors.push({ name, raw });
+    } else if (/[0-9]/.test(s[i])) {
+      // Dígitos en el interior de un producto: factor escalar (ej. A2X ≡ 2AX)
+      let raw = '';
+      while (i < s.length && /[0-9]/.test(s[i])) raw += s[i++];
+      factors.push({ name: null, raw });
     } else {
-      i++;
+      throw 'No se pudo interpretar el símbolo "' + s[i] + '" en la ecuación. Revisa la sintaxis.';
     }
   }
   return factors;
@@ -181,7 +186,7 @@ function analyzeEquation(lhsStr, rhsStr, unknownName) {
   const allSameRight = xTerms.every(t => t.right === xTerms[0].right);
   const allSameLeft  = xTerms.every(t => t.left  === xTerms[0].left);
   if (!allSameRight && !allSameLeft)
-    throw `Los términos con ${unknownName} no tienen ningún factor común por la izquierda ni por la derecha. No es posible despejar ${unknownName} con este método.`;
+    throw `Los términos con ${unknownName} no comparten el mismo factor a la izquierda de ${unknownName} ni a la derecha de ${unknownName}. No es posible despejar ${unknownName} con este método (ecuaciones de tipo Sylvester, como AX+XB=C).`;
 
   const strategy = allSameRight ? 'A' : 'B';
 
@@ -284,12 +289,12 @@ function computeSolution(analysis, matMap, n) {
   let Linv = null, Rinv = null;
   if (!isLId) {
     const detL = Matriz.determinante(L);
-    if (!detL || detL === '0') throw 'El factor izquierdo L no es invertible (det = 0). No tiene solución con este método.';
+    if (!detL || detL === '0') throw 'El factor izquierdo L no es invertible (det = 0). La ecuación no puede resolverse con este método: puede no tener solución o tener infinitas.';
     Linv = Matriz.inversa(L);
   }
   if (!isRId) {
     const detR = Matriz.determinante(R);
-    if (!detR || detR === '0') throw 'El factor derecho R no es invertible (det = 0). No tiene solución con este método.';
+    if (!detR || detR === '0') throw 'El factor derecho R no es invertible (det = 0). La ecuación no puede resolverse con este método: puede no tener solución o tener infinitas.';
     Rinv = Matriz.inversa(R);
   }
 
@@ -674,8 +679,6 @@ function renderResolvedInputSummary(analysis, matMap, options) {
   if (options.sol && options.sol.X) {
     const solutionBubble = document.createElement('div');
     solutionBubble.className = 'resolvedSummaryBubble resolvedSolutionBubble';
-    renderKatex(`\\text{SoluciÃ³n: } ${analysis.unknownName}= ${matrixToTex(sol.X)}`, solutionBubble, false);
-    solutionBubble.textContent = '';
     const solutionLabel = document.createElement('span');
     solutionLabel.className = 'resolvedSolutionLabel';
     solutionLabel.textContent = 'Solución:';
