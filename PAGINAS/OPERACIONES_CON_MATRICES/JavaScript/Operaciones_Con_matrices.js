@@ -177,6 +177,159 @@ c21.appendChild(wrap);mantenerScrollAbajo(c21)}
 function resetearFormulario(){caja124.innerHTML="";caja125.innerHTML="";opcionSeleccionada=null;
 document.querySelectorAll('input[name="option"]').forEach(op=>op.checked=false)}
 
+
+function mostrarInversaAdjuntaPasoAPaso(nombreMatriz,matriz,opts){
+opts=opts||{};
+const n=matriz.length,det=Matriz.determinante(matriz),adjCalculados={};
+const c21=opts.scrollContenedor||document.getElementById("caja21"),wrap=opts.contenedor?null:crearCajaOperacion();
+if(wrap)wrap.style.overflowX="auto";
+const zona=document.createElement(opts.contenedor?"span":"div");
+zona.style.cssText=(opts.contenedor?"display:inline-flex;":"display:flex;")+"align-items:stretch;gap:8px;flex-wrap:nowrap;min-width:max-content;font-size:13px;padding-bottom:2px;";
+if(opts.contenedor){opts.contenedor.appendChild(zona)}else{wrap.appendChild(zona);c21.appendChild(wrap)}
+mantenerScrollAbajo(c21);const alCompletar=typeof opts.onComplete==="function"?opts.onComplete:null;
+
+const bubbleCss="display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(37,99,235,.16);background:rgba(37,99,235,.045);border-radius:10px;padding:7px 9px;white-space:nowrap;min-height:44px;";
+const pendingCss="border-color:rgba(107,114,128,.18);background:rgba(107,114,128,.045);color:#6b7280;";
+const errorCss="border-color:rgba(185,28,28,.18);background:rgba(185,28,28,.045);color:#b91c1c;";
+const igual=(a,b)=>{try{return ExpresionAlgebraica.simplificar("("+a+")-("+b+")")==="0"}catch(_){return false}};
+const burbuja=()=>{const b=document.createElement("div");b.style.cssText=bubbleCss+pendingCss;zona.appendChild(b);return b};
+const limpiar=b=>{b.innerHTML="";b.style.cssText=bubbleCss};
+const latexEn=(padre,tex,css)=>{const el=document.createElement("span");el.style.cssText=css||"";katex.render(tex,el,{throwOnError:false});padre.appendChild(el);return el};
+const textoEn=(padre,txt,css)=>{const el=document.createElement("span");el.textContent=txt;el.style.cssText=css||"";padre.appendChild(el);return el};
+const igualEn=padre=>textoEn(padre,"=","font-size:18px;font-weight:300;color:#111827;");
+const matrizEn=(padre,M)=>{const box=document.createElement("div");box.style.cssText="display:inline-flex;align-items:center;font-size:13px;";Representar.matriz(M,box);padre.appendChild(box);return box};
+const parens=(filas,contenido)=>{const cont=document.createElement("div");cont.style.cssText="display:inline-flex;align-items:center;gap:3px;";const alto=Math.max(1.4,filas*1.45);Representar.abrirParentesis(alto,cont);cont.appendChild(contenido);Representar.cerrarParentesis(alto,cont);return cont};
+
+const bDet=burbuja();
+let bAdj=null,bAdjT=null,bInv=null;
+
+let detValidado=false,gridWrap=null,formWrap=null,btnAuto=null,finalMostrado=false;
+
+limpiar(bDet);
+latexEn(bDet,"\\det("+nombreMatriz+") =","font-weight:700;");
+const detMatBox=document.createElement("div");detMatBox.style.cssText="display:inline-flex;align-items:center;font-size:13px;";
+Representar.determinante(matriz,detMatBox);bDet.appendChild(detMatBox);igualEn(bDet);
+const detInput=document.createElement("input");detInput.type="text";detInput.style.cssText="width:56px;text-align:center;padding:3px;font-size:13px;";
+bDet.appendChild(detInput);
+const detFeedback=textoEn(bDet,"","font-size:12px;font-weight:800;");
+const btnAutoDet=document.createElement("button");btnAutoDet.style.cssText="font-size:12px;white-space:nowrap;";
+btnAutoDet.innerHTML="RESOLVER AUTOMÁTICAMENTE<br>(no se recomienda)";
+bDet.appendChild(btnAutoDet);
+
+const validarDet=()=>{if(detValidado)return;const v=detInput.value.trim();
+if(!v||!igual(v,det)){detFeedback.style.color="#d33";detFeedback.textContent="✗";detInput.focus();return}
+detValidado=true;detInput.disabled=true;detFeedback.style.color="#16a34a";detFeedback.textContent=det==="0"?"= 0":"≠ 0";btnAutoDet.remove();
+if(det==="0"){bInv=burbuja();limpiar(bInv);bInv.style.cssText=bubbleCss+errorCss;latexEn(bInv,nombreMatriz+"^{-1} =","font-weight:700;");textoEn(bInv,"no existe","font-weight:800;");mantenerScrollAbajo(c21);return}
+mostrarAdjuntos();mantenerScrollAbajo(c21)};
+btnAutoDet.addEventListener("click",()=>{if(detValidado)return;detInput.value=det;validarDet()});
+detInput.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();validarDet()}});
+detInput.focus();
+
+const pintarGrid=()=>{if(!gridWrap)return;gridWrap.innerHTML="";const tabla=document.createElement("table");
+tabla.style.cssText="border-collapse:separate;border-spacing:6px;";
+for(let i=0;i<n;i++){const tr=document.createElement("tr");
+for(let j=0;j<n;j++){const td=document.createElement("td"),key=i+"_"+j;
+if(adjCalculados[key]!==undefined){const span=document.createElement("span");
+span.style.cssText="display:inline-block;min-width:30px;padding:4px 6px;border:1px solid #16a34a;border-radius:4px;background:#f0fdf4;color:#16a34a;font-weight:700;font-size:13px;text-align:center;";
+span.textContent=adjCalculados[key];td.appendChild(span)}else{const btn=document.createElement("button");
+btn.type="button";btn.style.cssText="min-width:34px;padding:4px 6px;border:1px solid #999;border-radius:4px;background:#fff;cursor:pointer;font-size:13px;";
+btn.innerHTML="A<sub>"+(i+1)+(j+1)+"</sub>";btn.addEventListener("click",()=>mostrarFormularioCelda(i,j));td.appendChild(btn)}
+tr.appendChild(td)}tabla.appendChild(tr)}
+gridWrap.appendChild(parens(n,tabla))};
+
+const mostrarFormularioCelda=(ii,jj)=>{const n1=n-1,sub=Matriz.quitarFilayColumna(matriz,ii,jj);
+const signoCorrecto=((ii+jj)%2===0)?"+":"-",detSub=Matriz.determinante(sub);
+const cofactorCorrecto=detSub==="0"?"0":(signoCorrecto==="+"?detSub:ExpresionAlgebraica.simplificar("-("+detSub+")"));
+formWrap.innerHTML="";
+const linea=document.createElement("div");linea.style.cssText="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;font-size:13px;";
+const lbl=document.createElement("span");lbl.style.fontWeight="700";lbl.innerHTML="A<sub>"+(ii+1)+(jj+1)+"</sub> =";linea.appendChild(lbl);
+const inSigno=document.createElement("input");inSigno.type="text";inSigno.placeholder="±";inSigno.style.cssText="width:32px;text-align:center;padding:3px;";linea.appendChild(inSigno);
+const subTabla=document.createElement("table");subTabla.style.cssText="border-collapse:separate;border-spacing:3px;";
+const inputsSub=[];
+for(let r=0;r<n1;r++){const tr=document.createElement("tr");for(let c=0;c<n1;c++){const td=document.createElement("td");
+const inp=document.createElement("input");inp.type="text";inp.style.cssText="width:34px;text-align:center;padding:2px;font-size:12px;";
+inputsSub.push(inp);td.appendChild(inp);tr.appendChild(td)}subTabla.appendChild(tr)}
+linea.appendChild(parens(n1,subTabla));igualEn(linea);
+const inResultado=document.createElement("input");inResultado.type="text";inResultado.style.cssText="width:50px;text-align:center;padding:3px;";linea.appendChild(inResultado);
+const feedback=textoEn(linea,"","font-size:12px;font-weight:700;");
+formWrap.appendChild(linea);
+const todos=[inSigno,...inputsSub,inResultado];
+const validar=()=>{const errores=[],sv=inSigno.value.trim();
+const signoOk=(signoCorrecto==="+"&&sv==="+")||(signoCorrecto==="-"&&(sv==="-"||sv==="−"));if(!signoOk)errores.push("signo");
+let celdasOk=true;for(let r=0;r<n1;r++)for(let c=0;c<n1;c++){const v=inputsSub[r*n1+c].value.trim();if(!v||!igual(v,sub[r][c]))celdasOk=false}
+if(!celdasOk)errores.push("menor");
+const rv=inResultado.value.trim();if(!rv||!igual(rv,cofactorCorrecto))errores.push("resultado");
+if(errores.length===0){adjCalculados[ii+"_"+jj]=cofactorCorrecto;formWrap.innerHTML="";pintarGrid();if(Object.keys(adjCalculados).length===n*n){if(btnAuto)btnAuto.remove();revelarFinal()}}
+else{feedback.style.color="#d33";feedback.textContent="✗ "+errores.join(" · ")}
+mantenerScrollAbajo(c21)};
+todos.forEach((el,idx)=>el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();if(idx<todos.length-1)todos[idx+1].focus();else validar()}}));
+inSigno.focus()};
+
+const revelarFinal=()=>{if(finalMostrado)return;finalMostrado=true;
+const C=[];for(let i=0;i<n;i++){C.push([]);for(let j=0;j<n;j++)C[i].push(adjCalculados[i+"_"+j])}
+const AdjT=Matriz.trasponer(C),Inv=Matriz.inversa(matriz);if(formWrap)formWrap.innerHTML="";
+bAdjT=burbuja();
+limpiar(bAdjT);latexEn(bAdjT,"\\text{Adj}("+nombreMatriz+")^t =","font-weight:700;");matrizEn(bAdjT,AdjT);
+bInv=burbuja();
+limpiar(bInv);latexEn(bInv,nombreMatriz+"^{-1}=\\dfrac{1}{\\det("+nombreMatriz+")}\\,\\text{Adj}("+nombreMatriz+")^t","font-weight:700;");igualEn(bInv);
+latexEn(bInv,"\\dfrac{1}{"+det+"}\\,","font-weight:700;");matrizEn(bInv,AdjT);igualEn(bInv);matrizEn(bInv,Inv);
+if(alCompletar){const btnContinuar=document.createElement("button");btnContinuar.type="button";btnContinuar.style.cssText="font-size:12px;white-space:nowrap;";
+btnContinuar.textContent="Continuar";btnContinuar.addEventListener("click",()=>{btnContinuar.remove();alCompletar(Inv)});bInv.appendChild(btnContinuar)}
+mantenerScrollAbajo(c21)};
+
+function mostrarAdjuntos(){bAdj=burbuja();limpiar(bAdj);latexEn(bAdj,"\\text{Adj}("+nombreMatriz+") =","font-weight:700;");
+gridWrap=document.createElement("div");gridWrap.style.cssText="display:inline-flex;align-items:center;";bAdj.appendChild(gridWrap);
+formWrap=document.createElement("div");formWrap.style.cssText="display:inline-flex;align-items:center;";bAdj.appendChild(formWrap);
+if(n===1){adjCalculados["0_0"]="1";pintarGrid();revelarFinal();return}
+btnAuto=document.createElement("button");btnAuto.style.cssText="font-size:12px;white-space:nowrap;";
+btnAuto.innerHTML="RESOLVER AUTOMÁTICAMENTE<br>(no se recomienda)";
+btnAuto.addEventListener("click",()=>{for(let i=0;i<n;i++)for(let j=0;j<n;j++){const sub=Matriz.quitarFilayColumna(matriz,i,j);
+const d=Matriz.determinante(sub),sg=((i+j)%2===0)?1:-1;adjCalculados[i+"_"+j]=d==="0"?"0":(sg===1?d:ExpresionAlgebraica.simplificar("-("+d+")"))}
+formWrap.innerHTML="";pintarGrid();revelarFinal();btnAuto.remove()});
+bAdj.appendChild(btnAuto);pintarGrid()}
+}
+
+window.mostrarInversaAdjuntaEnPaso10=function(info){
+return new Promise(resolve=>{const panel=info&&info.panel,nombre=info&&info.nombre,matriz=info&&info.matriz;
+const c21=document.getElementById("caja21"),det=Matriz.determinante(matriz),adj=Matriz.adjunta(matriz),inv=info.result||Matriz.inversa(matriz);
+const igual=(a,b)=>{try{return ExpresionAlgebraica.simplificar("("+a+")-("+b+")")==="0"}catch(_){return false}};
+const latex=(tex,css)=>{const s=document.createElement("span");s.className="bloq";s.style.cssText=css||"";katex.render(tex,s,{throwOnError:false});return s};
+const parens=(filas,contenido)=>{const cont=document.createElement("span");cont.style.cssText="display:inline-flex;align-items:center;gap:2px;";
+Representar.abrirParentesis(Math.max(1.4,filas*1.45),cont);cont.appendChild(contenido);Representar.cerrarParentesis(Math.max(1.4,filas*1.45),cont);return cont};
+const pintarMatriz=(M)=>{const box=document.createElement("span");box.style.cssText="display:inline-flex;align-items:center;font-size:13px;";Representar.matriz(M,box);return box};
+const linea=document.createElement("span");linea.style.cssText="display:inline-flex;align-items:center;gap:.35rem;flex-wrap:nowrap;max-width:100%;overflow-x:auto;";
+if(panel)panel.appendChild(linea);
+const frac=document.createElement("span");frac.style.cssText="display:inline-flex;flex-direction:column;align-items:center;line-height:1;vertical-align:middle;";
+const num=document.createElement("span");num.textContent="1";num.style.cssText="font-size:12px;padding:0 5px;";
+const den=document.createElement("span");den.style.cssText="border-top:1px solid #111;padding:2px 3px 0;";
+const detInput=document.createElement("input");detInput.type="text";detInput.className="inp";detInput.title="det("+nombre+")";
+detInput.style.cssText="width:46px;height:18px;line-height:18px;font-size:13px;text-align:center;padding:0 2px;";
+den.appendChild(detInput);frac.appendChild(num);frac.appendChild(den);linea.appendChild(frac);
+linea.appendChild(latex("\\cdot"));
+const tabla=document.createElement("table");tabla.className="tabla";tabla.style.borderCollapse="collapse";
+const adjInputs=[];for(let i=0;i<adj.length;i++){const tr=document.createElement("tr");for(let j=0;j<adj[0].length;j++){
+const td=document.createElement("td");td.className="td";const inp=document.createElement("input");inp.type="text";inp.className="inp";
+inp.dataset.i=i;inp.dataset.j=j;inp.style.textAlign="center";td.appendChild(inp);tr.appendChild(td);adjInputs.push(inp)}tabla.appendChild(tr)}
+const adjBox=parens(adj.length,tabla),supT=document.createElement("sup");supT.textContent="t";
+supT.style.cssText="font-size:12px;line-height:1;align-self:flex-start;margin-left:-2px;margin-top:2px;";
+adjBox.appendChild(supT);linea.appendChild(adjBox);
+const igualFinal=document.createElement("span");igualFinal.textContent=" = ";igualFinal.style.display="none";linea.appendChild(igualFinal);
+const resultado=document.createElement("span");resultado.style.display="none";resultado.appendChild(pintarMatriz(inv));linea.appendChild(resultado);
+const msg=document.createElement("span");msg.className="msg";linea.appendChild(msg);
+const btnAuto=document.createElement("button");btnAuto.className="btn";btnAuto.style.whiteSpace="nowrap";btnAuto.innerHTML="RESOLVER AUTOMÁTICAMENTE<br>(no se recomienda)";linea.appendChild(btnAuto);
+const btnCont=document.createElement("button");btnCont.className="btn";btnCont.textContent="Continuar";btnCont.style.display="none";linea.appendChild(btnCont);
+const campos=[detInput,...adjInputs];let completado=false;
+const esperado=inp=>inp===detInput?det:adj[+inp.dataset.i][+inp.dataset.j];
+const ok=inp=>{const r=igual(inp.value.trim(),esperado(inp));inp.style.border=r?"":"2px solid #d33";return r};
+const completar=()=>{if(completado)return;const todoOk=campos.every(ok);if(!todoOk){msg.textContent="Valor incorrecto.";const mal=campos.find(inp=>!ok(inp));if(mal){mal.focus();mal.select()}mantenerScrollAbajo(c21);return}
+completado=true;msg.textContent="";campos.forEach(inp=>{inp.readOnly=true;inp.style.border=""});btnAuto.style.display="none";igualFinal.style.display="inline";resultado.style.display="inline-flex";btnCont.style.display="inline-block";mantenerScrollAbajo(c21)};
+campos.forEach((inp,idx)=>inp.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();
+if(!ok(inp)){msg.textContent="Valor incorrecto.";inp.focus();inp.select();mantenerScrollAbajo(c21);return}
+msg.textContent="";inp.readOnly=true;if(idx<campos.length-1){campos[idx+1].focus();campos[idx+1].select()}else completar();mantenerScrollAbajo(c21)}));
+btnAuto.addEventListener("click",()=>{detInput.value=det;adjInputs.forEach(inp=>{inp.value=adj[+inp.dataset.i][+inp.dataset.j]});completar()});
+btnCont.addEventListener("click",()=>{btnCont.remove();resolve(inv)});
+setTimeout(()=>{detInput.focus();detInput.select()},0);mantenerScrollAbajo(c21)})};
+
 function crearInputsYProcesar(inputConfigs,operacion,simbolo){envolverInversa();caja124.innerHTML="";caja125.innerHTML="";
 const inputs=[],inputValues=[];inputConfigs.forEach(config=>{let div=document.createElement("div");
 let label=document.createElement("label");label.textContent=config.label;let input=document.createElement("input");
@@ -198,8 +351,9 @@ throw new Error("Para poder multiplicar dos matrices, el número de columnas de 
 if(operacion===Matriz.potencia&&matricesOperandos.length===1){if(matricesOperandos[0].length!==matricesOperandos[0][0].length)
 throw new Error("La matriz debe ser cuadrada. Presiona RESET.")}
 if(operacion===Matriz.inversa&&matricesOperandos.length===1){if(matricesOperandos[0].length!==matricesOperandos[0][0].length)
-throw new Error("La matriz debe ser cuadrada. Presiona RESET.");if(Matriz.determinante(matricesOperandos[0])==="0")
-throw new Error("La matriz no es regular y, por tanto, no tiene inversa. Presiona RESET.")}
+throw new Error("La matriz debe ser cuadrada. Presiona RESET.")}
+if(operacion===Matriz.inversa&&matricesOperandos.length===1){resetearFormulario();caja125.style.color="";caja125.innerHTML="";
+mostrarInversaAdjuntaPasoAPaso(nombreOperandos[0],matricesOperandos[0]);return}
 let resultado,tituloParaResultado,simboloParaOperandosEnDisplay=simbolo,operandosParaDisplay=[];
 if(operacion===Matriz.potencia){resultado=operacion(matricesOperandos[0],exponente);
 tituloParaResultado=`${nombreOperandos[0]}^{${exponente}}`;simboloParaOperandosEnDisplay=`^{${exponente}}`;

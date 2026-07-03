@@ -349,11 +349,11 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <div class="k">\[\mathrm{Adj}(A)^t = \begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix}\]</div>
 
       <p class="ejemplo-paso">Paso 4 — Dividir por el determinante</p>
-      <div class="k">\[A^{-1} = \dfrac{1}{4}\begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \dfrac{1}{4}\begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix} = \begin{pmatrix}\tfrac{1}{2} & -1 & \tfrac{1}{2}\\\tfrac{1}{4} & \tfrac{1}{2} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{1}{2} & \tfrac{1}{4}\end{pmatrix}\]</div>
 
       <p class="ejemplo-paso">Comprobación — \(A\cdot A^{-1} = I_3\)</p>
       <p>El producto \(A\cdot A^{-1}\) da la matriz identidad \(I_3\). \(\checkmark\)</p>
-      <div class="resultado-final">\(A^{-1} = \dfrac{1}{4}\begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix}\)</div>
+      <div class="resultado-final">\(A^{-1} = \begin{pmatrix}\tfrac{1}{2} & -1 & \tfrac{1}{2}\\\tfrac{1}{4} & \tfrac{1}{2} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{1}{2} & \tfrac{1}{4}\end{pmatrix}\)</div>
     </div>
 
   </section>
@@ -435,7 +435,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           \[\mathrm{Adj}(A)^t=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
           <h4>Paso 4 — Dividir por el determinante</h4>
           <p>Como \(\det(A)=1\), la inversa coincide con la traspuesta de la adjunta.</p>
-          \[A^{-1}=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
+          \[A^{-1}=\dfrac{1}{1}\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
           <h4>Comprobación</h4>
           \[\begin{pmatrix}1&0&0\\2&1&0\\3&2&1\end{pmatrix}\begin{pmatrix}1&0&0\\-2&1&0\\1&-2&1\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\;\checkmark\]
           <div class="mk-resultado">\(A^{-1} = \begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\)</div>
@@ -463,10 +463,10 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p>La matriz de cofactores ya es simétrica, por lo que \(\mathrm{Adj}(A)^t = \mathrm{Adj}(A)\):</p>
           \[\mathrm{Adj}(A)^t=\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\]
           <h4>Paso 4 — Dividir por el determinante</h4>
-          \[A^{-1}=\dfrac{1}{4}\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\]
+          \[A^{-1}=\dfrac{1}{4}\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}=\begin{pmatrix}\tfrac{3}{4} & -\tfrac{1}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{3}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & -\tfrac{1}{4} & \tfrac{3}{4}\end{pmatrix}\]
           <h4>Comprobación</h4>
           \[\begin{pmatrix}2&1&1\\1&2&1\\1&1&2\end{pmatrix}\cdot\dfrac{1}{4}\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\;\checkmark\]
-          <div class="mk-resultado">\(A^{-1} = \dfrac{1}{4}\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\)</div>
+          <div class="mk-resultado">\(A^{-1} = \begin{pmatrix}\tfrac{3}{4} & -\tfrac{1}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{3}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & -\tfrac{1}{4} & \tfrac{3}{4}\end{pmatrix}\)</div>
           <div class="mk-tip"><strong>Nota:</strong> la inversa de una matriz simétrica también es simétrica.</div>
         </div>
       </div>

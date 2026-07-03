@@ -2212,7 +2212,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
         if(op==="+"){if(nom.includes(a)&&nom.includes(b))return{trozo:`${a}+${b}`,mat:Matriz.sumar(get(a),get(b))}}
         if(op==="-"){if(nom.includes(a)&&nom.includes(b))return{trozo:`${a}-${b}`,mat:Matriz.restar(get(a),get(b))};
           if(a==="0"&&nom.includes(b))return{trozo:`0-${b}`,mat:Matriz.opuesta(get(b))};
-          if(nom.includes(post[i-3])&&a==="0"&&b==="1"&&nx==="^"){const A=get(post[i-3]);return{trozo:`${post[i-3]}^(-1)`,mat:Matriz.inversa(A)}}}
+          if(nom.includes(post[i-3])&&a==="0"&&b==="1"&&nx==="^"){const nombre=post[i-3],A=get(nombre);return{tipo:"inversa",nombre:nombre,matriz:A,trozo:`${nombre}^(-1)`,mat:Matriz.inversa(A)}}}
         if(op==="*"){if(nom.includes(a)&&nom.includes(b))return{trozo:`${a}*${b}`,mat:Matriz.multiplicar(get(a),get(b))};
           const sa=esEscalar(a),sb=esEscalar(b);
           if(nom.includes(b)&&sa!==null)return{trozo:`${a}*${b}`,mat:Matriz.multiplicarEscalar(sa,get(b))};
@@ -2239,6 +2239,11 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
           .replace(/\^t\b/g,"^(t)").replace(/\^\s*\(\s*-1\s*\)/g,"^(-1)");
         const trozo=document.createElement("span");trozo.className="bloq";panel.appendChild(trozo);
         safe(sinDecimales(trozoNorm),Representar.expresionMatricialIntermedia,trozo);panel.appendChild(document.createTextNode(" = "));
+        if(paso.tipo==="inversa"&&typeof window.mostrarInversaAdjuntaEnPaso10==="function"){
+          await window.mostrarInversaAdjuntaEnPaso10({nombre:paso.nombre,matriz:paso.matriz,resultado:paso.mat,panel:panel,lugar:lugar,scroll:scroll});
+          const siguiente=ExpresionMatricial.calcularUnPaso(actual,matr);
+          if(!siguiente||Array.isArray(siguiente)||typeof siguiente!=="string"||siguiente===actual){th.textContent="Resultado final";scroll();break}
+          actual=siguiente;scroll();continue}
         const A=Array.isArray(paso.mat)?paso.mat:[[0,0],[0,0]];
         const par=document.createElement("span");par.className="bloq";par.style.display="inline-flex";par.style.alignItems="center";
         const tabla=document.createElement("table");tabla.className="tabla";
@@ -2480,7 +2485,7 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
         panel.appendChild(titulo); const vistaNombres = document.createElement("div"); vistaNombres.textContent = `Nombres por defecto: ${nombresPorDefecto.join(", ")}`; 
         panel.appendChild(vistaNombres); const botones = document.createElement("div"); botones.style.display = "flex"; botones.style.gap = "10px"; panel.appendChild(botones); 
         const btnCambiar = document.createElement("button"); btnCambiar.textContent = "Cambiar nombres (opcional)"; const btnUsarDefecto = document.createElement("button"); 
-        btnUsarDefecto.textContent = "Usar nombres por defecto"; botones.appendChild(btnCambiar); botones.appendChild(btnUsarDefecto); const formNombres = document.createElement("div"); 
+        btnUsarDefecto.textContent = "Usar nombres por defecto"; botones.appendChild(btnCambiar); botones.appendChild(btnUsarDefecto); setTimeout(() => btnUsarDefecto.focus(), 0); const formNombres = document.createElement("div"); 
         formNombres.style.display = "none"; formNombres.style.flexDirection = "column"; formNombres.style.gap = "6px"; panel.appendChild(formNombres); const inputs = []; 
         for (let i = 0; i < numero; i++) { const fila = document.createElement("div"); fila.style.display = "flex"; fila.style.alignItems = "center"; fila.style.gap = "8px"; 
           const label = document.createElement("span"); label.textContent = `Nombre ${i + 1}:`; const input = document.createElement("input"); 
