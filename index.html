@@ -75,6 +75,7 @@ html,body{max-width:100%;overflow-x:hidden}
 
 .enlaces-texto a{color:#283593;font-weight:700;text-decoration:none}
 .enlaces-texto a:hover{text-decoration:underline}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 @media (max-width:1024px){
   body{padding:0;max-width:100%;margin:0 auto}
@@ -105,7 +106,8 @@ html,body{max-width:100%;overflow-x:hidden}
 </head>
 <body>
 <header class="cabecera">
-<svg width="100%" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;display:block">
+<h1 class="sr-only">Matematikal: herramientas interactivas de matemáticas para ESO y Bachillerato</h1>
+<svg width="100%" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;display:block" aria-hidden="true" focusable="false">
   <circle cx="810" cy="32" r="2.5" fill="rgba(74,222,128,0.35)"/>
   <circle cx="828" cy="32" r="2.5" fill="rgba(74,222,128,0.2)"/>
   <circle cx="846" cy="32" r="2.5" fill="rgba(74,222,128,0.1)"/>
@@ -206,25 +208,25 @@ html,body{max-width:100%;overflow-x:hidden}
 <article class="tarjeta">
 <h3>Operaciones con matrices</h3>
 <p>Permite trabajar con matrices y practicar operaciones habituales de forma ordenada. Es un buen punto de partida para familiarizarse con la estructura y manipulación básica de matrices.</p>
-<a href="PAGINAS/OPERACIONES_CON_MATRICES/Operaciones_con_matrices.html">Ir a operaciones con matrices</a>
+<a href="/operaciones-con-matrices.html">Ir a operaciones con matrices</a>
 </article>
 
 <article class="tarjeta">
 <h3>Matriz escalonada</h3>
 <p>Herramienta pensada para escalonar matrices mediante transformaciones elementales. Resulta especialmente útil para estudiar procedimientos de Gauss paso a paso.</p>
-<a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">Ir a matriz escalonada</a>
+<a href="/matriz-escalonada.html">Ir a matriz escalonada</a>
 </article>
 
 <article class="tarjeta">
 <h3>Cálculo de determinantes</h3>
 <p>Página orientada al trabajo con determinantes de matrices cuadradas. Puede servir como práctica, comprobación de resultados y apoyo para ejercicios de examen.</p>
-<a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">Ir a cálculo de determinantes</a>
+<a href="/calculo-determinantes.html">Ir a cálculo de determinantes</a>
 </article>
 
 <article class="tarjeta">
 <h3>Rango de una matriz</h3>
 <p>Incluye recursos para calcular el rango de una matriz numérica por el método de Gauss o por el método de los menores, así como casos con parámetro.</p>
-<a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">Ir a rango por Gauss</a>
+<a href="/rango-gauss.html">Ir a rango por Gauss</a>
 </article>
 
 <article class="tarjeta">
@@ -236,25 +238,25 @@ html,body{max-width:100%;overflow-x:hidden}
 <article class="tarjeta">
 <h3>Casos con parámetro</h3>
 <p>Las páginas dedicadas a matrices y sistemas con parámetro ayudan a estudiar cómo cambian el rango o la compatibilidad según el valor del parámetro.</p>
-<a href="PAGINAS/SISTEMAS_CON_UN_PARAMETRO_GAUSS/Sistemas_con_un_parametro_intro.html">Ir a sistemas con parámetro</a>
+<a href="/sistemas-gauss-con-parametro.html">Ir a sistemas con parámetro</a>
 </article>
 
 <article class="tarjeta">
 <h3>Ecuaciones matriciales</h3>
 <p>Resuelve ecuaciones del tipo AX=B, XA=B, AXB=C, AX+BX=C y similares mediante factorización e inversas. La herramienta detecta la estrategia y muestra la resolución paso a paso.</p>
-<a href="PAGINAS/ECUACIONES_MATRICIALES/Ecuaciones_matriciales.html">Ir a ecuaciones matriciales</a>
+<a href="/ecuaciones-matriciales.html">Ir a ecuaciones matriciales</a>
 </article>
 
 <article class="tarjeta">
 <h3>Matrices que cumplen condiciones</h3>
 <p>Calcula matrices que conmutan con una matriz dada, resuelve ecuaciones del tipo AX+XB=C y estudia matrices con parámetros que deben verificar una condición lineal.</p>
-<a href="PAGINAS/CALCULO_MATRICES_CONDICIONES/Calculo_matrices_condiciones.html">Ir a matrices que cumplen condiciones</a>
+<a href="/matrices-con-condiciones.html">Ir a matrices que cumplen condiciones</a>
 </article>
 
 <article class="tarjeta">
 <h3>Sistemas de ecuaciones matriciales</h3>
 <p>Trabaja sistemas de dos ecuaciones lineales con dos incógnitas matriciales X e Y, como X+Y=A y X-Y=B, aplicando el método del determinante del sistema.</p>
-<a href="PAGINAS/SISTEMAS_ECUACIONES_MATRICIALES/Sistemas_ecuaciones_matriciales.html">Ir a sistemas de ecuaciones matriciales</a>
+<a href="/sistemas-ecuaciones-matriciales.html">Ir a sistemas de ecuaciones matriciales</a>
 </article>
 </div>
 </section>
@@ -276,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
 
 <section class="enlaces-texto">
 <h2>Temas principales del sitio</h2>
-<p>En Matematikal puedes encontrar recursos relacionados con <a href="PAGINAS/MATRIZ_ESCALONADA/Matriz_escalonada.html">matriz escalonada</a>, <a href="PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">cálculo de determinantes</a>, <a href="PAGINAS/RANGO_DE_UNA_MATRIZ_por_GAUSS/Rango_gauss_intro.html">rango de una matriz por Gauss</a>, <a href="PAGINAS/RANGO_DE_UNA_MATRIZ_POR_MENORES/Rango_menores_intro.html">rango por el método de los menores</a>, <a href="PAGINAS/ECUACIONES_MATRICIALES/Ecuaciones_matriciales.html">ecuaciones matriciales</a>, <a href="PAGINAS/CALCULO_MATRICES_CONDICIONES/Calculo_matrices_condiciones.html">matrices que cumplen condiciones</a> y <a href="PAGINAS/SISTEMAS_LINEALES_GAUSS/Sistemas_gauss_intro.html">sistemas de ecuaciones lineales</a>. Esta organización temática facilita que cada página tenga un propósito claro y que el usuario llegue rápidamente al tipo de práctica que necesita.</p>
+<p>En Matematikal puedes encontrar recursos relacionados con <a href="/matriz-escalonada.html">matriz escalonada</a>, <a href="/calculo-determinantes.html">cálculo de determinantes</a>, <a href="/rango-gauss.html">rango de una matriz por Gauss</a>, <a href="/rango-menores.html">rango por el método de los menores</a>, <a href="/ecuaciones-matriciales.html">ecuaciones matriciales</a>, <a href="/matrices-con-condiciones.html">matrices que cumplen condiciones</a> y <a href="/metodo-gauss-sistemas-ecuaciones.html">sistemas de ecuaciones lineales</a>. Esta organización temática facilita que cada página tenga un propósito claro y que el usuario llegue rápidamente al tipo de práctica que necesita.</p>
 <p>Además, las secciones introductorias de varias páginas permiten contextualizar cada procedimiento antes de usar la herramienta correspondiente. Ese enfoque es especialmente útil cuando se estudian técnicas como la eliminación de Gauss, el cálculo del rango o la discusión de sistemas con parámetros.</p>
 </section>
 
