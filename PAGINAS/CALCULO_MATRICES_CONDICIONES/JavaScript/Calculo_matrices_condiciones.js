@@ -1686,7 +1686,8 @@
     const btnReset = $('btnReset');
     if(btnReset) btnReset.addEventListener('click', ev => { ev.preventDefault(); gKind = null; initFase1(); });
     const btnAyuda = $('abreVentana1'), ventana1 = $('ventana1'), cierraV1 = $('cierraVentana1');
-    if(btnAyuda && ventana1) btnAyuda.addEventListener('click', ev => { ev.preventDefault(); ventana1.style.display = 'flex'; });
+    const pdf1 = $('pdf1');
+    if(btnAyuda && ventana1) btnAyuda.addEventListener('click', ev => { ev.preventDefault(); if(pdf1 && !pdf1.src.includes('Ayuda.pdf')) pdf1.src = 'INSTRUCCIONES/Ayuda.pdf'; ventana1.style.display = 'flex'; });
     if(cierraV1 && ventana1) cierraV1.addEventListener('click', () => { ventana1.style.display = 'none'; });
     if(ventana1) ventana1.addEventListener('click', ev => { if(ev.target === ventana1) ventana1.style.display = 'none'; });
     new MutationObserver(() => {

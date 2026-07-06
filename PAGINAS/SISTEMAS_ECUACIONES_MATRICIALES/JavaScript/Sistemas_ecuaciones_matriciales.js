@@ -1848,9 +1848,11 @@
     const btnAyuda = $('abreVentana1');
     const ventana1 = $('ventana1');
     const cierraV1 = $('cierraVentana1');
+    const pdf1 = $('pdf1');
     if (btnAyuda && ventana1) {
       btnAyuda.addEventListener('click', ev => {
         ev.preventDefault();
+        if (pdf1 && !pdf1.src.includes('Ayuda.pdf')) pdf1.src = 'INSTRUCCIONES/Ayuda.pdf';
         ventana1.style.display = 'flex';
       });
     }

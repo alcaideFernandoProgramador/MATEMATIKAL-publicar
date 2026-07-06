@@ -811,4 +811,25 @@ document.addEventListener("DOMContentLoaded", function(){
   iniciarEntradaDatos();
   var bReiniciar = $("btnReiniciarMatriz");
   if(bReiniciar) bReiniciar.addEventListener("click", iniciarEntradaDatos);
+
+  var btnAyuda = $("abreVentana1");
+  var cerrarAyuda = $("cierraVentana1");
+  var ventanaAyuda = $("ventana1");
+  var pdfAyuda = $("pdf1");
+  var pdfAyudaUrl = "INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
+  if(btnAyuda) btnAyuda.addEventListener("click", function(e){
+    e.preventDefault();
+    if(pdfAyuda) pdfAyuda.src = pdfAyudaUrl;
+    if(ventanaAyuda) ventanaAyuda.style.display = "flex";
+  });
+  if(cerrarAyuda) cerrarAyuda.addEventListener("click", function(){
+    if(ventanaAyuda) ventanaAyuda.style.display = "none";
+    if(pdfAyuda) pdfAyuda.src = "";
+  });
+  window.addEventListener("click", function(e){
+    if(e.target === ventanaAyuda){
+      ventanaAyuda.style.display = "none";
+      if(pdfAyuda) pdfAyuda.src = "";
+    }
+  });
 });

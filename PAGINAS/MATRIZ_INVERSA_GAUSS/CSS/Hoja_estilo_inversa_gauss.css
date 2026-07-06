@@ -8,7 +8,8 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
 #tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px;}
 #tituloinicial h1{font-size:18px;font-weight:800;letter-spacing:.2px;line-height:1.2;flex:1;display:flex;justify-content:center;text-align:center;}
 #controlesTop{display:flex;align-items:center;gap:18px}
-.abreVentana{font-size:14px;font-weight:700;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);}
+.abreVentana{font-size:14px;font-weight:700;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);color:var(--ink);text-decoration:none;cursor:pointer;}
+.abreVentana:hover{background:#e9eef9}
 #btnHome{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:46px;height:50px;background:var(--soft);border:1px solid var(--border);border-radius:10px;gap:2px;transition:.15s transform,.15s background;}
 #btnHome:hover{transform:translateY(-1px);background:#e9eef9}
 #btnHome svg{display:block;fill:var(--ink)}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Instrucciones — Matriz Inversa por Gauss-Jordan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;line-height:1.65;color:#111827;background:#fff;padding:28px 32px 40px}
+  h1{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a2b6b;margin-bottom:4px}
+  .subtitulo{font-size:12px;color:#6b7280;margin-bottom:22px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  h2{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;padding-bottom:4px;border-bottom:2px solid #e8eeff}
+  p{margin-bottom:8px;color:#374151}
+  strong{color:#111827}
+  .paso{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+  .num{flex-shrink:0;width:22px;height:22px;background:#2563eb;color:#fff;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .paso-body{flex:1}
+  .op-tabla{width:100%;border-collapse:collapse;margin:10px 0}
+  .op-tabla th{background:#1a2b6b;color:#fff;font-size:11px;font-weight:700;padding:6px 10px;text-align:left}
+  .op-tabla td{border-bottom:1px solid #e5e7eb;padding:7px 10px;font-size:12px;vertical-align:top}
+  .op-tabla tr:last-child td{border-bottom:none}
+  .op-tabla tr:nth-child(even) td{background:#f9fafb}
+  .op-num{font-weight:800;color:#2563eb;white-space:nowrap}
+  .formula{font-style:italic;color:#1a2b6b;font-weight:600}
+  .ejemplo{background:#f0f4ff;border-left:3px solid #2563eb;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12px;color:#374151;margin:6px 0}
+  .ejemplo .ej-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#2563eb;margin-bottom:2px}
+  .nota{background:#fefce8;border:1px solid #fef08a;border-radius:6px;padding:8px 12px;font-size:12px;color:#713f12;margin:12px 0}
+  .nota strong{color:#713f12}
+  .aviso{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin:12px 0}
+  .badge{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:.04em;margin-left:4px;vertical-align:middle}
+  ul{padding-left:18px;margin-bottom:8px}
+  li{margin:4px 0;color:#374151}
+  .divider{border:none;border-top:1px solid #e5e7eb;margin:18px 0}
+</style>
+</head>
+<body>
+
+<h1>Matriz Inversa — Método de Gauss-Jordan</h1>
+<div class="subtitulo">Instrucciones de uso de la calculadora</div>
+
+<!-- ─── ¿QUÉ HACE ESTA CALCULADORA? ─── -->
+<h2>¿Qué hace esta calculadora?</h2>
+<p>Permite calcular la inversa de una matriz cuadrada de orden 2×2, 3×3 o 4×4 mediante el <strong>método de Gauss-Jordan</strong>, aplicando operaciones elementales de filas sobre la <strong>matriz ampliada</strong> <span class="formula">[A | I]</span>. El objetivo es transformar la parte izquierda en la identidad; la parte derecha se convierte automáticamente en <span class="formula">A⁻¹</span>.</p>
+
+<hr class="divider"/>
+
+<!-- ─── PASOS ─── -->
+<h2>Cómo usar la calculadora</h2>
+
+<div class="paso">
+  <div class="num">1</div>
+  <div class="paso-body">
+    <strong>Selecciona el orden de la matriz.</strong><br>
+    Pulsa el botón <strong>2×2</strong>, <strong>3×3</strong> o <strong>4×4</strong> según el orden de tu matriz.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">2</div>
+  <div class="paso-body">
+    <strong>Introduce los coeficientes.</strong><br>
+    Escribe cada elemento de la matriz en su celda. Se admiten <strong>enteros</strong>, <strong>fracciones</strong> (<span class="formula">3/4</span>, <span class="formula">-2/5</span>) y <strong>decimales</strong> (<span class="formula">0.5</span>).
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">3</div>
+  <div class="paso-body">
+    <strong>Confirma la matriz.</strong><br>
+    Pulsa el botón <strong>Confirmar</strong>. Se mostrará la matriz ampliada <span class="formula">[A | I]</span> y el panel de operaciones de fila.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">4</div>
+  <div class="paso-body">
+    <strong>Aplica operaciones de fila</strong> hasta obtener la identidad en la parte izquierda.<br>
+    Elige una de las 4 operaciones disponibles (ver tabla inferior), rellena los datos y pulsa <strong>Seleccionar</strong>. Cada paso queda registrado en el área de operaciones.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">5</div>
+  <div class="paso-body">
+    <strong>Obtén el resultado.</strong><br>
+    Cuando la parte izquierda sea la identidad, la herramienta mostrará automáticamente <span class="formula">A⁻¹</span>.
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── OPERACIONES ─── -->
+<h2>Operaciones de fila disponibles</h2>
+
+<table class="op-tabla">
+  <thead>
+    <tr>
+      <th>Opción</th>
+      <th>Descripción</th>
+      <th>Notación</th>
+      <th>Datos a introducir</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="op-num">1</td>
+      <td><strong>Permutar dos filas</strong></td>
+      <td class="formula">Fᵢ ↔ Fⱼ</td>
+      <td>Números de las dos filas a intercambiar.</td>
+    </tr>
+    <tr>
+      <td class="op-num">2</td>
+      <td><strong>Dividir una fila por un escalar</strong></td>
+      <td class="formula">Fᵢ → (1/k)·Fᵢ</td>
+      <td>Número de fila <em>i</em> y divisor <em>k</em> (distinto de 0). Se admiten fracciones.</td>
+    </tr>
+    <tr>
+      <td class="op-num">3</td>
+      <td><strong>Combinar filas linealmente</strong></td>
+      <td class="formula">Fᵢ = a·Fᵢ + b·Fⱼ + ···</td>
+      <td>
+        Escribe la operación en forma <strong>F&lt;destino&gt; = &lt;expresión&gt;</strong>.<br>
+        <div class="ejemplo"><div class="ej-label">Ejemplos</div>
+          F2 = 2F2 − 3F1<br>
+          F3 = F3 − 2F1 + F2<br>
+          F1 = F1 − 3/2·F2
+        </div>
+        Los coeficientes pueden ser enteros o fracciones. Si el coeficiente es 1 o −1 se puede omitir el número (basta con <span class="formula">F2</span> o <span class="formula">-F2</span>).
+      </td>
+    </tr>
+    <tr>
+      <td class="op-num">4</td>
+      <td><strong>Reordenar filas por ceros a la izquierda</strong></td>
+      <td class="formula">F↓</td>
+      <td>No requiere parámetros. Ordena las filas situando primero las que tienen más elementos no nulos a la izquierda (útil para evitar pivotes cero).</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr class="divider"/>
+
+<!-- ─── BOTONES ADICIONALES ─── -->
+<h2>Botones adicionales</h2>
+
+<ul>
+  <li><strong>RESET</strong> — Deshace todos los pasos y restaura la matriz ampliada inicial.</li>
+  <li><strong>DESHACER</strong> — Deshace únicamente el último paso aplicado.</li>
+  <li><strong>SOLUCIÓN AUTOMÁTICA</strong> — Resuelve el proceso completo de forma automática, mostrando todos los pasos.</li>
+  <li><strong>OTRA MATRIZ</strong> — Vuelve a la pantalla de introducción de datos para calcular una nueva inversa.</li>
+</ul>
+
+<hr class="divider"/>
+
+<!-- ─── MATRIZ SINGULAR ─── -->
+<h2>Matriz singular (sin inversa)</h2>
+
+<div class="aviso">
+  <strong>Fila nula en la parte izquierda:</strong> si, al aplicar las operaciones, todos los elementos de la parte izquierda de alguna fila se anulan, la herramienta indicará que la matriz es <strong>singular</strong> (det A = 0) y que <strong>no tiene inversa</strong>.
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── NOTAS ─── -->
+<h2>Notas importantes</h2>
+
+<div class="nota">
+  <strong>Fracciones:</strong> todos los cálculos se realizan con aritmética exacta de fracciones, por lo que el resultado nunca presenta errores de redondeo.
+</div>
+
+<p>Para más información teórica sobre el método, pulsa el botón <strong>← TEORÍA</strong> en la barra superior de la calculadora.</p>
+
+</body>
+</html>

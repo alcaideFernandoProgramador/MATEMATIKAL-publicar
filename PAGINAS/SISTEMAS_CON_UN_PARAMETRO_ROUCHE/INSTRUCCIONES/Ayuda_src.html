@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Instrucciones — Sistemas Rouché-Frobenius con parámetro</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;line-height:1.65;color:#111827;background:#fff;padding:28px 32px 40px}
+  h1{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a2b6b;margin-bottom:4px}
+  .subtitulo{font-size:12px;color:#6b7280;margin-bottom:22px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  h2{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;padding-bottom:4px;border-bottom:2px solid #e8eeff}
+  p{margin-bottom:8px;color:#374151}
+  strong{color:#111827}
+  code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;color:#1e40af}
+  .paso{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+  .num-label{flex-shrink:0;padding:2px 8px;background:#1a2b6b;color:#fff;border-radius:4px;font-size:10px;font-weight:800;letter-spacing:.06em;white-space:nowrap;margin-top:3px}
+  .paso-body{flex:1}
+  .paso-body strong{display:block;margin-bottom:3px}
+  .op-tabla{width:100%;border-collapse:collapse;margin:10px 0}
+  .op-tabla th{background:#1a2b6b;color:#fff;font-size:11px;font-weight:700;padding:6px 10px;text-align:left}
+  .op-tabla td{border-bottom:1px solid #e5e7eb;padding:7px 10px;font-size:12px;vertical-align:top}
+  .op-tabla tr:last-child td{border-bottom:none}
+  .op-tabla tr:nth-child(even) td{background:#f9fafb}
+  .formula{font-style:italic;color:#1a2b6b;font-weight:600}
+  .ejemplo{background:#f0f4ff;border-left:3px solid #2563eb;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12px;color:#374151;margin:6px 0}
+  .ejemplo .ej-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#2563eb;margin-bottom:3px}
+  .nota{background:#fefce8;border:1px solid #fef08a;border-radius:6px;padding:8px 12px;font-size:12px;color:#713f12;margin:12px 0}
+  .casoRow{display:flex;gap:8px;margin:5px 0;align-items:flex-start}
+  .caso-badge{flex-shrink:0;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+  .badge-cd{background:#dbeafe;color:#1e3a8a}
+  .badge-ci{background:#fef9c3;color:#713f12}
+  .badge-inc{background:#fee2e2;color:#7f1d1d}
+  ul{padding-left:18px;margin-bottom:8px}
+  li{margin:4px 0;color:#374151}
+  .divider{border:none;border-top:1px solid #e5e7eb;margin:18px 0}
+  .rank-widget{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:12px}
+  .rank-widget .rw-title{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#475569;margin-bottom:5px}
+  .aviso{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin:12px 0}
+</style>
+</head>
+<body>
+
+<h1>Sistemas lineales con parámetro — Rouché-Frobenius</h1>
+<div class="subtitulo">Instrucciones de uso de la calculadora</div>
+
+<!-- ─── ¿QUÉ HACE? ─── -->
+<h2>¿Qué hace esta calculadora?</h2>
+<p>Discute un sistema de ecuaciones lineales cuyos coeficientes dependen de un <strong>parámetro</strong> (p. ej., <span class="formula">a</span>, <span class="formula">k</span>, <span class="formula">λ</span>). La herramienta aplica el teorema de Rouché-Frobenius para <strong>cada caso posible del parámetro</strong>: el caso general y los valores críticos donde el comportamiento del sistema cambia.</p>
+
+<hr class="divider"/>
+
+<!-- ─── PASOS ─── -->
+<h2>Pasos de la calculadora</h2>
+
+<div class="paso">
+  <div class="num-label">PASO 0</div>
+  <div class="paso-body">
+    <strong>Introducción de datos</strong>
+    Introduce:
+    <ul style="margin-top:4px">
+      <li><strong>Nº de ecuaciones</strong> (1 a 5)</li>
+      <li><strong>Nº de incógnitas</strong> (1 a 5)</li>
+      <li><strong>Nombre del parámetro</strong>: una sola letra (p. ej., <code>a</code>, <code>k</code>, <code>m</code>)</li>
+    </ul>
+    Luego rellena la <strong>matriz ampliada</strong> [A|b] con expresiones algebraicas en el parámetro:
+    <div class="ejemplo" style="margin-top:6px">
+      <div class="ej-label">Expresiones válidas</div>
+      <code>a+1</code>, <code>2a-3</code>, <code>a^2</code>, <code>3</code>, <code>-a</code>, <code>1/2</code>
+    </div>
+    <p style="margin-top:4px">Los coeficientes numéricos puros también se admiten. Pulsa Tab o Enter para avanzar entre celdas.</p>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num-label">PASO 1</div>
+  <div class="paso-body">
+    <strong>Rango de A (caso general)</strong>
+    Calcula el rango de la matriz de coeficientes <span class="formula">A</span> para un valor <em>genérico</em> del parámetro (es decir, cuando ningún determinante relevante se anula). El widget de rango funciona igual que en la versión sin parámetro:
+    <div class="rank-widget" style="margin-top:6px">
+      <div class="rw-title">Widget de rango con parámetro</div>
+      <ol style="padding-left:16px;margin:0">
+        <li style="margin:3px 0">Elige el <strong>orden del menor</strong> e introduce <strong>índices de filas y columnas</strong> (p. ej., filas <code>1,2</code> col. <code>1,2</code>).</li>
+        <li style="margin:3px 0">La herramienta muestra la expresión algebraica del determinante en el parámetro. Si esa expresión <strong>no es idénticamente cero</strong> para el caso general, confirma el rango.</li>
+        <li style="margin:3px 0">Si el determinante sí se puede anular, la herramienta detectará ese valor como <strong>caso crítico</strong> a tratar aparte.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num-label">PASO 2</div>
+  <div class="paso-body">
+    <strong>Rango de (A|b) (caso general)</strong>
+    Mismo proceso para la <strong>matriz ampliada</strong>. Confirma el rango para el caso general del parámetro.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num-label">PASO 3</div>
+  <div class="paso-body">
+    <strong>Valores críticos del parámetro</strong>
+    La herramienta lista las expresiones de los determinantes calculados e indica los valores del parámetro que los anulan. Puedes:
+    <ul style="margin-top:4px">
+      <li>Confirmar los valores críticos detectados automáticamente.</li>
+      <li>Añadir manualmente valores críticos adicionales si los conoces.</li>
+    </ul>
+    <p>Estos son los valores del parámetro para los que habrá que estudiar el sistema por separado (ya que el rango puede cambiar).</p>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num-label">PASO 4</div>
+  <div class="paso-body">
+    <strong>Discusión por casos</strong>
+    Para cada caso (el caso general y cada valor crítico) la herramienta:
+    <ul style="margin-top:4px">
+      <li>Sustituye el valor del parámetro en la matriz.</li>
+      <li>Muestra <span class="formula">rg(A)</span> y <span class="formula">rg(A|b)</span> para ese caso.</li>
+      <li>Aplica Rouché-Frobenius y determina el tipo de sistema:</li>
+    </ul>
+    <div class="casoRow" style="margin-top:6px"><span class="caso-badge badge-inc">Incompatible</span><div><span class="formula">rg(A) ≠ rg(A|b)</span></div></div>
+    <div class="casoRow"><span class="caso-badge badge-cd">Compatible determinado</span><div><span class="formula">rg(A) = rg(A|b) = n</span></div></div>
+    <div class="casoRow"><span class="caso-badge badge-ci">Compatible indeterminado</span><div><span class="formula">rg(A) = rg(A|b) &lt; n</span></div></div>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num-label">PASO 5</div>
+  <div class="paso-body">
+    <strong>Solución por casos</strong>
+    Para los casos compatibles la herramienta muestra la solución (o la solución general si es indeterminado). Para los incompatibles indica que no hay solución.
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── BOTONES ─── -->
+<h2>Botones adicionales</h2>
+<ul>
+  <li><strong>SOLUCIÓN AUTOMÁTICA</strong> — Completa todos los pasos pendientes automáticamente. Aparece en el panel lateral de pasos. <em>No se recomienda para aprender.</em></li>
+  <li><strong>OTRO SISTEMA</strong> — Reinicia la calculadora para introducir un nuevo sistema con parámetro.</li>
+</ul>
+
+<div class="nota">
+  <strong>Expresiones admitidas en las celdas:</strong> enteros, fracciones (<code>3/4</code>), decimales, y expresiones polinómicas en el parámetro como <code>2a+1</code>, <code>a^2-3</code> o <code>-a/2</code>.
+</div>
+
+<div class="aviso">
+  <strong>Parámetro en el término independiente:</strong> el parámetro puede aparecer también en la columna de términos independientes (última columna), lo que afecta al rango de (A|b).
+</div>
+
+<p>Para más teoría, pulsa <strong>← TEORÍA</strong> en la barra superior.</p>
+
+</body>
+</html>

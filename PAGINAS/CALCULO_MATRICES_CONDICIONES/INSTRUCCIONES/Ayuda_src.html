@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Instrucciones — Matrices que cumplen condiciones</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;line-height:1.65;color:#111827;background:#fff;padding:28px 32px 40px}
+  h1{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a2b6b;margin-bottom:4px}
+  .subtitulo{font-size:12px;color:#6b7280;margin-bottom:22px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  h2{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;padding-bottom:4px;border-bottom:2px solid #e8eeff}
+  p{margin-bottom:8px;color:#374151}
+  strong{color:#111827}
+  em{color:#374151}
+  code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;color:#1e40af}
+  .paso{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+  .num{flex-shrink:0;width:22px;height:22px;background:#2563eb;color:#fff;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .paso-body{flex:1}
+  .op-tabla{width:100%;border-collapse:collapse;margin:10px 0}
+  .op-tabla th{background:#1a2b6b;color:#fff;font-size:11px;font-weight:700;padding:6px 10px;text-align:left}
+  .op-tabla td{border-bottom:1px solid #e5e7eb;padding:7px 10px;font-size:12px;vertical-align:top}
+  .op-tabla tr:last-child td{border-bottom:none}
+  .op-tabla tr:nth-child(even) td{background:#f9fafb}
+  .formula{font-style:italic;color:#1a2b6b;font-weight:600}
+  .ejemplo{background:#f0f4ff;border-left:3px solid #2563eb;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12px;color:#374151;margin:6px 0}
+  .ejemplo .ej-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#2563eb;margin-bottom:3px}
+  .nota{background:#fefce8;border:1px solid #fef08a;border-radius:6px;padding:8px 12px;font-size:12px;color:#713f12;margin:12px 0}
+  .aviso{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin:12px 0}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .card{background:#f8faff;border:1px solid #dbeafe;border-radius:8px;padding:10px 14px}
+  .card-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#2563eb;margin-bottom:6px}
+  ul{padding-left:18px;margin-bottom:8px}
+  li{margin:4px 0;color:#374151}
+  .divider{border:none;border-top:1px solid #e5e7eb;margin:18px 0}
+</style>
+</head>
+<body>
+
+<h1>Matrices que cumplen condiciones</h1>
+<div class="subtitulo">Instrucciones de uso de la calculadora</div>
+
+<!-- ─── ¿QUÉ HACE? ─── -->
+<h2>¿Qué hace esta calculadora?</h2>
+<p>Halla todas las matrices <span class="formula">X</span> de dimensiones dadas que verifican una <strong>condición matricial lineal</strong>, como por ejemplo que <span class="formula">X</span> conmute con <span class="formula">A</span>, que sea simétrica, o que satisfaga una ecuación del tipo <span class="formula">AX + XB = C</span>.</p>
+
+<hr class="divider"/>
+
+<!-- ─── PASOS ─── -->
+<h2>Cómo usar la calculadora</h2>
+
+<div class="paso">
+  <div class="num">1</div>
+  <div class="paso-body">
+    <strong>Elige el tipo de X.</strong><br>
+    <div class="cols2" style="margin-top:6px">
+      <div class="card">
+        <div class="card-title">X general</div>
+        La herramienta asigna automáticamente una incógnita independiente a cada entrada de <span class="formula">X</span> (<em>a, b, c, d, …</em>). Úsalo cuando no sepas de antemano la forma de <span class="formula">X</span>.
+      </div>
+      <div class="card">
+        <div class="card-title">X de una forma dada</div>
+        Tú escribes la plantilla de <span class="formula">X</span> con números fijos y nombres de parámetros. Úsalo cuando el enunciado especifique la estructura de <span class="formula">X</span> (p. ej., simétrica, triangular, con un 1 fijo…).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">2</div>
+  <div class="paso-body">
+    <strong>Introduce las dimensiones de X</strong> (filas × columnas, entre 1 y 6 cada una).<br>
+    <p style="margin-top:4px">Si elegiste <em>X de una forma dada</em>, se mostrará una cuadrícula para escribir cada celda de <span class="formula">X</span> con números y/o nombres de parámetros (p. ej., <code>a</code>, <code>2b</code>, <code>0</code>, <code>1</code>).</p>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">3</div>
+  <div class="paso-body">
+    <strong>Escribe la condición</strong> que debe cumplir <span class="formula">X</span>.<br>
+    <div class="ejemplo" style="margin-top:6px">
+      <div class="ej-label">Ejemplos de condiciones</div>
+      <code>A*X=X*A</code> — X conmuta con A<br>
+      <code>X^t=X</code> — X es simétrica<br>
+      <code>X^t=-X</code> — X es antisimétrica<br>
+      <code>A*X+X*B=C</code> — ecuación de tipo Sylvester<br>
+      <code>A*X=B</code> — ecuación matricial simple<br>
+      <code>A*X^t+X=B</code> — combinación con transpuesta
+    </div>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">4</div>
+  <div class="paso-body">
+    <strong>Introduce las dimensiones de las matrices conocidas</strong> (si las hay y si X no es cuadrada).<br>
+    Para matrices cuadradas con X cuadrada, la herramienta deduce automáticamente que todas tienen el mismo orden que X.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">5</div>
+  <div class="paso-body">
+    <strong>Rellena los valores de las matrices conocidas</strong> (A, B, C, …).<br>
+    Puedes usar enteros, fracciones (<code>3/4</code>) o decimales (<code>0.5</code>). Pulsa Tab o Enter para avanzar entre celdas.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">6</div>
+  <div class="paso-body">
+    <strong>Obtén el resultado.</strong><br>
+    La herramienta resuelve el sistema lineal resultante y muestra la familia de soluciones para <span class="formula">X</span>, expresada en función de los parámetros libres (si los hay).
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── SINTAXIS DE LA CONDICIÓN ─── -->
+<h2>Sintaxis de la condición</h2>
+
+<table class="op-tabla">
+  <thead>
+    <tr><th>Símbolo</th><th>Significado</th><th>Ejemplo</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>*</code></td>
+      <td>Producto matricial</td>
+      <td><code>A*X</code></td>
+    </tr>
+    <tr>
+      <td><code>+</code> / <code>-</code></td>
+      <td>Suma / resta de matrices</td>
+      <td><code>A*X+X*B</code></td>
+    </tr>
+    <tr>
+      <td><code>^t</code></td>
+      <td>Transpuesta</td>
+      <td><code>X^t</code>, <code>A^t</code></td>
+    </tr>
+    <tr>
+      <td><code>^(-1)</code></td>
+      <td>Inversa</td>
+      <td><code>A^(-1)*X</code></td>
+    </tr>
+    <tr>
+      <td><code>=</code></td>
+      <td>Igualdad (obligatorio en la condición)</td>
+      <td><code>A*X=B</code></td>
+    </tr>
+    <tr>
+      <td>Letras mayúsculas (excl. X)</td>
+      <td>Matrices conocidas (A, B, C, …)</td>
+      <td><code>A</code>, <code>B</code>, <code>C</code></td>
+    </tr>
+    <tr>
+      <td><code>X</code></td>
+      <td>Matriz incógnita (siempre)</td>
+      <td><code>X</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr class="divider"/>
+
+<!-- ─── AVISOS ─── -->
+<h2>Avisos importantes</h2>
+
+<div class="aviso">
+  <strong>Solo condiciones lineales:</strong> la condición debe generar un sistema de ecuaciones lineales en las entradas de X. Si aparecen productos entre parámetros (condición no lineal), la herramienta mostrará un mensaje de aviso y no podrá resolverlo.
+</div>
+
+<div class="nota">
+  <strong>Dimensiones:</strong> si la condición implica productos matriciales, asegúrate de que las dimensiones de X y las matrices conocidas sean compatibles. La herramienta validará esto al resolver.
+</div>
+
+<p>Para más teoría sobre condiciones matriciales, pulsa <strong>← TEORÍA</strong> en la barra superior.</p>
+
+</body>
+</html>

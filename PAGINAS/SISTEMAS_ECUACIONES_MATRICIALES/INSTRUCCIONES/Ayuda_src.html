@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Instrucciones — Sistemas de ecuaciones matriciales</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;line-height:1.65;color:#111827;background:#fff;padding:28px 32px 40px}
+  h1{font-family:'DM Serif Display',Georgia,serif;font-size:20px;font-weight:400;color:#1a2b6b;margin-bottom:4px}
+  .subtitulo{font-size:12px;color:#6b7280;margin-bottom:22px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  h2{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:900;color:#2563eb;text-transform:uppercase;letter-spacing:.1em;margin:20px 0 8px;padding-bottom:4px;border-bottom:2px solid #e8eeff}
+  p{margin-bottom:8px;color:#374151}
+  strong{color:#111827}
+  em{color:#374151}
+  code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;color:#1e40af}
+  .paso{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+  .num{flex-shrink:0;width:22px;height:22px;background:#2563eb;color:#fff;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .paso-body{flex:1}
+  .op-tabla{width:100%;border-collapse:collapse;margin:10px 0}
+  .op-tabla th{background:#1a2b6b;color:#fff;font-size:11px;font-weight:700;padding:6px 10px;text-align:left}
+  .op-tabla td{border-bottom:1px solid #e5e7eb;padding:7px 10px;font-size:12px;vertical-align:top}
+  .op-tabla tr:last-child td{border-bottom:none}
+  .op-tabla tr:nth-child(even) td{background:#f9fafb}
+  .formula{font-style:italic;color:#1a2b6b;font-weight:600}
+  .ejemplo{background:#f0f4ff;border-left:3px solid #2563eb;padding:6px 10px;border-radius:0 6px 6px 0;font-size:12px;color:#374151;margin:6px 0}
+  .ejemplo .ej-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#2563eb;margin-bottom:3px}
+  .nota{background:#fefce8;border:1px solid #fef08a;border-radius:6px;padding:8px 12px;font-size:12px;color:#713f12;margin:12px 0}
+  .aviso{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px 12px;font-size:12px;color:#7f1d1d;margin:12px 0}
+  .ok{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px 12px;font-size:12px;color:#14532d;margin:12px 0}
+  .casoRow{display:flex;gap:8px;margin:8px 0;align-items:flex-start}
+  .caso-badge{flex-shrink:0;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+  .badge-cd{background:#dbeafe;color:#1e3a8a}
+  .badge-ci{background:#fef9c3;color:#713f12}
+  .badge-inc{background:#fee2e2;color:#7f1d1d}
+  ul{padding-left:18px;margin-bottom:8px}
+  li{margin:4px 0;color:#374151}
+  .sistema-box{background:#f8faff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;line-height:1.8}
+  .divider{border:none;border-top:1px solid #e5e7eb;margin:18px 0}
+</style>
+</head>
+<body>
+
+<h1>Sistemas de ecuaciones matriciales</h1>
+<div class="subtitulo">Instrucciones de uso de la calculadora</div>
+
+<!-- ─── ¿QUÉ HACE? ─── -->
+<h2>¿Qué hace esta calculadora?</h2>
+<p>Resuelve <strong>sistemas de dos ecuaciones lineales con dos incógnitas matriciales</strong> X e Y de la forma:</p>
+<div class="sistema-box">
+  <em>a</em>₁ · X + <em>b</em>₁ · Y = C₁<br>
+  <em>a</em>₂ · X + <em>b</em>₂ · Y = C₂
+</div>
+<p>donde <span class="formula">a₁, b₁, a₂, b₂</span> son escalares (números) y <span class="formula">C₁, C₂</span> son matrices conocidas.</p>
+
+<hr class="divider"/>
+
+<!-- ─── PASOS ─── -->
+<h2>Cómo usar la calculadora</h2>
+
+<div class="paso">
+  <div class="num">1</div>
+  <div class="paso-body">
+    <strong>Escribe las dos ecuaciones</strong> en los campos de texto.<br>
+    <div class="ejemplo" style="margin-top:6px">
+      <div class="ej-label">Ejemplos de ecuaciones</div>
+      <code>X+Y=A</code> y <code>X-Y=B</code><br>
+      <code>2X+3Y=A</code> y <code>X-Y=B</code><br>
+      <code>(1/2)X+Y=A</code> y <code>3X-2Y=B</code>
+    </div>
+    <p style="margin-top:6px">Las incógnitas son siempre <strong>X</strong> e <strong>Y</strong>. Los coeficientes deben ser números (enteros o fracciones). Las matrices del lado derecho (A, B, C, …) son las conocidas.</p>
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">2</div>
+  <div class="paso-body">
+    <strong>Indica las dimensiones</strong> (filas × columnas) de las matrices X, Y y las matrices conocidas.<br>
+    Todas las matrices del sistema deben tener las mismas dimensiones.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">3</div>
+  <div class="paso-body">
+    <strong>Rellena los valores de las matrices conocidas</strong>.<br>
+    Puedes usar enteros, fracciones (<code>3/4</code>) o decimales. Pulsa Tab o Enter para avanzar entre celdas.
+  </div>
+</div>
+
+<div class="paso">
+  <div class="num">4</div>
+  <div class="paso-body">
+    <strong>Sigue la resolución guiada paso a paso.</strong><br>
+    La herramienta presenta el proceso por etapas. En cada etapa verás un campo de entrada para que escribas el resultado intermedio. Si es correcto, se avanza al siguiente paso.
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── SINTAXIS ─── -->
+<h2>Sintaxis de las ecuaciones</h2>
+
+<table class="op-tabla">
+  <thead>
+    <tr><th>Elemento</th><th>Descripción</th><th>Ejemplos</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>X</code>, <code>Y</code></td>
+      <td>Incógnitas matriciales (siempre estas letras)</td>
+      <td><code>X+Y=A</code></td>
+    </tr>
+    <tr>
+      <td>Coeficiente entero</td>
+      <td>Número entero delante de X o Y (puede ser negativo)</td>
+      <td><code>2X</code>, <code>-3Y</code></td>
+    </tr>
+    <tr>
+      <td>Coeficiente fraccionario</td>
+      <td>Fracción entre paréntesis delante de X o Y</td>
+      <td><code>(1/2)X</code>, <code>(-3/4)Y</code></td>
+    </tr>
+    <tr>
+      <td>Coeficiente 1 o −1</td>
+      <td>Se puede omitir el número; basta con X, Y, −X o −Y</td>
+      <td><code>X+Y</code>, <code>-X+2Y</code></td>
+    </tr>
+    <tr>
+      <td>Letras mayúsculas (excl. X, Y)</td>
+      <td>Matrices conocidas del lado derecho</td>
+      <td><code>=A</code>, <code>=B</code>, <code>=C</code></td>
+    </tr>
+    <tr>
+      <td><code>=</code></td>
+      <td>Igualdad (obligatoria)</td>
+      <td><code>X+Y=A</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr class="divider"/>
+
+<!-- ─── PROCESO DE RESOLUCIÓN ─── -->
+<h2>Proceso de resolución</h2>
+<p>La herramienta aplica la <strong>regla de Cramer matricial</strong>:</p>
+
+<div class="paso" style="margin-top:8px">
+  <div class="num" style="background:#1a2b6b">Δ</div>
+  <div class="paso-body">
+    <strong>Cálculo del determinante escalar</strong> <span class="formula">Δ = a₁·b₂ − a₂·b₁</span>.<br>
+    Deberás rellenar la matriz de coeficientes y calcular su determinante.
+  </div>
+</div>
+
+<div class="casoRow">
+  <span class="caso-badge badge-cd">Δ ≠ 0 — Compatible determinado</span>
+  <div>Solución única: <span class="formula">X = (b₂C₁ − b₁C₂) / Δ</span> y <span class="formula">Y = (a₁C₂ − a₂C₁) / Δ</span>. La herramienta te guía para calcular cada matriz numerador y luego dividir por Δ.</div>
+</div>
+
+<div class="casoRow">
+  <span class="caso-badge badge-ci">Δ = 0 — Compatible indeterminado</span>
+  <div>Infinitas soluciones. La herramienta verifica la compatibilidad y muestra la solución general en función de un parámetro.</div>
+</div>
+
+<div class="casoRow">
+  <span class="caso-badge badge-inc">Δ = 0 — Incompatible</span>
+  <div>Sin solución. La herramienta detecta la inconsistencia y lo indica.</div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ─── BOTONES ─── -->
+<h2>Botones adicionales</h2>
+<ul>
+  <li><strong>RESOLVER AUTOMÁTICAMENTE</strong> — Completa el paso actual sin que el usuario introduzca el valor. <em>No se recomienda para aprender.</em></li>
+  <li><strong>OTRO SISTEMA</strong> — Vuelve al inicio para introducir un nuevo sistema.</li>
+</ul>
+
+<div class="nota">
+  <strong>Fracciones:</strong> todos los cálculos se realizan con aritmética exacta, por lo que el resultado nunca presenta errores de redondeo.
+</div>
+
+<p>Para más información teórica, pulsa <strong>← TEORÍA</strong> en la barra superior.</p>
+
+</body>
+</html>
