@@ -2006,7 +2006,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let ventana1 = document.getElementById("ventana1");
   let pdf1 = document.getElementById("pdf1");
   if (abreV1 && cierraV1 && ventana1 && pdf1) {
-    let pdfURL = "INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0";
+    let pdfURL = "INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
     abreV1.addEventListener("click", e => { e.preventDefault(); pdf1.src = pdfURL; ventana1.style.display = "flex"; });
     cierraV1.addEventListener("click", () => { ventana1.style.display = "none"; pdf1.src = ""; });
     window.addEventListener("click", e => { if (e.target === ventana1) { ventana1.style.display = "none"; pdf1.src = ""; } });

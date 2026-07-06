@@ -434,13 +434,13 @@ let b=ayuda.cloneNode(true);b.id="otrasMatrices";b.textContent="Otras matrices";
 if(b.tagName==="A"){b.href="#";b.removeAttribute("download")}else if(b.tagName==="BUTTON")b.type="button";
 b.addEventListener("click",e=>{e.preventDefault();sessionStorage.setItem('irACalculadora','1');location.reload();});
 if(volver)cont.insertBefore(b,volver);else ayuda.insertAdjacentElement("afterend",b)};insertarOtrasMatrices();
-const archivos={abreVentana1:{pdf:'INSTRUCCIONES/Ayuda.pdf',
+const archivos={abreVentana1:{pdf:'INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300',
 docx:'INSTRUCCIONES/Ayuda.docx'}};const vistaDe=f=>f?.pdf?{ver:f.pdf,desc:f.docx||f.pdf}:null;
 
 const abrir=aid=>{const n=aid.replace('abreVentana',''),v=$('ventana'+n),f=$('pdf'+n),
 c=v?.querySelector('.contenidoVentana');if(!v||!f||!c)return;const m=vistaDe(archivos[aid]);
 if(!m){f.removeAttribute('src');f.setAttribute('srcdoc','<div style="font:14px system-ui;padding:16px"><h3>Contenido no disponible</h3><p>Añade un PDF en <code>archivos.'+aid+'.pdf</code>.</p></div>');
-v.style.display='block';return}f.removeAttribute('srcdoc');f.src=m.ver;v.style.display='block';let btn=c.querySelector('.btnDescarga');
+v.style.display='block';return}f.removeAttribute('srcdoc');f.src=m.ver;v.style.display='flex';let btn=c.querySelector('.btnDescarga');
 if(!btn){btn=document.createElement('a');btn.className='btnDescarga';btn.textContent='Descargar DOCX';
 btn.style.cssText='position:absolute;top:12px;right:48px;font:12px system-ui;text-decoration:none;border:1px solid #888;padding:6px 10px;border-radius:6px;background:#f7f7f7';
 c.style.position='relative';c.appendChild(btn)}btn.style.display=archivos[aid]?.docx?'inline-block':'none';

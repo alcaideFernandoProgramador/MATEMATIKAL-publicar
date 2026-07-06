@@ -1852,12 +1852,12 @@
     if (btnAyuda && ventana1) {
       btnAyuda.addEventListener('click', ev => {
         ev.preventDefault();
-        if (pdf1 && !pdf1.src.includes('Ayuda.pdf')) pdf1.src = 'INSTRUCCIONES/Ayuda.pdf';
+        if (pdf1 && !pdf1.src.includes('Ayuda.pdf')) pdf1.src = 'INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300';
         ventana1.style.display = 'flex';
       });
     }
-    if (cierraV1 && ventana1) cierraV1.addEventListener('click', () => { ventana1.style.display = 'none'; });
-    if (ventana1) ventana1.addEventListener('click', ev => { if (ev.target === ventana1) ventana1.style.display = 'none'; });
+    if (cierraV1 && ventana1) cierraV1.addEventListener('click', () => { ventana1.style.display = 'none'; if (pdf1) pdf1.src = ''; });
+    if (ventana1) ventana1.addEventListener('click', ev => { if (ev.target === ventana1) { ventana1.style.display = 'none'; if (pdf1) pdf1.src = ''; } });
 
     new MutationObserver(() => {
       requestAnimationFrame(() => { caja21.scrollTop = caja21.scrollHeight; });
