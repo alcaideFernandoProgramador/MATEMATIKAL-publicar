@@ -216,35 +216,35 @@ async function crearFormulario(){
 
   let opcion1=document.createElement("input");opcion1.type="radio";opcion1.value="opcion1";
   opcion1.name="option";opcion1.id="inputcorto1";lugarFormulario1.appendChild(opcion1);
-  let etiquetaOpcion1=document.createElement("label");
+  let etiquetaOpcion1=document.createElement("label");etiquetaOpcion1.htmlFor="inputcorto1";
   etiquetaOpcion1.innerHTML="Opción 1: Extraer factor común de una fila";lugarFormulario1.appendChild(etiquetaOpcion1);
 
   let opcion1C=document.createElement("input");opcion1C.type="radio";opcion1C.value="opcion1C";
   opcion1C.name="option";opcion1C.id="inputcorto1C";lugarFormulario1C.appendChild(opcion1C);
-  let etiquetaOpcion1C=document.createElement("label");
+  let etiquetaOpcion1C=document.createElement("label");etiquetaOpcion1C.htmlFor="inputcorto1C";
   etiquetaOpcion1C.innerHTML="Opción 2: Extraer factor común de una columna";lugarFormulario1C.appendChild(etiquetaOpcion1C);
 
   let opcion2=document.createElement("input");opcion2.type="radio";opcion2.value="opcion2";
   opcion2.name="option";opcion2.id="inputcorto2";lugarFormulario2.appendChild(opcion2);
-  let etiquetaOpcion2=document.createElement("label");
+  let etiquetaOpcion2=document.createElement("label");etiquetaOpcion2.htmlFor="inputcorto2";
   etiquetaOpcion2.innerHTML="Opción 3: Cambiar una fila por una expresión del tipo F1=aF1+bF2-cF3";
   lugarFormulario2.appendChild(etiquetaOpcion2);
 
   let opcion2bis=document.createElement("input");opcion2bis.type="radio";opcion2bis.value="opcion2bis";
-  opcion2bis.name="option";opcion2bis.id="inputcorto2";lugarFormulario2bis.appendChild(opcion2bis);
-  let etiquetaopcion2bis=document.createElement("label");
+  opcion2bis.name="option";opcion2bis.id="inputcorto2bis";lugarFormulario2bis.appendChild(opcion2bis);
+  let etiquetaopcion2bis=document.createElement("label");etiquetaopcion2bis.htmlFor="inputcorto2bis";
   etiquetaopcion2bis.innerHTML="Opción 4: Cambiar una columna por una expresión del tipo C1=aC1+bC2-cC3";
   lugarFormulario2bis.appendChild(etiquetaopcion2bis);
 
   let opcion3=document.createElement("input");opcion3.type="radio";opcion3.value="opcion3";
   opcion3.name="option";opcion3.id="inputcorto3";lugarFormulario3.appendChild(opcion3);
-  let etiquetaOpcion3=document.createElement("label");
+  let etiquetaOpcion3=document.createElement("label");etiquetaOpcion3.htmlFor="inputcorto3";
   etiquetaOpcion3.innerHTML="Opción 5: Reducir el determinante a otro determinante de orden una unidad inferior";
   lugarFormulario3.appendChild(etiquetaOpcion3);
 
   let opcion4=document.createElement("input");opcion4.type="radio";opcion4.value="opcion4";
   opcion4.name="option";opcion4.id="inputcorto4";lugarFormulario4.appendChild(opcion4);
-  let etiquetaOpcion4=document.createElement("label");
+  let etiquetaOpcion4=document.createElement("label");etiquetaOpcion4.htmlFor="inputcorto4";
   etiquetaOpcion4.innerHTML="Opción 6: Obtener el valor del determinante de orden 3";
   lugarFormulario4.appendChild(etiquetaOpcion4);
 

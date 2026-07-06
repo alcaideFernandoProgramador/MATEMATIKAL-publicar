@@ -382,9 +382,9 @@ const opciones=["Obtener todos los menores de orden máximo","Elegir uno de los 
 "Resolver el rango de forma automática (no recomendado)"];
 
 opciones.forEach((texto,i)=>{const filaO=document.createElement("div");filaO.id="row-"+(i+1);filaO.className="rad";
-const input=document.createElement("input");input.type="radio";input.name="option";input.value=`opcion${i+1}`;
+const input=document.createElement("input");input.type="radio";input.name="option";input.value=`opcion${i+1}`;input.id=`opcionMenoresParam${i+1}`;
 input.className="inputCorto";input.style.cssText="transform:scale(0.8);margin-left:10px;margin-right:8px;";
-const lab=document.createElement("label");lab.textContent=i===5?texto:`Paso ${i+1}: ${texto}`;lab.style.fontSize="16px";
+const lab=document.createElement("label");lab.htmlFor=input.id;lab.textContent=i===5?texto:`Paso ${i+1}: ${texto}`;lab.style.fontSize="16px";
 if(i===5)filaO.style.marginTop="8px";filaO.appendChild(input);filaO.appendChild(lab);cajaFormulario.appendChild(filaO);});
 
 let caja122=document.createElement("div");caja122.id="caja122";caja122.style.cssText="display:flex;width:99%;margin-top:5px;align-items:center;gap:8px;";

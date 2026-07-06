@@ -1,4 +1,4 @@
-var S={nf:0,nc:0,np:0,val:[],act:[],orig:[],ant:[],p:1,FS_MAT:"14px",FS_TIT:"16px",MB_TIT:"20px"};
+var S={nf:0,nc:0,np:0,val:[],act:[],orig:[],ant:[],hist:[],p:1,FS_MAT:"14px",FS_TIT:"16px",MB_TIT:"20px"};
 function $(id){return document.getElementById(id);}function html(el,s){if(el)el.innerHTML=s;}
 function rm(el){if(el)try{el.remove()}catch(_){}}
 function normCad(c){c=(c??"").toString().replace(/\s+/g,"").replace(/,/g,".").replace(/\+\-/g,"-");
@@ -209,20 +209,32 @@ function resetTrabajoUsuario(){
   let ops=document.getElementsByName("option");for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
 }
 
+function deshacerUltimoPaso(){
+  if(!S.hist||!S.hist.length){msgERR("caja1241","No hay ningún paso que deshacer.");return;}
+  S.act=S.hist.pop();
+  let t=$("tiraUsuario");
+  if(t){if(t.lastChild)t.removeChild(t.lastChild);if(t.lastChild)t.removeChild(t.lastChild);}
+  activarScrollVerticalSiNecesario($("caja21"),260);
+  resetTrabajoUsuario();
+  msgOK("caja1241","Se ha deshecho el último paso.");
+}
+
 function crearFormulario(){
-  S.act=cloneM(S.val);S.orig=cloneM(S.val);S.ant=cloneM(S.val);
+  S.act=cloneM(S.val);S.orig=cloneM(S.val);S.ant=cloneM(S.val);S.hist=[];
   let lt=$("caja121");if(lt){html(lt,"");let tit=document.createElement("h3");tit.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";lt.appendChild(tit);}
   let l1=$("caja1221"),l2=$("caja1222"),l3=$("caja1223"),l4=$("caja1224"),l5=$("caja1225"),l6=$("caja1252");
   function addOpt(l,id,val,txt,sym){
     if(!l)return;let o=document.createElement("input");o.type="radio";o.value=val;o.name="option";o.id=id;l.appendChild(o);
     let a=document.createElement("label"),b=document.createElement("label");a.style.display="inline-block";a.style.width="75%";a.innerHTML=txt;b.innerHTML=sym;
+    a.setAttribute("for",id);b.setAttribute("for",id);
     l.appendChild(a);l.appendChild(b);}
   addOpt(l1,"inputcorto1","opcion1","Opción 1: Permutar el orden de dos filas","F<sub>i</sub> ↔ F<sub>j</sub>");
   addOpt(l2,"inputcorto2","opcion2","Opción 2: Reordenar las filas dejando abajo las que más ceros tengan a la izquierda","F↓");
   addOpt(l3,"inputcorto3","opcion3","Opción 3: Simplificar los elementos de una fila dividiendolos por el mismo número","F<sub>a</sub>→1/mF<sub>a</sub>");
   addOpt(l4,"inputcorto4","opcion4","Opción 4: Cambiar una fila por una combinación lineal de ella y de otras filas","F<sub>i</sub>→aF<sub>i</sub>+bF<sub>j</sub>+cF<sub>k</sub>");
   if(l5){html(l5,"");let b=document.createElement("button");b.innerHTML="Seleccionar";l5.appendChild(b);b.addEventListener("click",onSelect);}
-  if(l6){html(l6,"");let br=document.createElement("button");br.innerHTML="RESET";l6.appendChild(br);br.addEventListener("click",resetTrabajoUsuario);}
+  if(l6){html(l6,"");let br=document.createElement("button");br.innerHTML="RESET";l6.appendChild(br);br.addEventListener("click",resetTrabajoUsuario);
+    let bd=document.createElement("button");bd.innerHTML="DESHACER";l6.appendChild(bd);bd.addEventListener("click",deshacerUltimoPaso);}
   html($("caja1231"),"");html($("caja1232"),"");msgOK("caja1241","");msgOK("caja1251","");renderInicioUsuario(true);
 }
 
@@ -235,9 +247,10 @@ function onSelect(){
 
 function op2(){
   if(typeof Matriz!=="undefined"&&Matriz.ordenarFilasPorCeros){
-    let antes=cloneM(S.act);S.act=Matriz.ordenarFilasPorCeros(S.act);
-    if(typeof Matriz!=="undefined"&&Matriz.compararMatrices&&Matriz.compararMatrices(S.act,antes)){
-      msgERR("caja1241","LA MATRIZ YA ESTÁ ORDENADA. Elige otra opción");return;}}
+    let antes=cloneM(S.act),ordenado=Matriz.ordenarFilasPorCeros(S.act);
+    if(typeof Matriz!=="undefined"&&Matriz.compararMatrices&&Matriz.compararMatrices(ordenado,antes)){
+      msgERR("caja1241","LA MATRIZ YA ESTÁ ORDENADA. Elige otra opción");return;}
+    S.hist.push(antes);S.act=ordenado;}
   renderPasoFilasAbajo();html($("caja1231"),"");html($("caja1232"),"");
   let ops=document.getElementsByName("option");for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
   if(finalizarSiEscalonadaUsuario())return;
@@ -256,6 +269,7 @@ function op1(){
       msgOK("caja1251","");let A=parseInt(normNumStr(iA.value),10),B=parseInt(normNumStr(iB.value),10);
       if(!Number.isInteger(A)||!Number.isInteger(B)||A<1||B<1||A>S.act.length||B>S.act.length||A===B)throw 0;
       let ii=A-1,jj=B-1;
+      S.hist.push(cloneM(S.act));
       S.act=Matriz.permutarFilas?Matriz.permutarFilas(S.act,ii,jj):(()=>{let m=cloneM(S.act);[m[ii],m[jj]]=[m[jj],m[ii]];return m;})();
       renderPasoPermutar(A,B);
       html($("caja1231"),"");html($("caja1232"),"");let ops=document.getElementsByName("option");
@@ -279,6 +293,7 @@ function op3(){
       msgOK("caja1251","");let a=parseInt(normNumStr(iA.value),10),m=normNumStr(iB.value);
       if(!Number.isInteger(a)||a<1||a>S.act.length||!isNumStr(m)||_Z(simp(m)))throw 0;
       let nueva=cloneM(S.act);for(let j=0;j<nueva[a-1].length;j++)nueva[a-1][j]=divi(nueva[a-1][j],m);
+      S.hist.push(cloneM(S.act));
       S.act=nueva;renderPasoDividir(a,m);
       html($("caja1231"),"");html($("caja1232"),"");let ops=document.getElementsByName("option");
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
@@ -290,7 +305,7 @@ function op3(){
 
 function aplicarCombinacionDesdeCadena(cad){
   if(typeof Matriz==="undefined"||!Matriz.cambiarFila)throw new Error("sinMetodo");
-  S.act=Matriz.cambiarFila(S.act,cad);return {raw:(cad??"").toString()};}
+  return Matriz.cambiarFila(S.act,cad);}
 
 function op4(){
   let lf5=$("caja1231"),lf6=$("caja1232");if(!lf5||!lf6)return;
@@ -305,15 +320,20 @@ function op4(){
   ic.addEventListener("keydown",function(e){
     if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
     try{
-      msgOK("caja1251","");let cad=ic.value;aplicarCombinacionDesdeCadena(cad);
-      if(!rhsIncluyeFilaNoNula(cad))throw 1;
+      msgOK("caja1251","");let cad=ic.value,nuevo=aplicarCombinacionDesdeCadena(cad);
+      if(!rhsIncluyeFilaNoNula(cad)){
+        let mObj=cad.replace(/\s+/g,"").match(/^F(\d+)=/i);
+        throw {tipo:1,fila:mObj?mObj[1]:"i"};
+      }
+      S.hist.push(cloneM(S.act));
+      S.act=nuevo;
       renderPasoCambiar(cad);
       html($("caja1231"),"");html($("caja1232"),"");let ops=document.getElementsByName("option");
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(e2){
-      if(e2===1)msgERR("caja1251","Combinación no válida: el término F_i debe aparecer con coeficiente no nulo.");
-      else msgERR("caja1251","Cadena no válida. Usa F1=2F1+F2+3F3 admitiendo enteros, fracciones o decimales.");}});}
+      if(e2&&e2.tipo===1)msgERR("caja1251",`Combinación no válida: el término F${e2.fila} debe aparecer con coeficiente no nulo. Pulsa RESET e inténtalo de nuevo.`);
+      else msgERR("caja1251","Cadena no válida. Usa F1=2F1+F2+3F3 admitiendo enteros, fracciones o decimales. Pulsa RESET e inténtalo de nuevo.");}});}
 
 function mostrarResultadoFinalAutomatica(E){
   let res=cloneM(E);if(typeof Matriz!=="undefined"&&Matriz.simplificarFilasNumericas)res=Matriz.simplificarFilasNumericas(res);

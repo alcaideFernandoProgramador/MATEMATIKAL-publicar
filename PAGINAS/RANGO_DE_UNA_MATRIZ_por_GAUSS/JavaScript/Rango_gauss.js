@@ -1,4 +1,4 @@
-var S={nf:0,nc:0,np:0,val:[],act:[],orig:[],ant:[],p:1,FS_MAT:"13px",FS_IN:"12px",FS_TIT:"15px",
+var S={nf:0,nc:0,np:0,val:[],act:[],orig:[],ant:[],hist:[],p:1,FS_MAT:"13px",FS_IN:"12px",FS_TIT:"15px",
 MB_TIT:"12px",ALT_SIM:34,MAXH_USER:260,MAXH_AUTO:260};
 
 function $(id){return document.getElementById(id);}function html(el,s){if(el)el.innerHTML=s??"";}
@@ -241,6 +241,16 @@ function resetTrabajoUsuario(){
   let ops=document.getElementsByName("option");for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
 }
 
+function deshacerUltimoPaso(){
+  if(!S.hist||!S.hist.length){msgERR("caja1241","No hay ningún paso que deshacer.");return;}
+  S.act=S.hist.pop();
+  let t=$("tiraUsuario");
+  if(t){if(t.lastChild)t.removeChild(t.lastChild);if(t.lastChild)t.removeChild(t.lastChild);}
+  activarScrollVerticalSiNecesario($("caja21"),S.MAXH_USER);
+  resetTrabajoUsuario();
+  msgOK("caja1241","Se ha deshecho el último paso.");
+}
+
 function finalizarSiEscalonadaUsuario(){
   if(!esEscalonadaLocal(S.act))return false;
   let ini=cloneM(S.orig),E=cloneM(S.act),au=cloneM(E);
@@ -282,6 +292,7 @@ function op1(){
       msgOK("caja1251","");let A=parseInt(normNumStr(iA.value),10),B=parseInt(normNumStr(iB.value),10);
       if(!Number.isInteger(A)||!Number.isInteger(B)||A<1||B<1||A>S.act.length||B>S.act.length||A===B)throw 0;
       let ii=A-1,jj=B-1;
+      S.hist.push(cloneM(S.act));
       S.act=Matriz?.permutarFilas?Matriz.permutarFilas(S.act,ii,jj):(()=>{
         let m=cloneM(S.act);[m[ii],m[jj]]=[m[jj],m[ii]];return m;
       })();
@@ -295,17 +306,19 @@ function op1(){
 function op2(){
   try{
     if(Matriz?.ordenarFilasPorCeros){
-      let antes=cloneM(S.act);S.act=Matriz.ordenarFilasPorCeros(S.act);
-      if(Matriz?.compararMatrices&&Matriz.compararMatrices(S.act,antes)){
+      let antes=cloneM(S.act),ordenado=Matriz.ordenarFilasPorCeros(S.act);
+      if(Matriz?.compararMatrices&&Matriz.compararMatrices(ordenado,antes)){
         msgERR("caja1241","La matriz ya está ordenada.");resetTrabajoUsuario();return;
       }
+      S.hist.push(antes);S.act=ordenado;
       renderPasoFilasAbajo();resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;return;
     }
     if(Matriz?.filasNulasAbajo){
-      let antes=cloneM(S.act);S.act=Matriz.filasNulasAbajo(S.act);
-      if(Matriz?.compararMatrices&&Matriz.compararMatrices(S.act,antes)){
+      let antes=cloneM(S.act),ordenado=Matriz.filasNulasAbajo(S.act);
+      if(Matriz?.compararMatrices&&Matriz.compararMatrices(ordenado,antes)){
         msgERR("caja1241","La matriz ya está ordenada.");resetTrabajoUsuario();return;
       }
+      S.hist.push(antes);S.act=ordenado;
       renderPasoFilasAbajo();resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;return;
     }
     msgERR("caja1241","No existe método de reordenación en la biblioteca.");resetTrabajoUsuario();
@@ -327,6 +340,7 @@ function op3(){
       if(!Number.isInteger(a)||a<1||a>S.act.length||!isNumStr(m)||_Z(simp(m)))throw 0;
       let nueva=cloneM(S.act);
       for(let j=0;j<nueva[a-1].length;j++)nueva[a-1][j]=simp(`(${nueva[a-1][j]})/(${m})`);
+      S.hist.push(cloneM(S.act));
       S.act=nueva;renderPasoDividir(a,m);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
     }catch(_){msgERR("caja1251","Fila válida y divisor numérico distinto de 0.");}
   }
@@ -344,7 +358,7 @@ function op4(){
   if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
   let cad=ic.value;
   try{
-    msgOK("caja1251","");if(!rhsIncluyeFiNoNula(cad))throw 1;aplicarCombinacionDesdeCadena(cad);
+    msgOK("caja1251","");if(!rhsIncluyeFiNoNula(cad))throw 1;S.hist.push(cloneM(S.act));aplicarCombinacionDesdeCadena(cad);
     renderPasoCambiar(cad);resetTrabajoUsuario();if(finalizarSiEscalonadaUsuario())return;
   }catch(ex){
     if(ex===1){
@@ -365,14 +379,16 @@ function onSelect(){
 }
 
 function crearFormulario(){
-  S.act=cloneM(S.val);S.orig=cloneM(S.val);S.ant=cloneM(S.val);
+  S.act=cloneM(S.val);S.orig=cloneM(S.val);S.ant=cloneM(S.val);S.hist=[];
   let lt=$("caja121");
   if(lt){html(lt,"");let tit=document.createElement("h3");tit.innerHTML="OPCIONES PARA MODIFICAR LA MATRIZ";lt.appendChild(tit);}
   let l1=$("caja1221"),l2=$("caja1222"),l3=$("caja1223"),l4=$("caja1224"),l5=$("caja1225"),l6=$("caja1252");
   function addOpt(l,id,val,txt,sym){
     if(!l)return;html(l,"");let o=document.createElement("input");o.type="radio";o.value=val;o.name="option";o.id=id;
     l.appendChild(o);let a=document.createElement("label"),b=document.createElement("label");
-    a.style.display="inline-block";a.style.width="75%";a.innerHTML=txt;b.innerHTML=sym;l.appendChild(a);l.appendChild(b);
+    a.style.display="inline-block";a.style.width="75%";a.innerHTML=txt;b.innerHTML=sym;
+    a.setAttribute("for",id);b.setAttribute("for",id);
+    l.appendChild(a);l.appendChild(b);
   }
   addOpt(l1,"inputcorto1","opcion1","Opción 1: Permutar el orden de dos filas","F<sub>i</sub> ↔ F<sub>j</sub>");
   addOpt(l2,"inputcorto2","opcion2","Opción 2: Reordenar las filas dejando abajo las que más ceros tengan a la izquierda","F↓");
@@ -380,7 +396,8 @@ function crearFormulario(){
   addOpt(l4,"inputcorto4","opcion4","Opción 4: Cambiar una fila por combinación lineal de varias filas","F<sub>i</sub>→aF<sub>i</sub>+bF<sub>j</sub>+cF<sub>k</sub>");
   if(l5){html(l5,"");l5.style.display="flex";l5.style.justifyContent="flex-start";l5.style.alignItems="center";
   let b=document.createElement("button");b.innerHTML="Seleccionar";l5.appendChild(b);b.addEventListener("click",onSelect);}
-  if(l6){html(l6,"");let br=document.createElement("button");br.innerHTML="RESET";l6.appendChild(br);br.addEventListener("click",resetTrabajoUsuario);}
+  if(l6){html(l6,"");let br=document.createElement("button");br.innerHTML="RESET";l6.appendChild(br);br.addEventListener("click",resetTrabajoUsuario);
+  let bd=document.createElement("button");bd.innerHTML="DESHACER";l6.appendChild(bd);bd.addEventListener("click",deshacerUltimoPaso);}
   html($("caja1231"),"");html($("caja1232"),"");msgOK("caja1241","");msgOK("caja1251","");renderInicioUsuario(true);
 }
 

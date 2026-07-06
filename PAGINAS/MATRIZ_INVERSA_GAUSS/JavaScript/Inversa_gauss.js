@@ -9,6 +9,7 @@ var S = {
   val: [],       // matriz original n×n (strings fracción)
   aug: [],       // matriz ampliada actual n×2n
   origAug: [],   // matriz ampliada inicial (para reset)
+  hist: [],      // pila de matrices ampliadas anteriores (para DESHACER)
   hayUsuario: false
 };
 
@@ -33,7 +34,7 @@ function toFrac(s){
   if(/^[-+]?(\d+\.\d*|\.\d+)$/.test(s)){
     return ExpresionAlgebraica.pasarAFraccion(s);
   }
-  return s;
+  throw new Error("Valor no numérico: "+s);
 }
 
 function _isZero(v){
@@ -374,11 +375,56 @@ function mostrarResultadoUsuario(){
   c12.appendChild(note);
 }
 
+/* ---------- Detección de matriz singular durante el modo usuario ---------- */
+
+function filaNulaIzquierda(row, n){
+  for(var j=0;j<n;j++){ if(!_isZero(row[j])) return false; }
+  return true;
+}
+
+function haySingularUsuario(){
+  var n = S.n;
+  for(var i=0;i<n;i++){
+    if(filaNulaIzquierda(S.aug[i], n)) return true;
+  }
+  return false;
+}
+
+function mostrarSingularUsuario(){
+  var c12 = $("caja12"); if(!c12) return;
+  html(c12,"");
+  var h = document.createElement("h3");
+  h.style.cssText="font-size:14px;font-weight:800;margin:0 0 10px;padding:6px 10px;background:var(--soft);border:1px solid var(--border);border-radius:var(--radius-sm);";
+  h.innerHTML = "MATRIZ SINGULAR";
+  c12.appendChild(h);
+
+  var div=document.createElement("div");
+  div.className="inv-singular";
+  div.innerHTML="Has obtenido una fila con la parte izquierda completamente nula: la matriz <strong>no puede transformarse en la identidad</strong>. Esto confirma que <strong>A es singular</strong> (det(A) = 0) y no tiene inversa.";
+  c12.appendChild(div);
+
+  var bNueva=document.createElement("button");
+  bNueva.textContent="Probar con otra matriz";
+  bNueva.style.marginTop="10px";
+  bNueva.addEventListener("click", iniciarEntradaDatos);
+  c12.appendChild(bNueva);
+}
+
 /* ---------- Formulario de opciones ---------- */
+
+function deshacerUltimoPaso(){
+  if(!S.hist || !S.hist.length){ _msgOp("No hay ningún paso que deshacer."); return; }
+  S.aug = S.hist.pop();
+  var t=$("tiraUsuario");
+  if(t){ if(t.lastChild) t.removeChild(t.lastChild); if(t.lastChild) t.removeChild(t.lastChild); }
+  _afterExec();
+  _msgOp("Se ha deshecho el último paso.");
+}
 
 function crearFormulario(){
   S.aug = buildAug(S.val, S.n);
   S.origAug = cloneM(S.aug);
+  S.hist = [];
   renderInicioUsuario();
 
   var c121=$("caja121"), c122=$("caja122"), c123=$("caja123");
@@ -393,7 +439,7 @@ function crearFormulario(){
     wrap.style.cssText="display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #e5e7eb;";
     var o=document.createElement("input"); o.type="radio"; o.name="invOp"; o.id=pid; o.value=val;
     var la=document.createElement("label"); la.htmlFor=pid; la.style.cssText="flex:1;font-size:12px;"; la.textContent=txt;
-    var lb=document.createElement("span"); lb.style.cssText="font-size:12px;color:var(--muted);";
+    var lb=document.createElement("label"); lb.htmlFor=pid; lb.style.cssText="font-size:12px;color:var(--muted);";
     katex.render(sym, lb, {throwOnError:false, displayMode:false});
     wrap.appendChild(o); wrap.appendChild(la); wrap.appendChild(lb);
     c122.appendChild(wrap);
@@ -409,7 +455,9 @@ function crearFormulario(){
   bReset.addEventListener("click", function(){
     _afterExec();
   });
-  btnBar.appendChild(bSel); btnBar.appendChild(bReset);
+  var bUndo=document.createElement("button"); bUndo.textContent="DESHACER";
+  bUndo.addEventListener("click", deshacerUltimoPaso);
+  btnBar.appendChild(bSel); btnBar.appendChild(bReset); btnBar.appendChild(bUndo);
   c122.appendChild(btnBar);
 
   html(c123,""); html(c1241||{},"")||null;
@@ -462,11 +510,13 @@ function op1(){
       _msgOp("Introduce dos filas válidas entre 1 y "+n+"."); return;
     }
     if(a===b){ _msgOp("Las dos filas deben ser distintas."); return; }
+    S.hist.push(cloneM(S.aug));
     S.aug = swapRows(S.aug, a-1, b-1);
     var aa=a, bb=b;
     renderPasoUsuario(function(el){
       katex.render("F_{"+aa+"}\\leftrightarrow F_{"+bb+"}", el, {throwOnError:false});
     });
+    if(haySingularUsuario()){ mostrarSingularUsuario(); return; }
     if(esIdentidadIzquierda()){ mostrarResultadoUsuario(); return; }
     _afterExec();
   }
@@ -491,13 +541,17 @@ function op2(){
     var fi=parseInt(_strip(iI.value),10);
     var n=S.n;
     if(!Number.isInteger(fi)||fi<1||fi>n){ _msgOp("Introduce un número de fila válido entre 1 y "+n+"."); return; }
-    var ks = toFrac(_strip(iK.value));
+    var ks;
+    try{ ks = toFrac(_strip(iK.value)); }
+    catch(e){ _msgOp("El divisor introducido no es un número válido."); return; }
     if(!ks || _isZero(ks)){ _msgOp("El divisor no puede ser cero."); return; }
     var fi2=fi;
+    S.hist.push(cloneM(S.aug));
     S.aug = divRow(S.aug, fi-1, ks);
     renderPasoUsuario(function(el){
       katex.render("F_{"+fi2+"}\\to\\dfrac{1}{"+latexFrac(ks)+"}F_{"+fi2+"}", el, {throwOnError:false});
     });
+    if(haySingularUsuario()){ mostrarSingularUsuario(); return; }
     if(esIdentidadIzquierda()){ mostrarResultadoUsuario(); return; }
     _afterExec();
   }
@@ -592,6 +646,7 @@ function op3(){
       }
       newRow.push(acc);
     }
+    S.hist.push(cloneM(S.aug));
     S.aug=S.aug.map(function(row,i){ return i===target ? newRow : row; });
 
     var capturedTerms=obj.terms.slice(), capturedLhs=obj.lhs;
@@ -602,6 +657,7 @@ function op3(){
       }
       katex.render(latex, el, {throwOnError:false});
     });
+    if(haySingularUsuario()){ mostrarSingularUsuario(); return; }
     if(esIdentidadIzquierda()){ mostrarResultadoUsuario(); return; }
     _afterExec();
   }
@@ -627,10 +683,12 @@ function op4(){
     _afterExec();
     return;
   }
+  S.hist.push(cloneM(S.aug));
   S.aug=idx.map(function(i){ return S.aug[i]; });
   renderPasoUsuario(function(el){
     katex.render("F_{\\downarrow}", el, {throwOnError:false});
   });
+  if(haySingularUsuario()){ mostrarSingularUsuario(); return; }
   if(esIdentidadIzquierda()){ mostrarResultadoUsuario(); return; }
   _afterExec();
 }
@@ -640,8 +698,14 @@ function op4(){
 function iniciarEntradaDatos(){
   var c11121=$("caja11121"), c11122=$("caja11122"), c112=$("caja112");
   var c21=$("caja21"), c221=$("caja221"), c222=$("caja222");
-  // No limpiar caja12: sus hijos (caja121, caja122...) están definidos en el HTML
-  // y crearFormulario() los necesita por id. Solo vaciamos las zonas de datos y resultados.
+  // Si caja12 fue sustituida por completo (resultado o singular), reconstruir su esqueleto
+  // para que crearFormulario() pueda volver a encontrar sus hijos por id.
+  var c12=$("caja12");
+  if(c12 && !$("caja121")){
+    html(c12, '<div id="caja121"></div><div id="caja122"></div><div id="caja123"></div>'+
+      '<div id="caja124b"><div id="caja1241"></div><div id="caja1242"></div></div>'+
+      '<div id="caja125"><div id="caja1251"></div><div id="caja1252"></div></div>');
+  }
   [c11121,c11122,c112,c21,c221,c222].forEach(function(el){ if(el) html(el,""); });
   // Vaciar los hijos de caja12 individualmente sin destruirlos del DOM
   ["caja121","caja122","caja123","caja1241","caja1251","caja1252"].forEach(function(id){
@@ -706,20 +770,6 @@ function crearInputMatriz(n){
       mat.push(fila);
     }
 
-    // Comprobar si es invertible (det ≠ 0)
-    try{
-      var detStr=Matriz.determinante(mat);
-      if(detStr!==null){
-        var detSimp=ExpresionAlgebraica.simplificar(detStr);
-        if(detSimp==="0"){
-          inputs.forEach(function(inp){ inp.value=""; });
-          inputs[0].focus();
-          _msgErr("⚠ Matriz singular (det = 0): no tiene inversa. Introduce una matriz distinta.");
-          return;
-        }
-      }
-    }catch(e){}
-
     S.val=mat;
     _msgOk("Matriz "+n+"×"+n+" confirmada");
 
@@ -759,4 +809,6 @@ function crearInputMatriz(n){
 /* ---------- Arranque ---------- */
 document.addEventListener("DOMContentLoaded", function(){
   iniciarEntradaDatos();
+  var bReiniciar = $("btnReiniciarMatriz");
+  if(bReiniciar) bReiniciar.addEventListener("click", iniciarEntradaDatos);
 });

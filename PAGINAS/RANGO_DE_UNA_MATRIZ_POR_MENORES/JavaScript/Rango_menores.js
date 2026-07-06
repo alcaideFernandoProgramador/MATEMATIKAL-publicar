@@ -235,9 +235,9 @@ const opciones=["Elegir un menor de orden 2 no nulo","Ampliar a un menor no nulo
 "Resolver el rango de forma automática (no recomendado)"];
 opciones.forEach((texto,i)=>{
 const filaO=document.createElement("div");filaO.style.cssText="display:flex;align-items:center;height:20px;width:99%;";
-const input=document.createElement("input");input.type="radio";input.name="option";input.value=`opcion${i+1}`;input.className="inputCorto";
+const input=document.createElement("input");input.type="radio";input.name="option";input.value=`opcion${i+1}`;input.id=`opcionMenores${i+1}`;input.className="inputCorto";
 input.style.cssText="transform:scale(0.8);margin-left:10px;margin-right:8px;";
-const lab=document.createElement("label");lab.textContent=`Opción ${i+1}: ${texto}`;lab.style.fontSize="16px";
+const lab=document.createElement("label");lab.htmlFor=input.id;lab.textContent=`Opción ${i+1}: ${texto}`;lab.style.fontSize="16px";
 filaO.appendChild(input);filaO.appendChild(lab);cajaFormulario.appendChild(filaO);
 });
 let caja122=document.createElement("div");caja122.id="caja122";caja122.style.cssText="display:flex;width:99%;margin-top:5px;";cajaFormulario.appendChild(caja122);

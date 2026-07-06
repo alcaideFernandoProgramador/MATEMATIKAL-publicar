@@ -2354,9 +2354,9 @@ class Validar {
     pila.push({ expr: `${aExpr}${token}${bExpr}`, prio });} else {return [false, `Error: token desconocido '${token}'`];}}
     if (pila.length !== 1) return [false,"Error: no es una expresión válida"];
     return [true,salida,pila[0].expr];}
-  static expresionAlgebraica(expr) {expr=expr.replace(/(^\s*\+?)|(\()\s*\+/g, '$2');
+  static expresionAlgebraica(expr) {expr=String(expr ?? "");expr=expr.replace(/(^\s*\+?)|(\()\s*\+/g, '$2');
     if (typeof ExpresionAlgebraica?.notacionConProductos === "function") expr = ExpresionAlgebraica.notacionConProductos(expr);
-    expr = String(expr ?? "").replace(/·/g, "*");expr = expr.replace(/\^\s*\{\s*t\s*\}/g, '^t').replace(/\^\s*\{\s*-1\s*\}/g, '^(0-1)').replace(/\^\s*-\s*1\b/g, '^(0-1)');
+    expr = expr.replace(/·/g, "*");expr = expr.replace(/\^\s*\{\s*t\s*\}/g, '^t').replace(/\^\s*\{\s*-1\s*\}/g, '^(0-1)').replace(/\^\s*-\s*1\b/g, '^(0-1)');
     funciones.sort((a, b) => b.length - a.length);
     const validos = /^[A-Za-z\u0391-\u03A9\u03B1-\u03C90-9+\-*/^()._·\s]*$/;if (!validos.test(expr)) return [false,"Error: caracteres no válidos"];
     const abrir = (expr.match(/\(/g) || []).length, cerrar = (expr.match(/\)/g) || []).length;if (abrir !== cerrar) return [false,"Error: paréntesis desbalanceados "]
@@ -2391,8 +2391,8 @@ class Validar {
         operadores.push(t);} else return [false,"Error: toen inválido"];}
     while (operadores.length) { if (operadores.at(-1) === "(") return [false,"Error: paréntesis desbalanceados"]; salida.push(operadores.pop()); }
     const pila = [];const prioridad = { "+": 1, "-": 1, "*": 2, "/": 2, "^": 3 };
-    const reNumero = /^(?:\d+\.?\d*|\.\d+)$/;const reSoloLetras = /^[A-Za-z\u0391-\u03A9\u03B1-\u03C9]+$/;const reLetraSubNum = /^[A-Za-z\u0391-\u03A9\u03B1-\u03C9]_[0-9]+$/;
-    for (const token of salida) {if (reNumero.test(token) ||((reSoloLetras.test(token) || reLetraSubNum.test(token)) && !funciones.includes(token))) 
+    const reNumero = /^(?:\d+\.?\d*|\.\d+)$/;
+    for (const token of salida) {if (reNumero.test(token) || (esIdent(token) && !funciones.includes(token)))
     {pila.push({ expr: token, prio: 4 });} else if (funciones.includes(token)) {if (!pila.length) return false;const arg = pila.pop();
       pila.push({ expr: `${token}(${arg.expr})`, prio: 4 });} 
       else if ("+-*/^".includes(token)) { if (pila.length < 2) return [false, "Error: no es una expresión válida"];

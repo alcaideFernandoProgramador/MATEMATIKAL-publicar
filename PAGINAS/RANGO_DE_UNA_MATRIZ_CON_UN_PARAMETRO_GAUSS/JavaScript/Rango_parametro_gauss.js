@@ -181,9 +181,9 @@ function continuar(){
   function _clearUI(){caja127.innerHTML="";caja128.innerHTML="";_uncheck();}
   function _after(){_appendMatrizTrabajo(matrizActualExpresiones);if(!_enSol&&Matriz.esMatrizEscalonada(matrizActualExpresiones))solucionEscalonada(false);}
   function _radioRow(val,txt,sub){
-    let row=document.createElement("div");row.className="optionRow";let r=document.createElement("input");r.type="radio";r.name="option";r.value=val;
-    let lab=document.createElement("label");lab.innerHTML=txt;row.appendChild(r);row.appendChild(lab);
-    if(sub){let lab2=document.createElement("label");lab2.className="muted";lab2.innerHTML=sub;row.appendChild(lab2);}form.appendChild(row);
+    let row=document.createElement("div");row.className="optionRow";let r=document.createElement("input");r.type="radio";r.name="option";r.value=val;r.id="rpg_"+val;
+    let lab=document.createElement("label");lab.htmlFor=r.id;lab.innerHTML=txt;row.appendChild(r);row.appendChild(lab);
+    if(sub){let lab2=document.createElement("label");lab2.htmlFor=r.id;lab2.className="muted";lab2.innerHTML=sub;row.appendChild(lab2);}form.appendChild(row);
   }
   _radioRow("op1","Opción 1: Permutar el orden de dos filas","(Fᵢ ↔ Fⱼ)");
   _radioRow("op2","Opción 2: Permutar el orden de dos columnas","(Cᵢ ↔ Cⱼ)");

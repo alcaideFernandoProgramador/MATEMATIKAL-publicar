@@ -194,9 +194,9 @@ function crearFormulario(){
   let ops=[["op1","Opción 1: Permutar el orden de dos filas","(Fᵢ ↔ Fⱼ)"],["op2","Opción 2: Permutar el orden de dos columnas","(Cᵢ ↔ Cⱼ)"],["op3","Opción 3: Reordenar filas (más ceros a la izquierda abajo)","(F↓)"],["op4","Opción 4: Dividir una fila por un número no nulo","(Fₐ→1/m Fₐ)"],["op5","Opción 5: Combinación lineal de filas","(F1=2F1-3/2F2+F3)"],["op6","Opción 6: Eliminar las filas nulas","(F nulas)"]];
   for(let k=0;k<ops.length;k++){
     let row=document.createElement("div");row.style.display="flex";row.style.alignItems="center";row.style.gap="8px";row.style.padding="6px 4px";row.style.borderBottom="1px solid #e5e7eb";
-    let r=document.createElement("input");r.type="radio";r.name="opt";r.value=ops[k][0];
-    let l=document.createElement("label");l.innerHTML=ops[k][1];
-    let b=document.createElement("span");b.innerHTML=ops[k][2];b.style.color="#6b7280";b.style.fontWeight="800";b.style.fontSize="12px";
+    let r=document.createElement("input");r.type="radio";r.name="opt";r.value=ops[k][0];r.id="fsg_opt_"+k;
+    let l=document.createElement("label");l.htmlFor=r.id;l.innerHTML=ops[k][1];
+    let b=document.createElement("label");b.htmlFor=r.id;b.innerHTML=ops[k][2];b.style.color="#6b7280";b.style.fontWeight="800";b.style.fontSize="12px";
     row.appendChild(r);row.appendChild(l);row.appendChild(b);cont.appendChild(row);
   }
   let actions=document.createElement("div");actions.style.display="flex";actions.style.justifyContent="space-between";actions.style.gap="8px";actions.style.paddingTop="10px";caja12.appendChild(actions);
