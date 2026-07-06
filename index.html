@@ -39,15 +39,15 @@ html,body{max-width:100%;overflow-x:hidden}
 
 .cabecera{background:#071a09;color:#fff;padding:2rem 2rem 1.8rem;margin-bottom:.75rem}
 
-.contenedor{max-width:1200px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;gap:1.15rem;align-items:flex-start}
+.contenedor{max-width:1440px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;flex-wrap:wrap;gap:1.15rem;align-items:flex-start}
 .menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:280px;position:sticky;top:1rem}
 .menu-lateral h2{margin:.25rem 0 .5rem;font-size:1.25rem}
 .subtitulo-paginas{margin:0 0 .75rem;font-size:.9rem;color:#555}
 .menu-lateral ul{list-style:none;padding:0;margin:0}
-.menu-lateral li{padding-left:15pt}
+.menu-lateral li{padding-left:1cm}
 .menu-lateral li+li{margin-top:.42rem}
-.menu-lateral a{text-decoration:none;color:#283593;font-size:.95rem}
-.menu-lateral a:hover{text-decoration:underline}
+.menu-lateral a{display:block;text-decoration:none;color:#283593;font-size:.95rem;font-weight:700;background:#f4f6ff;border:1px solid #dfe4ff;border-radius:999px;padding:.42rem .72rem}
+.menu-lateral a:hover{background:#eaf0ff;text-decoration:none}
 
 .contenido{flex:1;background:#fff;border-radius:.75rem;padding:1.5rem 1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .contenido h2{margin:0 0 .7rem;font-size:1.55rem;color:#1d275f}
@@ -59,12 +59,18 @@ html,body{max-width:100%;overflow-x:hidden}
 .materiasBox{margin:.45rem 0 .8rem;display:flex;flex-direction:column;gap:.2rem}
 .materiasRow{font-weight:800;margin:0;padding:0;color:#222}
 
-.bloque-destacados{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:.95rem}
+.herramientasFull{width:100%;background:#fff;border-radius:.75rem;padding:1.5rem 1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.herramientasFull h2{margin:0 0 .7rem;font-size:1.55rem;color:#1d275f}
+.herramientasFull>p{margin:.55rem 0;color:#333}
+.bloque-destacados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:.95rem}
 .tarjeta{background:#fafafe;border:1px solid #e7e9f6;border-radius:.8rem;padding:1rem 1rem .95rem}
 .tarjeta h3{margin-top:0}
 .tarjeta p{margin:.35rem 0 .7rem}
 .tarjeta a{color:#283593;font-weight:700;text-decoration:none}
 .tarjeta a:hover{text-decoration:underline}
+.formulaTarjeta{display:block;margin:.55rem 0 .75rem;text-align:center;font-size:1.05rem}
+.formulaTarjeta math{font-size:1em}
+.ecuacionesTarjeta{display:block;text-align:center;margin:.35rem 0}
 
 .bloque-publico{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
 .publicoBox{background:#fafafe;border:1px solid #e7e9f6;border-radius:.8rem;padding:1rem}
@@ -83,6 +89,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .cabecera h1{font-size:1.95rem}
   .contenedor{padding:0 1rem}
   .menu-lateral{position:static}
+  .bloque-destacados{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:900px){
   .contenedor{flex-direction:column;align-items:stretch}
@@ -90,6 +97,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .contenido{width:100%;padding:1.2rem 1.25rem}
   .menu-lateral li{padding-left:0}
   .bloque-destacados,.bloque-publico{grid-template-columns:1fr}
+  .herramientasFull{padding:1.2rem 1.25rem}
 }
 @media (max-width:480px){
   body{padding:0;max-width:100%;margin:0 auto}
@@ -97,7 +105,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .cabecera h1{font-size:1.65rem}
   .cabecera p{font-size:.95rem}
   .contenedor{padding:0 .85rem}
-  .menu-lateral,.contenido{width:100%;max-width:100%}
+  .menu-lateral,.contenido,.herramientasFull{width:100%;max-width:100%}
   .menu-lateral a{font-size:1rem}
   .lista-materias,.lista-beneficios,.lista-faq{margin-left:1.05rem}
 }
@@ -118,7 +126,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <polyline points="20,86 31,86 41,52 53,100 63,68 82,68" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="100" y="72" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="52" fill="#ffffff" letter-spacing="-1">Matematikal</text>
   <line x1="100" y1="84" x2="840" y2="84" stroke="rgba(74,222,128,0.35)" stroke-width="1.2" stroke-linecap="round"/>
-  <text x="102" y="106" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#4ade80" letter-spacing="1.8">MATEMÁTICAS · ESO y Bachillerato</text>
+  <text x="102" y="106" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#4ade80" letter-spacing="1.8">MATEMÁTICAS BACHILLERATO. ALGEBRA LINEAL</text>
   <text x="102" y="130" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="rgba(255,255,255,0.5)">Herramientas interactivas</text>
 </svg>
 </header>
@@ -202,66 +210,6 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 
 <section>
-<h2>Herramientas destacadas</h2>
-<p>Estas son algunas de las páginas principales del sitio, con acceso directo y una breve explicación de para qué sirve cada una.</p>
-<div class="bloque-destacados">
-<article class="tarjeta">
-<h3>Operaciones con matrices</h3>
-<p>Permite trabajar con matrices y practicar operaciones habituales de forma ordenada. Es un buen punto de partida para familiarizarse con la estructura y manipulación básica de matrices.</p>
-<a href="/operaciones-con-matrices.html">Ir a operaciones con matrices</a>
-</article>
-
-<article class="tarjeta">
-<h3>Matriz escalonada</h3>
-<p>Herramienta pensada para escalonar matrices mediante transformaciones elementales. Resulta especialmente útil para estudiar procedimientos de Gauss paso a paso.</p>
-<a href="/matriz-escalonada.html">Ir a matriz escalonada</a>
-</article>
-
-<article class="tarjeta">
-<h3>Cálculo de determinantes</h3>
-<p>Página orientada al trabajo con determinantes de matrices cuadradas. Puede servir como práctica, comprobación de resultados y apoyo para ejercicios de examen.</p>
-<a href="/calculo-determinantes.html">Ir a cálculo de determinantes</a>
-</article>
-
-<article class="tarjeta">
-<h3>Rango de una matriz</h3>
-<p>Incluye recursos para calcular el rango de una matriz numérica por el método de Gauss o por el método de los menores, así como casos con parámetro.</p>
-<a href="/rango-gauss.html">Ir a rango por Gauss</a>
-</article>
-
-<article class="tarjeta">
-<h3>Sistemas lineales</h3>
-<p>Permite resolver sistemas de ecuaciones lineales mediante el método de Gauss y estudiar también sistemas dependientes de un parámetro.</p>
-<a href="/metodo-gauss-sistemas-ecuaciones.html">Ir a sistemas lineales</a>
-</article>
-
-<article class="tarjeta">
-<h3>Casos con parámetro</h3>
-<p>Las páginas dedicadas a matrices y sistemas con parámetro ayudan a estudiar cómo cambian el rango o la compatibilidad según el valor del parámetro.</p>
-<a href="/sistemas-gauss-con-parametro.html">Ir a sistemas con parámetro</a>
-</article>
-
-<article class="tarjeta">
-<h3>Ecuaciones matriciales</h3>
-<p>Resuelve ecuaciones del tipo AX=B, XA=B, AXB=C, AX+BX=C y similares mediante factorización e inversas. La herramienta detecta la estrategia y muestra la resolución paso a paso.</p>
-<a href="/ecuaciones-matriciales.html">Ir a ecuaciones matriciales</a>
-</article>
-
-<article class="tarjeta">
-<h3>Matrices que cumplen condiciones</h3>
-<p>Calcula matrices que conmutan con una matriz dada, resuelve ecuaciones del tipo AX+XB=C y estudia matrices con parámetros que deben verificar una condición lineal.</p>
-<a href="/matrices-con-condiciones.html">Ir a matrices que cumplen condiciones</a>
-</article>
-
-<article class="tarjeta">
-<h3>Sistemas de ecuaciones matriciales</h3>
-<p>Trabaja sistemas de dos ecuaciones lineales con dos incógnitas matriciales X e Y, como X+Y=A y X-Y=B, comprobando el determinante del sistema y resolviendo por el método de reducción de incógnitas.</p>
-<a href="/sistemas-ecuaciones-matriciales.html">Ir a sistemas de ecuaciones matriciales</a>
-</article>
-</div>
-</section>
-
-<section>
 <h2>Para quién está pensada esta web</h2>
 <div class="bloque-publico">
 <div class="publicoBox">
@@ -293,6 +241,115 @@ html,body{max-width:100%;overflow-x:hidden}
 </ul>
 </section>
 </main>
+
+<section class="herramientasFull">
+<h2>Herramientas destacadas</h2>
+<p>Todas las páginas principales del sitio están reunidas aquí con una explicación breve de su utilidad. Puedes entrar directamente en la herramienta que corresponda al ejercicio que estés trabajando.</p>
+<div class="bloque-destacados">
+<article class="tarjeta">
+<h3>Operaciones con matrices</h3>
+<p>Permite practicar suma, resta, producto, potencia, inversa y expresiones simples o complicadas de matrices, cuidando la compatibilidad de dimensiones y el orden de las operaciones.</p>
+<a href="/operaciones-con-matrices.html">Ir a operaciones con matrices</a>
+</article>
+
+<article class="tarjeta">
+<h3>Matriz escalonada</h3>
+<p>Permite transformar una matriz en una matriz equivalente escalonada mediante operaciones elementales por filas, mostrando el proceso de forma ordenada.</p>
+<a href="/matriz-escalonada.html">Ir a matriz escalonada</a>
+</article>
+
+<article class="tarjeta">
+<h3>Matriz inversa por Gauss-Jordan</h3>
+<p>Calcula la inversa de una matriz cuadrada usando el método de Gauss-Jordan, mostrando el trabajo con la matriz ampliada y las transformaciones por filas.</p>
+<a href="/matriz-inversa-gauss.html">Ir a inversa por Gauss-Jordan</a>
+</article>
+
+<article class="tarjeta">
+<h3>Matriz inversa por adjunta</h3>
+<p>Obtiene la inversa a partir de la fórmula clásica en la que intervienen el determinante y la matriz adjunta transpuesta.</p>
+<div class="formulaTarjeta"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>A</mi><mn>-1</mn></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>det</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo></mrow></mfrac><mo>·</mo><msup><mrow><mo fence="false">[</mo><mi>Adj</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo><mo fence="false">]</mo></mrow><mi>t</mi></msup></mrow></math></div>
+<a href="/matriz-inversa-adjunta.html">Ir a inversa por adjunta</a>
+</article>
+
+<article class="tarjeta">
+<h3>Ecuaciones matriciales</h3>
+<p>Resuelve ecuaciones del tipo:<br>
+<span class="ecuacionesTarjeta">AX=B &nbsp;&nbsp; XA=B &nbsp;&nbsp; AXB=C &nbsp;&nbsp; AX+BX=C</span>
+y otras formas habituales despejando la incógnita y calculando inversas si es preciso.</p>
+<a href="/ecuaciones-matriciales.html">Ir a ecuaciones matriciales</a>
+</article>
+
+<article class="tarjeta">
+<h3>Matrices que cumplen condiciones</h3>
+<p>Busca matrices que verifican condiciones como:<br>
+<span class="ecuacionesTarjeta">AX=XA, &nbsp;&nbsp; AX+XB=C</span>
+o expresiones lineales con matrices e incógnitas matriciales.</p>
+<a href="/matrices-con-condiciones.html">Ir a matrices que cumplen condiciones</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas de ecuaciones matriciales</h3>
+<p>Trabaja sistemas con dos incógnitas matriciales, por ejemplo:</p>
+<div class="formulaTarjeta"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>{</mo><mtable><mtr><mtd><mi>X</mi><mo>+</mo><mi>Y</mi><mo>=</mo><mi>A</mi></mtd></mtr><mtr><mtd><mi>X</mi><mo>-</mo><mi>Y</mi><mo>=</mo><mi>B</mi></mtd></mtr></mtable></mrow></math></div>
+<p>usando el método habitual de reducción de incógnitas.</p>
+<a href="/sistemas-ecuaciones-matriciales.html">Ir a sistemas de ecuaciones matriciales</a>
+</article>
+
+<article class="tarjeta">
+<h3>Cálculo de determinantes</h3>
+<p>Permite calcular determinantes de matrices cuadradas y revisar procedimientos útiles para ejercicios de rango, inversas y discusión de sistemas.</p>
+<a href="/calculo-determinantes.html">Ir a cálculo de determinantes</a>
+</article>
+
+<article class="tarjeta">
+<h3>Rango por Gauss</h3>
+<p>Calcula el rango de una matriz mediante escalonamiento, contando las filas no nulas después de aplicar transformaciones elementales.</p>
+<a href="/rango-gauss.html">Ir a rango por Gauss</a>
+</article>
+
+<article class="tarjeta">
+<h3>Rango por menores</h3>
+<p>Estudia el rango buscando menores no nulos, una técnica especialmente conectada con determinantes y criterios teóricos de dependencia lineal.</p>
+<a href="/rango-menores.html">Ir a rango por menores</a>
+</article>
+
+<article class="tarjeta">
+<h3>Rango con parámetro por Gauss</h3>
+<p>Analiza matrices dependientes de un parámetro mediante escalonamiento, separando los valores que cambian el rango final.</p>
+<a href="/rango-parametro-gauss.html">Ir a rango con parámetro por Gauss</a>
+</article>
+
+<article class="tarjeta">
+<h3>Rango con parámetro por menores</h3>
+<p>Discute el rango de una matriz con parámetro usando menores, determinantes y estudio de casos según los valores especiales.</p>
+<a href="/rango-parametro-menores.html">Ir a rango con parámetro por menores</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas por Gauss</h3>
+<p>Resuelve sistemas de ecuaciones lineales mediante eliminación de Gauss, mostrando las transformaciones hasta llegar a la solución.</p>
+<a href="/metodo-gauss-sistemas-ecuaciones.html">Ir a sistemas por Gauss</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas por Rouché-Frobenius</h3>
+<p>Estudia la compatibilidad y obtiene, en su caso, la solución o soluciones de un sistema comparando rangos de la matriz de coeficientes y la matriz ampliada y aplicando el teorema de Rouché-Frobenius.</p>
+<a href="/sistemas-rouche-frobenius.html">Ir a sistemas por Rouché-Frobenius</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas con parámetro por Gauss</h3>
+<p>Discute y resuelve sistemas dependientes de un parámetro mediante eliminación gaussiana, distinguiendo los casos según los valores críticos.</p>
+<a href="/sistemas-gauss-con-parametro.html">Ir a sistemas con parámetro por Gauss</a>
+</article>
+
+<article class="tarjeta">
+<h3>Sistemas con parámetro por Rouché-Frobenius</h3>
+<p>Analiza sistemas con parámetro mediante rangos y aplicando el teorema de Rouché-Frobenius, clasificando cuándo son compatibles determinados, compatibles indeterminados o incompatibles.</p>
+<a href="/sistemas-rouche-con-parametro.html">Ir a sistemas con parámetro por Rouché-Frobenius</a>
+</article>
+</div>
+</section>
 </div>
 
 <footer class="siteFooter">
