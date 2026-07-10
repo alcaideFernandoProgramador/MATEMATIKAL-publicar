@@ -76,6 +76,9 @@ body{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-
 .katex,.katex *{-webkit-font-smoothing:auto!important;-moz-osx-font-smoothing:auto!important;text-rendering:auto!important;}
 .katex{color:var(--mk-math-color,var(--text-primary,var(--ink,#111827)));}
 .katex .mrel{font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre","Segoe UI Symbol",Arial,sans-serif!important;font-style:normal!important;font-weight:400!important;}
+/* \not (used by \neq, \notin...) needs KaTeX's own font: its slash glyph is a
+   private-use character that system math fonts don't have, so it breaks. */
+.katex .vbox .mrel{font-family:KaTeX_Main,"Times New Roman",serif!important;}
 
 /* Keep plain-text algebra labels crisp when they are bold and small. */
 html body .op-box strong,

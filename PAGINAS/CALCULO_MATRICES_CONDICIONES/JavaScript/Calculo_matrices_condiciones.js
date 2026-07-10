@@ -420,13 +420,11 @@
 
     for(const expr of exprs){
       const exprVars = collectExprVars(expr, vars);
-      if(exprVars.length === 0)
-        throw 'Sin solución: la condición produce una contradicción numérica.';
+      if(exprVars.length === 0) return []; // contradicción numérica sin parámetros: no hay solución
       if(exprVars.length === 1){
         const v = exprVars[0];
         const analyzed = Resolver.analizarEcuacion(expr);
-        if(analyzed.estado === 'sin_soluciones_reales')
-          throw 'Sin solución real para el parámetro ' + v + '.';
+        if(analyzed.estado === 'sin_soluciones_reales'){ candidateMap[v] = []; continue; }
         if(!analyzed.soluciones || analyzed.soluciones.length === 0)
           throw 'No se pudo resolver automáticamente la ecuación en ' + v + '.';
         const sols = analyzed.soluciones.map(sol => {
@@ -434,15 +432,9 @@
           const idx = s.indexOf('=');
           return idx >= 0 ? s.slice(idx + 1) : s;
         });
-        if(candidateMap[v] === null){
-          candidateMap[v] = sols;
-        } else {
-          candidateMap[v] = candidateMap[v].filter(val =>
-            sols.some(s2 => simplify('(' + val + ')-(' + s2 + ')') === '0')
-          );
-          if(candidateMap[v].length === 0)
-            throw 'Sin solución: los valores de ' + v + ' son incompatibles.';
-        }
+        candidateMap[v] = candidateMap[v] === null ? sols : candidateMap[v].filter(val =>
+          sols.some(s2 => simplify('(' + val + ')-(' + s2 + ')') === '0')
+        );
       }
     }
 
@@ -1614,7 +1606,12 @@
       const msg = typeof linErr === 'string' ? linErr : linErr.message;
       if(msg && (msg.includes('no es lineal') || msg.includes('productos entre parámetros'))){
         renderResolvedSummary(problem, knownMap);
-        displayNonLinearWarning(problem, knownMap);
+        try {
+          const solutions = solveProblemNonLinear(problem, knownMap);
+          displayNonLinearSolution(problem, knownMap, solutions);
+        } catch(nonLinErr){
+          displayNonLinearWarning(problem, knownMap);
+        }
         return;
       }
       showError(msg, errDiv); return;
@@ -1700,6 +1697,6 @@
   window.mostrarIntro = mostrarIntro;
   window.CalculoMatricesCondiciones = {
     Fraction, buildGeneralProblem, buildParticularProblem, solveProblem, solveLinearSystem,
-    _internals: { linearizeProblem, evaluateResidual, matrixToTex }
+    _internals: { linearizeProblem, evaluateResidual, matrixToTex, solveProblemNonLinear, buildSymbolicResidual }
   };
 })();

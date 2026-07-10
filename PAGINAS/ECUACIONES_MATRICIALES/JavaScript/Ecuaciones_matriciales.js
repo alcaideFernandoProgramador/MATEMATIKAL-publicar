@@ -39,7 +39,7 @@ function parseSide(s, unknownName) {
   // Caracteres permitidos: letras (mayúsculas = matrices, minúsculas = escalares), dígitos, operadores
   if (/[^+\-0-9A-Za-z^()*]/.test(s))
     throw 'La ecuación contiene caracteres no soportados. ' +
-          'Se admiten matrices (letras mayúsculas), escalares (letras minúsculas, excepto t reservada para transpuesta), ' +
+          'Se admiten matrices (letras mayúsculas), escalares (letras minúsculas), ' +
           'coeficientes enteros y notaciones como A^(-1) o A^t.';
 
   // Dividir en términos por + y - de nivel superior (fuera de paréntesis)
@@ -77,7 +77,8 @@ function parseSide(s, unknownName) {
     const xi = factors.findIndex(f => f.name === unknownName);
     if (xi >= 0) {
       const xRaw = factors[xi].raw;
-      const xExp = xRaw.slice(factors[xi].name.length); // '' | '^t' | '^(-1)' | …
+      let xExp = xRaw.slice(factors[xi].name.length); // '' | '^t' | '^(-1)' | …
+      if (/^\^\(t\)$/i.test(xExp)) xExp = '^t'; // '^(t)' es equivalente a '^t' (transpuesta)
       const left  = factors.slice(0, xi).map(f => f.raw).join('*');
       const right = factors.slice(xi + 1).map(f => f.raw).join('*');
       return { sign, coeff: coeffFold, left, right, xExp, hasX: true };
@@ -379,7 +380,7 @@ function buildFormulaTex(analysis) {
     return `${unknownName} = ${rhs}`;
   }
   if (xExp === '^(-1)') {
-    const rhs = parts.length === 1 ? `\\left(${rhsTex}\\right)^{-1}` : `\\left(${rhsTex}\\right)^{-1}`;
+    const rhs = parts.length === 1 ? `${rhsTex}^{-1}` : `\\left(${rhsTex}\\right)^{-1}`;
     return `${unknownName} = ${rhs}`;
   }
   return `${unknownName} = ` + rhsTex;
@@ -547,6 +548,82 @@ function sameRref(A, B) {
   return true;
 }
 
+// ---------------------------------------------------------------------
+// Verificación de pasos cuando la incógnita aparece como X^(-1) (inversión:
+// NO es lineal en las entradas de X). No se puede sustituir la matriz cero
+// ni las matrices base (siempre singulares, fallan al invertirlas). En su
+// lugar se sustituyen valores SIEMPRE invertibles (I, I+E_k) y se reconstruye
+// el sistema lineal respecto de Y=X^(-1), que sí aparece linealmente.
+// ---------------------------------------------------------------------
+
+function numericInverse(mat) {
+  const n = mat.length;
+  const aug = mat.map((row, i) => [...row, ...Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))]);
+  for (let c = 0; c < n; c++) {
+    let pivot = c;
+    for (let i = c + 1; i < n; i++) if (Math.abs(aug[i][c]) > Math.abs(aug[pivot][c])) pivot = i;
+    if (almostZero(aug[pivot][c])) return null; // singular
+    [aug[c], aug[pivot]] = [aug[pivot], aug[c]];
+    const div = aug[c][c];
+    for (let j = 0; j < 2 * n; j++) aug[c][j] /= div;
+    for (let i = 0; i < n; i++) {
+      if (i === c) continue;
+      const factor = aug[i][c];
+      for (let j = 0; j < 2 * n; j++) aug[i][j] -= factor * aug[c][j];
+    }
+  }
+  return aug.map(row => row.slice(n));
+}
+
+// Extrae el punto único (si existe) de un sistema en RREF con n² incógnitas.
+function extractUniquePointFromRref(rrefRows, n) {
+  const vars = n * n;
+  const vec = new Array(vars).fill(null);
+  for (const row of rrefRows) {
+    const coeffPart = row.slice(0, vars);
+    const rhsVal = row[vars];
+    const pivotIdx = coeffPart.findIndex(v => Math.abs(v) > 1e-6);
+    if (pivotIdx === -1) continue; // fila nula
+    const isCleanPivotRow = coeffPart.every((v, i) => i === pivotIdx ? almostEqual(v, 1) : almostZero(v));
+    if (!isCleanPivotRow) return null; // sistema no totalmente determinado
+    vec[pivotIdx] = rhsVal;
+  }
+  if (vec.some(v => v === null)) return null;
+  const mat = [];
+  for (let i = 0; i < n; i++) mat.push(vec.slice(i * n, (i + 1) * n));
+  return mat;
+}
+
+function buildInverseTokenSystem(lhsStr, rhsStr, baseMatMap, n, unknownName) {
+  const vars = n * n;
+  const Yref = Matriz.identidad(n);
+  const Xref = Matriz.inversa(Yref);
+  const bRef = residualVector(lhsStr, rhsStr, { ...baseMatMap, [unknownName]: Xref }, n);
+  const rows = bRef.length;
+  const coeffs = Array.from({ length: rows }, () => Array(vars).fill(0));
+  for (let k = 0; k < vars; k++) {
+    const Yk = Matriz.sumar(Yref, basisMatrix(n, k)); // I + E_k: siempre invertible
+    const Xk = Matriz.inversa(Yk);
+    const vk = residualVector(lhsStr, rhsStr, { ...baseMatMap, [unknownName]: Xk }, n);
+    for (let r = 0; r < rows; r++) coeffs[r][k] = vk[r] - bRef[r];
+  }
+  const yRefVec = matrixToVector(Yref);
+  const b = bRef.map((val, r) => val - coeffs[r].reduce((s, c, i) => s + c * yRefVec[i], 0));
+
+  // Comprobación cruzada de linealidad con un punto invertible independiente
+  const Ysample = Matriz.multiplicarEscalar('2', Matriz.identidad(n));
+  const Xsample = Matriz.inversa(Ysample);
+  const actual = residualVector(lhsStr, rhsStr, { ...baseMatMap, [unknownName]: Xsample }, n);
+  const ySampleVec = matrixToVector(Ysample);
+  for (let r = 0; r < rows; r++) {
+    const predicted = coeffs[r].reduce((sum, c, i) => sum + c * ySampleVec[i], b[r]);
+    if (!almostEqual(predicted, actual[r]))
+      throw 'La ecuación introducida no es lineal en la matriz incógnita (a través de su inversa).';
+  }
+
+  return rref(coeffs.map((row, i) => [...row, -b[i]]));
+}
+
 function normalizeEquationText(eq) {
   return eq.trim().replace(/\s+/g, '')
     .replace(/\^-\s*1/g, '^(-1)')
@@ -622,6 +699,22 @@ function buildEquationSystem(eq, analysis, baseMatMap, n) {
   }
 
   const unknownName = analysis.unknownName;
+
+  // Si la incógnita todavía aparece como "X^(-1)" (sin aislar del todo),
+  // la sustitución directa de matrices de prueba (cero, base) fallaría al
+  // intentar invertirlas — se usa la ruta especial parametrizada por Y=X^(-1).
+  const invToken = analysis.xExp === '^(-1)' ? unknownName + analysis.xExp : null;
+  const usesInvToken = !!invToken && (lhsStr.includes(invToken) || rhsStr.includes(invToken));
+  if (usesInvToken) {
+    return {
+      eq: normalizedEq,
+      lhsStr,
+      rhsStr,
+      space: 'Y',
+      rref: buildInverseTokenSystem(lhsStr, rhsStr, numBaseMatMap, n, unknownName)
+    };
+  }
+
   const zeroMap = { ...numBaseMatMap, [unknownName]: zeroMatrix(n) };
   const b = residualVector(lhsStr, rhsStr, zeroMap, n);
   const vars = n * n;
@@ -648,6 +741,7 @@ function buildEquationSystem(eq, analysis, baseMatMap, n) {
     eq: normalizedEq,
     lhsStr,
     rhsStr,
+    space: 'X',
     rref: rref(coeffs.map((row, i) => [...row, -b[i]]))
   };
   } finally {
@@ -656,14 +750,34 @@ function buildEquationSystem(eq, analysis, baseMatMap, n) {
 }
 
 function isEquivalentSystem(a, b) {
-  return sameRref(a.rref, b.rref);
+  const spaceA = a.space || 'X', spaceB = b.space || 'X';
+  if (spaceA === spaceB) return sameRref(a.rref, b.rref);
+  // Un sistema está parametrizado por X (ya despejada) y el otro por
+  // Y=X^(-1) (todavía sin aislar). Estas ecuaciones siempre tienen solución
+  // única, así que cada rref determina un único punto: se extraen y se
+  // comparan tras invertir el de tipo Y.
+  const ySystem = spaceA === 'Y' ? a : b;
+  const xSystem = spaceA === 'Y' ? b : a;
+  const n = Math.round(Math.sqrt(xSystem.rref.length || ySystem.rref.length));
+  if (!n) return false;
+  const yPoint = extractUniquePointFromRref(ySystem.rref, n);
+  const xPoint = extractUniquePointFromRref(xSystem.rref, n);
+  if (!yPoint || !xPoint) return false;
+  const yInv = numericInverse(yPoint);
+  if (!yInv) return false;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      if (!almostEqual(yInv[i][j], xPoint[i][j])) return false;
+    }
+  }
+  return true;
 }
 
 function isSolvedForUnknown(system, analysis) {
-  const xExp = analysis.xExp || '';
-  // Acepta "X = RHS" y, cuando hay exponente, también "X^t = RHS" o "X^(-1) = RHS"
-  const validLhs = [analysis.unknownName, analysis.unknownName + xExp].filter(Boolean);
-  if (!validLhs.includes(system.lhsStr)) return false;
+  // Solo se considera despejada cuando queda "X = RHS": si la incógnita tiene
+  // exponente (X^t, X^(-1)), "X^t = RHS" no basta, hay que aplicar la operación
+  // inversa a ambos miembros para aislar X de verdad.
+  if (system.lhsStr !== analysis.unknownName) return false;
   return !ExpresionMatricial.obtenerVariables(system.rhsStr).includes(analysis.unknownName);
 }
 
@@ -1138,7 +1252,8 @@ function needsStepParens(tex) {
     const ch = s[i];
     if (ch === '{' || ch === '(' || ch === '[') depth++;
     else if (ch === '}' || ch === ')' || ch === ']') depth = Math.max(0, depth - 1);
-    else if ((ch === '+' || ch === '-') && depth === 0) return true;
+    else if (depth === 0 && (ch === '+' || ch === '-')) return true;
+    else if (depth === 0 && s.startsWith('\\cdot', i)) return true; // producto de varios factores: también necesita paréntesis
   }
   return false;
 }
@@ -1654,32 +1769,20 @@ function displaySolution(analysis, matMap, n, sol, lhsStr, rhsStr) {
     runIfSolveAll(stepAutos.step1);
     return stepAutos.step1;
   }, { showAutoButton: false });
-  return;
-
-  addStep(caja21, 'Paso 1: Despejar la matriz incógnita', false, div => {
-    renderDespejeStep(div, analysis, matMap, n, () => {
-      addStep(caja21, 'Paso 2: Calcular las matrices necesarias', false, step2Card => {
-        caja21.scrollTop = caja21.scrollHeight;
-        return renderStep2(step2Card, analysis, matMap, sol, () => {
-          addStep(caja21, 'Paso 3: Sustituir las matrices y realizar los cálculos paso a paso', false, step3Card => {
-            return renderStep3(step3Card, analysis, matMap, sol, () => {
-              addStep(caja21, 'Solución', true, solutionCard => {
-                renderSolutionCard(solutionCard, sol, analysis.unknownName);
-              });
-              caja21.scrollTop = caja21.scrollHeight;
-            });
-          });
-          caja21.scrollTop = caja21.scrollHeight;
-        });
-      });
-    });
-  });
 }
 
 function renderDespejeStep(container, analysis, matMap, n, onComplete, options) {
   options = options || {};
   const baseEq = `${analysis.lhsStr}=${analysis.rhsStr}`;
-  const originalSystem = buildEquationSystem(baseEq, analysis, matMap, n);
+  let originalSystem;
+  try {
+    originalSystem = buildEquationSystem(baseEq, analysis, matMap, n);
+  } catch(e) {
+    showError('No se pudo preparar el despeje interactivo de este paso: ' +
+      (typeof e === 'string' ? e : e.message), container);
+    if (typeof onComplete === 'function') onComplete();
+    return null;
+  }
   const chain = document.createElement('div');
   chain.className = 'equationChain';
   const autoWrap = document.createElement('div');
@@ -1894,7 +1997,16 @@ function buildAutomaticDespejeEquations(analysis) {
   if (!isLId) rhsParts.push(lInv);
   rhsParts.push(bStr);
   if (!isRId) rhsParts.push(rInv);
-  equations.push(`${xTok}=${rhsParts.join('*')}`);
+  const rhsJoined = rhsParts.join('*');
+  equations.push(`${xTok}=${rhsJoined}`);
+
+  // Si la incógnita tenía exponente (X^t, X^(-1)), aún no está aislada de
+  // verdad: hay que aplicar la misma operación a ambos miembros para pasar
+  // de "X^t = RHS" a "X = RHS^t" (la transpuesta y la inversa son
+  // involutivas, así que el exponente a aplicar es el mismo).
+  if (xExp) {
+    equations.push(`${unknownName}=(${rhsJoined})${xExp}`);
+  }
 
   return equations;
 }

@@ -81,6 +81,7 @@ body{font-family:var(--font-body);font-size:16px;line-height:1.68;color:var(--te
 .art-breadcrumb a:hover{color:var(--blue-mid)}
 .art-breadcrumb span{margin:0 6px}
 h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem);font-weight:400;color:var(--blue-deep);margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}
+.art-titulo-formula{display:block;text-align:center;font-size:.5em;margin-top:10px}
 .art-bajada{font-size:1.05rem;color:var(--text-secondary);line-height:1.7;margin:0 0 8px}
 .art-bajada-lista{list-style:none;margin:4px 0 20px;padding-left:2cm;color:var(--text-secondary);font-size:1.05rem;line-height:1.7;counter-reset:bajada}
 .art-bajada-lista li{margin:3px 0;display:flex;align-items:flex-start;gap:9px}
@@ -112,6 +113,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 .ops-grid{display:flex;flex-direction:column;gap:6px;margin:14px 0}
 .op-box{border:1px solid var(--border-card);border-radius:12px;padding:11px 16px;background:#f4f6fd}
 .op-box strong{display:inline;margin-right:6px;color:var(--text-primary);font-size:.88rem;text-transform:uppercase;letter-spacing:.03em}
+.op-box strong .katex{text-transform:none}
 .op-box span{color:var(--text-secondary);font-size:.93rem}
 
 /* AVISO */
@@ -205,12 +207,12 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <a href="/">Inicio</a><span>›</span>
       Matriz inversa (adjunta)
     </p>
-    <h1 class="art-titulo">Matriz inversa por la fórmula de la adjunta</h1>
-    <p class="art-bajada">Todo lo que necesitas para calcular la matriz inversa por el método de la adjunta:</p>
+    <h1 class="art-titulo">Matriz inversa por adjuntos<span class="art-titulo-formula">\(A^{-1} = \dfrac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t\)</span></h1>
+    <p class="art-bajada">Todo lo que necesitas para calcular la matriz inversa por el método de los adjuntos:</p>
     <ol class="art-bajada-lista">
-      <li>Qué son el cofactor y la matriz adjunta.</li>
-      <li>La fórmula de la adjunta y sus cuatro pasos.</li>
-      <li>Ejemplos resueltos 2×2 y 3×3 con comprobación.</li>
+      <li>Qué es un adjunto y qué es la matriz adjunta.</li>
+      <li>La fórmula de la matriz inversa por adjuntos y sus cuatro pasos.</li>
+      <li>Ejemplos resueltos.</li>
     </ol>
     <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
   </div>
@@ -221,8 +223,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ol>
       <li><a href="#que-es">¿Qué es la matriz inversa?</a></li>
       <li><a href="#cuando-existe">¿Cuándo existe la inversa?</a></li>
-      <li><a href="#cofactor-adjunta">Cofactor y matriz adjunta</a></li>
-      <li><a href="#formula">La fórmula de la adjunta</a></li>
+      <li><a href="#cofactor-adjunta">Adjunto y matriz adjunta</a></li>
+      <li><a href="#formula">Fórmula</a></li>
       <li><a href="#formula-2x2">Fórmula directa para matrices 2×2</a></li>
       <li><a href="#ejemplos">Ejemplos resueltos</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
@@ -238,57 +240,53 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <p>donde \(I_n\) es la <strong>matriz identidad</strong> de orden \(n\). La inversa, cuando existe, es <strong>única</strong>.</p>
     <div class="aviso-box">
       <p><strong>Fórmula central:</strong></p>
-      <p>\[A^{-1} = \dfrac{1}{\det(A)} \cdot \mathrm{Adj}(A)^t\]</p>
-      <p>donde \(\mathrm{Adj}(A)^t\) es la <strong>traspuesta de la matriz adjunta</strong> de \(A\).</p>
+      <p>\[A^{-1} = \dfrac{1}{\det(A)} \cdot [\mathrm{Adj}(A)]^t\]</p>
+      <p>donde \([\mathrm{Adj}(A)]^t\) es la <strong>traspuesta de la matriz adjunta</strong> de \(A\).</p>
     </div>
   </section>
 
   <!-- 2. CUÁNDO EXISTE -->
   <section class="art-seccion" id="cuando-existe">
     <h2>2. ¿Cuándo existe la inversa?</h2>
-    <p>La matriz \(A\) tiene inversa <strong>si y solo si</strong> \(\det(A) \neq 0\).</p>
+    <p>La matriz \(A\) tiene inversa <strong>si y solo si</strong> es cuadrada y \(\det(A) \neq 0\).</p>
     <ul class="pasos-lista">
       <li><strong>Matriz singular.</strong> Si \(\det(A) = 0\), la matriz se llama <strong>singular</strong> y <em>no tiene inversa</em>. La fórmula de la adjunta no es aplicable porque implicaría dividir por cero.</li>
       <li><strong>Matriz regular o invertible.</strong> Si \(\det(A) \neq 0\), la matriz se llama <strong>regular</strong> o <strong>invertible</strong>, y su inversa existe y es única.</li>
     </ul>
-    <p>Por tanto, el <strong>primer paso siempre es calcular el determinante</strong>. Solo si es distinto de cero tiene sentido continuar con el método.</p>
+    <p>Por tanto, el <strong>primer paso siempre es comprobar que la matriz es cuadrada y que su determinante es distinto de cero</strong>. Solo en este caso tiene sentido continuar con el método.</p>
   </section>
 
   <!-- 3. COFACTOR Y ADJUNTA -->
   <section class="art-seccion" id="cofactor-adjunta">
-    <h2>3. Cofactor y matriz adjunta</h2>
+    <h2>3. Adjunto y matriz adjunta</h2>
     <p>Para aplicar la fórmula necesitamos conocer tres conceptos relacionados:</p>
     <div class="ops-grid">
       <div class="op-box">
-        <strong>Menor complementario \(M_{ij}\)</strong>
-        <span>El determinante de la submatriz obtenida eliminando la <em>fila i</em> y la <em>columna j</em> de \(A\).</span>
+        <strong>Menor complementario del elemento \(a_{ij}\): \(M_{ij}\)</strong>
+        <span>El determinante de la submatriz obtenida al eliminar la <em>fila i</em> y la <em>columna j</em> de la matriz \(A\).</span>
       </div>
       <div class="op-box">
-        <strong>Cofactor (adjunto) \(A_{ij}\)</strong>
-        <span>El menor complementario con el signo de su posición: \(A_{ij} = (-1)^{i+j} \cdot M_{ij}\).</span>
-      </div>
-      <div class="op-box">
-        <strong>Matriz de signos</strong>
-        <span>La tabla de signos \((-1)^{i+j}\). Para orden 3: \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\). Ayuda a no confundirse con los signos de cada cofactor.</span>
+        <strong>Adjunto del elemento \(a_{ij}\): \(A_{ij}\)</strong>
+        <span>El menor complementario con el signo de su posición: \(A_{ij} = (-1)^{i+j} \cdot M_{ij}\).<span style="display:block;margin-left:1cm"><strong>Nota:</strong> el signo se puede obtener mediante la denominada tabla de signos que, para todos los casos, comienza en su esquina superior izquierda con + y luego alterna + con − de forma horizontal y vertical:<br>Orden 2: \(\begin{pmatrix}+&-\\-&+\end{pmatrix}\) &nbsp; Orden 3: \(\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}\) &nbsp; Orden 4: \(\begin{pmatrix}+&-&+&-\\-&+&-&+\\+&-&+&-\\-&+&-&+\end{pmatrix}\)</span></span>
       </div>
       <div class="op-box">
         <strong>Matriz adjunta \(\mathrm{Adj}(A)\)</strong>
-        <span>La matriz formada por todos los cofactores \(A_{ij}\) colocados en su posición \((i,j)\). Para una 3×3 hay que calcular 9 cofactores, cada uno como determinante de una submatriz 2×2 con su signo correspondiente.</span>
+        <span>La matriz formada por todos los adjuntos: <span style="display:block;white-space:nowrap;overflow-x:auto">\(\mathrm{Adj}(A)=\begin{pmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{pmatrix}\) &nbsp; \(\mathrm{Adj}(A)=\begin{pmatrix}A_{11}&A_{12}&A_{13}\\A_{21}&A_{22}&A_{23}\\A_{31}&A_{32}&A_{33}\end{pmatrix}\) &nbsp; \(\mathrm{Adj}(A)=\begin{pmatrix}A_{11}&A_{12}&A_{13}&A_{14}\\A_{21}&A_{22}&A_{23}&A_{24}\\A_{31}&A_{32}&A_{33}&A_{34}\\A_{41}&A_{42}&A_{43}&A_{44}\end{pmatrix}\)</span></span>
       </div>
     </div>
   </section>
 
   <!-- 4. LA FÓRMULA -->
   <section class="art-seccion" id="formula">
-    <h2>4. La fórmula de la adjunta</h2>
+    <h2>4. La fórmula</h2>
     <p>La fórmula completa para calcular la matriz inversa es:</p>
-    <div class="k">\[A^{-1} = \dfrac{1}{\det(A)} \cdot \mathrm{Adj}(A)^t\]</div>
+    <div class="k">\[A^{-1} = \dfrac{1}{\det(A)} \cdot [\mathrm{Adj}(A)]^t\]</div>
     <p>El proceso se desarrolla en <strong>cuatro pasos</strong>:</p>
     <ol class="pasos-lista">
       <li><strong>Calcular \(\det(A)\).</strong> Si es cero, la inversa no existe y el proceso termina aquí.</li>
       <li><strong>Calcular la matriz adjunta \(\mathrm{Adj}(A)\).</strong> Para cada posición \((i,j)\), calcular el cofactor \(A_{ij} = (-1)^{i+j} \cdot M_{ij}\), donde \(M_{ij}\) es el determinante de la submatriz que resulta de eliminar la fila \(i\) y la columna \(j\).</li>
-      <li><strong>Trasponer la adjunta.</strong> Calcular \(\mathrm{Adj}(A)^t\) intercambiando filas y columnas de \(\mathrm{Adj}(A)\).</li>
-      <li><strong>Dividir por el determinante.</strong> Multiplicar cada elemento de \(\mathrm{Adj}(A)^t\) por \(\dfrac{1}{\det(A)}\).</li>
+      <li><strong>Trasponer la adjunta.</strong> Calcular \([\mathrm{Adj}(A)]^t\) intercambiando filas y columnas de \(\mathrm{Adj}(A)\).</li>
+      <li><strong>Dividir por el determinante.</strong> Multiplicar cada elemento de \([\mathrm{Adj}(A)]^t\) por \(\dfrac{1}{\det(A)}\).</li>
     </ol>
     <div class="aviso-box">
       <p><strong>Nota sobre eficiencia:</strong> para matrices de orden 4 o superior, el método de <strong>Gauss-Jordan</strong> es más eficiente. La fórmula de la adjunta es práctica sobre todo para órdenes 2 y 3, que son los más habituales en Bachillerato.</p>
@@ -346,7 +344,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       =\begin{pmatrix}2 & 1 & -1\\-4 & 2 & 2\\2 & -1 & 1\end{pmatrix}\]</div>
 
       <p class="ejemplo-paso">Paso 3 — Trasponer la adjunta</p>
-      <div class="k">\[\mathrm{Adj}(A)^t = \begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix}\]</div>
+      <div class="k">\[[\mathrm{Adj}(A)]^t = \begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix}\]</div>
 
       <p class="ejemplo-paso">Paso 4 — Dividir por el determinante</p>
       <div class="k">\[A^{-1} = \dfrac{1}{4}\begin{pmatrix}2 & -4 & 2\\1 & 2 & -1\\-1 & 2 & 1\end{pmatrix} = \begin{pmatrix}\tfrac{1}{2} & -1 & \tfrac{1}{2}\\\tfrac{1}{4} & \tfrac{1}{2} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{1}{2} & \tfrac{1}{4}\end{pmatrix}\]</div>
@@ -364,7 +362,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ul class="lista-errores">
       <li><strong>Olvidar aplicar el signo \((-1)^{i+j}\) al cofactor.</strong> Cada cofactor lleva el signo de su posición en la tabla de signos. Sin ese signo, la adjunta es incorrecta.</li>
       <li><strong>Eliminar la fila y columna incorrectas al calcular el menor.</strong> Para obtener \(M_{ij}\) se elimina la <em>fila i</em> y la <em>columna j</em>, no las contrarias ni la misma dos veces.</li>
-      <li><strong>Olvidar trasponer la adjunta.</strong> La fórmula usa \(\mathrm{Adj}(A)^t\), no \(\mathrm{Adj}(A)\). Omitir la traspuesta es el error más común en 3×3.</li>
+      <li><strong>Olvidar trasponer la adjunta.</strong> La fórmula usa \([\mathrm{Adj}(A)]^t\), no \(\mathrm{Adj}(A)\). Omitir la traspuesta es el error más común en 3×3.</li>
       <li><strong>No comprobar el resultado.</strong> Siempre conviene verificar que \(A\cdot A^{-1} = I\) para detectar errores de cálculo.</li>
       <li><strong>Aplicar este método a matrices de orden 4 o superior.</strong> Para órdenes altos el número de cofactores crece rápidamente y el método de Gauss-Jordan es mucho más eficiente.</li>
     </ul>
@@ -432,7 +430,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           \end{pmatrix}
           =\begin{pmatrix}1 & -2 & 1\\0 & 1 & -2\\0 & 0 & 1\end{pmatrix}\]
           <h4>Paso 3 — Trasponer la adjunta</h4>
-          \[\mathrm{Adj}(A)^t=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
+          \[[\mathrm{Adj}(A)]^t=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
           <h4>Paso 4 — Dividir por el determinante</h4>
           <p>Como \(\det(A)=1\), la inversa coincide con la traspuesta de la adjunta.</p>
           \[A^{-1}=\dfrac{1}{1}\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}=\begin{pmatrix}1 & 0 & 0\\-2 & 1 & 0\\1 & -2 & 1\end{pmatrix}\]
@@ -460,8 +458,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           \end{pmatrix}
           =\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\]
           <h4>Paso 3 — Trasponer la adjunta</h4>
-          <p>La matriz de cofactores ya es simétrica, por lo que \(\mathrm{Adj}(A)^t = \mathrm{Adj}(A)\):</p>
-          \[\mathrm{Adj}(A)^t=\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\]
+          <p>La matriz de cofactores ya es simétrica, por lo que \([\mathrm{Adj}(A)]^t = \mathrm{Adj}(A)\):</p>
+          \[[\mathrm{Adj}(A)]^t=\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}\]
           <h4>Paso 4 — Dividir por el determinante</h4>
           \[A^{-1}=\dfrac{1}{4}\begin{pmatrix}3 & -1 & -1\\-1 & 3 & -1\\-1 & -1 & 3\end{pmatrix}=\begin{pmatrix}\tfrac{3}{4} & -\tfrac{1}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & \tfrac{3}{4} & -\tfrac{1}{4}\\-\tfrac{1}{4} & -\tfrac{1}{4} & \tfrac{3}{4}\end{pmatrix}\]
           <h4>Comprobación</h4>

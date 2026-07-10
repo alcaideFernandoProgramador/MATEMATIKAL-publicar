@@ -194,11 +194,6 @@ html,body{overflow-x:clip;max-width:100%}
         <!-- Matriz con paréntesis (aparece al elegir orden) -->
         <div id="zonaMatriz" style="display:none"></div>
 
-        <!-- Confirmada: botón resetear -->
-        <div id="zonaListo" style="display:none">
-          <button id="btnResetear2">Resetear</button>
-        </div>
-
       </div>
     </div>
 
@@ -357,7 +352,6 @@ function fnum(x){
 
 // ── Estado ───────────────────────────────────────────────────────────────
 var currentN=3;
-var fase='orden'; // 'orden' | 'entrada' | 'listo'
 var matrizActual=null;
 var detValue=null;
 var adjCalculados={};
@@ -374,7 +368,6 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 
   document.getElementById('btnResetear').addEventListener('click',irFaseOrden);
-  document.getElementById('btnResetear2').addEventListener('click',irFaseOrden);
   document.getElementById('btnSeleccionar').addEventListener('click',ejecutarOpcion);
   document.getElementById('btnAuto').addEventListener('click',solucionAutomatica);
   document.getElementById('otraMatrizBtn').addEventListener('click',function(e){
@@ -416,7 +409,6 @@ function irFaseOrden(){
   document.getElementById('caja11112').textContent='Elige el orden de la matriz';
   document.getElementById('zonaOrden').style.display='';
   document.getElementById('zonaMatriz').style.display='none';
-  document.getElementById('zonaListo').style.display='none';
   document.getElementById('caja112').style.display='none';
   document.getElementById('caja2borde').style.display='none';
   document.getElementById('caja21').innerHTML='';
@@ -438,7 +430,6 @@ function mostrarMatrizEntrada(n){
   currentN=n;
   document.getElementById('caja11112').textContent='Matriz '+n+'×'+n+' — Introduce los valores';
   document.getElementById('zonaOrden').style.display='none';
-  document.getElementById('zonaListo').style.display='none';
   document.getElementById('zonaMatriz').style.display='';
   document.getElementById('caja112').style.display='none';
   document.getElementById('caja2borde').style.display='none';
@@ -562,54 +553,6 @@ window.seleccionarMenor=function(i,j){
 };
 
 // ── Paso 2: funciones globales ────────────────────────────────────────────
-window.calcularMenor=function(){
-  var iEl=document.getElementById('inputI'),jEl=document.getElementById('inputJ');
-  var ii=parseInt(iEl?iEl.value:'')-1, jj=parseInt(jEl?jEl.value:'')-1;
-  var form=document.getElementById('minorForm');
-  if(!form||!matrizActual)return;
-  if(isNaN(ii)||isNaN(jj)||ii<0||ii>=currentN||jj<0||jj>=currentN){
-    form.innerHTML='<span style="font-size:12px;color:#b91c1c">Valores entre 1 y '+currentN+'.</span>';return;
-  }
-  if(adjCalculados[ii+'_'+jj]){
-    var a=adjCalculados[ii+'_'+jj];
-    form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+(jj+1)+'</sub> = '+a+' — ya calculado</span>';return;
-  }
-  var n1=currentN-1;
-  var subTbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
-  for(var r=0;r<n1;r++){
-    subTbl+='<tr>';
-    for(var c=0;c<n1;c++)
-      subTbl+='<td><input type="text" id="mc_'+r+'_'+c+'" style="width:38px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:600;background:#fff;outline:none"></td>';
-    subTbl+='</tr>';
-  }
-  subTbl+='</tbody></table>';
-  form.innerHTML=
-    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">'+
-      '<span style="font-size:13px;font-weight:700">A<sub>'+(ii+1)+(jj+1)+'</sub> =</span>'+
-      '<input type="text" id="mc_sign" placeholder="±" style="width:34px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff;outline:none">'+
-      '<div class="detWrap"><div class="det-bar"></div>'+subTbl+'<div class="det-bar"></div></div>'+
-      '<span style="font-size:18px;font-weight:300">=</span>'+
-      '<input type="text" id="mc_result" placeholder="" style="width:52px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff;outline:none">'+
-      '<span id="mc_feedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
-    '</div>';
-  // Tab/Enter navega entre todos los campos; último → valida
-  var ids=['mc_sign'];
-  for(var r=0;r<n1;r++) for(var c=0;c<n1;c++) ids.push('mc_'+r+'_'+c);
-  ids.push('mc_result');
-  ids.forEach(function(id,idx){
-    var el=document.getElementById(id);
-    if(!el)return;
-    el.addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key==='Tab'){
-        e.preventDefault();
-        if(idx<ids.length-1){var nx=document.getElementById(ids[idx+1]);if(nx)nx.focus();}
-        else{window.validarMenor();}
-      }
-    });
-  });
-  document.getElementById('mc_sign').focus();
-};
-
 window.validarMenor=function(){
   var form=document.getElementById('minorForm');
   var ii=form?parseInt(form.dataset.ii):-1, jj=form?parseInt(form.dataset.jj):-1;
@@ -681,17 +624,9 @@ window.validarMenor=function(){
       fb.innerHTML='&nbsp;<span style="color:#b91c1c">✗ '+errors.join(' · ')+'</span>'+
         '&nbsp;<button id="btnReintentar">↺ Reintentar</button>';
       var br=document.getElementById('btnReintentar');
-      if(br) br.addEventListener('click',function(){window.calcularMenor();});
+      if(br) br.addEventListener('click',function(){window.calcularMenorIJ(ii,jj);});
     }
   }
-};
-
-window.nuevoMenor=function(){
-  var iEl=document.getElementById('inputI'),jEl=document.getElementById('inputJ');
-  if(iEl)iEl.value='';if(jEl)jEl.value='';
-  var form=document.getElementById('minorForm');
-  if(form)form.innerHTML='';
-  if(iEl)iEl.focus();
 };
 
 // ── ¿Todos los adjuntos correctos? → mostrar Adj(A) ──────────────────────
@@ -803,89 +738,7 @@ function actualizarParams(opc){
     }
     return;
   }
-  if(opc===2){// legacy - no llega aquí
-    zona.innerHTML=
-      '<form id="ijForm" autocomplete="off" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0">'+
-        '<label style="font-size:12px;font-weight:700;color:var(--ink)">Fila <em>i</em>:&nbsp;'+
-          '<input type="text" id="inputI" style="width:40px;padding:4px;border:1px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:700;outline:none">'+
-        '</label>'+
-        '<label style="font-size:12px;font-weight:700;color:var(--ink)">Columna <em>j</em>:&nbsp;'+
-          '<input type="text" id="inputJ" style="width:40px;padding:4px;border:1px solid var(--border);border-radius:4px;text-align:center;font-size:13px;font-weight:700;outline:none">'+
-        '</label>'+
-        '<button type="submit" style="display:none">ok</button>'+
-      '</form>'+
-      '<div id="minorForm" style="margin-top:8px"></div>';
-
-    function mostrarFormularioMenor(){
-      var iEl=document.getElementById('inputI'), jEl=document.getElementById('inputJ');
-      var iVal=(iEl?iEl.value.trim():''), jVal=(jEl?jEl.value.trim():'');
-      // Si j está vacío, mover foco a j y esperar
-      if(!jVal){if(jEl)jEl.focus();return;}
-      var ii=parseInt(iVal)-1, jj=parseInt(jVal)-1;
-      var form=document.getElementById('minorForm');
-      if(!matrizActual||!form)return;
-      if(isNaN(ii)||isNaN(jj)||ii<0||ii>=currentN||jj<0||jj>=currentN){
-        form.innerHTML='<span style="color:#b91c1c;font-size:12px">Valores entre 1 y '+currentN+'.</span>';return;
-      }
-      if(adjCalculados[ii+'_'+jj]){
-        var a=adjCalculados[ii+'_'+jj];
-        form.innerHTML='<span style="color:#16a34a;font-weight:700">✓ A<sub>'+(ii+1)+''+(jj+1)+'</sub> = '+a+'</span>';return;
-      }
-      var n1=currentN-1;
-      var tbl='<table style="border-collapse:separate;border-spacing:4px"><tbody>';
-      for(var r=0;r<n1;r++){
-        tbl+='<tr>';
-        for(var c=0;c<n1;c++)
-          tbl+='<td><input type="text" id="mc_'+r+'_'+c+'" style="width:38px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:13px;font-weight:600;background:#fff"></td>';
-        tbl+='</tr>';
-      }
-      tbl+='</tbody></table>';
-      form.innerHTML=
-        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">'+
-          '<span style="font-size:13px;font-weight:700">A<sub>'+(ii+1)+''+(jj+1)+'</sub> =</span>'+
-          '<input type="text" id="mc_sign" placeholder="±" style="width:34px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
-          '<div class="detWrap"><div class="det-bar"></div>'+tbl+'<div class="det-bar"></div></div>'+
-          '<span style="font-size:18px;font-weight:300">=</span>'+
-          '<input type="text" id="mc_result" style="width:52px;padding:3px;border:1.5px solid #d1d5db;border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
-          '<span id="mc_feedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
-        '</div>';
-      // Navegación Tab/Enter entre campos
-      var ids=['mc_sign'];
-      for(var r=0;r<n1;r++) for(var c=0;c<n1;c++) ids.push('mc_'+r+'_'+c);
-      ids.push('mc_result');
-      ids.forEach(function(id,idx){
-        var el=document.getElementById(id);
-        if(!el)return;
-        el.addEventListener('keydown',function(e){
-          if(e.key==='Enter'||e.key==='Tab'){
-            e.preventDefault();
-            if(idx<ids.length-1){var nx=document.getElementById(ids[idx+1]);if(nx)nx.focus();}
-            else{window.validarMenor();}
-          }
-        });
-      });
-      document.getElementById('mc_sign').focus();
-    }
-
-    document.getElementById('ijForm').addEventListener('submit',function(e){
-      e.preventDefault();
-      mostrarFormularioMenor();
-    });
-    ['inputI','inputJ'].forEach(function(id){
-      var el=document.getElementById(id);
-      if(!el)return;
-      el.addEventListener('keydown',function(e){
-        if(e.key==='Enter'){
-          e.preventDefault();
-          mostrarFormularioMenor();
-        }
-      });
-    });
-    window.calcularMenor=mostrarFormularioMenor;
-    document.getElementById('inputI').focus();
-  } else {
-    zona.innerHTML='';
-  }
+  zona.innerHTML='';
 }
 
 function ejecutarOpcion(){
@@ -924,7 +777,7 @@ function ejecutarOpcion(){
     if(form&&document.getElementById('mc_sign')){
       window.validarMenor();
     } else {
-      window.calcularMenor();
+      document.getElementById('errMsg').textContent='Haz clic en uno de los adjuntos A_ij de la tabla para calcularlo.';
     }
 
   } else if(opc===3){
