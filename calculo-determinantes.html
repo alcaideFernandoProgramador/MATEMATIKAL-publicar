@@ -227,6 +227,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><a href="#propiedades">Propiedades del determinante</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
       <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+      <li><a href="#pau">Ejercicios tipo PAU</a></li>
+      <li><a href="#faq">Preguntas frecuentes</a></li>
     </ol>
   </nav>
 
@@ -552,7 +554,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           \end{aligned}
           \]
           <div class="mk-resultado">det(A) = −27</div>
-          <div class="mk-tip"><strong>Comprobación con Sarrus:</strong> \((0+(-4)+(-3))-(0+2+(-27))=-7-(-25)=-7+25=18\)… Nótese que al desarrollar por Laplace ya tenemos el valor exacto sin recurrir a Sarrus.</div>
+          <div class="mk-tip"><strong>Comprobación con Sarrus:</strong> \((1\cdot0\cdot3+2\cdot2\cdot(-1)+(-1)\cdot3\cdot1)-((-1)\cdot0\cdot(-1)+1\cdot2\cdot1+2\cdot3\cdot3)=(0-4-3)-(0+2+18)=-7-20=-27\). Coincide con el resultado obtenido por Laplace.</div>
         </div>
       </div>
 
@@ -699,6 +701,79 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       </div>
 
     </div>
+  </section>
+
+  <!-- 9. EJERCICIOS TIPO PAU -->
+  <section class="art-seccion" id="pau">
+    <h2>9. Ejercicios tipo PAU</h2>
+    <p>El cálculo de determinantes es una herramienta habitual en las pruebas de acceso a la universidad, tanto para calcularlos directamente como para discutirlos según un parámetro o aplicar sus propiedades. Estos ejercicios tienen ese mismo nivel y planteamiento.</p>
+    <div class="mk-ejercicios">
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 1</span><span class="mk-badge">Orden 3</span><span class="mk-ej-level">Cálculo directo</span></div>
+        <div class="mk-enunciado">Calcula, aplicando la regla de Sarrus, el determinante de la matriz:
+        \[A = \begin{pmatrix}2 & -1 & 3 \\ 0 & 4 & 1 \\ -2 & 5 & 0\end{pmatrix}\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Aplicación de Sarrus</h4>
+          \[\det(A)=\big(2\cdot4\cdot0+(-1)\cdot1\cdot(-2)+3\cdot0\cdot5\big)-\big(3\cdot4\cdot(-2)+2\cdot1\cdot5+(-1)\cdot0\cdot0\big)\]
+          \[\det(A)=(0+2+0)-(-24+10+0)=2-(-14)=16\]
+          <div class="mk-resultado">det(A) = 16</div>
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 2</span><span class="mk-badge">Orden 3</span><span class="mk-ej-level">Discusión según un parámetro</span></div>
+        <div class="mk-enunciado">Estudia para qué valores de \(k\) se anula el determinante:
+        \[\begin{vmatrix}k & 1 & 0 \\ 1 & k & 1 \\ 0 & 1 & k\end{vmatrix}\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Desarrollo por la primera fila</h4>
+          \[
+          \begin{aligned}
+          \det &= k\begin{vmatrix}k&1\\1&k\end{vmatrix} - 1\begin{vmatrix}1&1\\0&k\end{vmatrix} + 0\\[6pt]
+          &= k(k^2-1) - 1(k-0) = k^3-k-k = k^3-2k
+          \end{aligned}
+          \]
+          <p>Factorizando: \(k^3-2k = k(k^2-2)\). El determinante se anula cuando:</p>
+          \[k=0 \quad\text{o}\quad k^2=2 \;\Rightarrow\; k=\pm\sqrt{2}\]
+          <div class="mk-resultado">Se anula para k = 0, k = √2 y k = −√2</div>
+          <div class="mk-tip"><strong>Tipo de pregunta habitual:</strong> a partir de aquí suele pedirse el rango de la matriz para cada uno de esos valores de k.</div>
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 3</span><span class="mk-badge">Propiedades</span><span class="mk-ej-level">Sin desarrollar la matriz</span></div>
+        <div class="mk-enunciado">Sabiendo que \(A\) es una matriz cuadrada de orden 3 con \(\det(A)=5\), calcula sin desarrollar ninguna matriz:
+        <br>a) \(\det(2A)\)&nbsp;&nbsp; b) \(\det(A^t)\)&nbsp;&nbsp; c) \(\det(A^{-1})\)&nbsp;&nbsp; d) \(\det(A^3)\)</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Aplicación directa de las propiedades</h4>
+          <p>a) Al multiplicar por un escalar una matriz de orden 3, el determinante queda multiplicado por ese escalar elevado a 3:</p>
+          \[\det(2A)=2^3\cdot\det(A)=8\cdot5=40\]
+          <p>b) El determinante de la traspuesta coincide con el de la matriz original:</p>
+          \[\det(A^t)=\det(A)=5\]
+          <p>c) El determinante de la inversa es el inverso del determinante:</p>
+          \[\det(A^{-1})=\frac{1}{\det(A)}=\frac{1}{5}\]
+          <p>d) El determinante de una potencia es la potencia del determinante:</p>
+          \[\det(A^3)=\big(\det(A)\big)^3=5^3=125\]
+          <div class="mk-resultado">det(2A)=40 · det(Aᵗ)=5 · det(A⁻¹)=1/5 · det(A³)=125</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 10. PREGUNTAS FRECUENTES -->
+  <section class="art-seccion" id="faq">
+    <h2>10. Preguntas frecuentes</h2>
+    <ul class="pasos-lista">
+      <li><strong>¿Se puede calcular el determinante de una matriz no cuadrada?</strong> No. El determinante solo está definido para matrices cuadradas; para matrices rectangulares se recurre al rango, no al determinante.</li>
+      <li><strong>¿Sarrus funciona para cualquier orden?</strong> No, Sarrus es un atajo válido únicamente para orden 3. Para orden 2 se usa la fórmula directa, y para orden 4 o superior hay que aplicar el teorema de Laplace.</li>
+      <li><strong>¿Qué pasa si intercambio dos filas o columnas?</strong> El determinante cambia de signo, pero mantiene el mismo valor absoluto. Es un error frecuente olvidar este cambio de signo al reordenar una matriz.</li>
+      <li><strong>¿Por qué elegir una fila o columna con ceros al aplicar Laplace?</strong> Porque cada cero anula el cofactor correspondiente, así que desarrollar por la línea con más ceros ahorra cálculos sin cambiar el resultado.</li>
+      <li><strong>¿Un determinante nulo significa que la matriz "no vale para nada"?</strong> Significa que la matriz no tiene inversa y que sus filas (o columnas) son linealmente dependientes, lo cual es información igual de útil: indica que el <a href="/rango-gauss.html">rango</a> de la matriz es menor que su orden.</li>
+    </ul>
   </section>
 
   <!-- CTA FINAL -->

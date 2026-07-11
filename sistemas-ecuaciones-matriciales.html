@@ -108,6 +108,17 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 /* BLOQUES FÓRMULA */
 .k{background:linear-gradient(135deg,var(--blue-light) 0%,#f0f4ff 100%);border:1px solid rgba(59,110,248,.14);border-radius:14px;padding:18px 20px;overflow-x:auto;margin:14px 0;text-align:center;max-width:100%}
 
+.k.propuesto-box{text-align:left}
+.k.propuesto-box .katex-display{text-align:center}
+.k .propuesto-enunciado{margin:0 0 12px;color:var(--text-primary);font-weight:600;line-height:1.55;text-align:left}
+.propuesto-num{display:inline-flex;align-items:center;justify-content:center;min-width:1.7em;height:1.7em;margin-right:.45em;border-radius:6px;background:rgba(59,110,248,.12);color:var(--blue-deep);font-weight:800}
+.propuesto-solucion summary.btn-solucion{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:10px 22px;border-radius:999px;background:var(--blue-mid);color:#fff;font-weight:700;font-size:.88rem;letter-spacing:.02em;cursor:pointer;list-style:none;user-select:none;width:fit-content}
+.propuesto-solucion summary.btn-solucion::-webkit-details-marker{display:none}
+.propuesto-solucion summary.btn-solucion:hover{background:var(--blue-deep)}
+.propuesto-solucion summary.btn-solucion::after{content:"Ver solución ▾"}
+.propuesto-solucion[open] summary.btn-solucion::after{content:"Ocultar solución ▴"}
+.propuesto-solucion-contenido{margin-top:18px;padding-top:18px;border-top:1px dashed var(--border-card)}
+
 /* OPERACIONES */
 .ops-grid{display:flex;flex-direction:column;gap:6px;margin:14px 0}
 .op-box{border:1px solid var(--border-card);border-radius:12px;padding:11px 16px;background:#f4f6fd}
@@ -190,6 +201,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li>Qué es un sistema de ecuaciones matriciales y cuándo tiene solución única.</li>
       <li>El método de resolución en 4 pasos.</li>
       <li>Cuatro ejemplos resueltos con distintos tipos de coeficientes.</li>
+      <li>Ejercicios propuestos con solución oculta para practicar.</li>
+      <li>Preguntas frecuentes sobre casos especiales.</li>
     </ol>
     <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
   </div>
@@ -202,8 +215,11 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><a href="#cuando-tiene-solucion">¿Cuándo tiene solución única?</a></li>
       <li><a href="#metodo">El método paso a paso</a></li>
       <li><a href="#ejemplos">Ejemplos resueltos</a></li>
+      <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+      <li><a href="#pau">Ejercicios tipo PAU</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
       <li><a href="#calculadora">Qué admite la calculadora</a></li>
+      <li><a href="#faq">Preguntas frecuentes</a></li>
     </ol>
   </nav>
 
@@ -232,7 +248,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ol class="pasos-lista">
       <li><strong>Ordenar el sistema:</strong> llevar todos los términos con \(X\) e \(Y\) al primer miembro y las matrices conocidas al segundo.</li>
       <li><strong>Comprobar que el determinante \(\Delta = a_1b_2 - a_2b_1 \neq 0\).</strong></li>
-      <li><strong>Eliminar una incógnita:</strong> aplicar combinaciones lineales de las ecuaciones (multiplicar por escalares y sumar) para obtener una ecuación con una sola incógnita. Se pueden usar las mismas operaciones que en sistemas numéricos: intercambio de ecuaciones, multiplicación por escalar no nulo, combinación lineal.</li>
+      <li><strong>Eliminar una incógnita:</strong> aplicar combinaciones lineales de las ecuaciones (método habitual de eliminación gaussiana) para obtener una ecuación con una sola incógnita. Se pueden usar las mismas operaciones que en sistemas numéricos: intercambio de ecuaciones, multiplicación por escalar no nulo, combinación lineal.</li>
       <li><strong>Obtener las dos incógnitas:</strong> resolver la ecuación con una sola incógnita y después sustituir en una de las ecuaciones originales para obtener la otra.</li>
     </ol>
   </section>
@@ -312,9 +328,201 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <a class="cta-btn" href="/PAGINAS/SISTEMAS_ECUACIONES_MATRICIALES/Sistemas_ecuaciones_matriciales.html">Ir a la calculadora →</a>
   </div>
 
-  <!-- 5. ERRORES FRECUENTES -->
+  <!-- 5. EJERCICIOS PROPUESTOS -->
+  <section class="art-seccion" id="ejercicios">
+    <h2>5. Ejercicios propuestos</h2>
+    <p>Intenta resolverlos tú mismo antes de comprobar la solución.</p>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">1</span>Resuelve el sistema, sabiendo que las matrices \(A\) y \(B\) son:</p>
+        \[\begin{cases}X+2Y=A\\3X-Y=B\end{cases}\quad A=\begin{pmatrix}5&2\\2&7\end{pmatrix},\quad B=\begin{pmatrix}1&6\\-1&0\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}1&2\\3&-1\end{vmatrix}=-1-6=-7\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la segunda ecuación por 2 y sumando con la primera:</p>
+          <div class="k">\[\begin{aligned}(X+2Y)+2(3X-Y)&=A+2B\\7X&=A+2B\\X&=\tfrac{1}{7}\!\left[\begin{pmatrix}5&2\\2&7\end{pmatrix}+2\begin{pmatrix}1&6\\-1&0\end{pmatrix}\right]=\tfrac{1}{7}\begin{pmatrix}7&14\\0&7\end{pmatrix}=\begin{pmatrix}1&2\\0&1\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{A-X}{2}=\tfrac{1}{2}\!\left[\begin{pmatrix}5&2\\2&7\end{pmatrix}-\begin{pmatrix}1&2\\0&1\end{pmatrix}\right]=\tfrac{1}{2}\begin{pmatrix}4&0\\2&6\end{pmatrix}=\begin{pmatrix}2&0\\1&3\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}1&2\\0&1\end{pmatrix},\quad Y=\begin{pmatrix}2&0\\1&3\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">2</span>Resuelve el sistema para matrices de orden 2×3, sabiendo que \(A\) y \(B\) son:</p>
+        \[\begin{cases}2X+3Y=A\\X-2Y=B\end{cases}\quad A=\begin{pmatrix}2&3&1\\12&-2&5\end{pmatrix},\quad B=\begin{pmatrix}1&-2&4\\-1&-1&-1\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}2&3\\1&-2\end{vmatrix}=-4-3=-7\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 2 y la segunda por 3, y sumando:</p>
+          <div class="k">\[\begin{aligned}2(2X+3Y)+3(X-2Y)&=2A+3B\\7X&=2A+3B\\X&=\tfrac{1}{7}\!\left[2\begin{pmatrix}2&3&1\\12&-2&5\end{pmatrix}+3\begin{pmatrix}1&-2&4\\-1&-1&-1\end{pmatrix}\right]=\tfrac{1}{7}\begin{pmatrix}7&0&14\\21&-7&7\end{pmatrix}=\begin{pmatrix}1&0&2\\3&-1&1\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{A-2X}{3}=\tfrac{1}{3}\!\left[\begin{pmatrix}2&3&1\\12&-2&5\end{pmatrix}-\begin{pmatrix}2&0&4\\6&-2&2\end{pmatrix}\right]=\tfrac{1}{3}\begin{pmatrix}0&3&-3\\6&0&3\end{pmatrix}=\begin{pmatrix}0&1&-1\\2&0&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}1&0&2\\3&-1&1\end{pmatrix},\quad Y=\begin{pmatrix}0&1&-1\\2&0&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">3</span>Resuelve el sistema para matrices de orden 3×2, sabiendo que \(A\) y \(B\) son:</p>
+        \[\begin{cases}3X-5Y=A\\-2X+3Y=B\end{cases}\quad A=\begin{pmatrix}8&-10\\6&-8\\-5&9\end{pmatrix},\quad B=\begin{pmatrix}-5&6\\-4&5\\3&-6\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}3&-5\\-2&3\end{vmatrix}=9-10=-1\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 3 y la segunda por 5, y sumando:</p>
+          <div class="k">\[\begin{aligned}3(3X-5Y)+5(-2X+3Y)&=3A+5B\\-X&=3A+5B\\X&=-3A-5B=-3\begin{pmatrix}8&-10\\6&-8\\-5&9\end{pmatrix}-5\begin{pmatrix}-5&6\\-4&5\\3&-6\end{pmatrix}=\begin{pmatrix}1&0\\2&-1\\0&3\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{B+2X}{3}=\tfrac{1}{3}\!\left[\begin{pmatrix}-5&6\\-4&5\\3&-6\end{pmatrix}+2\begin{pmatrix}1&0\\2&-1\\0&3\end{pmatrix}\right]=\tfrac{1}{3}\begin{pmatrix}-3&6\\0&3\\3&0\end{pmatrix}=\begin{pmatrix}-1&2\\0&1\\1&0\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}1&0\\2&-1\\0&3\end{pmatrix},\quad Y=\begin{pmatrix}-1&2\\0&1\\1&0\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">4</span>Resuelve el sistema para matrices de orden 2×4, sabiendo que \(A\) y \(B\) son:</p>
+        \[\begin{cases}4X+3Y=A\\X-2Y=B\end{cases}\quad A=\begin{pmatrix}4&-5&6&9\\5&9&-4&10\end{pmatrix},\quad B=\begin{pmatrix}1&-4&-4&5\\4&-6&-1&-3\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}4&3\\1&-2\end{vmatrix}=-8-3=-11\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 2 y la segunda por 3, y sumando:</p>
+          <div class="k">\[\begin{aligned}2(4X+3Y)+3(X-2Y)&=2A+3B\\11X&=2A+3B\\X&=\tfrac{1}{11}\!\left[2\begin{pmatrix}4&-5&6&9\\5&9&-4&10\end{pmatrix}+3\begin{pmatrix}1&-4&-4&5\\4&-6&-1&-3\end{pmatrix}\right]=\tfrac{1}{11}\begin{pmatrix}11&-22&0&33\\22&0&-11&11\end{pmatrix}=\begin{pmatrix}1&-2&0&3\\2&0&-1&1\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{X-B}{2}=\tfrac{1}{2}\!\left[\begin{pmatrix}1&-2&0&3\\2&0&-1&1\end{pmatrix}-\begin{pmatrix}1&-4&-4&5\\4&-6&-1&-3\end{pmatrix}\right]=\tfrac{1}{2}\begin{pmatrix}0&2&4&-2\\-2&6&0&4\end{pmatrix}=\begin{pmatrix}0&1&2&-1\\-1&3&0&2\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}1&-2&0&3\\2&0&-1&1\end{pmatrix},\quad Y=\begin{pmatrix}0&1&2&-1\\-1&3&0&2\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">5</span>Resuelve el sistema para matrices de orden 4×2, sabiendo que \(A\) y \(B\) son:</p>
+        \[\begin{cases}3X+4Y=A\\5X-2Y=B\end{cases}\quad A=\begin{pmatrix}10&-3\\-4&17\\3&-1\\5&4\end{pmatrix},\quad B=\begin{pmatrix}8&-5\\2&11\\5&7\\-9&-2\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}3&4\\5&-2\end{vmatrix}=-6-20=-26\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la segunda ecuación por 2 y sumando con la primera (los coeficientes de \(Y\), 4 y \(-2\), se cancelan con un múltiplo menor que en los ejemplos anteriores):</p>
+          <div class="k">\[\begin{aligned}(3X+4Y)+2(5X-2Y)&=A+2B\\13X&=A+2B\\X&=\tfrac{1}{13}\!\left[\begin{pmatrix}10&-3\\-4&17\\3&-1\\5&4\end{pmatrix}+2\begin{pmatrix}8&-5\\2&11\\5&7\\-9&-2\end{pmatrix}\right]=\tfrac{1}{13}\begin{pmatrix}26&-13\\0&39\\13&13\\-13&0\end{pmatrix}=\begin{pmatrix}2&-1\\0&3\\1&1\\-1&0\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{A-3X}{4}=\tfrac{1}{4}\!\left[\begin{pmatrix}10&-3\\-4&17\\3&-1\\5&4\end{pmatrix}-3\begin{pmatrix}2&-1\\0&3\\1&1\\-1&0\end{pmatrix}\right]=\tfrac{1}{4}\begin{pmatrix}4&0\\-4&8\\0&-4\\8&4\end{pmatrix}=\begin{pmatrix}1&0\\-1&2\\0&-1\\2&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}2&-1\\0&3\\1&1\\-1&0\end{pmatrix},\quad Y=\begin{pmatrix}1&0\\-1&2\\0&-1\\2&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">6</span>Resuelve el sistema para matrices fila de orden 1×4, sabiendo que \(A\) y \(B\) son:</p>
+        \[\begin{cases}-3X+2Y=A\\4X-5Y=B\end{cases}\quad A=\begin{pmatrix}1&8&-2&-9\end{pmatrix},\quad B=\begin{pmatrix}-6&-13&5&12\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}-3&2\\4&-5\end{vmatrix}=15-8=7\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 5 y la segunda por 2, y sumando (atención a los signos):</p>
+          <div class="k">\[\begin{aligned}5(-3X+2Y)+2(4X-5Y)&=5A+2B\\-7X&=5A+2B\\X&=-\tfrac{1}{7}\!\left[5\begin{pmatrix}1&8&-2&-9\end{pmatrix}+2\begin{pmatrix}-6&-13&5&12\end{pmatrix}\right]=-\tfrac{1}{7}\begin{pmatrix}-7&14&0&-21\end{pmatrix}=\begin{pmatrix}1&-2&0&3\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{A+3X}{2}=\tfrac{1}{2}\!\left[\begin{pmatrix}1&8&-2&-9\end{pmatrix}+3\begin{pmatrix}1&-2&0&3\end{pmatrix}\right]=\tfrac{1}{2}\begin{pmatrix}4&2&-2&0\end{pmatrix}=\begin{pmatrix}2&1&-1&0\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}1&-2&0&3\end{pmatrix},\quad Y=\begin{pmatrix}2&1&-1&0\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 6. EJERCICIOS TIPO PAU -->
+  <section class="art-seccion" id="pau">
+    <h2>6. Ejercicios tipo PAU</h2>
+    <p>Este tipo de sistema —calcular dos matrices incógnitas a partir de dos ecuaciones matriciales— aparece con frecuencia en las pruebas de acceso a la universidad (PAU/EBAU/Selectividad). Los siguientes ejercicios tienen el mismo nivel de dificultad y el mismo planteamiento que los que suelen proponerse en ese tipo de examen.</p>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">1</span>Dadas las matrices \(A\) y \(B\), calcula las matrices \(X\) e \(Y\) que verifican el sistema:</p>
+        \[\begin{cases}2X+Y=A\\X-3Y=B\end{cases}\quad A=\begin{pmatrix}7&1\\4&2\end{pmatrix},\quad B=\begin{pmatrix}0&4\\2&-6\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}2&1\\1&-3\end{vmatrix}=-6-1=-7\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 3 y sumando con la segunda:</p>
+          <div class="k">\[\begin{aligned}3(2X+Y)+(X-3Y)&=3A+B\\7X&=3A+B\\X&=\tfrac{1}{7}\!\left[3\begin{pmatrix}7&1\\4&2\end{pmatrix}+\begin{pmatrix}0&4\\2&-6\end{pmatrix}\right]=\tfrac{1}{7}\begin{pmatrix}21&7\\14&0\end{pmatrix}=\begin{pmatrix}3&1\\2&0\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=A-2X=\begin{pmatrix}7&1\\4&2\end{pmatrix}-\begin{pmatrix}6&2\\4&0\end{pmatrix}=\begin{pmatrix}1&-1\\0&2\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}3&1\\2&0\end{pmatrix},\quad Y=\begin{pmatrix}1&-1\\0&2\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">2</span>Dadas las matrices \(A\) y \(B\), calcula las matrices \(X\) e \(Y\) que verifican el sistema:</p>
+        \[\begin{cases}3X-Y=A\\X+2Y=B\end{cases}\quad A=\begin{pmatrix}6&-5\\4&8\end{pmatrix},\quad B=\begin{pmatrix}2&3\\-1&5\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}3&-1\\1&2\end{vmatrix}=6+1=7\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la primera ecuación por 2 y sumando con la segunda:</p>
+          <div class="k">\[\begin{aligned}2(3X-Y)+(X+2Y)&=2A+B\\7X&=2A+B\\X&=\tfrac{1}{7}\!\left[2\begin{pmatrix}6&-5\\4&8\end{pmatrix}+\begin{pmatrix}2&3\\-1&5\end{pmatrix}\right]=\tfrac{1}{7}\begin{pmatrix}14&-7\\7&21\end{pmatrix}=\begin{pmatrix}2&-1\\1&3\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=\tfrac{B-X}{2}=\tfrac{1}{2}\!\left[\begin{pmatrix}2&3\\-1&5\end{pmatrix}-\begin{pmatrix}2&-1\\1&3\end{pmatrix}\right]=\tfrac{1}{2}\begin{pmatrix}0&4\\-2&2\end{pmatrix}=\begin{pmatrix}0&2\\-1&1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}2&-1\\1&3\end{pmatrix},\quad Y=\begin{pmatrix}0&2\\-1&1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ejemplo-bloque">
+      <div class="k propuesto-box">
+        <p class="propuesto-enunciado"><span class="propuesto-num">3</span>Dadas las matrices \(A\) y \(B\) de orden 2×3, calcula las matrices \(X\) e \(Y\) que verifican el sistema:</p>
+        \[\begin{cases}\tfrac{1}{3}X+2Y=A\\X-Y=B\end{cases}\quad A=\begin{pmatrix}3&-2&2\\2&5&1\end{pmatrix},\quad B=\begin{pmatrix}2&1&-8\\6&1&10\end{pmatrix}\]
+      </div>
+      <details class="propuesto-solucion">
+        <summary class="btn-solucion"></summary>
+        <div class="propuesto-solucion-contenido">
+          <p class="ejemplo-paso">Determinante</p>
+          <div class="k">\[\Delta=\begin{vmatrix}\tfrac{1}{3}&2\\1&-1\end{vmatrix}=-\tfrac{1}{3}-2=-\tfrac{7}{3}\neq 0\]</div>
+          <p class="ejemplo-paso">Eliminación de Y</p>
+          <p>Multiplicando la segunda ecuación por 2 y sumando con la primera:</p>
+          <div class="k">\[\begin{aligned}\left(\tfrac{1}{3}X+2Y\right)+2(X-Y)&=A+2B\\\tfrac{7}{3}X&=A+2B\\X&=\tfrac{3}{7}\!\left[\begin{pmatrix}3&-2&2\\2&5&1\end{pmatrix}+2\begin{pmatrix}2&1&-8\\6&1&10\end{pmatrix}\right]=\tfrac{3}{7}\begin{pmatrix}7&0&-14\\14&7&21\end{pmatrix}=\begin{pmatrix}3&0&-6\\6&3&9\end{pmatrix}\end{aligned}\]</div>
+          <p class="ejemplo-paso">Obtención de Y</p>
+          <div class="k">\[Y=X-B=\begin{pmatrix}3&0&-6\\6&3&9\end{pmatrix}-\begin{pmatrix}2&1&-8\\6&1&10\end{pmatrix}=\begin{pmatrix}1&-1&2\\0&2&-1\end{pmatrix}\]</div>
+          <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X=\begin{pmatrix}3&0&-6\\6&3&9\end{pmatrix},\quad Y=\begin{pmatrix}1&-1&2\\0&2&-1\end{pmatrix}\)</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 7. ERRORES FRECUENTES -->
   <section class="art-seccion" id="errores">
-    <h2>5. Errores frecuentes</h2>
+    <h2>7. Errores frecuentes</h2>
     <ul class="lista-errores">
       <li><strong>Usar matrices de distinta dimensión.</strong> Las sumas \(X+Y\), \(A+B\) etc. solo tienen sentido si todas las matrices tienen las mismas dimensiones.</li>
       <li><strong>Confundir coeficientes escalares con matrices.</strong> \(2X\) entra en este método; \(AX\) no.</li>
@@ -323,14 +531,26 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     </ul>
   </section>
 
-  <!-- 6. QUÉ ADMITE LA CALCULADORA -->
+  <!-- 7. QUÉ ADMITE LA CALCULADORA -->
   <section class="art-seccion" id="calculadora">
-    <h2>6. Qué admite la calculadora</h2>
+    <h2>8. Qué admite la calculadora</h2>
     <ul class="pasos-lista">
       <li>Ecuaciones con \(X\) e \(Y\) en cualquier miembro, por ejemplo \(X+Y=A\) y \(B=2X-Y\).</li>
       <li>Coeficientes enteros, decimales o fracciones: \(3X\), \(-Y\), \(\tfrac{1}{2}X\).</li>
       <li>Términos independientes formados con matrices conocidas, como \(A+B\), \(C-D\) o \(A^t\).</li>
       <li>Matrices de cualquier orden (cuadradas o no), siempre que todas tengan el mismo número de filas y columnas.</li>
+    </ul>
+  </section>
+
+  <!-- 8. PREGUNTAS FRECUENTES -->
+  <section class="art-seccion" id="faq">
+    <h2>9. Preguntas frecuentes</h2>
+    <ul class="pasos-lista">
+      <li><strong>¿Qué ocurre si \(\Delta=0\)?</strong> Igual que en un sistema numérico, el sistema puede ser incompatible o tener infinitas soluciones; hay que sustituir y comprobar cada caso, ya que el determinante nulo no permite despejar directamente.</li>
+      <li><strong>¿Puedo resolverlo por sustitución en vez de por combinación lineal?</strong> Sí. Cualquier método válido para sistemas numéricos (sustitución, igualación, reducción) funciona igual aquí, siempre que se respete el orden de la multiplicación si aparecieran productos entre matrices.</li>
+      <li><strong>¿Y si el sistema tiene tres incógnitas matriciales en vez de dos?</strong> El razonamiento se generaliza, pero esta calculadora está pensada para dos incógnitas (\(X\) e \(Y\)). Con tres o más conviene plantear el sistema por bloques o resolverlo por eliminación sucesiva.</li>
+      <li><strong>¿Las matrices \(C_1\) y \(C_2\) tienen que ser cuadradas?</strong> No. Solo necesitan tener las mismas dimensiones entre sí, ya que \(X\) e \(Y\) heredan esas dimensiones.</li>
+      <li><strong>¿En qué se diferencia esto de una ecuación matricial "normal"?</strong> En una <a href="/ecuaciones-matriciales.html">ecuación matricial</a> como \(AX=B\), los coeficientes (\(A\)) son matrices. Aquí los coeficientes (\(a_1,b_1,a_2,b_2\)) son números, y por eso el sistema se resuelve por combinación lineal en vez de por inversión de matrices.</li>
     </ul>
   </section>
 

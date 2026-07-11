@@ -239,9 +239,9 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
   <!-- 1. QUÉ ES EL RANGO -->
   <section class="art-seccion" id="que-es-rango">
     <h2>1. ¿Qué es el rango de una matriz?</h2>
-    <p>El <strong>rango</strong> de una matriz \(A\) de orden \(m\times n\) es el mayor número de filas (o columnas) <strong>linealmente independientes</strong> que contiene. Se denota \(\text{rg}(A)\) o \(\text{rang}(A)\), y cumple siempre:</p>
+    <p>Dada una matriz \(A\) de orden \(m\times n\), se llama <strong>rango</strong> al número máximo de filas (o, equivalentemente, de columnas) que resultan <strong>linealmente independientes</strong> entre sí. Se representa como \(\text{rg}(A)\) o \(\text{rang}(A)\), y siempre verifica:</p>
     <div class="k">\[0\;\leq\;\text{rg}(A)\;\leq\;\min(m,n)\]</div>
-    <p>Dos o más filas son <strong>linealmente dependientes</strong> cuando una puede expresarse como combinación lineal de las demás. El rango puede calcularse de varias formas equivalentes; el método de los menores lo determina buscando el <strong>mayor menor no nulo</strong>, sin necesidad de transformar la matriz.</p>
+    <p>Un conjunto de filas es <strong>linealmente dependiente</strong> cuando alguna de ellas puede escribirse como combinación de las demás; en caso contrario, son independientes. A diferencia del método de Gauss, que transforma la matriz mediante operaciones elementales, el método de los menores obtiene el rango de forma directa, sin escalonar: basta con localizar el <strong>mayor menor no nulo</strong> que puede extraerse de la matriz.</p>
     <div class="aviso-box">
       <p><strong>Idea fundamental.</strong> El rango de \(A\) es exactamente el orden \(r\) del mayor menor no nulo: existe al menos una submatriz cuadrada de orden \(r\) con determinante distinto de cero, y <em>todos</em> los menores de orden \(r+1\) son nulos (o no existen por dimensión).</p>
     </div>
