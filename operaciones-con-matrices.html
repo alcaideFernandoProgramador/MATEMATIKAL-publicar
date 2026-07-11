@@ -224,6 +224,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><a href="#ejemplos">Ejemplos resueltos</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
       <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+      <li><a href="#pau">Ejercicios tipo PAU</a></li>
+      <li><a href="#faq">Preguntas frecuentes</a></li>
     </ol>
   </nav>
 
@@ -703,6 +705,95 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       </div>
 
     </div>
+  </section>
+
+  <!-- 12. EJERCICIOS TIPO PAU -->
+  <section class="art-seccion" id="pau">
+    <h2>12. Ejercicios tipo PAU</h2>
+    <p>Estos ejercicios tienen el nivel y el planteamiento habitual en pruebas de acceso a la universidad: aplicar propiedades de la inversa, buscar patrones en potencias y comprobar si dos matrices conmutan.</p>
+    <div class="mk-ejercicios">
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 1</span><span class="mk-badge">Inversa</span><span class="mk-ej-level">Nivel avanzado · Propiedad de la inversa de un producto</span></div>
+        <div class="mk-enunciado">Dadas \(A=\begin{pmatrix}2&1\\1&1\end{pmatrix}\) y \(B=\begin{pmatrix}3&2\\1&1\end{pmatrix}\):
+        <br>a) Comprueba que \((A\cdot B)^{-1}\neq A^{-1}\cdot B^{-1}\).
+        <br>b) Comprueba que \((A\cdot B)^{-1}=B^{-1}\cdot A^{-1}\).
+        <br>c) Halla dos matrices \(C\) y \(D\) de orden 2, distintas de la matriz identidad, para las que sí se verifique \((C\cdot D)^{-1}=C^{-1}\cdot D^{-1}\).</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Inversas individuales de A y B</h4>
+          <p>Ambas matrices tienen determinante 1, así que la inversa se obtiene directamente con la fórmula de orden 2:</p>
+          \[A^{-1}=\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\qquad B^{-1}=\begin{pmatrix}1&-2\\-1&3\end{pmatrix}\]
+          <h4>a) \((AB)^{-1}\) frente a \(A^{-1}B^{-1}\)</h4>
+          \[AB=\begin{pmatrix}7&5\\4&3\end{pmatrix}\quad\Rightarrow\quad(AB)^{-1}=\begin{pmatrix}3&-5\\-4&7\end{pmatrix}\]
+          \[A^{-1}B^{-1}=\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}1&-2\\-1&3\end{pmatrix}=\begin{pmatrix}2&-5\\-3&8\end{pmatrix}\]
+          <p>Como \(\begin{pmatrix}3&-5\\-4&7\end{pmatrix}\neq\begin{pmatrix}2&-5\\-3&8\end{pmatrix}\), queda comprobado que \((AB)^{-1}\neq A^{-1}B^{-1}\).</p>
+          <h4>b) \((AB)^{-1}\) frente a \(B^{-1}A^{-1}\)</h4>
+          \[B^{-1}A^{-1}=\begin{pmatrix}1&-2\\-1&3\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix}=\begin{pmatrix}3&-5\\-4&7\end{pmatrix}\]
+          <p>Este resultado coincide exactamente con \((AB)^{-1}\) calculado antes, así que \((AB)^{-1}=B^{-1}A^{-1}\).</p>
+          <h4>c) Dos matrices donde sí se cumple \((CD)^{-1}=C^{-1}D^{-1}\)</h4>
+          <p>La igualdad \((CD)^{-1}=C^{-1}D^{-1}\) solo falla porque, en general, \(AB\neq BA\); si se eligen dos matrices que <strong>sí conmuten</strong>, ambos órdenes de la inversa coinciden. El caso más sencillo son dos matrices diagonales, por ejemplo:</p>
+          \[C=\begin{pmatrix}2&0\\0&1\end{pmatrix},\qquad D=\begin{pmatrix}1&0\\0&3\end{pmatrix}\]
+          \[CD=DC=\begin{pmatrix}2&0\\0&3\end{pmatrix}\quad\Rightarrow\quad(CD)^{-1}=\begin{pmatrix}\tfrac12&0\\0&\tfrac13\end{pmatrix}\]
+          \[C^{-1}D^{-1}=\begin{pmatrix}\tfrac12&0\\0&1\end{pmatrix}\begin{pmatrix}1&0\\0&\tfrac13\end{pmatrix}=\begin{pmatrix}\tfrac12&0\\0&\tfrac13\end{pmatrix}=(CD)^{-1}\]
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 2</span><span class="mk-badge">Potencia</span><span class="mk-ej-level">Nivel avanzado · Búsqueda de patrón en orden 3</span></div>
+        <div class="mk-enunciado">Dada la matriz \(A=\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}\), calcula \(A^2\), \(A^3\) y \(A^4\), y deduce (sin demostrarla formalmente) una fórmula general para \(A^n\) con \(n\) natural.</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Cálculo de \(A^2\)</h4>
+          \[A^2=\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}=\begin{pmatrix}1&2&1\\0&1&2\\0&0&1\end{pmatrix}\]
+          <h4>Cálculo de \(A^3\)</h4>
+          \[A^3=A^2\cdot A=\begin{pmatrix}1&2&1\\0&1&2\\0&0&1\end{pmatrix}\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}=\begin{pmatrix}1&3&3\\0&1&3\\0&0&1\end{pmatrix}\]
+          <h4>Cálculo de \(A^4\)</h4>
+          \[A^4=A^3\cdot A=\begin{pmatrix}1&3&3\\0&1&3\\0&0&1\end{pmatrix}\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}=\begin{pmatrix}1&4&6\\0&1&4\\0&0&1\end{pmatrix}\]
+          <h4>Patrón observado</h4>
+          <p>La diagonal principal se mantiene en 1 y la parte inferior en 0 (la matriz es siempre triangular superior con unos en la diagonal). En la primera superdiagonal aparece el exponente \(n\), y en la esquina superior derecha aparece el número combinatorio \(\binom{n}{2}=\tfrac{n(n-1)}{2}\) (1, 3, 6,… para \(n=2,3,4\)). Esto sugiere:</p>
+          \[A^n=\begin{pmatrix}1&n&\tfrac{n(n-1)}{2}\\0&1&n\\0&0&1\end{pmatrix}\]
+          <div class="mk-tip"><strong>Para ir más allá:</strong> escribiendo \(A=I+N\) con \(N=\begin{pmatrix}0&1&0\\0&0&1\\0&0&0\end{pmatrix}\) (que cumple \(N^3=0\)), el binomio de Newton \((I+N)^n=I+nN+\binom{n}{2}N^2\) explica directamente por qué aparece el término cuadrático \(\binom{n}{2}\) y por qué no surgen términos de grado superior.</div>
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 3</span><span class="mk-badge">Producto</span><span class="mk-ej-level">Nivel avanzado · Conmutatividad y conmutante en orden 3</span></div>
+        <div class="mk-enunciado">
+        <br>a) Dadas \(A=\begin{pmatrix}1&0&2\\-1&3&1\\2&1&0\end{pmatrix}\) y \(B=\begin{pmatrix}2&1&-1\\0&1&3\\1&-2&1\end{pmatrix}\), calcula \(A\cdot B\) y \(B\cdot A\), y razona si \(A\) y \(B\) conmutan.
+        <br>b) Considera ahora \(C=\begin{pmatrix}1&0&0\\0&2&0\\0&0&3\end{pmatrix}\). Halla todas las matrices \(X=\begin{pmatrix}x_{11}&x_{12}&x_{13}\\x_{21}&x_{22}&x_{23}\\x_{31}&x_{32}&x_{33}\end{pmatrix}\) de orden 3 que verifican \(C\cdot X=X\cdot C\).</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>a) Cálculo de \(A\cdot B\)</h4>
+          \[AB=\begin{pmatrix}1&0&2\\-1&3&1\\2&1&0\end{pmatrix}\begin{pmatrix}2&1&-1\\0&1&3\\1&-2&1\end{pmatrix}=\begin{pmatrix}4&-3&1\\-1&0&11\\4&3&1\end{pmatrix}\]
+          <h4>a) Cálculo de \(B\cdot A\)</h4>
+          \[BA=\begin{pmatrix}2&1&-1\\0&1&3\\1&-2&1\end{pmatrix}\begin{pmatrix}1&0&2\\-1&3&1\\2&1&0\end{pmatrix}=\begin{pmatrix}-1&2&5\\5&6&1\\5&-5&0\end{pmatrix}\]
+          <p>Como \(AB\neq BA\) (basta comparar el elemento de la fila 1, columna 1: 4 frente a −1), las matrices <strong>no conmutan</strong>.</p>
+          <h4>b) Planteamiento de \(CX=XC\)</h4>
+          <p>Como \(C\) es diagonal, multiplicar por la izquierda escala cada <strong>fila</strong> de \(X\) por el elemento diagonal correspondiente, y multiplicar por la derecha escala cada <strong>columna</strong>:</p>
+          \[CX=\begin{pmatrix}x_{11}&x_{12}&x_{13}\\2x_{21}&2x_{22}&2x_{23}\\3x_{31}&3x_{32}&3x_{33}\end{pmatrix}\qquad XC=\begin{pmatrix}x_{11}&2x_{12}&3x_{13}\\x_{21}&2x_{22}&3x_{23}\\x_{31}&2x_{32}&3x_{33}\end{pmatrix}\]
+          <h4>b) Igualando elemento a elemento</h4>
+          <p>Los elementos de la diagonal (\(x_{11},x_{22},x_{33}\)) coinciden automáticamente en ambas matrices. Para el resto:</p>
+          \[x_{12}=2x_{12}\Rightarrow x_{12}=0 \qquad x_{13}=3x_{13}\Rightarrow x_{13}=0 \qquad 2x_{23}=3x_{23}\Rightarrow x_{23}=0\]
+          \[2x_{21}=x_{21}\Rightarrow x_{21}=0 \qquad 3x_{31}=x_{31}\Rightarrow x_{31}=0 \qquad 3x_{32}=2x_{32}\Rightarrow x_{32}=0\]
+          <p>Todos los elementos fuera de la diagonal se anulan, así que \(X\) tiene que ser <strong>diagonal</strong>, con \(x_{11},x_{22},x_{33}\) arbitrarios:</p>
+          \[X=\begin{pmatrix}x_{11}&0&0\\0&x_{22}&0\\0&0&x_{33}\end{pmatrix},\quad x_{11},x_{22},x_{33}\in\mathbb{R}\]
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 13. PREGUNTAS FRECUENTES -->
+  <section class="art-seccion" id="faq">
+    <h2>13. Preguntas frecuentes</h2>
+    <ul class="pasos-lista">
+      <li><strong>¿Por qué no siempre se puede multiplicar dos matrices?</strong> Porque el número de columnas de la primera debe coincidir con el número de filas de la segunda. Si no se cumple, el producto simplemente no está definido.</li>
+      <li><strong>¿El producto de matrices es conmutativo?</strong> No, en general \(AB\neq BA\) (como se ve en el ejercicio PAU 3), incluso cuando ambos productos están definidos y tienen las mismas dimensiones.</li>
+      <li><strong>¿Toda matriz cuadrada tiene inversa?</strong> No. Solo las que tienen <a href="/calculo-determinantes.html">determinante distinto de cero</a>; a esas se las llama matrices regulares o invertibles.</li>
+      <li><strong>¿Qué relación hay entre la traspuesta de un producto y la inversa de un producto?</strong> Ambas invierten el orden de los factores: \((AB)^t=B^tA^t\) y \((AB)^{-1}=B^{-1}A^{-1}\). Es un patrón que conviene recordar junto.</li>
+      <li><strong>¿Para qué sirve elevar una matriz a una potencia?</strong> Aparece, por ejemplo, al estudiar procesos que se repiten varias veces (como en las cadenas de Markov) o al buscar patrones que permiten calcular \(A^n\) sin multiplicar la matriz por sí misma \(n\) veces.</li>
+    </ul>
   </section>
 
   <!-- PÁGINAS RELACIONADAS -->

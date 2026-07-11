@@ -227,6 +227,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><a href="#ejemplo">Ejemplos resueltos</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
       <li><a href="#ejercicios">Ejercicios propuestos</a></li>
+      <li><a href="#pau">Ejercicios tipo PAU</a></li>
+      <li><a href="#faq">Preguntas frecuentes</a></li>
     </ol>
   </nav>
 
@@ -556,6 +558,87 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 
 
     </div>
+  </section>
+
+  <!-- 8. EJERCICIOS TIPO PAU -->
+  <section class="art-seccion" id="pau">
+    <h2>8. Ejercicios tipo PAU</h2>
+    <p>El caso más habitual en Selectividad no es calcular el rango de una matriz numérica, sino <strong>discutirlo según los valores de un parámetro</strong>. Estos ejercicios tienen ese planteamiento y ese nivel de dificultad.</p>
+    <div class="mk-ejercicios">
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 1</span><span class="mk-badge">Orden 3</span><span class="mk-ej-level">Nivel avanzado · Discusión según parámetro</span></div>
+        <div class="mk-enunciado">Estudia el rango de la siguiente matriz según los valores del parámetro \(m\):
+        \[A=\begin{pmatrix}1 & m & 1\\m & 1 & 1\\1 & 1 & m\end{pmatrix}\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Escalonamiento con parámetro</h4>
+          \[F_2\to F_2-mF_1,\quad F_3\to F_3-F_1\]
+          \[A\to\begin{pmatrix}1 & m & 1\\0 & 1-m^2 & 1-m\\0 & 1-m & m-1\end{pmatrix}\]
+          <p>Sacando factor común \((1-m)\) en ambas filas (ya que \(1-m^2=(1-m)(1+m)\) y \(m-1=-(1-m)\)):</p>
+          \[\begin{pmatrix}1 & m & 1\\0 & (1-m)(1+m) & 1-m\\0 & 1-m & -(1-m)\end{pmatrix}\]
+          <h4>Discusión</h4>
+          <ul class="pasos-lista">
+            <li><strong>Si \(m\neq1\) y \(m\neq-2\):</strong> las filas 2 y 3 no son proporcionales entre sí, y ninguna es nula → <strong>rg(A) = 3</strong>.</li>
+            <li><strong>Si \(m=1\):</strong> el factor común se anula y las filas 2 y 3 quedan enteras a cero → <strong>rg(A) = 1</strong>.</li>
+            <li><strong>Si \(m=-2\):</strong> las filas 2 y 3 son proporcionales entre sí (\(F_3=-F_2\)) → <strong>rg(A) = 2</strong>.</li>
+          </ul>
+          <div class="mk-resultado">rg(A)=3 si m≠1,−2 · rg(A)=1 si m=1 · rg(A)=2 si m=−2</div>
+          <div class="mk-tip"><strong>Estrategia clave:</strong> sacar factor común antes de comparar filas evita tener que probar valores al azar; el factor que se anula señala directamente los valores críticos de m.</div>
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 2</span><span class="mk-badge">Matriz 3×4</span><span class="mk-ej-level">Nivel avanzado · Discusión según parámetro</span></div>
+        <div class="mk-enunciado">Estudia el rango de la siguiente matriz según los valores del parámetro \(m\):
+        \[A=\begin{pmatrix}1 & 2 & 1 & 0\\2 & 4 & m & 1\\1 & 2 & 3 & 2\end{pmatrix}\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Escalonamiento con parámetro</h4>
+          \[F_2\to F_2-2F_1,\quad F_3\to F_3-F_1\]
+          \[A\to\begin{pmatrix}1 & 2 & 1 & 0\\0 & 0 & m-2 & 1\\0 & 0 & 2 & 2\end{pmatrix}\]
+          <h4>Discusión</h4>
+          <p>Las filas 2 y 3 son proporcionales solo si \(\dfrac{m-2}{2}=\dfrac{1}{2}\), es decir, si \(m=3\):</p>
+          <ul class="pasos-lista">
+            <li><strong>Si \(m\neq3\):</strong> la fila 2 no es proporcional a la fila 3, y ninguna es nula → <strong>rg(A) = 3</strong> (rango máximo posible, al tener la matriz solo 3 filas).</li>
+            <li><strong>Si \(m=3\):</strong> queda \((0,0,1,1)\) y \((0,0,2,2)=2\cdot(0,0,1,1)\), filas proporcionales → <strong>rg(A) = 2</strong>.</li>
+          </ul>
+          <div class="mk-resultado">rg(A)=3 si m≠3 · rg(A)=2 si m=3</div>
+        </div>
+      </div>
+
+      <div class="mk-ejercicio">
+        <div class="mk-ej-head"><span class="mk-ej-num">PAU 3</span><span class="mk-badge">Orden 3</span><span class="mk-ej-level">Nivel avanzado · Atajo con el determinante</span></div>
+        <div class="mk-enunciado">Estudia el rango de la siguiente matriz según los valores del parámetro \(m\):
+        \[A=\begin{pmatrix}1 & 2 & 3\\2 & m & 6\\1 & 1 & m\end{pmatrix}\]</div>
+        <button class="mk-toggle" onclick="mkToggle(this)">Ver solución</button>
+        <div class="mk-sol">
+          <h4>Paso 1: usar el determinante como atajo</h4>
+          <p>Como la matriz es cuadrada, en vez de escalonar directamente conviene calcular primero \(\det(A)\), ya que \(\text{rg}(A)=3 \iff \det(A)\neq0\):</p>
+          \[\det(A)=m^2-7m+12=(m-4)(m-3)\]
+          <h4>Paso 2: discusión</h4>
+          <ul class="pasos-lista">
+            <li><strong>Si \(m\neq3\) y \(m\neq4\):</strong> \(\det(A)\neq0\) → <strong>rg(A) = 3</strong>.</li>
+            <li><strong>Si \(m=3\) o \(m=4\):</strong> \(\det(A)=0\), así que el rango es menor que 3. Sustituyendo cualquiera de los dos valores se comprueba que la submatriz \(\begin{pmatrix}1&2\\2&m\end{pmatrix}\) tiene determinante no nulo → <strong>rg(A) = 2</strong> en ambos casos.</li>
+          </ul>
+          <div class="mk-resultado">rg(A)=3 si m≠3,4 · rg(A)=2 si m=3 o m=4</div>
+          <div class="mk-tip"><strong>Por qué este atajo funciona:</strong> el determinante solo dice si el rango es máximo o no; para saber cuánto vale exactamente cuando no lo es, hace falta escalonar o buscar un menor no nulo, como en el paso 2.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. PREGUNTAS FRECUENTES -->
+  <section class="art-seccion" id="faq">
+    <h2>9. Preguntas frecuentes</h2>
+    <ul class="pasos-lista">
+      <li><strong>¿Qué hago si el pivote de una columna es 0?</strong> Se intercambian dos filas para llevar a esa posición un elemento no nulo (si existe alguno por debajo). Intercambiar filas no cambia el rango, aunque sí cambiaría el signo del determinante si se calculara uno.</li>
+      <li><strong>¿Las operaciones con columnas también son válidas?</strong> Sí. El rango no cambia si se aplican operaciones elementales por columnas en vez de por filas; de hecho a veces conviene combinarlas para simplificar antes.</li>
+      <li><strong>¿Cuál es el rango máximo posible de una matriz \(m\times n\)?</strong> El menor de los dos valores, \(\min(m,n)\). Una matriz 3×5 nunca puede tener rango mayor que 3.</li>
+      <li><strong>¿Qué significa que una fila se convierta en todo ceros?</strong> Que esa fila era combinación lineal de las demás (dependiente), y por tanto no aporta al rango; se descarta sin más al contar filas no nulas.</li>
+      <li><strong>¿Para qué sirve el rango, más allá de calcularlo?</strong> Es la base para clasificar <a href="/sistemas-rouche-frobenius.html">sistemas de ecuaciones mediante el teorema de Rouché-Frobenius</a>: comparando el rango de la matriz de coeficientes con el de la ampliada se sabe si el sistema tiene solución única, infinitas o ninguna.</li>
+    </ul>
   </section>
 
   <!-- CTA FINAL -->
