@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /PAGINAS/
 
 Sitemap: https://matematikal.com/sitemap.xml
