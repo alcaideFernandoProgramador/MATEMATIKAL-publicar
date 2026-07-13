@@ -310,7 +310,7 @@ html,body{overflow-x:clip;max-width:100%}
     Una matriz cuadrada \(A\) tiene inversa \(A^{-1}\) si y solo si \(\det(A)\neq 0\).<br>
     <span style="display:block;text-align:center">\(A\cdot A^{-1}=A^{-1}\cdot A=I\)</span>
     <span style="display:block;margin-top:6px">La inversa se calcula mediante el determinante y la traspuesta de la matriz de cofactores (adjunta), donde \(|A|\) denota el determinante de \(A\):</span>
-    <span style="display:block;text-align:center">\(A^{-1}=\dfrac{1}{|A|}\cdot \left(\text{Adj}(A)\right)^t\)</span>
+    <span style="display:block;text-align:center">\(A^{-1}=\dfrac{1}{|A|}\cdot \left[\text{Adj}(A)\right]^t\)</span>
     <span style="display:block;padding-left:24px"><strong>Propiedades</strong></span>
     <span style="display:block;padding-left:24px">1) \((A^{-1})^{-1}=A\)</span>
     <span style="display:block;padding-left:24px">2) \((AB)^{-1}=B^{-1}A^{-1}\)</span>
@@ -373,7 +373,7 @@ E^t=\begin{bmatrix}1&amp;-1\\0&amp;3\\2&amp;4\end{bmatrix}
 A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}
 \]</div>
 <h3 style="margin-top:18px">Inversa de una matriz 3×3</h3>
-<p class="muted">Para matrices de orden mayor, se utiliza la fórmula general basada en la matriz adjunta. Sea \(A=\begin{bmatrix}1&amp;2&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;2\end{bmatrix}\). El procedimiento tiene tres pasos: calcular el determinante, obtener la matriz de cofactores y trasponer dicha matriz para formar la adjunta.</p>
+<p class="muted">Para matrices de orden mayor, se utiliza la fórmula general basada en la matriz adjunta. Sea \(A=\begin{bmatrix}1&amp;2&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;2\end{bmatrix}\). El procedimiento tiene tres pasos: calcular el determinante, obtener la matriz adjunta (la matriz de cofactores) y aplicar la fórmula, trasponiendo la adjunta.</p>
 <p class="muted"><strong>Paso 1. Determinante.</strong></p>
 <div class="k">\[
 \det(A)=1\cdot(1\cdot2-1\cdot0)-2\cdot(0\cdot2-1\cdot1)+0=1\cdot2-2\cdot(-1)=2+2=4\neq0
@@ -387,12 +387,12 @@ A^{-1}=\dfrac{1}{\det(A)}\begin{bmatrix}3&amp;-1\\-5&amp;2\end{bmatrix}=\begin{b
 \end{bmatrix}
 =\begin{bmatrix}2&amp;1&amp;-1\\-4&amp;2&amp;2\\2&amp;-1&amp;1\end{bmatrix}
 \]</div>
-<p class="muted"><strong>Paso 3. Adjunta y resultado.</strong> La adjunta es la traspuesta de la matriz de cofactores.</p>
+<p class="muted"><strong>Paso 3. Adjunta y resultado.</strong> La adjunta es la matriz de cofactores; la traspuesta se aplica en la fórmula de la inversa.</p>
 <div class="k">\[
-\text{Adj}(A)=\text{Cof}(A)^t=\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}
+\text{Adj}(A)=\text{Cof}(A)=\begin{bmatrix}2&amp;1&amp;-1\\-4&amp;2&amp;2\\2&amp;-1&amp;1\end{bmatrix}
 \]</div>
 <div class="k">\[
-A^{-1}=\dfrac{1}{4}\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}=\begin{bmatrix}1/2&amp;-1&amp;1/2\\1/4&amp;1/2&amp;-1/4\\-1/4&amp;1/2&amp;1/4\end{bmatrix}
+A^{-1}=\dfrac{1}{|A|}\,[\text{Adj}(A)]^t=\dfrac{1}{4}\begin{bmatrix}2&amp;-4&amp;2\\1&amp;2&amp;-1\\-1&amp;2&amp;1\end{bmatrix}=\begin{bmatrix}1/2&amp;-1&amp;1/2\\1/4&amp;1/2&amp;-1/4\\-1/4&amp;1/2&amp;1/4\end{bmatrix}
 \]</div>
 <p class="muted">La herramienta calcula automáticamente la inversa de cualquier orden. Para matrices 3×3 o mayores, el método de Gauss-Jordan es más eficiente en la práctica. Puedes profundizar en el <a href="/PAGINAS/CALCULO_DE_DETERMINANTES/Determinantes.html">cálculo de determinantes</a> y en la <a href="/PAGINAS/MATRIZ_INVERSA_GAUSS/Inversa_gauss_intro.html">inversa por el método de Gauss-Jordan</a> en sus páginas correspondientes.</p>
 <h3 style="margin-top:18px">Potencia de una matriz</h3>
@@ -570,9 +570,9 @@ Calcula \(AB\) y \(BA\). ¿Son iguales?</div>
 +\begin{vmatrix}2&0\\1&1\end{vmatrix} & -\begin{vmatrix}1&0\\0&1\end{vmatrix} & +\begin{vmatrix}1&2\\0&1\end{vmatrix}
 \end{bmatrix}=\begin{bmatrix}2&1&-1\\-4&2&2\\2&-1&1\end{bmatrix}\]
 <h4>Paso 3. Adjunta</h4>
-\[\text{Adj}(A)=\text{Cof}(A)^t=\begin{bmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{bmatrix}\]
+\[\text{Adj}(A)=\text{Cof}(A)=\begin{bmatrix}2&1&-1\\-4&2&2\\2&-1&1\end{bmatrix}\]
 <h4>Paso 4. Inversa</h4>
-\[A^{-1}=\dfrac{1}{4}\begin{bmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{bmatrix}=\begin{bmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{bmatrix}\]
+\[A^{-1}=\dfrac{1}{|A|}\,[\text{Adj}(A)]^t=\dfrac{1}{4}\begin{bmatrix}2&-4&2\\1&2&-1\\-1&2&1\end{bmatrix}=\begin{bmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{bmatrix}\]
 <h4>Verificación</h4>
 \[A\cdot A^{-1}=\begin{pmatrix}1&2&0\\0&1&1\\1&0&2\end{pmatrix}\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}=\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}=I\checkmark\]
 <div class="mk-resultado">\(A^{-1}=\begin{pmatrix}1/2&-1&1/2\\1/4&1/2&-1/4\\-1/4&1/2&1/4\end{pmatrix}\)</div>
