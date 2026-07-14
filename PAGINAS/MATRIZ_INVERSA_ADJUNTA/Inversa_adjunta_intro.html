@@ -523,7 +523,10 @@ function renderMatrizDisplay(M){
 
 // ── Matriz adjunta clicable ──────────────────────────────────────────────
 function renderAdjMatrix(){
-  var html='<div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px">Haz clic en un adjunto para calcularlo</div>';
+  var html='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
+  html+='<span style="font-size:11px;font-weight:700;color:var(--muted)">Haz clic en un adjunto para calcularlo</span>';
+  html+='<button id="btnAutoTodosAdj" style="font-size:11px;opacity:.7">⚡ Resolver automáticamente (no recomendable)</button>';
+  html+='</div>';
   html+='<div style="display:inline-flex;align-items:center;gap:8px">';
   html+='<span style="font-size:13px;font-weight:700;color:var(--ink)">Adj(A) =</span>';
   html+='<div class="matrixWrap"><div class="mp lp"></div>';
@@ -640,6 +643,8 @@ window.validarMenor=function(){
           window.calcularMenorIJ(i,j);
         });
       }
+      var btnAT=document.getElementById('btnAutoTodosAdj');
+      if(btnAT)btnAT.addEventListener('click',resolverTodosAdjAuto);
     }
     // Mantener el formulario visible con valores en readonly + indicador verde
     var newForm=document.getElementById('minorForm');
@@ -672,6 +677,19 @@ window.validarMenor=function(){
     }
   }
 };
+
+// ── Resolver todos los adjuntos automáticamente de una vez ───────────────
+function resolverTodosAdjAuto(){
+  if(!matrizActual)return;
+  for(var i=0;i<currentN;i++){
+    for(var j=0;j<currentN;j++){
+      var sub=Matriz.quitarFilayColumna(matrizActual,i,j);
+      var cSign=((i+j)%2===0)?1:-1;
+      adjCalculados[i+'_'+j]=FraccionNumerica.multiplicar(String(cSign),Matriz.determinante(sub));
+    }
+  }
+  checkTodosAdj();
+}
 
 // ── ¿Todos los adjuntos correctos? → mostrar Adj(A) ──────────────────────
 function checkTodosAdj(){
@@ -810,6 +828,8 @@ function actualizarParams(opc){
         window.calcularMenorIJ(i,j);
       });
     }
+    var btnAT=document.getElementById('btnAutoTodosAdj');
+    if(btnAT)btnAT.addEventListener('click',resolverTodosAdjAuto);
     return;
   }
   zona.innerHTML='';
@@ -843,7 +863,7 @@ function ejecutarOpcion(){
     if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
     if(detValue==="0"){document.getElementById('errMsg').textContent='La matriz es singular.';return;}
     var Adj=Matriz.trasponer(Matriz.adjunta(matrizActual));
-    var html=tablaMatriz(Adj,'Adj(A)ᵗ','Paso 3 — Matriz adjunta transpuesta');
+    var html=tablaMatriz(Adj,'[Adj(A)]<sup>t</sup>','Paso 3 — Matriz adjunta transpuesta');
     addToCaja21(html);
     // Paso 3 completado: ocultar su fila, sin marcar ningún paso automáticamente
     var row3=document.getElementById('pasoRow3');
@@ -881,7 +901,7 @@ function ejecutarOpcion(){
     // Botón de comprobación, ajustado a la derecha del espacio de trabajo
     addToCaja21(
       '<div style="width:100%;display:flex;justify-content:flex-end">'+
-        '<button id="btnComprobar" style="font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--soft);color:var(--ink);cursor:pointer">Comprobar A·A⁻¹ y A⁻¹·A</button>'+
+        '<button id="btnComprobar" style="font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--soft);color:var(--ink);cursor:pointer">COMPROBAR</button>'+
       '</div>'+
       '<div id="comprobacionZona" style="width:100%"></div>'
     );
@@ -946,6 +966,14 @@ function matrizTbl(M){
   return t+'</tbody></table>';
 }
 
+// ── Fracción con línea horizontal (numerador/denominador) ────────────────
+function fraccionHtml(num,den){
+  return '<span style="display:inline-flex;flex-direction:column;align-items:stretch;justify-content:center;vertical-align:middle;line-height:1.2;font-size:13px;font-weight:700;color:var(--ink)">'+
+    '<span style="padding:0 3px 1px;border-bottom:1.5px solid var(--ink);white-space:nowrap;text-align:center">'+num+'</span>'+
+    '<span style="padding:1px 3px 0;white-space:nowrap;text-align:center">'+den+'</span>'+
+  '</span>';
+}
+
 // ── Tablas de resultados ─────────────────────────────────────────────────
 // nombre: notación matemática mostrada antes de la matriz (p.e. "Adj(A)")
 // desc:   etiqueta descriptiva pequeña encima (opcional)
@@ -966,10 +994,10 @@ function tablaInversaFormula(adjT,inv,det,desc){
   var html='<div class="resultBloque" style="max-width:100%">';
   if(desc) html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">'+desc+'</div>';
   html+='<div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding-bottom:2px">';
-  html+='<span style="font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap">A⁻¹ =</span>';
-  html+='<span style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap">(1/det(A)) · Adj(A)ᵗ</span>';
+  html+='<span style="font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap">A<sup>-1</sup> =</span>';
+  html+='<span style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap">'+fraccionHtml('1','det(A)')+'<span style="font-size:13px;font-weight:700;color:var(--ink)">· [Adj(A)]<sup>t</sup></span></span>';
   html+='<span style="font-size:18px;font-weight:300;color:var(--ink)">=</span>';
-  html+='<span style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap">(1/'+det+')</span>';
+  html+=fraccionHtml('1',det);
   html+='<span style="font-size:16px;font-weight:300;color:var(--ink)">·</span>';
   html+='<div class="matrixWrap"><div class="mp lp"></div>'+adjTbl+'<div class="mp rp"></div></div>';
   html+='<span style="font-size:18px;font-weight:300;color:var(--ink)">=</span>';
@@ -982,8 +1010,8 @@ function tablaInversaFormula(adjT,inv,det,desc){
 function tablaComprobacion(A,Inv){
   var P1=Matriz.multiplicar(A,Inv);
   var P2=Matriz.multiplicar(Inv,A);
-  function fila(lbl,M1,M2,R){
-    return '<div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding:3px 0">'+
+  function bocadillo(lbl,M1,M2,R){
+    return '<div class="resultBloque" style="display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;max-width:100%">'+
       '<span style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap">'+lbl+' =</span>'+
       '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(M1)+'<div class="mp rp"></div></div>'+
       '<span style="font-size:16px;font-weight:300;color:var(--ink)">·</span>'+
@@ -992,11 +1020,12 @@ function tablaComprobacion(A,Inv){
       '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(R)+'<div class="mp rp"></div></div>'+
     '</div>';
   }
-  var html='<div class="resultBloque" style="max-width:100%">';
+  var html='<div style="width:100%">';
   html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">Comprobación</div>';
-  html+=fila('A · A⁻¹',A,Inv,P1);
-  html+=fila('A⁻¹ · A',Inv,A,P2);
-  html+='</div>';
+  html+='<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">';
+  html+=bocadillo('A · A<sup>-1</sup>',A,Inv,P1);
+  html+=bocadillo('A<sup>-1</sup> · A',Inv,A,P2);
+  html+='</div></div>';
   return html;
 }
 
@@ -1045,7 +1074,7 @@ function solucionAutomatica(){
       '</div>';
     html+='</div></div>';
     // Bloque 2 y 3: Adj(A)^t e inversa
-    html+=tablaMatriz(C,'Adj(A)ᵗ','Traspuesta de la adjunta');
+    html+=tablaMatriz(C,'[Adj(A)]<sup>t</sup>','Traspuesta de la adjunta');
     html+=tablaInversaFormula(C,Inv,D,'Matriz inversa');
     html+='</div>';
   }
