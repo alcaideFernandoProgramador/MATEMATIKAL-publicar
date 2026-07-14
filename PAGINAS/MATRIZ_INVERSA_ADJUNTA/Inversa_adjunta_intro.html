@@ -151,7 +151,7 @@ html,body{overflow-x:clip;max-width:100%}
 </head>
 <body>
 <header id="tituloinicial">
-  <h2>MATRIZ INVERSA — Fórmula de la Adjunta</h2>
+  <h2><span class="tituloTexto">MATRIZ INVERSA — Fórmula de la Adjunta</span><span class="tituloFormula">\(\boldsymbol{A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t}\)</span></h2>
   <div id="controlesTop">
     <a class="abreVentana" href="/matriz-inversa-adjunta.html" id="btnVolverExplicacion">← TEORÍA</a>
     <button class="abreVentana" id="otraMatrizBtn" type="button">Otra matriz</button>
@@ -219,8 +219,6 @@ html,body{overflow-x:clip;max-width:100%}
         <div id="cajaOpcBtns" style="display:flex;align-items:center;gap:6px">
           <button id="btnSeleccionar">Seleccionar</button>
           <button id="btnResetear">RESET</button>
-          <div style="flex:1"></div>
-          <button id="btnAuto">⚡ Solución automática</button>
         </div>
       </div>
 
@@ -250,7 +248,10 @@ html,body{overflow-x:clip;max-width:100%}
 body{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--accent-2:#0ea5a4;--border:#d1d5db;--soft:#eef2f7;--shadow:0 6px 18px rgba(0,0,0,.08);--radius:12px;--radius-sm:8px;--gap:10px}
 #tituloinicial{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px}
 /* ── Rango-style layout (igual que Hoja_estilo_rango_menores.css) ────────── */
-#tituloinicial h2{font-size:18px;font-weight:800;letter-spacing:.2px;flex:1;text-align:left;margin:0;color:var(--ink)}
+#tituloinicial h2{font-size:18px;font-weight:800;letter-spacing:.2px;flex:1;text-align:left;margin:0;color:var(--ink);display:flex;align-items:center;gap:10px;min-width:0}
+#tituloinicial h2 .tituloTexto{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tituloinicial h2 .tituloFormula{flex-shrink:0;white-space:nowrap;font-size:1em;color:var(--ink)}
+@media(max-width:700px){#tituloinicial h2 .tituloFormula{display:none}}
 #controlesTop{display:flex;align-items:center;gap:18px}
 .abreVentana{font-size:14px;font-weight:700;padding:8px 10px;border-radius:var(--radius-sm);background:var(--soft);border:1px solid var(--border);color:var(--ink);text-decoration:none;cursor:pointer;font-family:inherit}
 .abreVentana:hover{background:#e9eef9}
@@ -368,7 +369,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
   document.getElementById('btnResetear').addEventListener('click',irFaseOrden);
   document.getElementById('btnSeleccionar').addEventListener('click',ejecutarOpcion);
-  document.getElementById('btnAuto').addEventListener('click',solucionAutomatica);
   document.getElementById('otraMatrizBtn').addEventListener('click',function(e){
     e.preventDefault();
     irFaseOrden();
@@ -494,8 +494,6 @@ function confirmarMatriz(){
   document.getElementById('caja2borde').style.display='';
   document.getElementById('errMsg').textContent='';
   renderMatrizDisplay(M);
-  var r1=document.querySelector('input[name="adjOpc"][value="1"]');
-  if(r1){r1.checked=true;actualizarParams(1);}
 }
 
 function renderMatrizDisplay(M){
@@ -510,12 +508,17 @@ function renderMatrizDisplay(M){
   }
   tbl+='</tbody></table>';
   var html=
-    '<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">MATRIZ INTRODUCIDA</div>'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">'+
+      '<span style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.6px;text-transform:uppercase">MATRIZ INTRODUCIDA</span>'+
+      '<button id="btnAuto" style="font-size:11px;opacity:.7">⚡ Solución automática (no recomendable)</button>'+
+    '</div>'+
     '<div style="display:flex;align-items:center;gap:6px">'+
       '<span style="font-size:14px;font-weight:700;color:var(--ink);align-self:center">A =</span>'+
       '<div class="matrixWrap"><div class="mp lp"></div>'+tbl+'<div class="mp rp"></div></div>'+
     '</div>';
   document.getElementById('matrizDisplay').innerHTML=html;
+  var btnAuto=document.getElementById('btnAuto');
+  if(btnAuto)btnAuto.addEventListener('click',solucionAutomatica);
 }
 
 // ── Matriz adjunta clicable ──────────────────────────────────────────────
@@ -549,6 +552,48 @@ window.seleccionarMenor=function(i,j){
   var btn=document.querySelector('.adjCell[data-i="'+i+'"][data-j="'+j+'"]');
   if(btn)btn.classList.add('active');
   window.calcularMenorIJ(i,j);
+};
+
+// ── Paso 1: validación del determinante ──────────────────────────────────
+window.validarDeterminante=function(){
+  if(!matrizActual)return;
+  var real=Matriz.determinante(matrizActual);
+  var el=document.getElementById('detInput');
+  var v=fnum(el?el.value.trim():'');
+  var fb=document.getElementById('detFeedback');
+  if(v===null||FraccionNumerica.simplificar(v)!==FraccionNumerica.simplificar(real)){
+    if(fb){
+      fb.innerHTML='&nbsp;<span style="color:#b91c1c">✗ Valor incorrecto</span>&nbsp;<button id="btnReintentarDet">↺ Reintentar</button>';
+      var br=document.getElementById('btnReintentarDet');
+      if(br)br.addEventListener('click',function(){
+        if(el){el.value='';el.focus();}
+        if(fb)fb.innerHTML='';
+      });
+    }
+    return;
+  }
+  detValue=real;
+  var ds=real;
+  var html='<div class="adjResultCard">'+
+    '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
+    '<div class="adjResultCardBody">'+
+      '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
+        '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(matrizActual)+'<div class="det-bar"></div></div>'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(detValue!=="0"?' ≠ 0':'')+'</span>'+
+      '</div>'+
+      '<span>'+(detValue==="0"
+        ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
+        :'✓ La matriz es <strong>invertible</strong>.')+
+      '</span>'+
+    '</div></div>';
+  addToCaja21(html);
+  // Paso 1 completado: ocultar su fila, sin marcar ningún paso automáticamente
+  var row1=document.getElementById('pasoRow1');
+  if(row1)row1.style.display='none';
+  document.querySelectorAll('input[name="adjOpc"]').forEach(function(r){r.checked=false;});
+  var zona=document.getElementById('zonaParams');
+  if(zona)zona.innerHTML='';
 };
 
 // ── Paso 2: funciones globales ────────────────────────────────────────────
@@ -642,9 +687,8 @@ function checkTodosAdj(){
   var C=[];
   for(var i=0;i<currentN;i++){C.push([]);for(var j=0;j<currentN;j++)C[i].push(adjCalculados[i+'_'+j]);}
   addToCaja21(tablaMatriz(C,'Adj(A)','Paso 2 — Matriz adjunta'));
-  // Seleccionar paso 3 automáticamente
-  var r3=document.querySelector('input[name="adjOpc"][value="3"]');
-  if(r3){r3.checked=true;actualizarParams(3);}
+  // Paso 2 completado, sin marcar ningún paso automáticamente
+  document.querySelectorAll('input[name="adjOpc"]').forEach(function(r){r.checked=false;});
 }
 
 // ── calcularMenorIJ: muestra el formulario para i,j específicos ───────────
@@ -721,6 +765,37 @@ window.calcularMenorIJ=function(ii,jj){
 function actualizarParams(opc){
   var zona=document.getElementById('zonaParams');
   document.getElementById('errMsg').textContent='';
+  if(opc===1){
+    zona.innerHTML=
+      '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
+        '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
+        '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(matrizActual)+'<div class="det-bar"></div></div>'+
+        '<span style="font-size:18px;font-weight:300">=</span>'+
+        '<input type="text" id="detInput" style="width:60px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
+        '<span id="detFeedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
+        '<button id="btnAutoDet" style="margin-left:8px;font-size:11px;opacity:.7">Automático (no recomendable)</button>'+
+      '</div>';
+    var detInput=document.getElementById('detInput');
+    if(detInput){
+      detInput.addEventListener('keydown',function(e){
+        if(e.key==='Enter'){e.preventDefault();window.validarDeterminante();}
+      });
+      setTimeout(function(){detInput.focus();},50);
+    }
+    var btnAD=document.getElementById('btnAutoDet');
+    if(btnAD)btnAD.addEventListener('click',function(){
+      var real=Matriz.determinante(matrizActual);
+      if(detInput)detInput.value=real;
+      btnAD.style.display='none';
+      var fb=document.getElementById('detFeedback');
+      if(fb){
+        fb.innerHTML='<button id="btnOkAutoDet" style="margin-left:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;padding:5px 14px;border-radius:6px;font-weight:800;cursor:pointer">OK</button>';
+        var btnOk=document.getElementById('btnOkAutoDet');
+        if(btnOk)btnOk.addEventListener('click',function(){window.validarDeterminante();});
+      }
+    });
+    return;
+  }
   if(opc===2){
     zona.innerHTML=renderAdjMatrix()+'<div id="minorForm" style="margin-top:8px"></div>';
     // Delegación de eventos para las celdas clicables
@@ -747,27 +822,12 @@ function ejecutarOpcion(){
   document.getElementById('errMsg').textContent='';
 
   if(opc===1){
-    detValue=Matriz.determinante(matrizActual);
-    var ds=detValue;
-    var html='<div class="adjResultCard">'+
-      '<div class="adjResultCardTitle">Opción 1 — Cálculo del determinante</div>'+
-      '<div class="adjResultCardBody">'+
-        '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">'+
-          '<span style="font-size:13px;font-weight:700;color:var(--ink)">det(A) =</span>'+
-          '<div class="detWrap"><div class="det-bar"></div>'+matrizTbl(matrizActual)+'<div class="det-bar"></div></div>'+
-          '<span style="font-size:13px;font-weight:700;color:var(--ink)">= <strong class="adjVal">'+ds+'</strong>'+(detValue!=="0"?' ≠ 0':'')+'</span>'+
-        '</div>'+
-        '<span>'+(detValue==="0"
-          ?'⚠ La matriz es <strong>singular</strong> y no tiene inversa.'
-          :'✓ La matriz es <strong>invertible</strong>.')+
-        '</span>'+
-      '</div></div>';
-    addToCaja21(html);
-    // Paso 1 completado: ocultar su fila y pasar al paso 2
-    var row1=document.getElementById('pasoRow1');
-    if(row1)row1.style.display='none';
-    var r2=document.querySelector('input[name="adjOpc"][value="2"]');
-    if(r2){r2.checked=true;actualizarParams(2);}
+    var detInput=document.getElementById('detInput');
+    if(detInput){
+      window.validarDeterminante();
+    } else {
+      document.getElementById('errMsg').textContent='Introduce el valor del determinante en el recuadro.';
+    }
 
   } else if(opc===2){
     if(detValue===null)detValue=Matriz.determinante(matrizActual);
@@ -785,11 +845,11 @@ function ejecutarOpcion(){
     var Adj=Matriz.trasponer(Matriz.adjunta(matrizActual));
     var html=tablaMatriz(Adj,'Adj(A)ᵗ','Paso 3 — Matriz adjunta transpuesta');
     addToCaja21(html);
-    // Paso 3 completado: ocultar y pasar al 4
+    // Paso 3 completado: ocultar su fila, sin marcar ningún paso automáticamente
     var row3=document.getElementById('pasoRow3');
     if(row3)row3.style.display='none';
-    var r4=document.querySelector('input[name="adjOpc"][value="4"]');
-    if(r4){r4.checked=true;actualizarParams(4);}
+    document.querySelectorAll('input[name="adjOpc"]').forEach(function(r){r.checked=false;});
+    document.getElementById('zonaParams').innerHTML='';
 
   } else if(opc===4){
     if(detValue===null){document.getElementById('errMsg').textContent='Calcula primero el determinante (Paso 1).';return;}
@@ -818,6 +878,21 @@ function ejecutarOpcion(){
         throwOnError:false
       });
     }
+    // Botón de comprobación, ajustado a la derecha del espacio de trabajo
+    addToCaja21(
+      '<div style="width:100%;display:flex;justify-content:flex-end">'+
+        '<button id="btnComprobar" style="font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--soft);color:var(--ink);cursor:pointer">Comprobar A·A⁻¹ y A⁻¹·A</button>'+
+      '</div>'+
+      '<div id="comprobacionZona" style="width:100%"></div>'
+    );
+    var btnComp=document.getElementById('btnComprobar');
+    if(btnComp)btnComp.addEventListener('click',function(){
+      var z=document.getElementById('comprobacionZona');
+      if(z)z.innerHTML=tablaComprobacion(matrizActual,Inv);
+      btnComp.style.display='none';
+      var caja21=document.getElementById('caja21');
+      if(caja21)caja21.scrollTop=caja21.scrollHeight;
+    });
   }
 }
 
@@ -900,6 +975,28 @@ function tablaInversaFormula(adjT,inv,det,desc){
   html+='<span style="font-size:18px;font-weight:300;color:var(--ink)">=</span>';
   html+='<div class="matrixWrap"><div class="mp lp"></div>'+resTbl+'<div class="mp rp"></div></div>';
   html+='</div></div>';
+  return html;
+}
+
+// ── Comprobación A·A⁻¹ = A⁻¹·A = I ───────────────────────────────────────
+function tablaComprobacion(A,Inv){
+  var P1=Matriz.multiplicar(A,Inv);
+  var P2=Matriz.multiplicar(Inv,A);
+  function fila(lbl,M1,M2,R){
+    return '<div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding:3px 0">'+
+      '<span style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap">'+lbl+' =</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(M1)+'<div class="mp rp"></div></div>'+
+      '<span style="font-size:16px;font-weight:300;color:var(--ink)">·</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(M2)+'<div class="mp rp"></div></div>'+
+      '<span style="font-size:18px;font-weight:300;color:var(--ink)">=</span>'+
+      '<div class="matrixWrap"><div class="mp lp"></div>'+matrizTbl(R)+'<div class="mp rp"></div></div>'+
+    '</div>';
+  }
+  var html='<div class="resultBloque" style="max-width:100%">';
+  html+='<div style="font-size:11px;font-weight:900;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">Comprobación</div>';
+  html+=fila('A · A⁻¹',A,Inv,P1);
+  html+=fila('A⁻¹ · A',Inv,A,P2);
+  html+='</div>';
   return html;
 }
 

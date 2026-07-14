@@ -269,9 +269,9 @@ const revelarFinal=()=>{if(finalMostrado)return;finalMostrado=true;
 const C=[];for(let i=0;i<n;i++){C.push([]);for(let j=0;j<n;j++)C[i].push(adjCalculados[i+"_"+j])}
 const AdjT=Matriz.trasponer(C),Inv=Matriz.inversa(matriz);if(formWrap)formWrap.innerHTML="";
 bAdjT=burbuja();
-limpiar(bAdjT);latexEn(bAdjT,"[\\text{Adj}("+nombreMatriz+")]^t =","font-weight:700;");matrizEn(bAdjT,AdjT);
+limpiar(bAdjT);latexEn(bAdjT,"\\text{Adj}("+nombreMatriz+")^t =","font-weight:700;");matrizEn(bAdjT,AdjT);
 bInv=burbuja();
-limpiar(bInv);latexEn(bInv,nombreMatriz+"^{-1}=\\dfrac{1}{\\det("+nombreMatriz+")}\\,[\\text{Adj}("+nombreMatriz+")]^t","font-weight:700;");igualEn(bInv);
+limpiar(bInv);latexEn(bInv,nombreMatriz+"^{-1}=\\dfrac{1}{\\det("+nombreMatriz+")}\\,\\text{Adj}("+nombreMatriz+")^t","font-weight:700;");igualEn(bInv);
 latexEn(bInv,"\\dfrac{1}{"+det+"}\\,","font-weight:700;");matrizEn(bInv,AdjT);igualEn(bInv);matrizEn(bInv,Inv);
 if(alCompletar){const btnContinuar=document.createElement("button");btnContinuar.type="button";btnContinuar.style.cssText="font-size:12px;white-space:nowrap;";
 btnContinuar.textContent="Continuar";btnContinuar.addEventListener("click",()=>{btnContinuar.remove();alCompletar(Inv)});bInv.appendChild(btnContinuar)}
