@@ -611,7 +611,7 @@ window.validarMenor=function(){
   var errors=[];
   // Signo
   var sv=(document.getElementById('mc_sign')||{}).value||'';sv=sv.trim();
-  var signOk=cSign>0?(sv==='+'||sv==='+'):(sv==='-'||sv==='−'||sv==='−');
+  var signOk=cSign>0?(sv==='+'):(sv==='-'||sv==='−');
   if(!signOk)errors.push('signo (esperado '+(cSign>0?'+':'−')+')');
   // Celdas
   var cellOk=true;
@@ -791,7 +791,7 @@ function actualizarParams(opc){
         '<span style="font-size:18px;font-weight:300">=</span>'+
         '<input type="text" id="detInput" style="width:60px;padding:3px;border:1.5px solid var(--border);border-radius:4px;text-align:center;font-size:14px;font-weight:700;background:#fff">'+
         '<span id="detFeedback" style="font-size:12px;font-weight:800;margin-left:4px"></span>'+
-        '<button id="btnAutoDet" style="margin-left:8px;font-size:11px;opacity:.7">Automático (no recomendable)</button>'+
+        '<button id="btnAutoDet" style="margin-left:8px;font-size:11px;opacity:.7">CALCULAR</button>'+
       '</div>';
     var detInput=document.getElementById('detInput');
     if(detInput){
@@ -804,13 +804,7 @@ function actualizarParams(opc){
     if(btnAD)btnAD.addEventListener('click',function(){
       var real=Matriz.determinante(matrizActual);
       if(detInput)detInput.value=real;
-      btnAD.style.display='none';
-      var fb=document.getElementById('detFeedback');
-      if(fb){
-        fb.innerHTML='<button id="btnOkAutoDet" style="margin-left:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;padding:5px 14px;border-radius:6px;font-weight:800;cursor:pointer">OK</button>';
-        var btnOk=document.getElementById('btnOkAutoDet');
-        if(btnOk)btnOk.addEventListener('click',function(){window.validarDeterminante();});
-      }
+      window.validarDeterminante();
     });
     return;
   }
