@@ -926,6 +926,20 @@ class FraccionAlgebraica {constructor(fraccion) {const [numerador, denominador] 
       for(let i=0;i<f.length;i++){let L=denomsEn(f[i]);if(L>1){f[i]=Polinomio.multiplicar(L.toString(),f[i]);
           let nc=divRatStr(c,L.toString());if(nc)c=nc}}return c};
     let numer=FraccionAlgebraica.numerador(cadena).toString(),denom=FraccionAlgebraica.denominador(cadena).toString();
+    // Las fracciones con denominador entero no necesitan factorizar el
+    // numerador. Reducirlas directamente evita que los denominadores
+    // intermedios crezcan hasta convertirse en notación científica, que no
+    // es una sintaxis válida para Monomio.
+    if(esInt(denom)){
+      const pol=Polinomio._parseSimplificado(numer),cs=pol.monomios.map(m=>m.coeficiente),di=parseInt(denom,10);
+      if(cs.every(Number.isSafeInteger)&&Number.isSafeInteger(di)){
+        let g=Math.abs(di);for(const x of cs)g=gcd(g,Math.abs(x));g=g||1;
+        let n=Polinomio.simplificar("("+numer+")/("+g+")"),d=di/g;
+        if(d<0){n=Polinomio.multiplicar("-1",n);d=-d}
+        if(d===1)return n;
+        return haySuma(n)?"("+n+")/("+d+")":n+"/"+d;
+      }
+    }
     let fN=Polinomio.factoresCanonicos(numer),fD=Polinomio.factoresCanonicos(denom);
     let cN=(""+fN[0]),cD=(""+fD[0]),nF=fN.slice(1),dF=fD.slice(1);
     cN=normalizarFactores(cN,nF);cD=normalizarFactores(cD,dF);
