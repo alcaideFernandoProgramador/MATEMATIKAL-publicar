@@ -355,11 +355,13 @@ function fraccionContinua(decimal, long) {if(decimal==="Infinity"||decimal===Inf
   for (let i = 0; i < long; i++) {parteDecimal = 1 / parteDecimal;coeficientes.push(Math.floor(parteDecimal));
     parteDecimal = parteDecimal - Math.floor(parteDecimal);if (parteDecimal < 0.00001) {break;}}
   if (coeficientes.length < 2) {return entero.toString();}
-  let resultado = FraccionNumerica.sumar(coeficientes[coeficientes.length - 2].toString(), FraccionNumerica.dividir("1", coeficientes[coeficientes.length - 1].toString()));
-  for (let i = coeficientes.length - 2; i > 0; i--) 
-    {resultado = FraccionNumerica.dividir("1", resultado);resultado = FraccionNumerica.sumar(coeficientes[i - 1].toString(), resultado);}
-  let denomin = FraccionNumerica.denominador(resultado);let numera = FraccionNumerica.numerador(resultado);
-  if (denomin === "1") {resultado = numera;}return resultado;}
+  let num = BigInt(coeficientes[coeficientes.length - 1]);let den = 1n;
+  for (let i = coeficientes.length - 2; i >= 0; i--)
+    {const ci = BigInt(coeficientes[i]);const nuevoNum = ci * num + den;den = num;num = nuevoNum;}
+  const mcdBigInt = (a, b) => {a = a < 0n ? -a : a;b = b < 0n ? -b : b;while (b) {[a, b] = [b, a % b];}return a;};
+  const g = mcdBigInt(num, den);if (g > 1n) {num /= g;den /= g;}
+  if (den < 0n) {num = -num;den = -den;}
+  return den === 1n ? num.toString() : num.toString() + "/" + den.toString();}
 
 
 function _toInt(x){x=Number(x);return Number.isFinite(x)&&Number.isInteger(x)?x:NaN;}
