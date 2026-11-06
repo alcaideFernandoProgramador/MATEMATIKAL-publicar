@@ -19,7 +19,7 @@ try{new MutationObserver(()=>mantenerScrollAbajo(caja)).observe(caja,{childList:
 
 
 
-const prepararExpresionMatrices=e=>{let s=String(e||"").replace(/\s+/g,"");
+const prepararExpresionMatrices=e=>{let s=String(e||"").replace(/\s+/g,"").replace(/(\d),(\d)/g,"$1.$2");
 s=s.replace(/(^|[\(\+\-\*\/\^])-(\d+\s*\/\s*\d+)\s*([A-Za-z]\w*)/g,(_,p,f,m)=>p+"(-"+f.replace(/\s+/g,"")+")*"+m);
 s=s.replace(/(^|[\(\+\-\*\/\^])-(\d*\.\d+|\d+)\s*([A-Za-z]\w*)/g,(_,p,n,m)=>p+"(-"+n+")*"+m);
 s=s.replace(/(^|[^\w\.])(\d+\s*\/\s*\d+)\s*([A-Za-z]\w*)/g,(_,p,f,m)=>p+"("+f.replace(/\s+/g,"")+")*"+m);
@@ -43,8 +43,8 @@ if(A.length!==A[0].length)throw new Error("La matriz debe ser cuadrada.");
 if(Matriz.determinante(A)==="0")throw new Error("La matriz no es regular y, por tanto, no tiene inversa.");
 return Matriz.__inversaOriginal(A)};Matriz.__inversaEnvuelta=true};
 
-window.addEventListener("error",e=>{let m=e?.error?.message||e?.message||"";if(/cuadrada|no es regular|inversa/i.test(m))pintarErrorEnCaja21(m)});
-window.addEventListener("unhandledrejection",e=>{let m=e?.reason?.message||String(e.reason||"");if(/cuadrada|no es regular|inversa/i.test(m))pintarErrorEnCaja21(m)});
+window.addEventListener("error",e=>{let m=e?.error?.message||e?.message||"";if(/cuadrada|no es regular|inversa|no es válida/i.test(m))pintarErrorEnCaja21(m)});
+window.addEventListener("unhandledrejection",e=>{let m=e?.reason?.message||String(e.reason||"");if(/cuadrada|no es regular|inversa|no es válida/i.test(m))pintarErrorEnCaja21(m)});
 
 async function crearMatrices(){contenedor.style.display="flex";contenedor.style.justifyContent="center";
 caja1.style.width="auto";caja1.style.height="auto";caja1.style.minHeight="0";
@@ -155,7 +155,7 @@ let celda=document.createElement("td");celda.style.border="1px solid black";celd
 let input=document.createElement("input");input.type="text";input.style.width="40px";input.style.fontSize="13px";
 input.style.textAlign="center";if(!primerInput)primerInput=input;input.addEventListener("keydown",e=>{
 if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.preventDefault();mensajeError.style.display="none";let valor=input.value.trim();
-let correcto=resultado[i][j];if(valor===""||ExpresionAlgebraica.simplificar("("+valor+")-("+correcto+")")!=="0"){
+let correcto=resultado[i][j],acierto=false;try{acierto=valor!==""&&ExpresionAlgebraica.simplificar("("+valor+")-("+correcto+")")==="0"}catch(_){}if(!acierto){
 input.value="";input.style.border="2px solid red";mensajeError.style.display="block";input.focus()}else{
 input.style.border="";let inputs=tablaInputs.querySelectorAll("input");let actualIndex=[...inputs].indexOf(input);
 let siguiente=inputs[actualIndex+1];if(siguiente)siguiente.focus();else{contenedorParentesis.remove();
@@ -340,7 +340,7 @@ let matricesOperandos=[],nombreOperandos=[],escalar=null,exponente=null;inputCon
 let val=inputValues[i];if(config.type==='matriz'){let indiceMatriz=nombreMatrices.indexOf(val);
 if(indiceMatriz===-1){throw new Error(`Nombre de matriz "${val}" no válido. Asegúrate de escribirlo exactamente como aparece. Presiona RESET`)}
 matricesOperandos.push(matricesCreadasActuales[indiceMatriz]);nombreOperandos.push(val)}else if(config.type==='numero'){
-if(opcionSeleccionada==="opcion4"){escalar=val}else{let num=Number(val);if(isNaN(num))throw new Error("Por favor, introduce un valor numérico válido.");
+if(opcionSeleccionada==="opcion4"){escalar=val.replace(/(\d),(\d)/g,"$1.$2");if(!escalar)throw new Error("Introduce un número en el campo Escalar.")}else{let num=Number(val);if(isNaN(num))throw new Error("Por favor, introduce un valor numérico válido.");
 if(config.label.includes('Exponente')){if(!Number.isInteger(num)||num<0)throw new Error("El exponente debe ser un número entero mayor o igual a 0.");
 exponente=num}else if(config.label.includes('Escalar')){escalar=num}}}});
 if((operacion===Matriz.sumar||operacion===Matriz.restar)
@@ -405,7 +405,7 @@ pintarErrorEnCaja21(msg)}}});break}
 case"opcion10":{let label=document.createElement("label");
 label.textContent="Escribe la operación combinada (el usuario realizará los pasos):";
 let input=document.createElement("input");input.className="inputLargo";caja124.append(label,input);input.focus();
-const preparar10=txt=>{let s=String(txt||"").replace(/\s+/g,"").replace(/·|\\cdot/g,"*");
+const preparar10=txt=>{let s=String(txt||"").replace(/\s+/g,"").replace(/(\d),(\d)/g,"$1.$2").replace(/·|\\cdot/g,"*");
 s=s.replace(/\b([A-Za-z]\w*)\(/g,"$1*(").replace(/(\d|\))([A-Za-z]\w*)/g,"$1*$2").replace(/\)\(/g,")*(");
 const aDecimal=t=>{try{return ExpresionAlgebraica.pasarADecimal(t)}catch(_){return t}};
 s=s.replace(/-?\d+\s*\/\s*\d+/g,m=>aDecimal(m.replace(/\s+/g,"")));

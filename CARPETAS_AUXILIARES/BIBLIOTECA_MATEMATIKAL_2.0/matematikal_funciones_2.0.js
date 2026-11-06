@@ -1,3 +1,5 @@
+// Evita bucles infinitos al evaluar una expresión: si una vuelta no reduce nada, la expresión no se puede resolver.
+function comprobarAvance(estadoAnterior,pila){const estado=Array.isArray(pila)?pila.join("\u0001"):null;if(estado===null||estado===estadoAnterior)throw new Error("La expresión no es válida. Revísala e inténtalo de nuevo.");return estado}
 /*ÍNDICE
 
 FRACCIÓN GENERATRIZ DE UN NúMERO DECIMAL (MÉTODO FRACCION CONTINUA)                           fraccionContinua(decimal,long):resultado string
@@ -1120,9 +1122,9 @@ class ExpresionAlgebraica {constructor(expresion) {this.expresion = expresion;}
         pila.push({ expr: `${aExpr}${token}${bExpr}`, prio });}
       else {return [false, `Error: token no reconocido '${token}'`];}}
     if (pila.length !== 1) return false; return pila[0].expr;}  
-  static simplificar (exp){if(exp===""){return "0"};
+  static simplificar (exp){if(exp===""){return "0"};if(typeof exp==="string")exp=exp.replace(/(\d),(\d)/g,"$1.$2");
     let expPostfija=ExpresionAlgebraica.infijaAPostfija(exp);
-    while(expPostfija.length!==1){for (let i=0;i<expPostfija.length;i++){
+    let estadoAnterior=null;while(expPostfija.length!==1){estadoAnterior=comprobarAvance(estadoAnterior,expPostfija);for (let i=0;i<expPostfija.length;i++){
         if(expPostfija[i]==="+"){
           if(expPostfija[i-1].includes("/")||expPostfija[i-2].includes("/")){let frac=FraccionAlgebraica.sumar(expPostfija[i-2],expPostfija[i-1]);
           expPostfija[i]=frac.toString();expPostfija.splice(i-2,2);break;}else{let pol=Polinomio.sumar(expPostfija[i-2],expPostfija[i-1]);
@@ -2660,7 +2662,7 @@ class ExpresionMatricial {
   static _clonarMatrices(matr){return (matr||[]).map(obj=>({nombre:obj.nombre,matriz:Array.isArray(obj.matriz)?obj.matriz.map(f=>Array.isArray(f)?f.slice():f):obj.matriz}));}
   static calcular(exp,matr){matr=ExpresionMatricial._clonarMatrices(matr);let control=ExpresionMatricial._indiceTemporal(matr);
     let nomMatrices=matr.map(obj=>obj.nombre);let expPostfija=ExpresionMatricial.infijaAPostfija(exp);
-    while(expPostfija.length!==1){nomMatrices=matr.map(obj=>obj.nombre);
+    let estadoAnterior=null;while(expPostfija.length!==1){estadoAnterior=comprobarAvance(estadoAnterior,expPostfija);nomMatrices=matr.map(obj=>obj.nombre);
       for(let i=0;i<expPostfija.length;i++){
         if(expPostfija[i]==="+"){
           if(nomMatrices.includes(expPostfija[i-2])&&expPostfija[i-1]==="I"){
@@ -2740,7 +2742,7 @@ class ExpresionMatricial {
             matr.push(ressObj);control++;expPostfija[i]=ressObj.nombre;expPostfija.splice(i-2,2);break}}}}
     for(let i=0;i<matr.length;i++){if(matr[i].nombre===expPostfija[0]){return matr[i].matriz}}return expPostfija[0]}
   static calcularUnPaso(exp,matr){let control=ExpresionMatricial._indiceTemporal(matr);let nomMatrices=matr.map(obj=>obj.nombre);let expPostfija=ExpresionMatricial.infijaAPostfija(exp);
-    while(expPostfija.length!==1){for(let i=0;i<expPostfija.length;i++){
+    let estadoAnterior=null;while(expPostfija.length!==1){estadoAnterior=comprobarAvance(estadoAnterior,expPostfija);for(let i=0;i<expPostfija.length;i++){
       if(expPostfija[i]==="+"){
         if(nomMatrices.includes(expPostfija[i-2])&&expPostfija[i-1]==="I"){
           let mat1=[];for(let j=0;j<matr.length;j++){if(matr[j].nombre===expPostfija[i-2]){mat1=matr[j].matriz}}
