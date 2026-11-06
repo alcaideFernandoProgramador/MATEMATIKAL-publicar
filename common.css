@@ -101,3 +101,7 @@ html body .formulaBox strong{
   font-size:.9rem!important;
   letter-spacing:0!important;
 }
+
+/* Fórmulas anchas en ejercicios y soluciones: se deslizan en lugar de quedar cortadas por el recuadro. */
+.mk-ejercicio .katex-display{overflow-x:auto;overflow-y:hidden;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+.mk-sol,.mk-enunciado,.resultado-final{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}

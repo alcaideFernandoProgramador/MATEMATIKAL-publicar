@@ -43,7 +43,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<style>body{overflow:hidden!important;display:flex!important;flex-direction:column!important;height:100vh!important}</style>
+<style>html,body{height:auto!important;overflow-y:visible!important}body{display:flex!important;flex-direction:column!important;min-height:100vh}#calculadora,#contenedor{height:auto!important;overflow:visible!important}</style>
 <style id="mk-design-v2">
 :root{
   --blue-deep:#1a2b6b;--blue-mid:#2d4faa;--blue-bright:#3b6ef8;
@@ -118,8 +118,6 @@ document.addEventListener('DOMContentLoaded',function(){
   if(calc){
     calc.style.display='flex';
     calc.style.flexDirection='column';
-    calc.style.height='100vh';
-    document.body.style.overflow='hidden';
     document.body.style.display='flex';
     document.body.style.flexDirection='column';
   }

@@ -34,13 +34,15 @@ function tieneFracDec(m){
   }return false;
 }
 
-function normNumStr(v){let s=(v??"").toString().trim().replace(/\s+/g,"").replace(/,/g,".");return s===""?"0":s;}
+function normNumStr(v){let s=(v??"").toString().trim();if(/\d\s+\d/.test(s))return "NaN";s=s.replace(/\s+/g,"").replace(/,/g,".").replace(/^([+\-]?)\./,(_,g)=>g+"0.");return s===""?"0":s;}
+function filaEntera(v){let s=(v??"").toString().trim();return /^\d+$/.test(s)?Number(s):NaN;}
+function divideEntreCero(v){let p=(v??"").toString().split("/");return p.length===2&&_Z(p[1]);}
 function isNumStr(v){
   if(typeof Matriz!=="undefined"&&Matriz._isNum)return Matriz._isNum(v);
   let s=normNumStr(v);return /^[+\-]?\d+$/.test(s)||/^[+\-]?\d*\.\d+$/.test(s)||/^[+\-]?\d+\/[+\-]?\d+$/.test(s);
 }
-function msgOK(id,txt){let c=$(id);if(c){c.style.color="black";html(c,txt??"");}}
-function msgERR(id,txt){let c=$(id);if(c){c.style.color="red";html(c,txt??"");}}
+function msgOK(id,txt){let c=$(id);if(c){c.style.color=id==="caja11112"?"#dbeafe":"black";html(c,txt??"");}}
+function msgERR(id,txt){let c=$(id);if(c){c.style.color=id==="caja11112"?"#fecaca":"red";html(c,txt??"");}}
 
 function activarScrollVerticalSiNecesario(el,maxHpx){
   if(!el)return;el.style.maxHeight=maxHpx+"px";el.style.overflowY="hidden";
@@ -230,7 +232,7 @@ function crearFormulario(){
     l.appendChild(a);l.appendChild(b);}
   addOpt(l1,"inputcorto1","opcion1","Opción 1: Permutar el orden de dos filas","F<sub>i</sub> ↔ F<sub>j</sub>");
   addOpt(l2,"inputcorto2","opcion2","Opción 2: Reordenar las filas dejando abajo las que más ceros tengan a la izquierda","F↓");
-  addOpt(l3,"inputcorto3","opcion3","Opción 3: Simplificar los elementos de una fila dividiendolos por el mismo número","F<sub>a</sub>→1/mF<sub>a</sub>");
+  addOpt(l3,"inputcorto3","opcion3","Opción 3: Simplificar los elementos de una fila dividiéndolos por el mismo número","F<sub>a</sub>→1/mF<sub>a</sub>");
   addOpt(l4,"inputcorto4","opcion4","Opción 4: Cambiar una fila por una combinación lineal de ella y de otras filas","F<sub>i</sub>→aF<sub>i</sub>+bF<sub>j</sub>+cF<sub>k</sub>");
   if(l5){html(l5,"");let b=document.createElement("button");b.innerHTML="Seleccionar";l5.appendChild(b);b.addEventListener("click",onSelect);}
   if(l6){html(l6,"");let br=document.createElement("button");br.innerHTML="RESET";l6.appendChild(br);br.addEventListener("click",resetTrabajoUsuario);
@@ -266,7 +268,7 @@ function op1(){
   iA.inputMode="numeric";iB.inputMode="numeric";wrap.appendChild(lA);wrap.appendChild(iA);wrap.appendChild(lB);wrap.appendChild(iB);iA.focus();
   function exec(){
     try{
-      msgOK("caja1251","");let A=parseInt(normNumStr(iA.value),10),B=parseInt(normNumStr(iB.value),10);
+      msgOK("caja1251","");let A=filaEntera(iA.value),B=filaEntera(iB.value);
       if(!Number.isInteger(A)||!Number.isInteger(B)||A<1||B<1||A>S.act.length||B>S.act.length||A===B)throw 0;
       let ii=A-1,jj=B-1;
       S.hist.push(cloneM(S.act));
@@ -290,7 +292,7 @@ function op3(){
   iA.inputMode="numeric";wrap.appendChild(lA);wrap.appendChild(iA);wrap.appendChild(lB);wrap.appendChild(iB);iA.focus();
   function exec(){
     try{
-      msgOK("caja1251","");let a=parseInt(normNumStr(iA.value),10),m=normNumStr(iB.value);
+      msgOK("caja1251","");let a=filaEntera(iA.value),m=normNumStr(iB.value);
       if(!Number.isInteger(a)||a<1||a>S.act.length||!isNumStr(m)||_Z(simp(m)))throw 0;
       let nueva=cloneM(S.act);for(let j=0;j<nueva[a-1].length;j++)nueva[a-1][j]=divi(nueva[a-1][j],m);
       S.hist.push(cloneM(S.act));
@@ -313,18 +315,21 @@ function op4(){
   lc.innerHTML="Introduce la operación (ej: F1=2F1+F2+3F3):";lf5.appendChild(lc);lf6.appendChild(ic);ic.focus();
   function rhsIncluyeFilaNoNula(cad){
     cad=(cad??"").toString().replace(/\s+/g,"");let m=cad.match(/^F(\d+)=/i);if(!m)return false;
-    let i=m[1],rhs=(cad.split("=")[1]??""),re=new RegExp(`([+\\-]?)([0-9.,/]*?)F${i}(?!\\d)`,"gi"),x;
+    let i=String(Number(m[1])),rhs=(cad.split("=")[1]??""),re=/([+\-]?)(\([^()]*\)|[0-9.,\/]*)\*?F(\d+)/gi,x,total="0";
     while((x=re.exec(rhs))!==null){
-      let sign=x[1]==="-"?"-":"",coef=(x[2]??"");if(coef==="")return true;
-      let v=normNumStr(sign+coef);if(isNumStr(v)&&!_Z(simp(v)))return true;}return false;}
+      if(String(Number(x[3]))!==i)continue;
+      let coef=(x[2]??"").replace(/^\(|\)$/g,"");if(coef==="")coef="1";
+      total=add(total,(x[1]==="-"?"-":"")+"("+normNumStr(coef)+")");}
+    return !_Z(simp(total));}
   ic.addEventListener("keydown",function(e){
     if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();
     try{
-      msgOK("caja1251","");let cad=ic.value,nuevo=aplicarCombinacionDesdeCadena(cad);
+      msgOK("caja1251","");let cad=ic.value;if(/[a-eg-z]/i.test(cad))throw 0;let nuevo=aplicarCombinacionDesdeCadena(cad);
       if(!rhsIncluyeFilaNoNula(cad)){
         let mObj=cad.replace(/\s+/g,"").match(/^F(\d+)=/i);
         throw {tipo:1,fila:mObj?mObj[1]:"i"};
       }
+      if(_eqM(nuevo,S.act)){msgERR("caja1251","Esa operación no cambia la matriz. Prueba con otra.");return;}
       S.hist.push(cloneM(S.act));
       S.act=nuevo;
       renderPasoCambiar(cad);
@@ -332,7 +337,7 @@ function op4(){
       for(let k=0;k<ops.length;k++)if(ops[k].checked){ops[k].checked=false;break;}
       if(finalizarSiEscalonadaUsuario())return;
     }catch(e2){
-      if(e2&&e2.tipo===1)msgERR("caja1251",`Combinación no válida: el término F${e2.fila} debe aparecer con coeficiente no nulo. Pulsa RESET e inténtalo de nuevo.`);
+      if(e2&&e2.tipo===1)msgERR("caja1251",`Combinación no válida: el coeficiente total de F${e2.fila} no puede ser cero. Pulsa RESET e inténtalo de nuevo.`);
       else msgERR("caja1251","Cadena no válida. Usa F1=2F1+F2+3F3 admitiendo enteros, fracciones o decimales. Pulsa RESET e inténtalo de nuevo.");}});}
 
 function mostrarResultadoFinalAutomatica(E){
@@ -345,6 +350,18 @@ function mostrarResultadoFinalAutomatica(E){
   t2.style.display="flex";t2.style.alignItems="center";t2.style.justifyContent="center";
   let lab=document.createElement("div");t2.appendChild(lab);lab.style.fontWeight="bold";lab.style.fontSize=S.FS_MAT;lab.innerHTML="E=";
   if(typeof Representar!=="undefined"&&Representar.matriz)Representar.matriz(res,t2);
+}
+
+// Los números no pueden superar lo que JavaScript representa con exactitud.
+function comprobarTamanoAuto(piv,a,filaF,filaP){
+  for(let k=0;k<filaF.length;k++)if(Math.abs(Number(piv)*Number(filaF[k]))+Math.abs(Number(a)*Number(filaP[k]))>Number.MAX_SAFE_INTEGER)throw new Error("NUMEROS_GRANDES");
+}
+// Si los números crecen, se simplifican las filas para poder seguir.
+function reducirSiGrandes(E){
+  if(!E.some(r=>r.some(v=>Math.abs(Number(v))>=1000)))return E;
+  let ant=cloneM(E),Es=Matriz.simplificarFilasNumericas(cloneM(E));
+  if(!Matriz.compararMatrices(Es,ant))renderPasoAutoSimplificar(Es.length,cloneM(Es));
+  return Es;
 }
 
 function matrizEscalonadaFn(matriz){
@@ -372,10 +389,10 @@ function matrizEscalonadaFn(matriz){
       for(let f=c+1;f<nf;f++){
         if(_Z(E[f][c]))continue;
         let piv=E[c][c],a=E[f][c],m2=cloneM(E);
-        for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[c][k]));
+        comprobarTamanoAuto(piv,a,m2[f],m2[c]);for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[c][k]));
         if(typeof Matriz!=="undefined"&&Matriz.compararMatrices&&!Matriz.compararMatrices(E,m2)){
           let cad=`F${f+1}=${prettyCoef(piv)}F${f+1}+${prettyCoef(opp(a))}F${c+1}`;cad=normCad(cad);
-          renderPasoAutoCambiar(E.length,cad,cloneM(E));
+          renderPasoAutoCambiar(E.length,cad,cloneM(E));E=reducirSiGrandes(E);
         }
       }
     }else{
@@ -385,10 +402,10 @@ function matrizEscalonadaFn(matriz){
             for(let f=c+1;f<nf;f++){
               if(_Z(E[f][j]))continue;
               let piv=E[c][j],a=E[f][j],m2=cloneM(E);
-              for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[c][k]));
+              comprobarTamanoAuto(piv,a,m2[f],m2[c]);for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[c][k]));
               if(typeof Matriz!=="undefined"&&Matriz.compararMatrices&&!Matriz.compararMatrices(E,m2)){
                 let cad=`F${f+1}=${prettyCoef(piv)}F${f+1}+${prettyCoef(opp(a))}F${c+1}`;cad=normCad(cad);
-                renderPasoAutoCambiar(E.length,cad,cloneM(E));
+                renderPasoAutoCambiar(E.length,cad,cloneM(E));E=reducirSiGrandes(E);
               }
             }break;
           }
@@ -428,7 +445,7 @@ function botonResolucionAutomatica(){
     rm($("botonautomatico"));
     ocultarTituloUsuario();ocultarZonaUsuario();
     let c221=$("caja221");if(c221){c221.style.display="flex";c221.style.fontSize=S.FS_MAT;}
-    matrizEscalonadaFn(S.ant);
+    try{matrizEscalonadaFn(S.ant);}catch(_){l.style.color="red";html(l,"No se ha podido terminar la solución automática: los números son demasiado grandes. Prueba a aplicar tú las operaciones, simplificando las filas.");}
   });
 }
 
@@ -518,7 +535,7 @@ function rellenarMatriz(tabla){
     try{
       msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
-      let v=normNumStr(this.value);if(!isNumStr(v))throw 0;S.val[f][col]=simp(v);
+      if(this.value.trim()==="")throw 0;let v=normNumStr(this.value);if(!isNumStr(v)||divideEntreCero(v))throw 0;S.val[f][col]=simp(v);
       if(i<inputs.length-1)inputs[i+1].focus();else finalizarEntrada();
     }catch(_){msgERR("caja11112","Valor no válido. Admite enteros, decimales y fracciones tipo 2/3.");inputs[i].value="";}});}
 
