@@ -2114,6 +2114,8 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
     cont2.style.cssText = "width:auto;height:auto;display:flex;align-items:center;margin-bottom:10px;font-size:13px;";lugar.appendChild(cont2);
     const matrices = nombres.map(nombre => ({nombre,matriz: nombre2matriz.get(nombre)}));
     const latexSustituido = Representar.expresionMatricialSustituida(exp, matrices);katex.render(latexSustituido, cont2);}
+  static expresionMatricialSimbolica(exp, matr, lugar) {lugar.style.display = "flex";lugar.style.alignItems = "center";const cont = document.createElement("div");cont.id = "cont1";
+    cont.style.cssText = "width:auto;height:auto;display:flex;align-items:center;font-size:13px;";lugar.appendChild(cont);katex.render(ExpresionAlgebraica.pasarALatex(exp), cont);}
   static expresionMatricialIntermedia(exp, matr, lugar) {const getArrayLike = (m) => m?.array ?? m?.matriz ?? m?.values ?? m?.data ?? null;
     const entries = (matr || []).map(m => ({ nombre: String(m?.nombre ?? '').trim(), arr: getArrayLike(m) })).filter(e => e.nombre.length > 0);
     const nombre2matriz = new Map(entries.map(e => [e.nombre, e.arr]));const nombres = [...nombre2matriz.keys()];
@@ -2140,7 +2142,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
       document.head.appendChild(style);}
     const addBloque=(renderFn,expr)=>{const cont=document.createElement('span');cont.className='exp-bloque';linea.appendChild(cont);renderFn(expr,matr,cont);scroll()};
     const addIgual=()=>{const eq=document.createElement('span');eq.className='exp-igual';eq.textContent='=';linea.appendChild(eq);scroll()};
-    addBloque(Representar.expresionMatricial,exp);addIgual();let actual=exp;
+    if(ExpresionMatricial.esValida(exp)){addBloque(Representar.expresionMatricialSimbolica,exp);addIgual()}addBloque(Representar.expresionMatricialIntermedia,exp);addIgual();let actual=exp;
     try{while(true){const siguiente=ExpresionMatricial.calcularUnPaso(actual,matr);addBloque(Representar.expresionMatricialIntermedia,siguiente);
       const post=ExpresionMatricial.infijaAPostfija(siguiente);
       if(post.length===1)break;addIgual();actual=siguiente;}} 
@@ -2167,7 +2169,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
     const waitForClick=()=>new Promise(r=>{const onClick=()=>{cleanup();scroll();r()};const onKey=e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();cleanup();scroll();r()}};
       const cleanup=()=>{btn.removeEventListener('click',onClick);document.removeEventListener('keydown',onKey)};btn.addEventListener('click',onClick);
       document.addEventListener('keydown',onKey)});
-    addBloque(Representar.expresionMatricial,exp);addIgual();await waitForClick();let actual=exp;
+    if(ExpresionMatricial.esValida(exp)){addBloque(Representar.expresionMatricialSimbolica,exp);addIgual()}addBloque(Representar.expresionMatricialIntermedia,exp);addIgual();await waitForClick();let actual=exp;
     try{while(true){const siguiente=ExpresionMatricial.calcularUnPaso(actual,matr);addBloque(Representar.expresionMatricialIntermedia,siguiente);
         const post=ExpresionMatricial.infijaAPostfija(siguiente);if(post.length===1)break;addIgual();await waitForClick();actual=siguiente;}
       btn.remove();ctrl.remove();scroll();} 
