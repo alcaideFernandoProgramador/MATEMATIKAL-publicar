@@ -2135,7 +2135,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
     exp=ExpresionMatricial.sustituirIdentidades(exp,matr);
     const added=ensureIdentitiesFromExp(exp,matr);
     while(lugar.firstChild)lugar.removeChild(lugar.firstChild);
-    const linea=document.createElement('div');linea.className='exp-linea';lugar.appendChild(linea);scroll();
+    const linea=document.createElement('div');linea.className='exp-linea exp-linea-vertical';lugar.appendChild(linea);scroll();
     if(!document.getElementById('exp-linea-css')){const style=document.createElement('style');style.id='exp-linea-css';
       style.textContent=`.exp-linea{display:flex;flex-wrap:wrap;align-items:center;column-gap:.5rem;row-gap:.5rem}.exp-bloque{display:inline-flex;
       align-items:center;white-space:nowrap}.exp-bloque>*{display:inline-block}.exp-igual{display:inline-flex;align-items:center;padding:0 .25rem}`;
@@ -2169,7 +2169,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
     const waitForClick=()=>new Promise(r=>{const onClick=()=>{cleanup();scroll();r()};const onKey=e=>{if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();cleanup();scroll();r()}};
       const cleanup=()=>{btn.removeEventListener('click',onClick);document.removeEventListener('keydown',onKey)};btn.addEventListener('click',onClick);
       document.addEventListener('keydown',onKey)});
-    if(ExpresionMatricial.esValida(exp)){addBloque(Representar.expresionMatricialSimbolica,exp);addIgual()}addBloque(Representar.expresionMatricialIntermedia,exp);addIgual();await waitForClick();let actual=exp;
+    addBloque(Representar.expresionMatricial,exp);addIgual();await waitForClick();let actual=exp;
     try{while(true){const siguiente=ExpresionMatricial.calcularUnPaso(actual,matr);addBloque(Representar.expresionMatricialIntermedia,siguiente);
         const post=ExpresionMatricial.infijaAPostfija(siguiente);if(post.length===1)break;addIgual();await waitForClick();actual=siguiente;}
       btn.remove();ctrl.remove();scroll();} 
