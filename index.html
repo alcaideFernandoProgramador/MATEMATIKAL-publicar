@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<script>document.documentElement.className='js';</script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});(function(){var c=localStorage.getItem('mk_consent');if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});})();</script>
 <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871505410372543"></script>
 <meta charset="utf-8">
@@ -38,10 +39,13 @@ html,body{max-width:100%;overflow-x:hidden}
 *,*::before,*::after{box-sizing:border-box}
 
 .cabecera{background:#071a09;color:#fff;padding:2rem 2rem 1.8rem;margin-bottom:.75rem}
+.logoAncho{display:block;max-width:900px}
+.logoMovil,.cabecera .cabeceraTexto{display:none}
 
 .contenedor{max-width:1440px;margin:0 auto 1.1rem;padding:0 1.15rem;display:flex;flex-wrap:wrap;gap:1.15rem;align-items:flex-start}
-.menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:280px;position:sticky;top:1rem}
+.menu-lateral{background:#fff;border-radius:.75rem;padding:1.25rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.08);min-width:280px}
 .menu-lateral h2{margin:.25rem 0 .5rem;font-size:1.25rem}
+.menuBoton{display:none}
 .subtitulo-paginas{margin:0 0 .75rem;font-size:.9rem;color:#555}
 .menu-lateral ul{list-style:none;padding:0;margin:0}
 .menu-lateral li{padding-left:1cm}
@@ -88,7 +92,6 @@ html,body{max-width:100%;overflow-x:hidden}
   .cabecera{padding:1.5rem 1.25rem;margin-bottom:1rem}
   .cabecera h1{font-size:1.95rem}
   .contenedor{padding:0 1rem}
-  .menu-lateral{position:static}
   .bloque-destacados{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:900px){
@@ -96,8 +99,28 @@ html,body{max-width:100%;overflow-x:hidden}
   .menu-lateral{min-width:0;width:100%;padding:1.1rem 1.15rem}
   .contenido{width:100%;padding:1.2rem 1.25rem}
   .menu-lateral li{padding-left:0}
+  .menuGrupos{column-count:2;column-gap:1.25rem}
+  .menuGrupo{break-inside:avoid;-webkit-column-break-inside:avoid;padding-bottom:.9rem}
+  .menuGrupo h3{margin:0 0 .5rem}
   .bloque-destacados,.bloque-publico{grid-template-columns:1fr}
   .herramientasFull{padding:1.2rem 1.25rem}
+}
+@media (max-width:700px){
+  .logoAncho{display:none}
+  .logoMovil{display:block;width:100%;max-width:280px}
+  .cabecera .cabeceraTexto{display:block;margin:.5rem 0 0;font-size:.8rem;line-height:1.4}
+  .cabeceraLinea1{display:block;color:#4ade80;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .cabeceraLinea2{display:block;margin-top:.15rem;color:rgba(255,255,255,.75)}
+}
+@media (max-width:600px){
+  .menuGrupos{column-count:1}
+  .js .menu-lateral{padding:.7rem}
+  .js .menu-lateral>h2{display:none}
+  .js .menuBoton{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:44px;padding:.5rem .9rem;border:1px solid #dfe4ff;border-radius:.6rem;background:#f4f6ff;color:#283593;font:inherit;font-weight:700;cursor:pointer}
+  .menuBoton::after{content:"";width:.55rem;height:.55rem;margin:-.2rem .2rem 0 .75rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);flex-shrink:0}
+  .js .menu-lateral.abierto .menuBoton::after{margin-top:.2rem;transform:rotate(-135deg)}
+  .js .menuCuerpo{display:none;padding:.8rem .4rem 0}
+  .js .menu-lateral.abierto .menuCuerpo{display:block}
 }
 @media (max-width:480px){
   body{padding:0;max-width:100%;margin:0 auto}
@@ -115,7 +138,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <body>
 <header class="cabecera">
 <h1 class="sr-only">Matematikal: herramientas interactivas de matemáticas para ESO y Bachillerato</h1>
-<svg width="100%" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;display:block" aria-hidden="true" focusable="false">
+<svg class="logoAncho" width="100%" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <circle cx="810" cy="32" r="2.5" fill="rgba(74,222,128,0.35)"/>
   <circle cx="828" cy="32" r="2.5" fill="rgba(74,222,128,0.2)"/>
   <circle cx="846" cy="32" r="2.5" fill="rgba(74,222,128,0.1)"/>
@@ -126,16 +149,26 @@ html,body{max-width:100%;overflow-x:hidden}
   <polyline points="20,86 31,86 41,52 53,100 63,68 82,68" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="100" y="72" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="52" fill="#ffffff" letter-spacing="-1">Matematikal</text>
   <line x1="100" y1="84" x2="840" y2="84" stroke="rgba(74,222,128,0.35)" stroke-width="1.2" stroke-linecap="round"/>
-  <text x="102" y="106" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#4ade80" letter-spacing="1.8">MATEMÁTICAS BACHILLERATO. ALGEBRA LINEAL</text>
+  <text x="102" y="106" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#4ade80" letter-spacing="1.8">MATEMÁTICAS BACHILLERATO. ÁLGEBRA LINEAL</text>
   <text x="102" y="130" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="rgba(255,255,255,0.5)">Herramientas interactivas</text>
 </svg>
+<svg class="logoMovil" viewBox="6 14 396 132" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <ellipse cx="52" cy="80" rx="42" ry="62" fill="rgba(74,222,128,0.07)" stroke="#4ade80" stroke-width="1.5"/>
+  <polyline points="20,86 31,86 41,52 53,100 63,68 82,68" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="104" y="98" font-family="system-ui,-apple-system,sans-serif" font-weight="700" font-size="52" fill="#ffffff" letter-spacing="-1">Matematikal</text>
+</svg>
+<p class="cabeceraTexto"><span class="cabeceraLinea1">Matemáticas Bachillerato. Álgebra lineal</span><span class="cabeceraLinea2">Herramientas interactivas</span></p>
 </header>
 
 <div class="contenedor">
-<nav class="menu-lateral">
+<nav class="menu-lateral" aria-label="Páginas">
+<button type="button" class="menuBoton" aria-expanded="false" aria-controls="menuCuerpo">Ver todas las páginas</button>
 <h2>Páginas</h2>
+<div class="menuCuerpo" id="menuCuerpo">
 <p class="subtitulo-paginas">Cálculo matricial, determinantes, rango y sistemas de ecuaciones</p>
-<h3>Cálculo matricial...</h3>
+<div class="menuGrupos">
+<div class="menuGrupo">
+<h3>Cálculo matricial</h3>
 <ul>
 <li><a href="/operaciones-con-matrices.html">Operaciones con matrices</a></li>
 <li><a href="/matriz-escalonada.html">Matriz escalonada</a></li>
@@ -145,10 +178,14 @@ html,body{max-width:100%;overflow-x:hidden}
 <li><a href="/matrices-con-condiciones.html">Matrices que cumplen condiciones</a></li>
 <li><a href="/sistemas-ecuaciones-matriciales.html">Sistemas de ecuaciones matriciales</a></li>
 </ul>
+</div>
+<div class="menuGrupo">
 <h3>Determinantes</h3>
 <ul>
 <li><a href="/calculo-determinantes.html">Cálculo de determinantes</a></li>
 </ul>
+</div>
+<div class="menuGrupo">
 <h3>Rango de una matriz</h3>
 <ul>
 <li><a href="/rango-gauss.html">Rango por Gauss</a></li>
@@ -156,6 +193,8 @@ html,body{max-width:100%;overflow-x:hidden}
 <li><a href="/rango-parametro-gauss.html">Rango con parámetro (Gauss)</a></li>
 <li><a href="/rango-parametro-menores.html">Rango con parámetro (menores)</a></li>
 </ul>
+</div>
+<div class="menuGrupo">
 <h3>Sistemas de ecuaciones lineales</h3>
 <ul>
 <li><a href="/metodo-gauss-sistemas-ecuaciones.html">Sistemas por Gauss</a></li>
@@ -163,6 +202,9 @@ html,body{max-width:100%;overflow-x:hidden}
 <li><a href="/sistemas-gauss-con-parametro.html">Sistemas con parámetro (Gauss)</a></li>
 <li><a href="/sistemas-rouche-con-parametro.html">Sistemas con parámetro (Rouché-Frobenius)</a></li>
 </ul>
+</div>
+</div>
+</div>
 </nav>
 
 <main class="contenido">
@@ -267,7 +309,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <article class="tarjeta">
 <h3>Matriz inversa por adjunta</h3>
 <p>Obtiene la inversa a partir de la fórmula clásica en la que intervienen el determinante y la matriz adjunta transpuesta.</p>
-<div class="formulaTarjeta"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>A</mi><mn>-1</mn></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>det</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo></mrow></mfrac><mo>·</mo><msup><mrow><mo fence="false">[</mo><mi>Adj</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo><mo fence="false">]</mo></mrow><mi>t</mi></msup></mrow></math></div>
+<div class="formulaTarjeta"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>det</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo></mrow></mfrac><mo>·</mo><msup><mrow><mo fence="false">[</mo><mi>Adj</mi><mo fence="false">(</mo><mi>A</mi><mo fence="false">)</mo><mo fence="false">]</mo></mrow><mi>t</mi></msup></mrow></math></div>
 <a href="/matriz-inversa-adjunta.html">Ir a inversa por adjunta</a>
 </article>
 
@@ -362,6 +404,16 @@ o expresiones lineales con matrices e incógnitas matriciales.</p>
 </div>
 </footer>
 
+<script>
+(function(){
+  var menu=document.querySelector('.menu-lateral'),boton=menu.querySelector('.menuBoton');
+  boton.addEventListener('click',function(){
+    var abierto=menu.classList.toggle('abierto');
+    boton.setAttribute('aria-expanded',abierto?'true':'false');
+    boton.textContent=abierto?'Ocultar páginas':'Ver todas las páginas';
+  });
+})();
+</script>
 <script src="/common.js"></script>
 </body>
 </html>
