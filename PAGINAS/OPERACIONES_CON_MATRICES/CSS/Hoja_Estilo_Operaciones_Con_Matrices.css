@@ -214,6 +214,8 @@ iframe{border:none;border-radius:10px;}
 html,body{height:100%;}
 body{min-height:100vh;display:flex;flex-direction:column;}
 #contenedor{flex:1;}
+/* Reserva el espacio del pie fijo: con html,body{height:100%} el padding de body no alarga la página */
+#calculadora{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-area-inset-bottom,0px));}
 
 /* Evitar que estilos genéricos de footer afecten al footer fijo global (.siteFooter) */
 footer:not(.siteFooter){margin-top:auto;padding:14px 0;text-align:center;font-size:.95em;}
