@@ -292,3 +292,13 @@ iframe{border:none}
   #caja11121 label,#caja11122 label{margin-right:0}
   #nfilas,#ncolumnas{width:76px;flex:0 0 auto}
 }
+
+/* Botón "✓ Validar" junto al campo activo */
+#btnValidar{position:absolute;z-index:9000;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#2563eb;color:#fff;font:700 14px/1 system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(37,99,235,.35);cursor:pointer;white-space:nowrap}
+#btnValidar:active{transform:translateY(1px)}
+#notaAutomatica{margin-top:6px;font-size:12px;color:var(--muted,#6b7280);text-align:right}
+/* Móvil: título más compacto y que no se quede fijo arriba ocupando pantalla */
+@media (max-width:700px){
+  #tituloinicial{position:static}
+  #tituloinicial h2{font-size:16px;line-height:1.25;margin:0}
+}

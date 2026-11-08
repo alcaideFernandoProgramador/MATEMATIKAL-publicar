@@ -260,7 +260,7 @@ function op2(){
 
 function op1(){
   let lf5=$("caja1231"),lf6=$("caja1232");if(!lf5||!lf6)return;
-  let t=document.createElement("div");t.innerHTML="Introduce las dos filas a permutar y valida con ENTER en la segunda caja:";lf5.appendChild(t);
+  let t=document.createElement("div");t.innerHTML="Introduce las dos filas a permutar y valida con ENTER o ✓ Validar en la segunda caja:";lf5.appendChild(t);
   let wrap=document.createElement("div");wrap.style.display="inline-flex";wrap.style.gap="8px";wrap.style.alignItems="center";lf6.appendChild(wrap);
   let lA=document.createElement("label"),lB=document.createElement("label");lA.innerHTML="Fila 1";lB.innerHTML="Fila 2";
   let iA=document.createElement("input"),iB=document.createElement("input");iA.type="text";iB.type="text";
@@ -284,7 +284,7 @@ function op1(){
 
 function op3(){
   let lf5=$("caja1231"),lf6=$("caja1232");if(!lf5||!lf6)return;
-  let t=document.createElement("div");t.innerHTML="Introduce fila y divisor (entero, decimal o fracción); valida con ENTER:";lf5.appendChild(t);
+  let t=document.createElement("div");t.innerHTML="Introduce fila y divisor (entero, decimal o fracción); valida con ENTER o ✓ Validar:";lf5.appendChild(t);
   let wrap=document.createElement("div");wrap.style.display="inline-flex";wrap.style.gap="8px";wrap.style.alignItems="center";lf6.appendChild(wrap);
   let lA=document.createElement("label"),lB=document.createElement("label");lA.innerHTML="Fila";lB.innerHTML="Divisor";
   let iA=document.createElement("input"),iB=document.createElement("input");iA.type="text";iB.type="text";
@@ -440,9 +440,9 @@ function matrizEscalonadaFn(matriz){
 
 function botonResolucionAutomatica(){
   let l=$("caja222");if(!l)return;rm($("botonautomatico"));
-  let b=document.createElement("button");b.id="botonautomatico";b.innerHTML="SOLUCIÓN automática";l.appendChild(b);
+  let b=document.createElement("button");b.id="botonautomatico";b.innerHTML="SOLUCIÓN automática";l.appendChild(b);rm($("notaAutomatica"));let nota=document.createElement("div");nota.id="notaAutomatica";nota.textContent="Admite matrices de hasta 6×6 con números enteros entre −30 y 30.";l.appendChild(nota);
   b.addEventListener("click",function(){
-    rm($("botonautomatico"));
+    rm($("botonautomatico"));rm($("notaAutomatica"));
     ocultarTituloUsuario();ocultarZonaUsuario();
     let c221=$("caja221");if(c221){c221.style.display="flex";c221.style.fontSize=S.FS_MAT;}
     try{matrizEscalonadaFn(S.ant);}catch(_){l.style.color="red";html(l,"No se ha podido terminar la solución automática: los números son demasiado grandes. Prueba a aplicar tú las operaciones, simplificando las filas.");}
@@ -455,7 +455,7 @@ function crearNumeroFilas(lug,lugc){
   let i=document.createElement("input");i.id="nfilas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
     if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
-    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+    try{if(!ok)msgOK(lugc,"Valida cada dato con ENTER, TAB o el botón ✓ Validar");
       S.nf=Number(i.value);if(isNaN(S.nf)||S.nf<1||!Number.isInteger(S.nf))throw 0;crearNumeroColumnas("caja11122","caja11112");
     }catch(_){ok=false;msgERR(lugc,"El nº de filas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
 
@@ -465,7 +465,7 @@ function crearNumeroColumnas(lug,lugc){
   let i=document.createElement("input");i.id="ncolumnas";i.type="text";l.appendChild(p);l.appendChild(i);i.focus();
   let ok=true;i.addEventListener("keydown",function(e){
     if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
-    try{if(!ok)msgOK(lugc,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+    try{if(!ok)msgOK(lugc,"Valida cada dato con ENTER, TAB o el botón ✓ Validar");
       S.nc=Number(i.value);if(isNaN(S.nc)||S.nc<1||!Number.isInteger(S.nc))throw 0;crearMatrizVacia();
     }catch(_){ok=false;msgERR(lugc,"El nº de columnas no es válido.<br>Debe ser un entero positivo.");i.value="";}});}
 
@@ -533,7 +533,7 @@ function rellenarMatriz(tabla){
   for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(e){
     if(e.key!=="Enter"&&e.key!=="Tab")return;e.preventDefault();e.preventDefault();e.preventDefault();
     try{
-      msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+      msgOK("caja11112","Valida cada dato con ENTER, TAB o el botón ✓ Validar");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
       if(this.value.trim()==="")throw 0;let v=normNumStr(this.value);if(!isNumStr(v)||divideEntreCero(v))throw 0;S.val[f][col]=simp(v);
       if(i<inputs.length-1)inputs[i+1].focus();else finalizarEntrada();
@@ -547,10 +547,36 @@ function insertarBotonOtraMatriz(){
 
 document.addEventListener("DOMContentLoaded",function(){
   crearNumeroFilas("caja11121","caja11112");let cInit=$("caja11112");
-  if(cInit)html(cInit,"Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
+  if(cInit)html(cInit,"Valida cada dato con ENTER, TAB o el botón ✓ Validar");
   const a=$("abreVentana1"),c=$("cierraVentana1"),v=$("ventana1"),p=$("pdf1"),u="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";
   if(a)a.addEventListener("click",function(e){e.preventDefault();if(p)p.src=u;if(v)v.style.display="flex";});
   if(c)c.addEventListener("click",function(){if(v)v.style.display="none";if(p)p.src="";});
   window.addEventListener("click",function(e){if(e.target==v){v.style.display="none";if(p)p.src="";}});
   insertarBotonOtraMatriz();
 });
+
+// ===== Botón "✓ Validar": hace lo mismo que pulsar ENTER en el campo activo (útil en móvil y tablet) =====
+function activarBotonValidar(){
+  if($("btnValidar"))return;
+  let b=document.createElement("button");b.id="btnValidar";b.type="button";b.textContent="✓ Validar";b.style.display="none";document.body.appendChild(b);
+  let activo=null;
+  const esCampo=e=>e&&e.tagName==="INPUT"&&(e.type==="text"||!e.getAttribute("type"))&&!e.disabled&&!!e.closest("#contenedor");
+  const colocar=()=>{
+    if(!activo||!document.body.contains(activo)){b.style.display="none";return;}
+    let par=activo.parentElement,ancla=activo.closest("#marcoEntrada")||activo.closest("table")||(par&&par.querySelectorAll("input").length>1?par:activo),ra=ancla.getBoundingClientRect(),ri=activo.getBoundingClientRect();
+    b.style.display="block";let w=b.offsetWidth,h=b.offsetHeight,x,y;
+    if(ra.right+8+w<=document.documentElement.clientWidth-4){x=ra.right+8;y=ri.top+ri.height/2-h/2;}
+    else{x=Math.max(4,Math.min(ri.left,document.documentElement.clientWidth-w-4));y=ra.bottom+6;}
+    b.style.left=(x+window.scrollX)+"px";b.style.top=(y+window.scrollY)+"px";
+  };
+  document.addEventListener("focusin",e=>{if(esCampo(e.target)){activo=e.target;requestAnimationFrame(colocar);}else if(e.target!==b){activo=null;b.style.display="none";}});
+  document.addEventListener("focusout",()=>setTimeout(()=>{if(!esCampo(document.activeElement)&&document.activeElement!==b){activo=null;b.style.display="none";}},150));
+  b.addEventListener("pointerdown",e=>e.preventDefault());b.addEventListener("mousedown",e=>e.preventDefault());
+  b.addEventListener("click",()=>{if(!activo)return;let campo=activo;campo.focus();
+    campo.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",code:"Enter",keyCode:13,which:13,bubbles:true,cancelable:true}));
+    setTimeout(()=>{if(esCampo(document.activeElement)){activo=document.activeElement;colocar();}else{activo=null;b.style.display="none";}},30);});
+  window.addEventListener("scroll",()=>requestAnimationFrame(colocar),{passive:true,capture:true});
+  window.addEventListener("resize",()=>requestAnimationFrame(colocar),{passive:true});
+  if(esCampo(document.activeElement)){activo=document.activeElement;requestAnimationFrame(colocar);}
+}
+document.addEventListener("DOMContentLoaded",activarBotonValidar);
