@@ -559,27 +559,5 @@ document.addEventListener("DOMContentLoaded",function(){
 // Dispositivo táctil = su puntero principal es el dedo (en un PC es el ratón o el panel táctil).
 function esTactil(){return !!(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches);}
 function textoValidar(){return esTactil()?"Valida cada dato con ENTER, TAB o el botón ✓ Validar":"Valida cada dato con ENTER o TAB del teclado";}
-function activarBotonValidar(){
-  if($("btnValidar"))return;
-  let b=document.createElement("button");b.id="btnValidar";b.type="button";b.textContent="✓ Validar";b.style.display="none";document.body.appendChild(b);
-  let activo=null;
-  const esCampo=e=>e&&e.tagName==="INPUT"&&(e.type==="text"||!e.getAttribute("type"))&&!e.disabled&&!!e.closest("#contenedor");
-  const colocar=()=>{
-    if(!activo||!document.body.contains(activo)){b.style.display="none";return;}
-    let par=activo.parentElement,ancla=activo.closest("#marcoEntrada")||activo.closest("table")||(par&&par.querySelectorAll("input").length>1?par:activo),ra=ancla.getBoundingClientRect(),ri=activo.getBoundingClientRect();
-    b.style.display="block";let w=b.offsetWidth,h=b.offsetHeight,x,y;
-    if(ra.right+8+w<=document.documentElement.clientWidth-4){x=ra.right+8;y=ri.top+ri.height/2-h/2;}
-    else{x=Math.max(4,Math.min(ri.left,document.documentElement.clientWidth-w-4));y=ra.bottom+6;}
-    b.style.left=(x+window.scrollX)+"px";b.style.top=(y+window.scrollY)+"px";
-  };
-  document.addEventListener("focusin",e=>{if(esCampo(e.target)&&esTactil()){activo=e.target;requestAnimationFrame(colocar);}else if(e.target!==b){activo=null;b.style.display="none";}});
-  document.addEventListener("focusout",()=>setTimeout(()=>{if(!esCampo(document.activeElement)&&document.activeElement!==b){activo=null;b.style.display="none";}},150));
-  b.addEventListener("pointerdown",e=>e.preventDefault());b.addEventListener("mousedown",e=>e.preventDefault());
-  b.addEventListener("click",()=>{if(!activo)return;let campo=activo;campo.focus();
-    campo.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",code:"Enter",keyCode:13,which:13,bubbles:true,cancelable:true}));
-    setTimeout(()=>{if(esCampo(document.activeElement)){activo=document.activeElement;colocar();}else{activo=null;b.style.display="none";}},30);});
-  window.addEventListener("scroll",()=>requestAnimationFrame(colocar),{passive:true,capture:true});
-  window.addEventListener("resize",()=>requestAnimationFrame(colocar),{passive:true});
-  if(esCampo(document.activeElement)&&esTactil()){activo=document.activeElement;requestAnimationFrame(colocar);}
-}
-document.addEventListener("DOMContentLoaded",activarBotonValidar);
+// El botón "✓ Validar" lo crea common.js para todas las calculadoras.
+
