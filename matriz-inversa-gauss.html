@@ -241,7 +241,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
   <section class="art-seccion" id="cuando-existe">
     <h2>2. ¿Cuándo existe la inversa?</h2>
     <p>La matriz \(A\) tiene inversa si y solo si su determinante es distinto de cero:</p>
-    <div class="k">\[\det(A) \neq 0 \implies \exists\, A^{-1}\]</div>
+    <div class="k">\[\det(A) \neq 0 \iff \exists\, A^{-1}\]</div>
     <ul class="pasos-lista">
       <li>Si \(\det(A) = 0\), la matriz se llama <strong>singular</strong> y no tiene inversa.</li>
       <li>Si \(\det(A) \neq 0\), la matriz se llama <strong>regular</strong> o <strong>invertible</strong>.</li>
@@ -286,7 +286,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       </div>
       <div class="op-box">
         <strong>Combinación lineal</strong>
-        <span>\(F_i \to m \cdot F_i + n \cdot F_j\) — para anular elementos fuera de la diagonal.</span>
+        <span>\(F_i \to m \cdot F_i + n \cdot F_j\) con \(m \neq 0\) — para anular elementos fuera de la diagonal.</span>
       </div>
       <div class="op-box">
         <strong>Aplicadas SIEMPRE a toda la fila</strong>

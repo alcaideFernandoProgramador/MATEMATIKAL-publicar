@@ -343,11 +343,14 @@ body{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#6b7280;--accent:#2563eb;--
 (function(){
 // ── Fracciones y matrices (vía Biblioteca Matematikal 2.0) ───────────────
 function fnum(x){
-  x=String(x||"").trim().replace(/\s+/g,"").replace(/,/g,".");
+  x=String(x||"").trim();
+  if(/\d\s+\d/.test(x))return null;
+  x=x.replace(/\s+/g,"").replace(/,/g,".");
   if(!x.length)return "0";
   if(/^[-+]?\d+$/.test(x))return x;
-  if(/^[-+]?\d+\/\d+$/.test(x))return FraccionNumerica.simplificar(x);
-  if(/^[-+]?(\d+\.\d*|\.\d+)$/.test(x))return ExpresionAlgebraica.pasarAFraccion(x);
+  if(/^[-+]?\d+\/\d+$/.test(x)){if(/^0+$/.test(x.split("/")[1]))return null;return FraccionNumerica.simplificar(x);}
+  var md=x.match(/^([-+]?)(\d*)\.(\d*)$/);
+  if(md&&(md[2]||md[3])){var num=(md[2]||"0")+(md[3]||""),den="1"+"0".repeat((md[3]||"").length);return FraccionNumerica.simplificar((md[1]==="-"?"-":"")+String(Number(num))+"/"+den);}
   return null;
 }
 
@@ -477,8 +480,9 @@ function leerMatriz(){
     M.push([]);
     for(var j=0;j<n;j++){
       var el=document.getElementById('m'+i+'_'+j);
-      var v=fnum(el?(el.value.trim()||'0'):'0');
-      if(v===null){document.getElementById('errMsg').textContent='Valor no válido en fila '+(i+1)+', col '+(j+1)+'.';return null;}
+      if(!el||!el.value.trim()){document.getElementById('errMsg').textContent='Rellena todas las casillas (falta la fila '+(i+1)+', col '+(j+1)+').';if(el)el.focus();return null;}
+      var v=fnum(el.value);
+      if(v===null){document.getElementById('errMsg').textContent='Valor no válido en fila '+(i+1)+', col '+(j+1)+'.';el.focus();return null;}
       M[i].push(v);
     }
   }

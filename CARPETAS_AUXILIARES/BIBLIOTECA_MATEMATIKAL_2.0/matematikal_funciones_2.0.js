@@ -1612,7 +1612,7 @@ class Matriz {constructor(array) {this.matriz = array;}
     if(dim.filas===1)return [["1"]];let matrizAdjunta=matriz.map(function(arr){return arr.slice()});
     for (let i=0;i<matrizAdjunta.length;i++){for (let j=0;j<matrizAdjunta[0].length;j++){
       if((i+j)%2===0){matrizAdjunta[i][j]=Matriz.determinante(Matriz.quitarFilayColumna(matriz,i,j))}
-      else{matrizAdjunta[i][j]=Polinomio.multiplicar(Matriz.determinante(Matriz.quitarFilayColumna(matriz,i,j)),"-1")}}};return matrizAdjunta}
+      else{matrizAdjunta[i][j]=ExpresionAlgebraica.simplificar("-("+Matriz.determinante(Matriz.quitarFilayColumna(matriz,i,j))+")")}}};return matrizAdjunta}
   static inversa(m){const dim=Matriz._dimensiones(m,"matriz");if(dim.filas!==dim.columnas)throw new Error("La inversa solo esta definida para matrices cuadradas."); 
     let d=Matriz.determinante(m); d=typeof d==="string"?ExpresionAlgebraica.simplificar(d):d; 
     if(d===0||d==="0")throw new Error("La matriz no es regular y no tiene inversa."); 

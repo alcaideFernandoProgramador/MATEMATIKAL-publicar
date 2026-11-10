@@ -19,7 +19,28 @@ function html(el, s){ if(el) el.innerHTML = s; }
 function rm(el){ if(el) try{ el.remove(); }catch(_){} }
 function cloneM(m){ return m.map(function(r){ return r.slice(); }); }
 
-function _strip(s){ return (s||"").toString().trim().replace(/\s+/g,"").replace(/,/g,"."); }
+/* ---------- Fracciones exactas (precisión ilimitada) ----------
+   Mismo formato de texto que FraccionNumerica ("3", "-7/2"), pero sin perder precisión
+   cuando los números crecen (antes fallaba en algunas matrices 4×4). */
+var QF=(function(){
+  function gcd(a,b){if(a<0n)a=-a;if(b<0n)b=-b;while(b){var t=a%b;a=b;b=t;}return a;}
+  function norm(n,d){if(d===0n)throw new Error("división por 0");if(d<0n){n=-n;d=-d;}var g=gcd(n,d)||1n;return {n:n/g,d:d/g};}
+  function dec(s){var neg=false;if(s[0]==="+"||s[0]==="-"){neg=s[0]==="-";s=s.slice(1);}
+    var m=s.match(/^(\d*)(?:\.(\d*))?$/);if(!m||(!m[1]&&!m[2]))throw new Error("Valor no numérico: "+s);
+    var ent=m[1]||"0",fr=m[2]||"",n=BigInt(ent+fr),d=10n**BigInt(fr.length);return norm(neg?-n:n,d);}
+  function parse(x){var s=String(x==null?"":x).trim().replace(/\s+/g,"");while(/^\(.*\)$/.test(s))s=s.slice(1,-1);if(!s.length)return {n:0n,d:1n};
+    var p=s.split("/");if(p.length===1)return dec(p[0]);if(p.length!==2)throw new Error("Valor no numérico: "+s);
+    var a=dec(p[0]),b=dec(p[1]);return norm(a.n*b.d,a.d*b.n);}
+  function str(q){return q.d===1n?q.n.toString():q.n.toString()+"/"+q.d.toString();}
+  return {
+    simplificar:function(a){return str(parse(a));},
+    sumar:function(a,b){var x=parse(a),y=parse(b);return str(norm(x.n*y.d+y.n*x.d,x.d*y.d));},
+    multiplicar:function(a,b){var x=parse(a),y=parse(b);return str(norm(x.n*y.n,x.d*y.d));},
+    dividir:function(a,b){var x=parse(a),y=parse(b);return str(norm(x.n*y.d,x.d*y.n));}
+  };
+})();
+
+function _strip(s){ s=(s||"").toString().trim(); if(/\d\s+\d/.test(s)) return s; return s.replace(/\s+/g,"").replace(/,/g,"."); }
 
 function toFrac(s){
   s = _strip(s);
@@ -28,11 +49,11 @@ function toFrac(s){
   if(/^[-+]?\d+$/.test(s)) return s;
   // fraction p/q
   if(/^[-+]?\d+\/[+]?\d+$/.test(s)){
-    return FraccionNumerica.simplificar(s);
+    return QF.simplificar(s);
   }
   // decimal → fraction via library
   if(/^[-+]?(\d+\.\d*|\.\d+)$/.test(s)){
-    return ExpresionAlgebraica.pasarAFraccion(s);
+    return QF.simplificar(s);
   }
   throw new Error("Valor no numérico: "+s);
 }
@@ -41,7 +62,7 @@ function _isZero(v){
   v = (v||"").toString().trim();
   if(v === "0" || v === "" || v === "-0") return true;
   try{
-    var s = FraccionNumerica.simplificar(v);
+    var s = QF.simplificar(v);
     return s === "0";
   }catch(e){ return false; }
 }
@@ -50,7 +71,7 @@ function _isOne(v){
   v = (v||"").toString().trim();
   if(v === "1") return true;
   try{
-    var s = FraccionNumerica.simplificar(v);
+    var s = QF.simplificar(v);
     return s === "1";
   }catch(e){ return false; }
 }
@@ -78,7 +99,7 @@ function divRow(aug, k, div){
   return aug.map(function(row, i){
     if(i !== k) return row;
     return row.map(function(v){
-      return FraccionNumerica.dividir(v, div);
+      return QF.dividir(v, div);
     });
   });
 }
@@ -88,9 +109,9 @@ function combineRows(aug, k, m, n, other){
   return aug.map(function(row, i){
     if(i !== k) return row;
     return row.map(function(v, j){
-      var t1 = FraccionNumerica.multiplicar(m, v);
-      var t2 = FraccionNumerica.multiplicar(n, aug[other][j]);
-      return FraccionNumerica.sumar(t1, t2);
+      var t1 = QF.multiplicar(m, v);
+      var t2 = QF.multiplicar(n, aug[other][j]);
+      return QF.sumar(t1, t2);
     });
   });
 }
@@ -100,7 +121,7 @@ function combineRows(aug, k, m, n, other){
 function latexFrac(v){
   // convierte string fracción a LaTeX  p/q → \frac{p}{q}, entero → entero
   v = (v||"0").toString().trim();
-  try{ v = FraccionNumerica.simplificar(v); }catch(_){}
+  try{ v = QF.simplificar(v); }catch(_){}
   if(v.indexOf("/") === -1) return v;
   var parts = v.split("/");
   var num = parts[0], den = parts[1];
@@ -260,7 +281,7 @@ function gaussJordanAuto(mat){
       if(k===i) continue;
       if(!_isZero(aug[k][i])){
         var factor = aug[k][i];
-        var negFactor = FraccionNumerica.multiplicar("-1", factor);
+        var negFactor = QF.multiplicar("-1", factor);
         aug = combineRows(aug, k, "1", negFactor, i);
         pasos.push({tipo:"comb", fila:k+1, pivFila:i+1, factor:factor, mat:cloneM(aug)});
       }
@@ -343,7 +364,7 @@ function esIdentidadIzquierda(){
   for(var i=0; i<n; i++){
     for(var j=0; j<n; j++){
       var v;
-      try{ v = FraccionNumerica.simplificar(S.aug[i][j]); }catch(e){ return false; }
+      try{ v = QF.simplificar(S.aug[i][j]); }catch(e){ return false; }
       if(i===j && v!=="1") return false;
       if(i!==j && v!=="0") return false;
     }
@@ -611,7 +632,9 @@ function op3(){
       var fullCoef=(sign==="-"?"-":"")+coefStr;
       terms.push({fila:fila, coef:toFrac(fullCoef)});
     }
-    var selfOk=false;
+    var selfOk=false,total="0";
+    for(var k=0;k<terms.length;k++){ if(terms[k].fila===lhs) total=QF.sumar(total,terms[k].coef); }
+    if(_isZero(total)) throw "El coeficiente total de F"+lhs+" no puede ser cero.";
     for(var k=0;k<terms.length;k++){
       if(terms[k].fila===lhs && !_isZero(terms[k].coef)){ selfOk=true; break; }
     }
@@ -623,7 +646,7 @@ function op3(){
   function termLatex(coef, filaIdx, isFirst){
     var isNeg=coef.toString()[0]==="-";
     var plus=(!isFirst&&!isNeg)?"+":"";
-    var simpl; try{ simpl=FraccionNumerica.simplificar(coef); }catch(e){ simpl=coef.toString(); }
+    var simpl; try{ simpl=QF.simplificar(coef); }catch(e){ simpl=coef.toString(); }
     if(simpl==="1")  return plus+"F_{"+filaIdx+"}";
     if(simpl==="-1") return "-F_{"+filaIdx+"}";
     return plus+latexFrac(coef)+"F_{"+filaIdx+"}";
@@ -641,8 +664,8 @@ function op3(){
     for(var j=0;j<cols;j++){
       var acc="0";
       for(var k=0;k<obj.terms.length;k++){
-        var contrib=FraccionNumerica.multiplicar(obj.terms[k].coef, S.aug[obj.terms[k].fila-1][j]);
-        acc=FraccionNumerica.sumar(acc, contrib);
+        var contrib=QF.multiplicar(obj.terms[k].coef, S.aug[obj.terms[k].fila-1][j]);
+        acc=QF.sumar(acc, contrib);
       }
       newRow.push(acc);
     }
