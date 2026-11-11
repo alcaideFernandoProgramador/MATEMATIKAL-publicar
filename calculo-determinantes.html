@@ -506,7 +506,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li><strong>Olvidar el signo \((-1)^{i+j}\) al calcular el cofactor.</strong> El cofactor incorpora el signo de la posición; sin él se está calculando el menor complementario, no el cofactor.</li>
       <li><strong>No tener en cuenta el factor \(a\) en \(F_i\to aF_i+\lambda F_j\).</strong> Esta operación multiplica el determinante por \(a\). Solo cuando \(a=1\) el determinante no varía.</li>
       <li><strong>Perder signos en el desarrollo por adjuntos.</strong> Conviene escribir explícitamente cada término \(a_{ij}\cdot A_{ij}\) antes de calcular y sumar.</li>
-      <li><strong>Confundir el menor complementario con el cofactor.</strong> El menor \(M_{ij}\) es siempre positivo (es un determinante); el cofactor \(A_{ij}\) puede ser negativo según su posición.</li>
+      <li><strong>Confundir el menor complementario con el cofactor.</strong> El menor \(M_{ij}\) es un determinante, así que puede ser positivo, negativo o cero; el cofactor \(A_{ij}=(-1)^{i+j}M_{ij}\) le añade el signo de su posición, por lo que puede tener el signo contrario al del menor.</li>
       <li><strong>Elegir una fila o columna con pocos ceros.</strong> Siempre es más eficiente desarrollar por la fila o columna que tenga más ceros, o introducir ceros previamente con operaciones elementales.</li>
     </ul>
   </section>
@@ -770,7 +770,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p>d) Aquí se encadenan tres propiedades: escalar, inversa y potencia:</p>
           \[\det\big((2A)^{-1}B^2\big)=\frac{1}{\det(2A)}\cdot\big(\det(B)\big)^2=\frac{1}{2^3\cdot\det(A)}\cdot(-3)^2=\frac{1}{16}\cdot9=\frac{9}{16}\]
           <div class="mk-resultado">det(AB)=−6 · det(3A)=54 · det(A⁻¹Bᵗ)=−3/2 · det((2A)⁻¹B²)=9/16</div>
-          <div class="mk-tip"><strong>Error típico:</strong> en el apartado d), olvidar que el escalar 2 dentro de \((2A)^{-1}\) también se ve afectado por el exponente −1, es decir, \(\det(2A)=2^3\det(A)\), no \(2\cdot\det(A)\).</div>
+          <div class="mk-tip"><strong>Error típico:</strong> en el apartado d), olvidar que, al multiplicar una matriz de orden 3 por 2, el determinante queda multiplicado por \(2^3\): \(\det(2A)=2^3\det(A)=16\), no \(2\cdot\det(A)=4\). Después se aplica la inversa: \(\det\big((2A)^{-1}\big)=\tfrac{1}{16}\).</div>
         </div>
       </div>
 

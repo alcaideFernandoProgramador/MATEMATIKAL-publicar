@@ -111,7 +111,7 @@ function crearOrden(lug,lugc){
           document.getElementById("caja11112").innerHTML=
           "Valida todos los datos introducidos con la tecla ENTER o TAB del teclado";
         }
-        orden=parseInt(document.getElementById("nOrden").value);
+        orden=/^\s*\d+\s*$/.test(document.getElementById("nOrden").value)?parseInt(document.getElementById("nOrden").value,10):NaN;
         if(isNaN(orden)||orden<2||orden>6){document.getElementById("nOrden").value="";throw new Error();}
         crearDeterminanteVacio();
       }catch(error){
@@ -148,13 +148,17 @@ function rellenarDeterminante(tabla){
         try{
             let fila=this.parentNode.parentNode.rowIndex,columna=this.parentNode.cellIndex,valor=this.value;
             document.getElementById("caja11112bis").innerHTML="";
-            let raw=(valor??"").toString().trim();if(raw==="")raw="0";raw=raw.replace(/\s+/g,"");
+            let raw=(valor??"").toString().trim();if(raw==="")throw new Error("vacia");
+            if(/[\d.,]\s+[\d.,]/.test(raw))throw new Error("espacios");
+            raw=raw.replace(/\s+/g,"").replace(/,/g,".").replace(/(^|[^\d])\.(\d)/g,"$10.$2");
+            if(/\/\s*\(?\s*[+\-]?0+(\.0+)?\s*\)?(?![\d.])/.test(raw))throw new Error("divCero");
             if(!Validar.expresionAlgebraica(raw)[0])throw new Error("valorInvalido");
             let vs=raw;try{vs=_simp(raw);}catch(e){vs=raw;}
             this.value=vs;valores[fila][columna]=vs;
           document.getElementById("caja11112bis").innerHTML="";
           let siguienteInput=null;
           if(i<inputs.length-1){siguienteInput=inputs[i+1];}
+          else if(valores.flat().some(x=>x==null)){let k=valores.flat().findIndex(x=>x==null);document.getElementById("caja11112bis").style.color="red";document.getElementById("caja11112bis").innerHTML="Falta rellenar alguna casilla.";inputs[k].focus();return;}
           else{
             let caja1121=document.getElementById("caja1121"),caja11211=document.createElement("div");
             caja1121.style.flexDirection="column";let caja11212=document.createElement("div");
@@ -195,9 +199,10 @@ function rellenarDeterminante(tabla){
           if(siguienteInput){siguienteInput.focus();}
         }catch(error){
           document.getElementById("caja11112bis").style.color="red";
-          document.getElementById("caja11112bis").innerHTML=
+          const mensajes={vacia:"La casilla está vacía.<br>Escribe un número (puede ser 0).",espacios:"No dejes espacios entre las cifras.",divCero:"No se puede dividir por cero."};
+          document.getElementById("caja11112bis").innerHTML=mensajes[error&&error.message]||
           "El valor introducido en el elemento del determinante no es válido.<br>"+
-          "Debe ser un número entero. Prueba otro ...";
+          "Escribe un número entero, decimal o fracción (por ejemplo 3, -1.5 o 2/3), o una expresión con letras.";
           inputs[i].value="";
         }
       }
@@ -280,7 +285,7 @@ async function crearFormulario(){
               }catch(error){
                 document.getElementById("caja1236").style.color="red";
                 document.getElementById("caja1236").innerHTML=
-                "<br>El número de fila no es válido<br>Debe ser un número comprendido ente 1 y "+
+                "<br>El número de fila no es válido<br>Debe ser un número comprendido entre 1 y "+
                 determinanteActual.length+"<br>Presiona \"RESET\" y elige una nueva opción";
                 inputFila4.remove();labelFila4.remove();inputFila5.remove();labelFila5.remove();
                 opcionSeleccionada.value=null;var opciones=document.getElementsByName("option");
@@ -358,7 +363,7 @@ async function crearFormulario(){
               }catch(error){
                 document.getElementById("caja1236").style.color="red";
                 document.getElementById("caja1236").innerHTML=
-                "<br>El número de columna no es válido<br>Debe ser un número comprendido ente 1 y "+
+                "<br>El número de columna no es válido<br>Debe ser un número comprendido entre 1 y "+
                 determinanteActual.length+"<br>Presiona \"RESET\" y elige una nueva opción";
                 inputFila4C.remove();labelFila4C.remove();inputFila5C.remove();labelFila5C.remove();
                 opcionSeleccionada.value=null;var opciones=document.getElementsByName("option");
@@ -636,7 +641,7 @@ async function crearFormulario(){
           }catch(error){
             document.getElementById("caja1236").style.color="red";
             document.getElementById("caja1236").innerHTML=
-            "<br>El determinante todavía no tiene determinanteActual.length 3<br>"+
+            "<br>El determinante todavía no es de orden 3: redúcelo primero con la opción 5.<br>"+
             "Presiona \"RESET\" y elige otra opción";
             opcionSeleccionada.value=null;var opciones=document.getElementsByName("option");
             for(let i=0;i<opciones.length;i++){if(opciones[i].checked){opciones[i].checked=false;break;}}
