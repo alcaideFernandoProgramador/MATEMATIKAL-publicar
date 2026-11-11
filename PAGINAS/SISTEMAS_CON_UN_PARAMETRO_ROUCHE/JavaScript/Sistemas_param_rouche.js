@@ -1969,7 +1969,7 @@ function _cramerNumerico(card, matCoef, matAmp, rango, panel, val) {
     let h1 = 1, h0 = 0, k1 = 0, k0 = 1, b = v;
     for (let it = 0; it < 32; it++) {
       let ai = Math.floor(b), h = ai * h1 + h0, k = ai * k1 + k0;
-      if (k > 1000) break;
+      if (k > 100000) break;
       if (Math.abs(v - h / k) < 1e-8) return { p: s * h, q: k };
       h0 = h1; h1 = h; k0 = k1; k1 = k;
       let fr = b - ai; if (fr < 1e-15) break; b = 1 / fr;

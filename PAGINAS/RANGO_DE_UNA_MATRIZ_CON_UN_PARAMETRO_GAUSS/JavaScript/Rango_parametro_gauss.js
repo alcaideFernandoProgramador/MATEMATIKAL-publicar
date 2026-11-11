@@ -277,7 +277,7 @@ let h=document.createElement("div");h.className="panelTitle";h.innerHTML="casos 
 
   function _listaGeneral(){return [...new Set((casosAutomatico||[]).map(x=>_simpl(x)))].filter(x=>x&&x!=="G"&&x!=="g");}
   function _tituloGeneral(){let L=_listaGeneral();if(!L.length)return "caso general (∀ "+nombreParametro+")";return "caso general (∀ "+nombreParametro+" ∉ {"+L.join(", ")+"})";}
-  function _lineaRango(card,mat1,mat2,r){let line=document.createElement("div");line.className="casosLine";
+  function _lineaRango(card,mat1,mat2,r){let line=document.createElement("div");line.className="casosLine";if(!mat2||!mat2.length){let s1=document.createElement("span");s1.innerHTML="rango ";let m1=document.createElement("span");let s3=document.createElement("span");s3.innerHTML=" = 0 (todos sus elementos son 0)";line.appendChild(s1);line.appendChild(m1);line.appendChild(s3);try{Representar.matriz(mat1,m1);}catch(e){}card.appendChild(line);return;}
     let s1=document.createElement("span");s1.innerHTML="rango ";let m1=document.createElement("span");let s2=document.createElement("span");s2.innerHTML=" = rango ";
     let m2=document.createElement("span");let s3=document.createElement("span");s3.innerHTML=" = "+r;line.appendChild(s1);line.appendChild(m1);
     line.appendChild(s2);line.appendChild(m2);line.appendChild(s3);Representar.matriz(mat1,m1);Representar.matriz(mat2,m2);card.appendChild(line);}

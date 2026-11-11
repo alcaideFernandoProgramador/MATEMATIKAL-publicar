@@ -662,7 +662,25 @@ function botonResolucionAutomatica(){
     estado="automatico";caja21.remove();let tiU=document.getElementById("tituloU");tiU.remove();
     Representar.determinante(valores,caja221);coeficienteDeterminante="1";
 
+    // Saca factor común de cada fila con todos sus elementos enteros. Sin esto, las operaciones
+    // Cj=p·Cj−a·Ck multiplican los números en cada paso y con matrices grandes se desbordan.
+    function sacarFactoresComunesFilas(){
+      const mcd=(a,b)=>{a=a<0n?-a:a;b=b<0n?-b:b;while(b){[a,b]=[b,a%b];}return a;};
+      for(let i=0;i<valores.length;i++){
+        if(!valores[i].every(x=>/^-?\d+$/.test(String(x).trim())))continue;
+        let g=valores[i].reduce((acc,x)=>mcd(acc,BigInt(String(x).trim())),0n);
+        if(g<=1n)continue;
+        for(let j=0;j<valores[i].length;j++)valores[i][j]=(BigInt(String(valores[i][j]).trim())/g).toString();
+        coeficienteDeterminante=_simp("("+coeficienteDeterminante+")*("+g.toString()+")");
+        Representar.simboloDividirFila(i+1,g.toString(),valores.length,caja221);
+        Representar.coeficienteDeterminante(coeficienteDeterminante,valores.length,caja221);
+        Representar.determinante(valores,caja221);
+      }
+    }
+
+    try{
     while(orden>3){
+      sacarFactoresComunesFilas();
       let linea=Matriz.elegirLineaConMasCeros(valores);
 
       if(linea[0]==="F"){
@@ -714,10 +732,34 @@ function botonResolucionAutomatica(){
       }
     }
     if(orden===3){imprimeResultadoFinal(valores,"orden3");}
+    }catch(errorCalculo){
+      // Con números muy grandes la biblioteca (que trabaja con decimales) puede fallar a mitad de los pasos
+      let av=document.createElement("p");av.style.cssText="color:#b91c1c;font-weight:700;margin:8px 0;line-height:1.4";
+      let ex=_detExacto(determinanteInicial);
+      av.innerHTML="Con números tan grandes no se pueden mostrar todos los pasos (la calculadora trabaja con decimales)."+(ex!==null?"<br>El valor exacto del determinante, calculado con enteros, es "+ex+".":"<br>Prueba con números más pequeños.");
+      caja221.appendChild(av);imprimeResultadoFinal(valores,"error");
+    }
     botonAutomatico.remove();
   });
 }
 
+// Determinante exacto con enteros de tamaño ilimitado (BigInt). Devuelve "a" o "a/b", o null si
+// algún elemento no es un número (por ejemplo, si lleva letras).
+function _detExacto(M){
+  const ab=x=>x<0n?-x:x,mcd=(a,b)=>{a=ab(a);b=ab(b);while(b){[a,b]=[b,a%b];}return a||1n;};
+  const fr=v=>{let t=String(v).trim().replace(/\s+/g,"").replace(/,/g,".");while(/^\(.*\)$/.test(t))t=t.slice(1,-1);
+    const num=x=>{const m=x.match(/^([+\-]?)(\d*)(?:\.(\d*))?$/);if(!m||(m[2]===""&&!m[3]))return null;const d=m[3]||"";return [BigInt((m[2]||"0")+d)*(m[1]==="-"?-1n:1n),10n**BigInt(d.length)];};
+    const p=t.split("/");if(p.length>2)return null;const a=num(p[0]);if(!a)return null;if(p.length===1)return a;const b=num(p[1]);if(!b||b[0]===0n)return null;return [a[0]*b[1],a[1]*b[0]];};
+  const red=([n,d])=>{if(d<0n){n=-n;d=-d;}const g=mcd(n,d);return [n/g,d/g];};
+  let A=[];for(const fila of M){const r=fila.map(fr);if(r.some(x=>x===null))return null;A.push(r.map(red));}
+  const n=A.length;let det=[1n,1n];
+  for(let c=0;c<n;c++){let p=-1;for(let i=c;i<n;i++)if(A[i][c][0]!==0n){p=i;break;}if(p<0)return "0";
+    if(p!==c){[A[p],A[c]]=[A[c],A[p]];det=[-det[0],det[1]];}
+    const pv=A[c][c];det=red([det[0]*pv[0],det[1]*pv[1]]);
+    for(let i=c+1;i<n;i++){const f=red([A[i][c][0]*pv[1],A[i][c][1]*pv[0]]);if(f[0]===0n)continue;
+      for(let j=c;j<n;j++){const t=A[c][j];A[i][j]=red([A[i][j][0]*f[1]*t[1]-f[0]*t[0]*A[i][j][1],A[i][j][1]*f[1]*t[1]]);}}}
+  return det[1]===1n?det[0].toString():det[0].toString()+"/"+det[1].toString();
+}
 function imprimeResultadoFinal(det,tex){
   let caja12=document.getElementById("caja12");while(caja12.firstChild)caja12.removeChild(caja12.firstChild);
   caja12.style.display="block";let caja121=document.createElement("div"),caja122=document.createElement("div");
@@ -750,6 +792,12 @@ function imprimeResultadoFinal(det,tex){
     else if(simple)linea="="+tcl+"\\cdot("+tdev+")="+tcl+"\\cdot("+t3+")="+tf;else linea="=("+tcl+")\\cdot("+tdev+")=("+tcl+")\\cdot("+t3+")="+tf;
     let p5=document.createElement("div");p5.style.display="flex";p5.style.alignItems="center";caja221.appendChild(p5);
     katex.render(linea.replace(/\+\-/g,"-"),p5);
+    let exacto=_detExacto(determinanteInicial);
+    if(exacto!==null&&_detExacto([[vf]])!==exacto){
+      let av=document.createElement("p");av.style.cssText="color:#b91c1c;font-weight:700;margin:8px 0;line-height:1.4";
+      av.innerHTML="Atención: con números tan grandes los pasos intermedios pierden precisión (la calculadora trabaja con decimales).<br>El valor exacto del determinante, calculado con enteros, es "+exacto+".";
+      caja221.appendChild(av);
+    }
   }
   let caja1122=document.getElementById("caja1122");caja1122.style.display="block";
   let tit1=document.createElement("div"),tit2=document.createElement("div");caja1122.appendChild(tit1);caja1122.appendChild(tit2);
@@ -759,7 +807,8 @@ function imprimeResultadoFinal(det,tex){
   let tit3=document.createElement("div");tit2.appendChild(tit3);tit3.style.fontSize="15px";tit3.innerHTML="A=";
   Representar.determinante(determinanteInicial,tit2);
   let tit4=document.createElement("div");tit2.appendChild(tit4);tit4.style.fontWeight="bold";tit4.style.fontSize="15px";
-  let texx="="+Matriz.determinante(determinanteInicial);katex.render(texx,tit4);
+  let exactoFinal=_detExacto(determinanteInicial);
+  let texx="="+(exactoFinal!==null?ExpresionAlgebraica.pasarALatex(exactoFinal):Matriz.determinante(determinanteInicial));katex.render(texx,tit4);
 
   tit1.style.margin="0";tit1.style.padding="12px 16px";tit1.style.textAlign="left";tit1.style.width="100%";
   let c11211=document.getElementById("caja11211"),h=c11211?c11211.querySelector("h3"):null;

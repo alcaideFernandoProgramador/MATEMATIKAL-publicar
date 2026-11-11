@@ -31,7 +31,7 @@ function _fracApprox(x,maxDen){
   let h1=1,h0=0,k1=0,k0=1,b=v;
   for(let it=0;it<32;it++){
     let ai=Math.floor(b),h=ai*h1+h0,k=ai*k1+k0;if(k>maxDen)break;
-    let r=v-h/k;if(Math.abs(r)<=1e-9)return{p:s*h,q:k};
+    let r=v-h/k;if(Math.abs(r)<=1e-11*Math.max(1,v))return{p:s*h,q:k};
     h0=h1;h1=h;k0=k1;k1=k;let frac=b-ai;if(frac<=1e-15)break;b=1/frac;
   }
   return null;
@@ -40,8 +40,8 @@ function _numToStr(x){
   if(!Number.isFinite(x))return"0";
   if(_esCeroNum(x))return"0";
   let r=Math.round(x);if(Math.abs(x-r)<=1e-9)return r.toString();
-  let fr=_fracApprox(x,1000);
-  if(fr&&fr.q!==1){let g=_gcd(Math.abs(fr.p),fr.q),p=fr.p/g,q=fr.q/g;if(Math.abs(x-p/q)<=1e-8)return p+"/"+q;}
+  let fr=_fracApprox(x,100000);
+  if(fr&&fr.q!==1){let g=_gcd(Math.abs(fr.p),fr.q),p=fr.p/g,q=fr.q/g;if(Math.abs(x-p/q)<=1e-10*Math.max(1,Math.abs(x)))return p+"/"+q;}
   return x.toFixed(8).replace(/\.?0+$/,"");
 }
 function _parseRacional(raw){
@@ -835,39 +835,56 @@ function _buildLinearExprTex(constant, paramCoeffs, pNames){
   return result;
 }
 
+// Fracciones exactas (BigInt) a partir de los datos escritos: evita que los decimales den una fracción
+// aproximada equivocada cuando los numeradores o denominadores son grandes.
+function _frExacta(v){let t=String(v).trim().replace(/\s+/g,"").replace(/,/g,".");
+  const num=x=>{const m=x.match(/^([+\-]?)(\d*)(?:\.(\d*))?$/);if(!m||(m[2]===""&&!m[3]))return null;const d=m[3]||"";return [BigInt((m[2]||"0")+d)*(m[1]==="-"?-1n:1n),10n**BigInt(d.length)];};
+  const p=t.split("/");const a=num(p[0]);if(!a)return null;if(p.length===1)return _frRed(a);const b=num(p[1]);if(!b||b[0]===0n)return null;return _frRed([a[0]*b[1],a[1]*b[0]]);}
+function _frRed([n,d]){if(d<0n){n=-n;d=-d;}let a=n<0n?-n:n,b=d;while(b){[a,b]=[b,a%b];}a=a||1n;return [n/a,d/a];}
+function _frDet(M){let A=M.map(r=>r.slice()),n=A.length,det=[1n,1n];
+  for(let c=0;c<n;c++){let p=-1;for(let i=c;i<n;i++)if(A[i][c][0]!==0n){p=i;break;}if(p<0)return [0n,1n];
+    if(p!==c){[A[p],A[c]]=[A[c],A[p]];det=[-det[0],det[1]];}const pv=A[c][c];det=_frRed([det[0]*pv[0],det[1]*pv[1]]);
+    for(let i=c+1;i<n;i++){const fc=_frRed([A[i][c][0]*pv[1],A[i][c][1]*pv[0]]);if(fc[0]===0n)continue;
+      for(let j=c;j<n;j++){const t=A[c][j];A[i][j]=_frRed([A[i][j][0]*fc[1]*t[1]-fc[0]*t[0]*A[i][j][1],A[i][j][1]*fc[1]*t[1]]);}}}
+  return det;}
+function _frLx([n,d]){return d===1n?n.toString():(n<0n?"-":"")+"\\dfrac{"+(n<0n?-n:n).toString()+"}{"+d.toString()+"}";}
+
 function _cramerCD(card, panel){
-  let matCoef=_matCoefN();
-  let b=matrizAmpN.map(function(r){return r[nIncognitas];});
   let n=nIncognitas;
+  let filas=Array.from({length:matrizAmpS.length},function(_,i){return i;});
   // Más ecuaciones que incógnitas: Cramer solo vale para un sistema cuadrado. Se eligen n ecuaciones
   // cuyo determinante no sea nulo; las demás son combinación lineal de ellas (el sistema es compatible).
-  if(matCoef.length!==n){
-    let filAll=Array.from({length:matCoef.length},function(_,i){return i;}),elegidas=null;
-    for(let fC of _combs(filAll,n)){let d=Matriz.determinanteNumerico(fC.map(function(i){return matCoef[i];}));if(d!==null&&Number.isFinite(d)&&!_esCeroNum(d)){elegidas=fC;break;}}
+  let exacta=matrizAmpS.map(function(r){return r.map(_frExacta);});
+  if(exacta.some(function(r){return r.some(function(x){return x===null;});})){exacta=matrizAmpN.map(function(r){return r.map(function(x){return _frExacta(_numToStr(x));});});}
+  if(matrizAmpS.length!==n){
+    let elegidas=null;
+    for(let fC of _combs(filas,n)){let d=_frDet(fC.map(function(i){return exacta[i].slice(0,n);}));if(d[0]!==0n){elegidas=fC;break;}}
     if(elegidas){
-      matCoef=elegidas.map(function(i){return matCoef[i];});b=elegidas.map(function(i){return b[i];});
+      filas=elegidas;
       _addValorLine(card,"\\text{Hay más ecuaciones que incógnitas: usamos las ecuaciones }"+elegidas.map(function(i){return i+1;}).join(",\\,")+"\\text{ (su determinante no es nulo); las demás son combinación lineal de ellas.}");
     }
   }
-  let detA=Matriz.determinanteNumerico(matCoef);
+  let matCoef=filas.map(function(i){return exacta[i].slice(0,n);});
+  let b=filas.map(function(i){return exacta[i][n];});
+  let detA=_frDet(matCoef);
 
-  let mRows=matCoef.map(function(r){return r.map(_numLx).join("&");});
-  _addValorLine(card,"\\det(A)=\\begin{vmatrix}"+mRows.join("\\\\")+"\\end{vmatrix}="+_numLx(detA));
+  let mRows=matCoef.map(function(r){return r.map(_frLx).join("&");});
+  _addValorLine(card,"\\det(A)=\\begin{vmatrix}"+mRows.join("\\\\")+"\\end{vmatrix}="+_frLx(detA));
 
   let results=[];
   for(let i=0;i<n;i++){
     let Ai=matCoef.map(function(row,ri){let nr=row.slice();nr[i]=b[ri];return nr;});
-    let detAi=Matriz.determinanteNumerico(Ai);
-    let xi=detAi/detA;
+    let detAi=_frDet(Ai);
+    let xi=_frRed([detAi[0]*detA[1],detAi[1]*detA[0]]);
     results.push(xi);
-    let aiRows=Ai.map(function(r){return r.map(_numLx).join("&");});
+    let aiRows=Ai.map(function(r){return r.map(_frLx).join("&");});
     _addValorLine(card,
-      "\\det(A_{"+(i+1)+"})=\\begin{vmatrix}"+aiRows.join("\\\\")+"\\end{vmatrix}="+_numLx(detAi)
-      +"\\qquad x_{"+(i+1)+"}=\\dfrac{"+_numLx(detAi)+"}{"+_numLx(detA)+"}="+_numLx(xi)
+      "\\det(A_{"+(i+1)+"})=\\begin{vmatrix}"+aiRows.join("\\\\")+"\\end{vmatrix}="+_frLx(detAi)
+      +"\\qquad x_{"+(i+1)+"}=\\dfrac{"+_frLx(detAi)+"}{"+_frLx(detA)+"}="+_frLx(xi)
     );
   }
 
-  let solTex=results.map(function(v,i){return"x_{"+(i+1)+"}="+_numLx(v);}).join(",\\quad ");
+  let solTex=results.map(function(v,i){return"x_{"+(i+1)+"}="+_frLx(v);}).join(",\\quad ");
   let tex="\\left["+solTex+"\\right]";
   let b1=document.createElement("div");b1.className="hist-badge-rango";_rk(tex,b1);card.appendChild(b1);
   let b2=document.createElement("div");b2.className="hist-badge-rango";_rk(tex,b2);panel.appendChild(b2);
