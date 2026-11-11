@@ -1397,9 +1397,35 @@ class Matriz {constructor(array) {this.matriz = array;}
     const Atest=Matriz.sustituir(A0.map(r=>r.slice()),letra,v);return Matriz.rangoMatrizNumerica(Atest)<maxR
     })])];
     return[maAux,casosA];}
-  static rangoMatrizNumerica(matriz){let aux=matriz.map(function (arr){return arr.slice()}); 
+  static rangoMatrizNumerica(matriz){
+    // Cálculo exacto con fracciones (BigInt): con decimales en coma flotante, valores como 1/3 dejaban restos
+    // del orden de 1e-16 que se tomaban como pivotes y el rango salía mal. Si algún valor no se puede leer
+    // exactamente, se usa el método anterior.
+    const exacto=Matriz._rangoExacto(matriz);if(exacto!==null)return exacto;
+    let aux=matriz.map(function (arr){return arr.slice()});
     let ran=0;aux=Matriz.escalonarMatrizNumerica(aux);aux=Matriz.filasNulasAbajo(aux);aux=Matriz.eliminarFilasNulas(aux);
     ran=aux.length;return ran;}
+  static _fraccionExacta(x){let s=String(x??"0").trim().replace(/\s+/g,"").replace(/,/g,".");
+    while(s.length>1&&s[0]==="("&&s[s.length-1]===")")s=s.slice(1,-1);
+    const dec=t=>{const m=t.match(/^([+\-]?)(\d*)(?:\.(\d*))?$/);if(!m||(m[2]===""&&!m[3]))return null;const d=m[3]||"";
+      // Decimales largos (p. ej. 1.6666666666666665, resultado de sustituir 5/3): se recupera la fracción
+      if(d.length>9&&typeof fraccionContinua==="function"){try{const fc=String(fraccionContinua(t,(typeof long!=="undefined"?long:10))).replace(/\s+/g,"");
+        const q=fc.match(/^([+\-]?\d+)(?:\/([+\-]?\d+))?$/);if(q&&(!q[2]||BigInt(q[2])!==0n))return [BigInt(q[1]),q[2]?BigInt(q[2]):1n];}catch(e){}}
+      return [BigInt((m[2]||"0")+d)*(m[1]==="-"?-1n:1n),10n**BigInt(d.length)];};
+    const p=s.split("/");if(p.length>2)return null;const a=dec(p[0]);if(!a)return null;if(p.length===1)return a;
+    const b=dec(p[1]);if(!b||b[0]===0n)return null;return [a[0]*b[1],a[1]*b[0]];}
+  static _rangoExacto(matriz){
+    if(!Array.isArray(matriz)||!matriz.length||!Array.isArray(matriz[0])||!matriz[0].length)return 0;
+    const ab=v=>v<0n?-v:v,mcd=(a,b)=>{a=ab(a);b=ab(b);while(b){[a,b]=[b,a%b];}return a;};
+    let M=[];for(const fila of matriz){const fr=fila.map(x=>Matriz._fraccionExacta(x));if(fr.some(f=>f===null))return null;
+      let mcm=1n;for(const [,d] of fr){const dd=ab(d);mcm=mcm/mcd(mcm,dd)*dd;}M.push(fr.map(([n,d])=>n*(mcm/d)));}
+    const nf=M.length,nc=M[0].length;let r=0;
+    for(let c=0;c<nc&&r<nf;c++){let p=-1;for(let i=r;i<nf;i++)if(M[i][c]!==0n){p=i;break;}if(p<0)continue;
+      [M[r],M[p]]=[M[p],M[r]];
+      for(let i=r+1;i<nf;i++){if(M[i][c]===0n)continue;const a=M[r][c],b=M[i][c];
+        M[i]=M[i].map((v,j)=>v*a-M[r][j]*b);const g=M[i].reduce((acc,v)=>mcd(acc,v),0n);if(g>1n)M[i]=M[i].map(v=>v/g);}
+      r++;}
+    return r;}
   static rangoPorCasos(matriz){if(!Matriz._simpCache)Matriz._simpCache=new Map();if(!Matriz._simp)Matriz._simp=function(s){const k=String(s).trim();if(Matriz._simpCache.has(k))return Matriz._simpCache.get(k);const v=ExpresionAlgebraica.simplificar(k);Matriz._simpCache.set(k,v);return v};
     const E=Matriz.escalonarMatriz(matriz)[0];if(!E||!E.length||!E[0]||!E[0].length)return[{condiciones:[],rango:0},[],[]];
     const nFilas=E.length,nCols=E[0].length,rTeor=Math.min(nFilas,nCols);function esCero(x){return Matriz._simp(x)==="0"}function esConst(e){return/^[+\-]?\(?\d+(?:\/\d+)?\)?$/.test(e)}
@@ -1468,7 +1494,9 @@ class Matriz {constructor(array) {this.matriz = array;}
     const norm=s=>(s??"0").toString().trim().replace(/\s+/g,"").replace(/,/g,".");
     const isZero=v=>{let s=norm(v);if(s.includes("/"))s=s.split("/")[0];return /^[+\-]?0+(\.0+)?$/.test(s);};
     const opuesto=s=>{s=norm(s);if(isZero(s))return "0";if(typeof ExpresionAlgebraica!=="undefined"&&ExpresionAlgebraica.opuesto)return ExpresionAlgebraica.opuesto(s);
-      if(s[0]==='-')return s.slice(1);if(s[0]==='+')return '-'+s.slice(1);if(/[+\-]/.test(s.slice(1)))return '-('+s+')';return '-'+s;};
+      // Expresión con varios términos (p. ej. "-a+1"): cambiar el signo de todos, no solo del primero
+      if(/[+\-]/.test(s.slice(1))){try{return ExpresionAlgebraica.simplificar('-('+s+')');}catch(e){return '-('+s+')';}}
+      if(s[0]==='-')return s.slice(1);if(s[0]==='+')return '-'+s.slice(1);return '-'+s;};
     const normalizarSigno=f=>{for(let j=0;j<f.length;j++){let v=norm(f[j]);if(isZero(v))continue;if(v[0]!=='-')break;for(let k=0;k<f.length;k++)f[k]=opuesto(f[k]);break;}};
     for(let i=0;i<m.length;i++){let fila=m[i],tmp=new Array(fila.length),son=true;
       for(let j=0;j<fila.length;j++){let s=norm(fila[j]),L=(typeof long!=="undefined"?long:10),v=/^[+\-]?\d*\.\d+$/.test(s)?fraccionContinua(s,L):s;
@@ -2593,19 +2621,30 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
             for(let i=0;i<filas;i++){const tr=document.createElement("tr"),filaDatos=[];for(let j=0;j<columnas;j++){
                 const td=document.createElement("td"),inp=document.createElement("input");td.style.border="1px solid #ccc";inp.style.width="40px";filaDatos.push(null);
                 inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();const fi=inp.parentNode.parentNode.rowIndex,co=inp.parentNode.cellIndex;
-                    const valorNormalizado=inp.value.replace(/(\d),(\d)/g,"$1.$2");
+                    const valorNormalizado=inp.value.trim().replace(/,/g,".").replace(/(^|[^\d])\.(\d)/g,"$10.$2");
                     try{Validar.expresionParentesisBalanceadosYCaracteresValidos(valorNormalizado);
+                      // Un único parámetro (una letra minúscula), el mismo en toda la matriz, y sin divisiones por cero
+                      const letras=[...new Set(valorNormalizado.match(/[a-zA-Z]/g)||[])];
+                      if(letras.length>1)throw new Error("variasLetras");
+                      if(letras.length===1){if(!/[a-z]/.test(letras[0]))throw new Error("mayuscula");
+                        const previa=matrizCreada.flat().filter((x,k)=>x!=null&&k!==fi*columnas+co).join("").match(/[a-z]/);
+                        if(previa&&previa[0]!==letras[0])throw new Error("otroParametro");}
+                      if(/\/\s*\(?\s*[+\-]?0+(\.0+)?\s*\)?(?![\d.])/.test(valorNormalizado))throw new Error("divCero");
                       matrizCreada[fi][co]=valorNormalizado;const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
-                      if(idx<inputs.length-1)inputs[idx+1].focus();else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});}
-                    catch(err){const e={"Parentesis no balanceados":"Los paréntesis no están balanceados.","Expresion vacía":"No has introducido nada.","Caracteres no válidos":"Se ha introducido una expresión errónea."};
+                      if(idx<inputs.length-1)inputs[idx+1].focus();else{const vacia=matrizCreada.flat().findIndex(x=>x==null);if(vacia>=0){Representar.mostrarError(cajaError,"Falta rellenar alguna casilla.");inputs[vacia].focus();}else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});}}
+                    catch(err){const e={"Parentesis no balanceados":"Los paréntesis no están balanceados.","Expresion vacía":"No has introducido nada.","Caracteres no válidos":"Se ha introducido una expresión errónea.",
+                      variasLetras:"Solo se admite un parámetro: una única letra minúscula (no escribas productos de letras como k·m).",mayuscula:"El parámetro debe ser una letra minúscula.",
+                      otroParametro:"Usa la misma letra para el parámetro en toda la matriz.",divCero:"No se puede dividir por cero."};
                       Representar.mostrarError(cajaError,e[err.message]||"Error desconocido");inp.value="";inp.focus();}}});
                 td.appendChild(inp);tr.appendChild(td);};matrizCreada.push(filaDatos);tabla.appendChild(tr);}
             cont.appendChild(tabla);Representar.cerrarParentesis(filas*1.25,cont);tabla.querySelector("input")?.focus();}
           catch{Representar.mostrarError(cajaError,"Entrada de columnas inválida.")}}});});}
   static async unaMatrizNumerica(lugar){
       const clonarMatriz=m=>m.map(f=>[...f]),esNumeroCadena=v=>{v=(v??"").toString().trim();if(!v)throw new Error("errorB");
-        v=v.replace(/\s+/g,"");if(/^[-+]?\d+(?:\.\d+)?(?:e[-+]?\d+)?$/i.test(v)){const n=Number(v);if(!Number.isFinite(n))throw new Error("noNumero");return v;}
-        const m=v.match(/^([-+]?\d+)\/(\d+)$/);if(m){const a=Number(m[1]),b=Number(m[2]);if(!Number.isFinite(a)||!Number.isFinite(b)||b===0)throw new Error("noNumero");return v;}
+        if(/\d\s+[\d.,]/.test(v))throw new Error("espacios");
+        v=v.replace(/\s+/g,"").replace(/,/g,".").replace(/(^|[^\d])\.(\d)/g,"$10.$2");
+        if(/^[-+]?\d+(?:\.\d+)?(?:e[-+]?\d+)?$/i.test(v)){const n=Number(v);if(!Number.isFinite(n))throw new Error("noNumero");return v;}
+        const m=v.match(/^([-+]?\d+)\/([-+]?\d+)$/);if(m){const a=Number(m[1]),b=Number(m[2]);if(!Number.isFinite(a)||!Number.isFinite(b))throw new Error("noNumero");if(b===0)throw new Error("divCero");return v;}
         throw new Error("noNumero");};lugar.textContent="";
       return await new Promise(resolve=>{
         let filas,columnas,nombreActual="A",editando=false;const matrizCreada=[];
@@ -2638,8 +2677,8 @@ static async matrices(lugar) { if (!(lugar instanceof HTMLElement)) { throw new 
                 inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key==="Tab"){ev.preventDefault();const fi=inp.parentNode.parentNode.rowIndex,co=inp.parentNode.cellIndex;
                   try{const val=esNumeroCadena(inp.value);matrizCreada[fi][co]=val;
                     const inputs=tabla.querySelectorAll("input"),idx=fi*columnas+co;
-                    if(idx<inputs.length-1)inputs[idx+1].focus();else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});
-                  }catch(err){const e={errorB:"Entrada vacía",noNumero:"Solo se admiten números (enteros, decimales o fracciones a/b)."};
+                    if(idx<inputs.length-1)inputs[idx+1].focus();else{const vacia=matrizCreada.flat().findIndex(x=>x==null);if(vacia>=0){Representar.mostrarError(cajaError,"Falta rellenar alguna casilla.");inputs[vacia].focus();}else resolve({nombre:nombreActual,matriz:clonarMatriz(matrizCreada)});}
+                  }catch(err){const e={errorB:"Entrada vacía",noNumero:"Solo se admiten números (enteros, decimales o fracciones a/b).",espacios:"No dejes espacios entre las cifras.",divCero:"No se puede dividir por cero."};
                     if(err?.message&&e[err.message])Representar.mostrarError(cajaError,e[err.message]);else Representar.mostrarError(cajaError,"Entrada inválida.");
                     inp.value="";inp.focus();}}});
                 td.appendChild(inp);tr.appendChild(td);}

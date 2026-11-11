@@ -51,7 +51,7 @@ h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif}
 /* PRIMERA LÍNEA (equivalente a la de la página base) */
 #caja111{display:flex;gap:var(--gap);align-items:stretch;margin-bottom:8px}
 #caja1111{
-  height: 75px !important;
+  height:auto !important;min-height:75px;
   width:38%;min-width:220px;background:linear-gradient(135deg,#0f172a,#1f2937);
   color:white;border-radius:var(--radius-sm);border:1px solid #0b1020;
   padding:10px;display:flex;flex-direction:column;justify-content:space-between;
@@ -176,3 +176,6 @@ input[type="text"],input{
   #caja111{flex-direction:column!important;}
   #caja112{flex-direction:column;}
 }
+/* Mensajes sobre el recuadro oscuro: el JavaScript pone color negro o rojo; se fuerzan tonos claros legibles */
+#caja11112{color:#dbeafe!important;overflow-wrap:anywhere}
+#caja11112[style*="red"]{color:#fca5a5!important}

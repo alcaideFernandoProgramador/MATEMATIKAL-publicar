@@ -1,7 +1,7 @@
 let ventana1,contenedor,caja1,tituloCaja1,ventana2,caja2,tituloUsuario,ventana3;
 let matriz=null,nombreMatriz=null,matrizInicial=null;
 let estadoMenoresMax=null,menorActual=null,menorElegidoDet=null,menorElegidoMat=null;
-let solucionesPaso3=[],casosEstudiados=[],huboPaso4=false;
+let solucionesPaso3=[],casosEstudiados=[],huboPaso4=false,solucionesIrracionales=[],paso3Hecho=false;
 let cajaFormulario=null,caja124=null,caja125=null,autoModo=null,autoBody=null;
 let cacheMenores={},finalSolucion=null;
 if(typeof globalThis.matrizObjeto==="undefined"||globalThis.matrizObjeto===null)globalThis.matrizObjeto={};
@@ -55,12 +55,16 @@ function getCasosPendientes(){let host=document.getElementById("listaCasosEspeci
 function ocultarPaso(num){let r=document.getElementById("row-"+num);if(!r)return;r.style.setProperty("display","none","important");let inp=r.querySelector('input[type="radio"]');if(inp)inp.disabled=true;}
 function mostrarTodosPasos(){for(let i=1;i<=6;i++){let r=document.getElementById("row-"+i);if(!r)continue;r.style.setProperty("display","flex","important");let inp=r.querySelector('input[type="radio"]');if(inp)inp.disabled=false;}}
 
-function resetEstado(){estadoMenoresMax=null;menorActual=null;menorElegidoDet=null;menorElegidoMat=null;solucionesPaso3=[];casosEstudiados=[];huboPaso4=false;cacheMenores={};finalSolucion=null;
+function resetEstado(){estadoMenoresMax=null;menorActual=null;menorElegidoDet=null;menorElegidoMat=null;solucionesPaso3=[];casosEstudiados=[];huboPaso4=false;solucionesIrracionales=[];paso3Hecho=false;cacheMenores={};finalSolucion=null;
 let ce=document.getElementById("listaCasosEspeciales");if(ce)ce.innerHTML="";}
 function resetTotalUI(){resetEstado();mostrarTodosPasos();if(caja124)caja124.innerHTML="";if(caja125)caja125.innerHTML="";document.querySelectorAll('input[name="option"]').forEach(op=>op.checked=false);
 let caja21=document.getElementById("caja21");if(caja21)caja21.innerHTML="";if(autoBody)autoBody.innerHTML="";if(autoModo&&cajaFormulario&&caja2){autoModo.style.display="none";cajaFormulario.style.display="";caja2.style.display="block";}}
 function desmarcarOpcionActual(){const m=document.querySelector('input[name="option"]:checked');if(m){m.checked=false;m.blur();m.dispatchEvent(new Event("change",{bubbles:true}));}}
 
+// Un caso "p=v" es racional si v es un entero, decimal o fracción (sin raíces)
+function esRacionalCaso(c){let {v}=parseCaso(c);v=String(v||"");if(/[a-z]/i.test(v))return false;v=v.replace(/[()]/g,"");try{return Matriz._fraccionExacta(v)!==null;}catch(e){return false;}}
+function latexRaiz(c){return String(c).replace(/sqrt\(([^()]*)\)/g,"\\sqrt{$1}").replace(/\*/g,"");}
+function letraParametro(){let m=(matriz||[]).flat().join(" ").match(/[a-z]/);return m?m[0]:"k";}
 function combos(n,k){let a=[...Array(n).keys()].map(i=>i+1),res=[];function bt(start,path){if(path.length===k){res.push(path.slice());return;}
 for(let i=start;i<=a.length-(k-path.length)+1;i++)bt(i+1,path.concat(a[i-1]));}bt(1,[]);return res;}
 function submatriz(mat,filas,cols){return filas.map(f=>cols.map(c=>mat[f-1][c-1]));}
@@ -223,8 +227,13 @@ let fila=document.createElement("div");fila.style.cssText="margin-top:6px;displa
 fila.appendChild(renderDet(menor,"math"));fila.appendChild(spanMathFromLatex("=", "math"));fila.appendChild(spanMathExpr(det,"math"));
 fila.appendChild(spanMathFromLatex("=0\\;\\Rightarrow\\;\\text{Soluciones:}","math"));
 let soluciones=[];try{soluciones=(Resolver&&Resolver.ecuacion)?Resolver.ecuacion(String(det)):[];soluciones=uniqSoluciones(soluciones);}catch(err){soluciones=[];}
-solucionesPaso3=soluciones||[];let solLatex=solucionesPaso3.length?latexJoinSolutions(solucionesPaso3):"\\text{(no se encontraron en forma cerrada)}";
+let todas=soluciones||[];solucionesPaso3=todas.filter(esRacionalCaso);solucionesIrracionales=todas.filter(x=>!esRacionalCaso(x));paso3Hecho=true;
+let solLatex=solucionesPaso3.length?latexJoinSolutions(solucionesPaso3):(solucionesIrracionales.length?"\\text{ninguna racional}":"\\text{ninguna}");
 fila.appendChild(spanMathFromLatex(solLatex,"math"));wrap.appendChild(fila);
+if(solucionesIrracionales.length){let n=document.createElement("div");n.style.cssText="margin-top:4px;font-size:13px;";
+n.appendChild(spanMathFromLatex("\\text{Las soluciones }"+solucionesIrracionales.map(latexRaiz).join(",\\;")+"\\text{ no son racionales. Como el parámetro solo toma valores enteros o racionales, no se estudian.}","math"));wrap.appendChild(n);}
+if(!solucionesPaso3.length){let n=document.createElement("div");n.style.cssText="margin-top:4px;font-size:13px;";
+n.appendChild(spanMathFromLatex("\\text{El menor no se anula para ningún valor racional de }"+letraParametro()+"\\text{, así que no hay casos especiales: }\\operatorname{rg}(A)="+menor.length+"\\text{ para cualquier valor. Ve al Resumen (Paso 5).}","math"));wrap.appendChild(n);}
 if(solucionesPaso3.length){
 let box=ensureCasosEspeciales();if(box){let hostCh=box.querySelector("#listaCasosEspeciales");hostCh.innerHTML="";
 solucionesPaso3.forEach(s=>{let chip=document.createElement("span");chip.className="chip";chip.dataset.raw=s;chip.appendChild(spanMathExpr(s,"math"));hostCh.appendChild(chip);});}}
@@ -248,7 +257,7 @@ casosEstudiados.push({p,v,rank:r,soporte,k:kmax});eliminarCasoEspecial(p+"="+v);
 function uiRangoParaParametro(){
 let ui=document.createElement("div");ui.style.cssText="margin-top:8px;font-size:14px;display:flex;align-items:center;gap:10px;";caja124.appendChild(ui);
 let sugeridos=getCasosPendientes();
-if(!solucionesPaso3.length){let e=document.createElement("div");e.className="err";e.textContent="Antes encuentra casos especiales en el Paso 3.";ui.appendChild(e);return;}
+if(!solucionesPaso3.length){let e=document.createElement("div");if(paso3Hecho){e.className="ok";e.textContent="No hay casos especiales: el menor no se anula para ningún valor racional del parámetro. Ya puedes ir al Resumen (Paso 5).";}else{e.className="err";e.textContent="Antes encuentra casos especiales en el Paso 3.";}ui.appendChild(e);return;}
 if(!sugeridos.length){let e=document.createElement("div");e.className="ok";e.textContent="No hay casos especiales pendientes. Ya puedes ir al Resumen (Paso 5).";ui.appendChild(e);return;}
 let lista=document.createElement("div");lista.style.cssText="display:flex;flex-wrap:wrap;gap:10px;";ui.appendChild(lista);
 sugeridos.forEach(s=>{let l=document.createElement("label");l.style.cssText="display:flex;align-items:center;gap:6px;border:1px dashed #888;padding:2px 6px;border-radius:6px;";
@@ -288,27 +297,28 @@ espCont.appendChild(spanMathFromLatex("\\text{(No hay casos específicos)}","mat
 cajaT.appendChild(wrap);ocultarPaso(5);if(!host){caja124.innerHTML="";caja125.innerHTML="";desmarcarOpcionActual();autoScroll();}return;}
 
 let pendientes=getCasosPendientes();
-if(!huboPaso4||pendientes.length){let e=document.createElement("div");e.className="err";e.style.marginTop="6px";
+const sinCasos=paso3Hecho&&!solucionesPaso3.length;
+if((!huboPaso4&&!sinCasos)||pendientes.length){let e=document.createElement("div");e.className="err";e.style.marginTop="6px";
 e.textContent=!huboPaso4?"Antes debes estudiar al menos un caso en el Paso 4.":"Quedan casos especiales sin estudiar: "+pendientes.join(", ")+".";if(!host)caja124.appendChild(e);else cajaT.appendChild(e);return;}
 let wrap=envoltorioPaso();wrap.appendChild(paso("Paso 5: RESUMEN"));
 let box=document.createElement("div");box.style.cssText="max-width:98%;font-size:14px;";wrap.appendChild(box);
-let param=(solucionesPaso3[0]?parseCaso(solucionesPaso3[0]).p:"k")||"k",vals=solucionesPaso3.map(s=>parseCaso(s).v);
+let param=(solucionesPaso3[0]?parseCaso(solucionesPaso3[0]).p:letraParametro())||letraParametro(),vals=solucionesPaso3.map(s=>parseCaso(s).v);
 let vTxt=vals.length===2?`${param}≠${vals[0]} y ${param}≠${vals[1]}`:vals.map(v=>`${param}≠${v}`).join(" y ");
 let rangoGen=(menorElegidoMat?menorElegidoMat.length:Math.min(matriz.length,matriz[0].length));
 let cg=document.createElement("div");cg.style.cssText="font-weight:bold;text-decoration:underline;margin-bottom:6px;";
-cg.textContent=`caso general: Para cualquier valor ${vTxt}`;box.appendChild(cg);
+cg.textContent=vals.length?`caso general: Para cualquier valor ${vTxt}`:`caso general: Para cualquier valor de ${param}`;box.appendChild(cg);
 let genCont=document.createElement("div");genCont.style.marginLeft="18px";box.appendChild(genCont);
 let row1=document.createElement("div");row1.style.cssText="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;";genCont.appendChild(row1);
 row1.appendChild(spanMathFromLatex("\\text{Menor elegido:}","math"));
 if(menorElegidoMat){
 row1.appendChild(renderDet(menorElegidoMat,"math"));row1.appendChild(spanMathFromLatex("=", "math"));row1.appendChild(spanMathExpr(menorElegidoDet,"math"));
-let sols=vals.length?vals.map(v=>toLatex(`${param}=${v}`)).join("\\;\\text{ ó }\\;"):"\\text{(sin soluciones)}";
-row1.appendChild(spanMathFromLatex(`\\text{; se anula solo para }${sols}`,"math"));
+let sols=vals.length?vals.map(v=>toLatex(`${param}=${v}`)).join("\\;\\text{ ó }\\;"):"";
+row1.appendChild(spanMathFromLatex(vals.length?`\\text{; se anula solo para }${sols}`:"\\text{; no se anula para ningún valor racional de }"+param,"math"));
 }else row1.appendChild(spanMathFromLatex("\\text{(no seleccionado en Paso 2)}","math"));
-genCont.appendChild(spanMathFromLatex(`\\text{Por tanto, para cualquier valor }${toLatex(vTxt)}\\;\\operatorname{rg}(A)=${rangoGen}`,"math"));
+genCont.appendChild(spanMathFromLatex(vals.length?`\\text{Por tanto, para cualquier valor }${toLatex(vTxt)}\\;\\operatorname{rg}(A)=${rangoGen}`:`\\text{Por tanto, para cualquier valor de }${param}\\;\\operatorname{rg}(A)=${rangoGen}`,"math"));
 let subt=document.createElement("div");subt.style.cssText="font-weight:bold;margin:10px 0 6px 0;text-align:left;";subt.textContent="CASOS ESPECÍFICOS:";box.appendChild(subt);
 let espCont=document.createElement("div");espCont.style.marginLeft="18px";box.appendChild(espCont);
-if(!casosEstudiados.length)espCont.appendChild(spanMathFromLatex("\\text{(Todavía no hay casos específicos)}","math"));
+if(!casosEstudiados.length)espCont.appendChild(spanMathFromLatex(sinCasos?"\\text{(No hay casos específicos)}":"\\text{(Todavía no hay casos específicos)}","math"));
 casosEstudiados.forEach(c=>{let fila=document.createElement("div");fila.style.cssText="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;";espCont.appendChild(fila);
 fila.appendChild(spanMathFromLatex("\\bullet","math"));
 fila.appendChild(spanMathFromLatex(`\\text{Si }${toLatex(`${c.p}=${c.v}`)}\\text{ entonces }\\operatorname{rg}(A)=${c.rank}`,"math"));
@@ -437,10 +447,10 @@ tituloUsuario=document.getElementById("letreroUsuario");ventana3=document.getEle
 if(!contenedor||!caja1||!tituloCaja1||!caja2||!tituloUsuario)return;
 tituloUsuario.style.fontSize="20px";caja2.style.marginTop="10px";tituloUsuario.style.margin="10px 0 10px 0";
 caja2.style.display="none";tituloCaja1.style.display="block";tituloCaja1.style.width="500px";
-let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";aviso.style.color="red";
+let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";aviso.style.color="#bfdbfe";
 aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER o TAB del teclado)";
 inyectarEstilosUI();
-let btnOtra=document.createElement("button");btnOtra.id="btnOtraMatriz";btnOtra.className="btn";btnOtra.textContent="Otra matriz";
+let btnOtra=document.createElement("button");btnOtra.id="btnOtraMatriz";btnOtra.className="abreVentana";btnOtra.type="button";btnOtra.textContent="Otra matriz";
 btnOtra.addEventListener("click",()=>{sessionStorage.setItem('irACalculadora','1');location.reload();});
 tituloCaja1.insertBefore(btnOtra,tituloCaja1.firstChild);
 initPdfAyuda();

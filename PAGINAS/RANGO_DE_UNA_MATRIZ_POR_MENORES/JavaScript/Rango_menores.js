@@ -8,7 +8,7 @@ if(tituloCaja1){
 tituloCaja1.style.display="flex";tituloCaja1.style.flexDirection="column";tituloCaja1.style.justifyContent="flex-start";
 tituloCaja1.style.alignItems="center";tituloCaja1.style.gap="6px";tituloCaja1.style.paddingTop="10px";
 tituloCaja1.style.paddingBottom="10px";tituloCaja1.style.height="auto";tituloCaja1.style.minHeight="70px";
-let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";aviso.style.color="red";
+let aviso=document.createElement("div");tituloCaja1.appendChild(aviso);aviso.style.fontSize="12px";aviso.style.color="#bfdbfe";
 aviso.style.margin="0";aviso.style.textAlign="center";aviso.textContent="(Valida todos los datos introducidos con la tecla ENTER o TAB del teclado)";
 }
 function autoScroll(){requestAnimationFrame(()=>{let c=document.getElementById("caja21");if(c){c.scrollTop=c.scrollHeight;}});}
@@ -459,10 +459,10 @@ window.addEventListener("click",function(event){if(event.target==ventana){ventan
 
 let ayuda=abreVentana1;try{
 if(ayuda&&ayuda.parentElement){
-let parent=ayuda.parentElement,btn=document.createElement("button");btn.textContent="Otra matriz";
+let parent=ayuda.parentElement,btn=document.createElement("button");btn.className="abreVentana";btn.type="button";btn.textContent="Otra matriz";
 btn.addEventListener("click",()=>{window.scrollTo(0,0);sessionStorage.setItem('irACalculadora','1');window.location.reload();});
 let volver=[...parent.querySelectorAll("button,a")].find(x=>String(x.textContent||"").trim()==="Volver");
-if(volver)parent.insertBefore(btn,volver);else parent.appendChild(btn);
+parent.insertBefore(btn,ayuda);
 }
 }catch(e){}
 });

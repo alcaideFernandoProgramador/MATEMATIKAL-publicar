@@ -506,10 +506,21 @@ function rellenarMatriz(tabla){
     try{
       msgOK("caja11112","Valida todos los datos introducidos con la tecla ENTER o TAB del teclado");
       let f=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
-      let v=normNumStr(this.value);if(!isNumStr(v))throw 0;S.val[f][col]=simp(v);
-      if(i<inputs.length-1)inputs[i+1].focus();else finalizarEntrada();
-    }catch(_){msgERR("caja11112","Valor no válido. Admite enteros, decimales y fracciones tipo 2/3.");inputs[i].value="";}
+      let v=leerNumeroCelda(this.value);S.val[f][col]=simp(v);
+      if(i<inputs.length-1)inputs[i+1].focus();else{let vac=S.val.flat().findIndex(x=>x==null);if(vac>=0){msgERR("caja11112","Falta rellenar alguna casilla.");inputs[vac].focus();}else finalizarEntrada();}
+    }catch(err){msgERR("caja11112",typeof err==="string"?err:"Valor no válido. Admite enteros, decimales y fracciones tipo 2/3.");inputs[i].value="";}
   });
+}
+// Lee una casilla: entero, decimal (también ".5" o "1,5") o fracción a/b. Rechaza vacíos, espacios entre cifras y divisiones por cero.
+function leerNumeroCelda(raw){
+  let s=(raw??"").toString().trim();
+  if(s==="")throw "Escribe un número en la casilla (puede ser 0).";
+  if(/\d\s+[\d.,]/.test(s))throw "Valor no válido: no dejes espacios entre las cifras.";
+  s=s.replace(/\s+/g,"").replace(/,/g,".").replace(/(^|[^\d])\.(\d)/g,"$10.$2");
+  let m=s.match(/^([+\-]?\d+(?:\.\d+)?)(?:\/([+\-]?\d+(?:\.\d+)?))?$/);
+  if(!m)throw "Valor no válido. Admite enteros, decimales y fracciones tipo 2/3.";
+  if(m[2]!==undefined&&Number(m[2])===0)throw "Valor no válido: no se puede dividir por cero.";
+  return s;
 }
 
 function mostrarResultadoFinalAutomatica(E){
@@ -569,28 +580,36 @@ function matrizEscalonadaFn(matriz){
     mostrarResultadoFinalAutomatica(E);return;
   }
 
-  let nf=E.length,nc=E[0].length,np=Math.min(nc,nf-1);if(np<0)np=0;
+  let nf=E.length,nc=E[0].length,r=0;
   function primerNoNuloCol(col,desde){for(let f=(desde??0);f<nf;f++)if(!_Z(E[f][col]))return f;return -1;}
+  // Simplifica las filas (quita denominadores y divide por el mcd) para que los números no crezcan
+  function simplificarPaso(){
+    if(!Matriz?.simplificarFilasNumericas)return;
+    let ant=cloneM(E),Es=Matriz.simplificarFilasNumericas(cloneM(E));
+    if(Matriz?.compararMatrices&&!Matriz.compararMatrices(Es,ant)){E=Es;renderAutoSimplificar(E.length,cloneM(E));}
+  }
+  simplificarPaso();
 
-  for(let c=0;c<np;c++){
-    let pivRow=primerNoNuloCol(c,c);
-    if(pivRow!==-1&&pivRow!==c){
-      if(Matriz?.permutarFilas)E=Matriz.permutarFilas(E,c,pivRow);
-      else {let tmp=E[c];E[c]=E[pivRow];E[pivRow]=tmp;}
-      renderAutoCambiar(E.length,`F${c+1}↔F${pivRow+1}`,cloneM(E));
+  // El pivote se busca columna a columna; si una columna no tiene pivote se pasa a la siguiente
+  // sin avanzar de fila (antes se buscaba solo en la diagonal y el proceso podía pararse antes de tiempo).
+  for(let c=0;c<nc&&r<nf;c++){
+    let pivRow=primerNoNuloCol(c,r);
+    if(pivRow===-1)continue;
+    if(pivRow!==r){
+      if(Matriz?.permutarFilas)E=Matriz.permutarFilas(E,r,pivRow);
+      else {let tmp=E[r];E[r]=E[pivRow];E[pivRow]=tmp;}
+      renderAutoCambiar(E.length,`F${r+1}↔F${pivRow+1}`,cloneM(E));
     }
-
-    if(primerNoNuloCol(c,c)===c){
-      for(let f=c+1;f<nf;f++){
-        if(_Z(E[f][c]))continue;
-        let piv=E[c][c],a=E[f][c],m2=cloneM(E);
-        for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[c][k]));
-        if(Matriz?.compararMatrices&&!Matriz.compararMatrices(E,m2)){
-          let cad=`F${f+1}=${prettyCoef(piv)}F${f+1}+${prettyCoef(opp(a))}F${c+1}`;
-          renderAutoCambiar(E.length,normCad(cad),cloneM(E));
-        }
+    for(let f=r+1;f<nf;f++){
+      if(_Z(E[f][c]))continue;
+      let piv=E[r][c],a=E[f][c],m2=cloneM(E);
+      for(let k=0;k<nc;k++)E[f][k]=sub(mul(piv,m2[f][k]),mul(a,m2[r][k]));
+      if(Matriz?.compararMatrices&&!Matriz.compararMatrices(E,m2)){
+        let cad=`F${f+1}=${prettyCoef(piv)}F${f+1}+${prettyCoef(opp(a))}F${r+1}`;
+        renderAutoCambiar(E.length,normCad(cad),cloneM(E));
       }
     }
+    r++;
 
     if(Matriz?.filasNulasAbajo){
       let ant=cloneM(E);E=Matriz.filasNulasAbajo(E);
@@ -600,7 +619,8 @@ function matrizEscalonadaFn(matriz){
       let ant=cloneM(E);E=Matriz.ordenarFilasPorCeros(E);
       if(Matriz?.compararMatrices&&!Matriz.compararMatrices(E,ant))renderAutoOrdenar(E.length,cloneM(E));
     }
-    nf=E.length;nc=E[0].length;np=Math.min(nc,nf-1);if(np<0)np=0;
+    simplificarPaso();
+    nf=E.length;nc=E[0].length;
     if(esEscalonadaLocal(E))break;
   }
 
@@ -633,7 +653,7 @@ function botonResolucionAutomatica(){
 
 function insertarBotonOtraMatriz(){
   let ayuda=$("abreVentana1");if(!ayuda||!ayuda.parentNode)return;if($("otraMatrizBtn"))return;
-  let b=document.createElement("button");b.id="otraMatrizBtn";b.innerHTML="Otra matriz";
+  let b=document.createElement("button");b.id="otraMatrizBtn";b.className="abreVentana";b.type="button";b.innerHTML="Otra matriz";
   ayuda.parentNode.insertBefore(b,ayuda);b.addEventListener("click",e=>{e.preventDefault();sessionStorage.setItem('irACalculadora','1');window.location.reload();});
 }
 

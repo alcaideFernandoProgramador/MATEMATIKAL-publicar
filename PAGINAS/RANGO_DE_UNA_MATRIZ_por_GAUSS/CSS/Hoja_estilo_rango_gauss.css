@@ -321,3 +321,6 @@ span.mjx-mtable{padding:0!important;margin:0!important}
   #caja1122{flex-wrap:wrap!important;}
   #caja11212{flex-wrap:wrap;}
 }
+/* Mensajes sobre el recuadro oscuro: el JavaScript pone color negro o rojo; se fuerzan tonos claros legibles */
+#caja11112{color:#dbeafe!important;overflow-wrap:anywhere}
+#caja11112[style*="red"]{color:#fca5a5!important}

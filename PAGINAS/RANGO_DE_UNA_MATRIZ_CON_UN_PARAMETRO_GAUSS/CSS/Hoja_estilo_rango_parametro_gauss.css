@@ -127,3 +127,14 @@ td{vertical-align:middle;}
   #caja1.layoutContinuar .formAuto{min-width:0!important;width:100%!important;}
   #caja112{flex-wrap:wrap!important;}
 }
+
+/* ===== Cabecera igual que en las demás calculadoras de rango ===== */
+#tituloinicial{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #d1d5db;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 18px;}
+#tituloinicial h2{margin:0;font-family:"DM Serif Display",Georgia,serif;font-size:1.5em;font-weight:700;line-height:1.2;text-align:left;text-transform:none;color:#111827;}
+#controlesTop{position:static;display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:flex-end;}
+.abreVentana,#otraMatriz{font-family:inherit;font-size:14px;font-weight:700;padding:8px 10px;border-radius:8px;background:#eef2f7;border:1px solid #d1d5db;color:#2563eb;cursor:pointer;}
+#btnHome{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:46px;height:50px;padding:0;background:#eef2f7;border:1px solid #d1d5db;border-radius:10px;gap:2px;}
+#btnHome span{font-size:9px;line-height:9px;font-weight:800;letter-spacing:.5px;color:#111827;}
+/* El recuadro de datos y resultados crece con su contenido (antes se cortaba el panel de casos) */
+#caja1{max-height:none!important;overflow:visible!important;}
+@media(max-width:700px){#tituloinicial{flex-direction:column;align-items:stretch;padding:8px 12px;gap:8px}#tituloinicial h2{font-size:16px}#controlesTop{gap:8px}}

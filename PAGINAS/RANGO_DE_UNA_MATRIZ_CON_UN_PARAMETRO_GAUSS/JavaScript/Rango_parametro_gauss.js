@@ -66,7 +66,7 @@ function _splitTopSums(expr){expr=_strip(expr);if(!expr.length)return [];let out
 function _parseCombLineal(expr,n){expr=_strip(expr);let m=expr.match(/^F(\d+)\=(.+)$/i);if(!m)throw new Error("f");let target=parseInt(m[1],10)-1;if(!(target>=0&&target<n))throw new Error("lhs");let rhs=m[2];if(rhs[0]!=="+"&&rhs[0]!=="-")rhs="+"+rhs;let parts=_splitTopSums(rhs),terms=[];for(let p of parts){let s=p[0],b=p.slice(1);let mm=b.match(/^(.+)?F(\d+)$/i);if(!mm)throw new Error("t");let coef=(mm[1]||"1");if(coef==="")coef="1";let idx=parseInt(mm[2],10)-1;if(!(idx>=0&&idx<n))throw new Error("fila");coef=_simpl(ExpresionAlgebraica.simplificar((s==="-"?"-1":"1")+"*("+coef+")"));terms.push({coef,idx});}let coefTarget="0";for(let t of terms)if(t.idx===target)coefTarget=_simpl(Polinomio.sumar(coefTarget,t.coef));if(_esCeroExpr(coefTarget))throw new Error("self0");return {target,terms,expr};}
 function _aplicarCombMultiple(M,expr){let n=M.length,m=M[0].length,o=_parseCombLineal(expr,n),snap=_clone2(M),nueva=Array(m).fill("0");for(let t of o.terms){_registrarPivoteFila(t.idx);_registrarDenomsCoef(t.coef);for(let j=0;j<m;j++){let p=_simpl("("+t.coef+")*("+snap[t.idx][j]+")");nueva[j]=_simpl("("+nueva[j]+")+("+p+")");}}M[o.target]=nueva;return o;}
 function _parseValorSimple(raw){raw=(raw||"").toString().trim();if(!raw.length)throw new Error("v");if(raw.includes("/"))raw=ExpresionAlgebraica.pasarADecimal(raw);if(raw.includes(","))raw=raw.replace(",",".");let n=parseFloat(raw);if(Number.isNaN(n))throw new Error("v");return n;}
-function _insertarBotonOtraMatriz(){try{let ayuda=_$("abreVentana1"),volver=_$("btnHome");if(!ayuda)return;let btn=_$("otraMatriz");if(btn)btn.remove();btn=document.createElement("button");btn.id="otraMatriz";btn.innerHTML="Otra matriz";btn.addEventListener("click",function(e){e.preventDefault();sessionStorage.setItem('irACalculadora','1');window.location.reload();});let parent=ayuda.parentNode;if(parent){if(volver&&volver.parentNode===parent)parent.insertBefore(btn,volver);else parent.insertBefore(btn,ayuda.nextSibling);}}catch(e){}}
+function _insertarBotonOtraMatriz(){try{let ayuda=_$("abreVentana1"),volver=_$("btnHome");if(!ayuda)return;let btn=_$("otraMatriz");if(btn)btn.remove();btn=document.createElement("button");btn.id="otraMatriz";btn.className="abreVentana";btn.type="button";btn.innerHTML="Otra matriz";btn.addEventListener("click",function(e){e.preventDefault();sessionStorage.setItem('irACalculadora','1');window.location.reload();});let parent=ayuda.parentNode;if(parent){parent.insertBefore(btn,ayuda);}}catch(e){}}
 function _setupAyuda(){const abre=_$("abreVentana1"),cierra=_$("cierraVentana1"),vent=_$("ventana1"),pdf=_$("pdf1");const url="INSTRUCCIONES/Ayuda.pdf#view=FitH&navpanes=0&zoom=300";if(abre)abre.addEventListener("click",function(ev){ev.preventDefault();pdf.src=url;vent.style.display="flex";});if(cierra)cierra.addEventListener("click",function(){vent.style.display="none";pdf.src="";});window.addEventListener("click",function(ev){if(ev.target===vent){vent.style.display="none";pdf.src="";}});}
 function _appendMatrizTrabajo(M){let caja2=_$("caja2");if(!caja2)return;caja2.style.display="flex";Representar.matriz(M,caja2);}
 function _validarExpresionEntrada(expr){
@@ -129,15 +129,19 @@ function _init(){
     for(let i=0;i<inputs.length;i++)inputs[i].addEventListener("keydown",function(ev){
       if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();_msgOkBox("caja1112","");let fila=this.parentNode.parentNode.rowIndex,col=this.parentNode.cellIndex;
       try{
-        let v=this.value||"";if(!v.length)throw new Error("B");
+        let v=(this.value||"").trim();if(!v.length)throw new Error("B");
+        // ".5" -> "0.5", coma decimal -> punto; división por cero no permitida
+        v=v.replace(/,/g,".").replace(/(^|[^\d])\.(\d)/g,"$10.$2");
+        if(/\/\s*\(?\s*[+\-]?0+(\.0+)?\s*\)?(?![\d.])/.test(v))throw new Error("Z");
         let texto="^[0-9\\.,\\+\\-\\(\\)\\^\\*\\/"+nombreParametro+"]*$",rx=new RegExp(texto);if(!rx.test(v))throw new Error("C");
         let ap=(v.match(/\(/g)||[]).length,cp=(v.match(/\)/g)||[]).length;if(ap-cp!==0)throw new Error("A");
         let vr=_validarExpresionEntrada(v);if(!vr[0])throw new Error("V:"+vr[1]);
-        valores[fila][col]=v;let next=(i+1)%inputs.length;inputs[next].focus();if(ev.key==="Tab")ev.preventDefault();if(i===inputs.length-1)_finEntrada();
+        valores[fila][col]=v;let next=(i+1)%inputs.length;inputs[next].focus();if(ev.key==="Tab")ev.preventDefault();if(i===inputs.length-1){let vac=valores.flat().findIndex(x=>x==null);if(vac>=0){_msgErrBox("caja1112","Falta rellenar alguna casilla.");inputs[vac].focus();}else _finEntrada();}
       }catch(e){
         this.value="";this.focus();let m=(e&&e.message)?e.message:"";
         if(m==="C")_msgErrBox("caja1112","Dato erróneo. Revisa caracteres permitidos.");
         else if(m==="B")_msgErrBox("caja1112","No has introducido nada.");
+        else if(m==="Z")_msgErrBox("caja1112","No se puede dividir por cero.");
         else if(m==="A")_msgErrBox("caja1112","Los paréntesis no están balanceados.");
         else if(m.startsWith("V:")){let det=m.slice(2).trim();_msgErrBox("caja1112",(det?("Expresión no válida: "+det):"Expresión no válida."));}
         else _msgErrBox("caja1112","Expresión no válida.");
@@ -206,7 +210,7 @@ function continuar(){
         caja127.appendChild(d1);caja127.appendChild(d2);l1.innerHTML="i=";l2.innerHTML="j=";i1.focus();let n=matrizActualExpresiones.length,f1=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}
           catch(e){i1.value="";i1.focus();_msgErr("i no válido (1.."+n+").");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");if(f1===null){i2.value="";i1.focus();_msgErr("Escribe primero i y pulsa ENTER.");return;}let f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;
           matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
           if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloPermutarFilas(f1,f2,n,caja2);_after();_clearUI();}
           catch(e){i2.value="";i2.focus();_msgErr("j no válido (1.."+n+") y distinto de i.");}});
@@ -220,7 +224,7 @@ function continuar(){
         caja127.appendChild(d1);caja127.appendChild(d2);l1.innerHTML="i=";l2.innerHTML="j=";i1.focus();let m=matrizActualExpresiones[0].length,c1=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}
           catch(e){i1.value="";i1.focus();_msgErr("i no válido (1.."+m+").");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter"&&ev.key!=="Tab")return;ev.preventDefault();try{_msgOk("");if(c1===null){i2.value="";i1.focus();_msgErr("Escribe primero i y pulsa ENTER.");return;}let c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
           matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);
           if(!_cmp(matrizActualExpresiones,matrizAux))Representar.simboloPermutarColumnas(c1,c2,matrizActualExpresiones.length,caja2);_after();_clearUI();}
           catch(e){i2.value="";i2.focus();_msgErr("j no válido (1.."+m+") y distinto de i.");}});

@@ -85,7 +85,8 @@ body{padding-bottom:calc(var(--footer-h,74px) + var(--consent-h,0px) + env(safe-
 
 /* Improve thin KaTeX symbols on low-density displays and small formulas. */
 .katex,.katex *{-webkit-font-smoothing:auto!important;-moz-osx-font-smoothing:auto!important;text-rendering:auto!important;}
-.katex{color:var(--mk-math-color,var(--text-primary,var(--ink,#111827)));}
+.katex{color:var(--mk-math-color,var(--text-primary,var(--ink,#111827)));position:relative;}
+/* position:relative: el MathML oculto de KaTeX (posición absoluta) no debe salirse de las cajas con scroll y ensanchar la página en el móvil */
 .katex .mrel{font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre","Segoe UI Symbol",Arial,sans-serif!important;font-style:normal!important;font-weight:400!important;}
 /* \not (used by \neq, \notin...) needs KaTeX's own font: its slash glyph is a
    private-use character that system math fonts don't have, so it breaks. */
@@ -109,3 +110,5 @@ html body .formulaBox strong{
 /* Botón "✓ Validar" de las calculadoras (solo pantallas táctiles; lo crea common.js) */
 .mk-btn-validar{position:absolute;z-index:9000;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#2563eb;color:#fff;font:700 14px/1 system-ui,-apple-system,sans-serif;box-shadow:0 4px 14px rgba(37,99,235,.35);cursor:pointer;white-space:nowrap}
 .mk-btn-validar:active{transform:translateY(1px)}
+/* Botón "Otra matriz" de las calculadoras: mismo aspecto que los enlaces de la cabecera */
+#controlesTop button.abreVentana{color:#2563eb;font-family:inherit;cursor:pointer;line-height:normal}
