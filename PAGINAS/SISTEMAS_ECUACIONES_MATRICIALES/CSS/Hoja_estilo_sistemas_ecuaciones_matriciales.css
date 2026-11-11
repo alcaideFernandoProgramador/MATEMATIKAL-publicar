@@ -126,3 +126,11 @@ body{
   .hero{padding:22px 18px 22px!important}
   .introWrap{padding:14px 12px 32px!important}
 }
+/* Móvil: menos relleno anidado y fórmulas algo más pequeñas en los pasos */
+@media(max-width:480px){
+  #caja2{padding-left:4px!important;padding-right:4px!important}
+  #caja21{padding-left:0!important;padding-right:0!important}
+  #caja21 .stepCard{padding-left:8px;padding-right:8px}
+  #caja21 .stepCard div[style*="padding: 8px 12px"]{padding-left:6px!important;padding-right:6px!important}
+  #caja21 .sistEcPasoAPaso .katex{font-size:.85em}
+}

@@ -20,11 +20,47 @@
 
   function $(id){ return document.getElementById(id); }
   function clearEl(el){ while(el && el.firstChild) el.removeChild(el.firstChild); }
+  // ".5" -> "0.5" y coma decimal -> punto
+  function fixDecimal(v){ return String(v ?? '').trim().replace(/,/g,'.').replace(/(^|[^\d])\.(\d)/g,'$10.$2'); }
+  // "y" salvo delante de una palabra que suena /i/ (la letra Y se lee "i griega")
+  function conj(name){ return /^[IY]/.test(String(name)) ? ' e ' : ' y '; }
+  // Comprueba que una casilla contiene un número: entero, decimal o fracción
+  function checkNumericCell(raw, where){
+    const v = fixDecimal(raw).replace(/\s*\/\s*/g,'/');
+    const NUM = '[+-]?(?:\\d+(?:\\.\\d+)?)';
+    const m = v.match(new RegExp('^(' + NUM + ')(?:/(' + NUM + '))?$'));
+    if (!m) throw 'En ' + where + ' escribe un número: entero, decimal o fracción (por ejemplo 3, -1.5 o 2/3).';
+    if (m[2] !== undefined && Number(m[2]) === 0) throw 'En ' + where + ' hay una división por cero.';
+    return v;
+  }
+  // Convierte "expr/k" en "(1/k)expr" para que se pueda dividir una expresión matricial entre un número
+  function moveDivisions(e){
+    e = String(e || '');
+    for (let guard = 0; guard < 50; guard++){
+      const re = /\/(\d+(?:\.\d+)?|\(\d+(?:\.\d+)?\))/g;
+      let m, done = true;
+      while ((m = re.exec(e))){
+        const k = m.index; const prev = e[k-1];
+        let start = -1;
+        if (prev === ')'){
+          let depth = 0;
+          for (let i = k-1; i >= 0; i--){ if (e[i] === ')') depth++; else if (e[i] === '(') { depth--; if (depth === 0){ start = i; break; } } }
+        } else if (/[A-Z]/.test(prev)) start = k-1;
+        else if (prev === 't' && e.slice(k-3,k-1).match(/^[A-Z]\^$/)) start = k-3;
+        if (start < 0) continue;
+        const den = m[1].replace(/^\(|\)$/g,'');
+        e = e.slice(0,start) + '(1/' + den + ')' + e.slice(start,k) + e.slice(k + m[0].length);
+        done = false; break;
+      }
+      if (done) break;
+    }
+    return e;
+  }
 
   function showError(msg, where){
     const p = document.createElement('p');
     p.className = 'msgError';
-    p.textContent = 'Atencion: ' + msg;
+    p.textContent = 'Atención: ' + msg;
     where.appendChild(p);
   }
 
@@ -65,7 +101,7 @@
   }
 
   function numberToPlainDecimal(num){
-    if (!Number.isFinite(num)) throw 'Decimal no valido.';
+    if (!Number.isFinite(num)) throw 'Decimal no válido.';
     const digits = Math.abs(num) > 0 && Math.abs(num) < 1e-14 ? 20 : 16;
     let s = num.toFixed(digits).replace(/0+$/,'').replace(/\.$/,'');
     if (s === '-0' || s === '') s = '0';
@@ -100,10 +136,10 @@
     if (!s) s = '1';
     s = stripOuterParens(s);
     if (/[A-Za-z]/.test(s)) {
-      throw 'Los coeficientes de X e Y deben ser escalares numericos. Usa, por ejemplo, 2X, -Y o (1/2)X.';
+      throw 'Los coeficientes de ' + gVar1 + conj(gVar2) + gVar2 + ' deben ser números. Usa, por ejemplo, 2' + gVar1 + ', -' + gVar2 + ', (1/2)' + gVar1 + ' o ' + gVar1 + '/2.';
     }
     if (!/^[0-9+\-*/().]+$/.test(s)) {
-      throw 'Coeficiente no valido: "' + raw + '".';
+      throw 'Coeficiente no válido: "' + raw + '".';
     }
     return simplifyScalar(s);
   }
@@ -113,13 +149,14 @@
       .trim()
       .replace(/\s+/g,'')
       .replace(/,/g,'.')
+      .replace(/(^|[^\d])\.(\d)/g,'$10.$2')
       .replace(/\^-\s*1/g,'^(-1)')
       .replace(/\^T(?![A-Za-z0-9])/g,'^t');
   }
 
   function splitTopLevelTerms(side){
     let s = normalizeEquationText(side);
-    if (!s) throw 'Cada miembro de la ecuacion debe tener contenido.';
+    if (!s) throw 'Cada miembro de la ecuación debe tener contenido.';
     if (!/^[+\-]/.test(s)) s = '+' + s;
 
     const out = [];
@@ -133,13 +170,13 @@
         out.push(s.slice(start,i));
         start = i;
       }
-      if (depth < 0) throw 'Hay parentesis mal cerrados en la ecuacion.';
+      if (depth < 0) throw 'Hay paréntesis mal cerrados en la ecuación.';
     }
-    if (depth !== 0) throw 'Hay parentesis sin cerrar en la ecuacion.';
+    if (depth !== 0) throw 'Hay paréntesis sin cerrar en la ecuación.';
     out.push(s.slice(start));
 
     return out.map(tok => {
-      if (tok.length < 2) throw 'Hay un termino vacio en la ecuacion.';
+      if (tok.length < 2) throw 'Hay un término vacío en la ecuación (sobra o falta algún signo).';
       return { sign: tok[0] === '-' ? -1 : 1, body: tok.slice(1) };
     });
   }
@@ -170,12 +207,12 @@
     const has1 = compact.includes(gVar1);
     const has2 = compact.includes(gVar2);
     if (!has1 && !has2) return null;
-    if (has1 && has2) throw 'Un mismo termino no puede contener ' + gVar1 + ' e ' + gVar2 + ' a la vez.';
+    if (has1 && has2) throw 'Un mismo término no puede contener ' + gVar1 + conj(gVar2) + gVar2 + ' a la vez.';
 
     const variable = has1 ? gVar1 : gVar2;
     const count = compact.split(variable).length - 1;
     if (count !== 1 || !compact.endsWith(variable)) {
-      throw 'Los terminos con incognitas deben tener la forma a' + gVar1 + ' o b' + gVar2 + '. No se admiten productos con matrices.';
+      throw 'Los términos con incógnitas deben tener la forma a' + gVar1 + ' o b' + gVar2 + '. No se admiten productos con matrices.';
     }
     const coefRaw = compact.slice(0, -variable.length);
     const coef = normalizeCoefficient(coefRaw || '1');
@@ -203,19 +240,19 @@
   }
 
   function parseLinearEquation(raw){
-    const eq = normalizeEquationText(raw);
+    const eq = moveDivisions(normalizeEquationText(raw));
     if (!eq) throw 'Introduce las dos ecuaciones del sistema.';
     if ((eq.match(/=/g) || []).length !== 1) {
-      throw 'Cada ecuacion debe tener exactamente un signo igual (=).';
+      throw 'Cada ecuación debe tener exactamente un signo igual (=).';
     }
     const [lhs, rhs] = eq.split('=');
-    if (!lhs || !rhs) throw 'Cada ecuacion debe tener dos miembros no vacios.';
+    if (!lhs || !rhs) throw 'Cada ecuación debe tener dos miembros no vacíos.';
 
     const acc = { x:'0', y:'0', freeTerms:[] };
 
     function consume(side, unknownMultiplier, freeMultiplier){
       for (const term of splitTopLevelTerms(side)){
-        if (!term.body) throw 'Hay un termino vacio en la ecuacion.';
+        if (!term.body) throw 'Hay un término vacío en la ecuación (sobra o falta algún signo).';
         const unknown = parseUnknownTerm(term.body);
         const movedSign = term.sign * (unknown ? unknownMultiplier : freeMultiplier);
         if (unknown){
@@ -224,7 +261,7 @@
           else acc.y = addScalar(acc.y, signed);
         } else {
           if (new RegExp('[' + gVar1 + gVar2 + ']').test(term.body)) {
-            throw gVar1 + ' e ' + gVar2 + ' estan reservadas para las incognitas matriciales.';
+            throw gVar1 + conj(gVar2) + gVar2 + ' están reservadas para las incógnitas matriciales.';
           }
           acc.freeTerms.push({ sign:movedSign, expr:term.body });
         }
@@ -235,7 +272,7 @@
     consume(rhs, -1, 1);
 
     if (isZeroScalar(acc.x) && isZeroScalar(acc.y)) {
-      throw 'Alguna ecuacion no contiene ' + gVar1 + ' ni ' + gVar2 + ' de forma lineal.';
+      throw 'Alguna ecuación no contiene ' + gVar1 + ' ni ' + gVar2 + ' de forma lineal.';
     }
 
     const cExpr = buildFreeExpression(acc.freeTerms);
@@ -246,10 +283,10 @@
     const clean = String(expr || '0').replace(/\^t/g,'').replace(/\^\(-1\)/g,'');
     const lower = clean.match(/[a-z]/g);
     if (lower && lower.length) {
-      throw 'La herramienta no admite parametros escalares en los terminos independientes. Introduce solo matrices conocidas y numeros.';
+      throw 'La herramienta no admite parámetros escalares en los términos independientes. Introduce solo matrices conocidas y números.';
     }
     if (new RegExp('[' + gVar1 + gVar2 + ']').test(expr)) {
-      throw gVar1 + ' e ' + gVar2 + ' no pueden aparecer en los terminos independientes.';
+      throw gVar1 + conj(gVar2) + gVar2 + ' no pueden aparecer en los términos independientes.';
     }
   }
 
@@ -270,7 +307,7 @@
     const second = parseLinearEquation(eq2);
     const delta = subScalar(mulScalar(first.x, second.y), mulScalar(second.x, first.y));
     if (isZeroScalar(delta)) {
-      throw 'El determinante del sistema es 0. No hay solucion unica mediante este metodo.';
+      throw 'El determinante del sistema es 0, así que no tiene solución única: puede no tener solución o tener infinitas. Esta herramienta solo resuelve sistemas con solución única.';
     }
     const matrixNames = collectMatrixNames([first.cExpr, second.cExpr]);
     return { first, second, delta, matrixNames };
@@ -288,17 +325,23 @@
     const val = simplifyScalar(value);
     if (val === '0') return zeroMatrix(rows, cols);
     if (rows !== cols) {
-      throw 'Un termino independiente numerico solo puede interpretarse como multiplo de la identidad si las matrices son cuadradas.';
+      throw 'Un término numérico (como +3) solo puede interpretarse como múltiplo de la identidad si las matrices son cuadradas.';
     }
     return Matriz.multiplicarEscalar(val, Matriz.identidad(rows));
   }
 
   function calcMatrixExpr(expr, matMap, rows, cols){
     cols = cols || rows;
-    const e = String(expr || '0').trim();
+    const e = moveDivisions(normalizeEquationText(expr || '0'));
     if (!e || e === '0') return zeroMatrix(rows, cols);
+    if (rows !== cols && /[A-Z]/.test(e)) {
+      let terms = [];
+      try { terms = splitTopLevelTerms(e); } catch(_) {}
+      if (terms.some(t => t.body && !/[A-Z]/.test(t.body)))
+        throw 'Un término numérico (como +3) solo puede interpretarse como múltiplo de la identidad si las matrices son cuadradas.';
+    }
     if (rows !== cols && /\bI\b/.test(e)) {
-      throw 'La matriz identidad I solo esta disponible cuando la dimension es cuadrada.';
+      throw 'La matriz identidad I solo está disponible cuando las matrices son cuadradas.';
     }
     const matrList = toMatrList(matMap);
     if (rows === cols) matrList.push({ nombre:'I', matriz:Matriz.identidad(rows) });
@@ -310,7 +353,7 @@
       return identityOrScalarMatrix(String(result), rows, cols);
     }
     if (result.length !== rows || result.some(row => row.length !== cols)) {
-      throw 'Alguna expresion matricial no produce una matriz de la dimension indicada.';
+      throw 'Alguna expresión matricial no produce una matriz de la dimensión indicada.';
     }
     return Matriz.simplificarElementosMatriz(result);
   }
@@ -555,7 +598,7 @@
     detWrap.appendChild(lBar); detWrap.appendChild(cellTbl); detWrap.appendChild(rBar); boc1.appendChild(detWrap);
     setTimeout(()=>cellInputs[0].focus(),0);
 
-    function isPlainNumber(s){ const t=s.replace(/\s+/g,'').replace(',','.'); return /^[+\-]?\d+(\.\d+)?$/.test(t)||/^[+\-]?\d+\/\d+$/.test(t); }
+    function isPlainNumber(s){ const t=fixDecimal(s).replace(/\s+/g,''); return /^[+\-]?\d+(\.\d+)?$/.test(t)||/^[+\-]?\d+\/\d+$/.test(t); }
 
     for (let k=0;k<cellInputs.length;k++){
       const inp=cellInputs[k]; const kk=k;
@@ -564,7 +607,7 @@
         e.preventDefault(); errMsg.style.display='none';
         const i=+inp.dataset.i, j=+inp.dataset.j;
         const exp=simplifyScalar(coeffs[i][j]);
-        const val=inp.value.trim().replace(',','.');
+        const val=fixDecimal(inp.value);
         let ok=false;
         try{ok=val!==''&&ExpresionAlgebraica.simplificar('('+val+')-('+exp+')')==='0';}catch(_){}
         if(!ok){inp.style.borderColor='#ef4444';errMsg.textContent='⚠ Valor incorrecto.';errMsg.style.display='block';inp.focus();inp.select();return;}
@@ -584,7 +627,7 @@
         inp.addEventListener('keydown',e=>{
           if(e.key!=='Enter'&&e.key!=='Tab') return;
           e.preventDefault(); errMsg.style.display='none';
-          const val=inp.value.trim().replace(',','.');
+          const val=fixDecimal(inp.value);
           if(!val) return;
           let ok=false;
           try{ok=ExpresionAlgebraica.simplificar('('+val+')-('+analysis.delta+')')==='0';}catch(_){}
@@ -980,7 +1023,7 @@
       inp.addEventListener('keydown',e=>{
         if(e.key!=='Enter'&&e.key!=='Tab') return;
         e.preventDefault(); clearEl(errDiv);
-        const val=inp.value.trim().replace(',','.');
+        const val=fixDecimal(inp.value);
         const ii=+inp.dataset.i, jj=+inp.dataset.j;
         const expVal=String(expected[ii][jj]??'0');
         let ok=false;
@@ -1419,7 +1462,7 @@
         if(step4Finished) return;
         const eqForAuto=buildSubstitutionExpr(chosenEq)?chosenEq:chooseAutoSubstitutionEq();
         const rhsExpr=eqForAuto?buildSubstitutionExpr(eqForAuto):null;
-        if(!rhsExpr){ showError('No se ha podido elegir una ecuacion valida para despejar '+otherVar+'.',errDiv); return; }
+        if(!rhsExpr){ showError('No se ha podido elegir una ecuación válida para despejar '+otherVar+'.',errDiv); return; }
         if(autoWrap4.parentNode) autoWrap4.remove();
         clearEl(errDiv);
         if(eqForAuto!==chosenEq){
@@ -1559,7 +1602,7 @@
 
     const titleDiv = document.createElement('div');
     titleDiv.id = 'tituloCaja1';
-    titleDiv.innerHTML = '<span>INTRODUCCION DE DATOS</span>';
+    titleDiv.innerHTML = '<span>INTRODUCCIÓN DE DATOS</span>';
     caja1.appendChild(titleDiv);
 
     function addSection(label){
@@ -1579,7 +1622,7 @@
     const namesInfo = document.createElement('div');
     namesInfo.style.cssText = 'margin:8px 0 4px;font-size:.93rem;color:var(--text-secondary);display:flex;align-items:center;gap:10px;flex-wrap:wrap;';
     const namesText = document.createElement('span');
-    namesText.textContent = 'Los nombres son, en principio, ' + gVar1 + ' e ' + gVar2 + '. Puedes cambiarlos a continuación.';
+    namesText.textContent = 'Los nombres son, en principio, ' + gVar1 + conj(gVar2) + gVar2 + '. Puedes cambiarlos a continuación.';
     const btnNames = document.createElement('button');
     btnNames.type = 'button'; btnNames.textContent = 'CAMBIAR NOMBRES';
     namesInfo.appendChild(namesText); namesInfo.appendChild(btnNames);
@@ -1595,6 +1638,8 @@
     namesForm.appendChild(lbN1); namesForm.appendChild(inpN1);
     namesForm.appendChild(lbN2); namesForm.appendChild(inpN2);
     namesForm.appendChild(btnCN);
+    const namesErr = document.createElement('div'); namesErr.style.flexBasis = '100%';
+    namesForm.appendChild(namesErr);
     sec1.appendChild(namesForm);
 
     btnNames.addEventListener('click', () => {
@@ -1603,11 +1648,13 @@
     btnCN.addEventListener('click', () => {
       const v1=inpN1.value.trim().toUpperCase().slice(0,1);
       const v2=inpN2.value.trim().toUpperCase().slice(0,1);
-      if (!v1||!v2) return;
-      if (v1===v2){ alert('Las dos incógnitas deben tener nombres distintos.'); return; }
-      if (v1==='I'||v2==='I'){ alert('La letra I está reservada para la identidad.'); return; }
+      clearEl(namesErr);
+      if (!v1||!v2){ showError('Escribe una letra para cada incógnita.', namesErr); return; }
+      if (!/^[A-Z]$/.test(v1)||!/^[A-Z]$/.test(v2)){ showError('Los nombres de las incógnitas deben ser letras (de la A a la Z).', namesErr); return; }
+      if (v1===v2){ showError('Las dos incógnitas deben tener nombres distintos.', namesErr); return; }
+      if (v1==='I'||v2==='I'){ showError('La letra I está reservada para la identidad.', namesErr); return; }
       gVar1=v1; gVar2=v2;
-      namesText.textContent='Los nombres son '+gVar1+' e '+gVar2+'. Puedes cambiarlos a continuación.';
+      namesText.textContent='Los nombres son '+gVar1+conj(gVar2)+gVar2+'. Puedes cambiarlos a continuación.';
       namesForm.style.display='none';
     });
 
@@ -1694,7 +1741,7 @@
 
       function confirmDim(){
         clearEl(errDiv3);
-        const m=parseInt(inpR.value,10), n=parseInt(inpC.value,10);
+        const m=/^\s*\d+\s*$/.test(inpR.value)?parseInt(inpR.value,10):NaN, n=/^\s*\d+\s*$/.test(inpC.value)?parseInt(inpC.value,10):NaN;
         if (!Number.isInteger(m)||m<1||m>9){ showError('El número de filas debe ser un entero entre 1 y 9.',errDiv3); return; }
         if (!Number.isInteger(n)||n<1||n>9){ showError('El número de columnas debe ser un entero entre 1 y 9.',errDiv3); return; }
         gRows=m; gCols=n;
@@ -1764,8 +1811,11 @@
             for (let i=0;i<gRows;i++){
               const row=[];
               for (let j=0;j<gCols;j++){
-                const v=cells[i][j].value.trim().replace(',','.');
-                if(!v){ showError('Falta un valor en '+name+' (fila '+(i+1)+', columna '+(j+1)+').',errDiv4); return; }
+                const raw=cells[i][j].value.trim();
+                if(!raw){ showError('Falta un valor en '+name+' (fila '+(i+1)+', columna '+(j+1)+').',errDiv4); cells[i][j].focus(); return; }
+                let v;
+                try { v=checkNumericCell(raw, name+' (fila '+(i+1)+', columna '+(j+1)+')'); }
+                catch(err){ showError(err,errDiv4); cells[i][j].focus(); cells[i][j].select(); return; }
                 row.push(v);
               }
               mat.push(row);

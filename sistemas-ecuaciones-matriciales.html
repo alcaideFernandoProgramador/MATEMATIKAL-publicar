@@ -324,7 +324,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
 
   <!-- CTA ANTES DE ERRORES -->
   <div class="cta-herramienta">
-    <p><strong>¿Prefieres practicar con la herramienta?</strong> La calculadora resuelve cualquier sistema con coeficientes escalares y matrices de cualquier orden, mostrando cada paso del proceso.</p>
+    <p><strong>¿Prefieres practicar con la herramienta?</strong> La calculadora resuelve cualquier sistema con coeficientes escalares y solución única (\(\Delta\neq 0\)), con matrices de hasta 9×9, mostrando cada paso del proceso.</p>
     <a class="cta-btn" href="/PAGINAS/SISTEMAS_ECUACIONES_MATRICIALES/Sistemas_ecuaciones_matriciales.html">Ir a la calculadora →</a>
   </div>
 
@@ -536,9 +536,10 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <h2>8. Qué admite la calculadora</h2>
     <ul class="pasos-lista">
       <li>Ecuaciones con \(X\) e \(Y\) en cualquier miembro, por ejemplo \(X+Y=A\) y \(B=2X-Y\).</li>
-      <li>Coeficientes enteros, decimales o fracciones: \(3X\), \(-Y\), \(\tfrac{1}{2}X\).</li>
+      <li>Coeficientes enteros, decimales o fracciones: \(3X\), \(-Y\), \(\tfrac{1}{2}X\) (se puede escribir <code>(1/2)X</code> o <code>X/2</code>).</li>
       <li>Términos independientes formados con matrices conocidas, como \(A+B\), \(C-D\) o \(A^t\).</li>
-      <li>Matrices de cualquier orden (cuadradas o no), siempre que todas tengan el mismo número de filas y columnas.</li>
+      <li>Matrices de hasta 9×9 (cuadradas o no), siempre que todas tengan el mismo número de filas y columnas.</li>
+      <li>Sistemas con solución única, es decir, con \(\Delta\neq 0\). Si \(\Delta=0\), la calculadora lo indica y no continúa.</li>
     </ul>
   </section>
 
