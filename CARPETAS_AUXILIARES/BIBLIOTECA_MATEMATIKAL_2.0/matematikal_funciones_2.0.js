@@ -1440,12 +1440,16 @@ class Matriz {constructor(array) {this.matriz = array;}
     {let acc={ok:true,conds};for(let t=0;t<cand.length&&acc.ok;t++)acc=addCond(acc.conds,cand[t],"eq0");if(acc.ok)dfs(f+1,acc.conds,r)}}
     dfs(0,new Map(),0);
     function parseSols(raw,param){const arr=Array.isArray(raw)?raw:[raw];return arr.map(s=>String(s).replace(/\s+/g,"")).filter(s=>s.startsWith(param+"="))}
-    function normEq0(expr,param){if(!expr.includes(param))return[expr+"=0"];const sols=parseSols(Resolver.ecuacion(expr),param);return sols.length?sols:[expr+"=0"]}
-    function normNeq0(expr,param){if(!expr.includes(param))return[expr+"!=0"];const sols=parseSols(Resolver.ecuacion(expr),param);if(!sols.length)return[expr+"!=0"];return uniq(sols.map(s=>s.replace("=","!=")))}
+    // El parámetro solo toma valores racionales: las raíces irracionales o complejas no se estudian.
+    // Una condición "=0" cuyas únicas raíces son irracionales no se cumple nunca (la pieza se descarta: null);
+    // una condición "!=0" cuyas únicas raíces son irracionales se cumple siempre (sin condición).
+    const esRacionalSol=(s,param)=>!/[a-zA-Z]/.test(s.slice(param.length+1));
+    function normEq0(expr,param){if(!expr.includes(param))return[expr+"=0"];const todas=parseSols(Resolver.ecuacion(expr),param),sols=todas.filter(s=>esRacionalSol(s,param));if(sols.length)return sols;if(todas.length)return null;return[expr+"=0"]}
+    function normNeq0(expr,param){if(!expr.includes(param))return[expr+"!=0"];const todas=parseSols(Resolver.ecuacion(expr),param),sols=todas.filter(s=>esRacionalSol(s,param));if(!sols.length)return todas.length?[]:[expr+"!=0"];return uniq(sols.map(s=>s.replace("=","!=")))}
     function normalizarCond(cond,param){if(cond.endsWith("!=0"))return normNeq0(cond.slice(0,-3),param);if(cond.endsWith("=0"))return normEq0(cond.slice(0,-2),param);return[cond]}
-    function normalizarPieza(pieza,param){let conds=[];for(const c of pieza.condiciones)conds=conds.concat(normalizarCond(c,param));conds=uniq(conds).sort();return{condiciones:conds,rango:pieza.rango}}
+    function normalizarPieza(pieza,param){let conds=[];for(const c of pieza.condiciones){const r=normalizarCond(c,param);if(r===null)return null;conds=conds.concat(r)}conds=uniq(conds).sort();return{condiciones:conds,rango:pieza.rango}}
     function detectarParam(piezas){const set=new Set();for(const p of piezas)for(const c of p.condiciones){const ms=c.match(/[a-zA-Z]/g);if(ms)for(const ch of ms)set.add(ch)}return set.size===1?[...set][0]:"a"}
-    const param=detectarParam(piezasCrudas),piezasNorm=piezasCrudas.map(p=>normalizarPieza(p,param));
+    const param=detectarParam(piezasCrudas),piezasNorm=piezasCrudas.map(p=>normalizarPieza(p,param)).filter(Boolean);
     function descomponerEnPiezasFinales(pieza){const eq=new Set(),neq=new Set();for(const c of pieza.condiciones){let m=c.match(/^([a-zA-Z])=(.+)$/);if(m){eq.add(m[1]+"="+m[2]);continue}m=c.match(/^([a-zA-Z])!=(.+)$/);if(m){neq.add(m[1]+"!="+m[2]);continue}}
     const eqArr=[...eq],neqArr=[...neq],res=[];if(eqArr.length===0){res.push({condiciones:(neqArr.length?neqArr.slice().sort():pieza.condiciones.slice()),rango:pieza.rango});return res}
     for(const e of eqArr){const [l,v]=e.split("=");let bad=false;for(const n of neqArr){const [ln,vn]=n.split("!=");if(ln===l&&vn===v){bad=true;break}}if(!bad)res.push({condiciones:[e],rango:pieza.rango})}return res}
@@ -2009,6 +2013,12 @@ class Representar{
     fila.appendChild(columna);}tabla.appendChild(fila);};lug.appendChild(tabla);}
   
 static solucionesSistemaLineal(mat,lug,ley,ordLey){
+    // El texto ("SISTEMA COMPATIBLE…") va como párrafo normal, que puede partirse en varias líneas en el móvil;
+    // solo la parte matemática se dibuja con KaTeX.
+    const pintar=(latex,d)=>{const m=String(latex).match(/^\\text\{([^{}]*)\}(?:\\;)?([\s\S]*)$/);
+      if(!m){pintar(latex,d);return;}
+      const t=document.createElement("div");t.className="mk-sol-texto";t.textContent=m[1].replace(/\\;/g," ").trim();d.appendChild(t);
+      if(m[2].trim()){const fm=document.createElement("div");fm.className="mk-sol-formula";fm.style.cssText="max-width:100%;overflow-x:auto";katex.render(m[2],fm,{throwOnError:false});d.appendChild(fm);}};
     let simp=e=>ExpresionAlgebraica.simplificar(""+e),esCero=e=>simp(e)==="0";
     let esEnteroCadena=s=>/^[+-]?\d+$/.test(s),esNumeroCadena=s=>/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(s),yaEsLatex=s=>/\\[a-zA-Z]+/.test(s);
     let aFracLatex=s=>{let frac=fraccionContinua(String(s),long),num=FraccionNumerica.numerador(frac),den=FraccionNumerica.denominador(frac);return `\\dfrac{${num}}{${den}}`;};
@@ -2024,7 +2034,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
         let sol=resolucion[1];if(typeof sol==="string"){lug.textContent=sol;return;}
         let A=sol.map((v,i)=>({k:etq(i+1),v}));ordenar(A);
         let partes=A.map(o=>`x_{${o.k}}=${valorALatex(o.v)}`),latex=`\\text{SISTEMA COMPATIBLE DETERMINADO. Solución\\;única: }\\left[${partes.join(",\\;")}\\right]`;
-        let d=document.createElement("div");katex.render(latex,d,{throwOnError:false});lug.appendChild(d);return;
+        let d=document.createElement("div");pintar(latex,d);lug.appendChild(d);return;
     }
     if(tipo==="CI"){
         let sol=resolucion[1];if(typeof sol==="string"){lug.textContent=sol;return;}
@@ -2052,7 +2062,7 @@ static solucionesSistemaLineal(mat,lug,ley,ordLey){
         ordenar(A);let L=A.map(o=>o.s);
         let sep=hayFrac?"\\\\[8pt]":"\\\\",cond="";if(denoms.size){let C=[...denoms].map(d=>`${valorALatex(d)}\\neq 0`);cond=`\\\\[8pt]\\text{Válido\\;si: }${C.join(",\\;")}`;}
         let latex=`\\text{SISTEMA COMPATIBLE INDETERMINADO. Infinitas\\;soluciones:}\\;\\begin{cases}${L.join(sep)}\\end{cases}${cond}`;
-        let d=document.createElement("div");katex.render(latex,d,{throwOnError:false});lug.appendChild(d);return;
+        let d=document.createElement("div");pintar(latex,d);lug.appendChild(d);return;
     }
     lug.textContent="Tipo de sistema no reconocido";
 }

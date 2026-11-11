@@ -315,7 +315,7 @@ function _tarjetaRangoConfirmado(prefijo, casos) {
 
   // General case badge
   let vg = document.createElement("div"); vg.className = "hist-badge-rango";
-  let texG = `\\text{rg}(${prefijo}) = ${casos.general}`;
+  let texG = `\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${casos.general}`;
   if (casos.especiales.length > 0) {
     let vals = casos.especiales.map(e => _toLaTeX(e.val)).join(",\\,");
     texG += `\\;\\;(${nombreParam}\\neq ${vals})`;
@@ -326,7 +326,7 @@ function _tarjetaRangoConfirmado(prefijo, casos) {
   casos.especiales.forEach(e => {
     let ve = document.createElement("div"); ve.className = "hist-badge-rango";
     ve.style.background = "#fff7ed"; ve.style.color = "#c2410c";
-    _rk(`\\text{rg}(${prefijo}) = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
+    _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
     card.appendChild(ve);
   });
   return card;
@@ -482,7 +482,7 @@ function _crearTarjetaRangoAuto(titulo, prefijo, casos, mat, numFilas, numCols) 
   card.appendChild(et);
 
   let vg = document.createElement("div"); vg.className = "hist-badge-rango";
-  let texG = `\\text{rg}(${prefijo}) = ${casos.general}`;
+  let texG = `\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${casos.general}`;
   if (casos.especiales.length > 0) {
     texG += `\\;\\;(${nombreParam}\\neq ${casos.especiales.map(e => _toLaTeX(e.val)).join(",\\,")})`;
   }
@@ -493,7 +493,7 @@ function _crearTarjetaRangoAuto(titulo, prefijo, casos, mat, numFilas, numCols) 
   casos.especiales.forEach(e => {
     let ve = document.createElement("div"); ve.className = "hist-badge-rango";
     ve.style.cssText = "background:#fff7ed;color:#c2410c;";
-    _rk(`\\text{rg}(${prefijo}) = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
+    _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
     let justE = _crearJustificacionRangoAuto(mat, numFilas, numCols, e.r, e.val);
     if (justE) justE.classList.add("especial");
     _appendFilaRango(card, ve, justE);
@@ -523,7 +523,7 @@ function _crearTarjetaCasoAuto(val, rA, rAb) {
   let tipo = document.createElement("div"); tipo.className = "caso-opciones";
   [
     { value: "SCD", label: "SCD" },
-    { value: "CSI", label: "SDI" },
+    { value: "CSI", label: "SCI" },
     { value: "SI", label: "SI" }
   ].forEach(opt => {
     let lab = document.createElement("span"); lab.className = "caso-opcion auto";
@@ -565,7 +565,7 @@ function _actualizarRangosCabecera(prefijo, casos) {
 
   let general = document.createElement("div");
   general.className = "conf-rango-badge";
-  let texG = `\\text{rg}(${prefijo})=${casos.general}`;
+  let texG = `\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'}=${casos.general}`;
   if (casos.especiales.length > 0) {
     let vals = casos.especiales.map(e => _toLaTeX(e.val)).join(",\\,");
     texG += `\\;(${nombreParam}\\neq ${vals})`;
@@ -576,7 +576,7 @@ function _actualizarRangosCabecera(prefijo, casos) {
   casos.especiales.forEach(e => {
     let esp = document.createElement("div");
     esp.className = "conf-rango-badge especial";
-    _rk(`\\text{rg}(${prefijo})=${e.r}\\;(${nombreParam}=${_toLaTeX(e.val)})`, esp);
+    _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'}=${e.r}\\;(${nombreParam}=${_toLaTeX(e.val)})`, esp);
     wrap.appendChild(esp);
   });
 
@@ -672,7 +672,7 @@ function _appendSolucionPanel(val, node) {
   if (!refContenido || !node) return;
   let box = document.createElement("div"); box.className = "ref-nota";
   let title = document.createElement("div"); title.className = "confirmados-caso-titulo";
-  _rk(`\\text{Solucion: }${_casoTexto(val)}`, title);
+  _rk(`\\text{Solución: }${_casoTexto(val)}`, title);
   box.appendChild(title);
   box.appendChild(node.cloneNode(true));
   refContenido.appendChild(box);
@@ -682,7 +682,7 @@ function _appendIncompatiblePanel(val) {
   if (!refContenido) return;
   let box = document.createElement("div"); box.className = "ref-nota";
   let title = document.createElement("div"); title.className = "confirmados-caso-titulo";
-  _rk(`\\text{Conclusion: }${_casoTexto(val)}`, title);
+  _rk(`\\text{Conclusión: }${_casoTexto(val)}`, title);
   let msg = document.createElement("div");
   msg.className = "hist-badge-rango hist-sol-linea";
   msg.style.cssText = "background:#fef2f2;color:#dc2626;border:1px solid #fecaca;";
@@ -726,12 +726,24 @@ function _primerMenorNoNulo(mat, r) {
 
 function _renderSolucionCaso(card, val, rA) {
   let matS = val === null ? matrizAmpS : Matriz.sustituir(matrizAmpS, nombreParam, val);
+  let matNum = _sustitNum(matrizAmpS, val === null ? _encontrarValorGenerico() : _valorNumericoCasoEspecial(val));
+  // Compatible determinado con más ecuaciones que incógnitas: Cramer necesita un sistema cuadrado.
+  // Se eligen n ecuaciones independientes; las demás son combinación lineal de ellas.
+  if (rA === nIncognitas && matrizAmpS.length > nIncognitas) {
+    let pv = _primerMenorNoNulo(matNum.map(r => r.slice(0, nIncognitas)), nIncognitas);
+    if (pv) {
+      matS = pv.rows.map(i => matS[i]);
+      matNum = pv.rows.map(i => matNum[i]);
+      let nota = document.createElement("div"); nota.className = "hist-valor";
+      _rk(`\\text{Hay más ecuaciones que incógnitas: usamos las ecuaciones }${pv.rows.map(i => i + 1).join(",\\,")}\\text{ (las demás son combinación lineal de ellas).}`, nota);
+      card.appendChild(nota);
+    }
+  }
   if (val === null) {
     _cramerSimbolicoCD(card, matS, rA, refContenido, val);
     return;
   }
 
-  let matNum = _sustitNum(matrizAmpS, _valorNumericoCasoEspecial(val));
   let matCoef = matNum.map(r => r.slice(0, nIncognitas));
   if (rA === nIncognitas) {
     _cramerNumerico(card, matCoef, matNum, rA, refContenido, val);
@@ -815,7 +827,8 @@ function _renderSolucionCaso(card, val, rA) {
 // ENCONTRAR VALOR GENÉRICO (no crítico)
 // =====================================================================
 function _encontrarValorGenerico() {
-  let candidates = [7, 13, 97, 23, 41, -3, 100, 11, 5, 3, 2, -5, 17, 19];
+  // Valores "genéricos": primos grandes, que difícilmente son raíz de los menores (antes empezaba por 7 y fallaba si el valor crítico era 7)
+  let candidates = [1009, 1013, 1019, 1021, 1031, 1033, -1039, 1049, 1051, 1061];
   for (let c of candidates) {
     let isCrit = valoresCriticos.some(v => {
       let nv = _valorNumericoCasoEspecial(v);
@@ -1110,7 +1123,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
     let rows = [];
 
     let rowG = document.createElement("div"); rowG.className = "form-row";
-    let lG = document.createElement("label"); _rk(`\\text{rg}(${prefijo})=`, lG);
+    let lG = document.createElement("label"); _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'}=`, lG);
     let iG = document.createElement("input"); iG.type = "text"; iG.style.width = "40px";
     rowG.appendChild(lG); rowG.appendChild(iG);
     if (criticos.length > 0) {
@@ -1124,7 +1137,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
     criticos.forEach(val => {
       let rowS = document.createElement("div"); rowS.className = "form-row";
       rowS.style.marginTop = "5px";
-      let lS = document.createElement("label"); _rk(`\\text{rg}(${prefijo})=`, lS);
+      let lS = document.createElement("label"); _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'}=`, lS);
       let iS = document.createElement("input"); iS.type = "text"; iS.style.width = "40px";
       let noteS = document.createElement("small");
       noteS.textContent = ` cuando ${nombreParam} = ${val}`;
@@ -1181,7 +1194,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
         if (prefijo === "(A|b)" && et) et.textContent = "Paso 2: Rango(A|b)";
         // Add summary
         let vg = document.createElement("div"); vg.className = "hist-badge-rango";
-        let texG = `\\text{rg}(${prefijo}) = ${casosObj.general}`;
+        let texG = `\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${casosObj.general}`;
         if (casosObj.especiales.length > 0) {
           texG += `\\;\\;(${nombreParam}\\neq ${casosObj.especiales.map(e => _toLaTeX(e.val)).join(",\\,")})`;
         }
@@ -1192,7 +1205,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, prefijo, onRangoOk) {
         casosObj.especiales.forEach(e => {
           let ve = document.createElement("div"); ve.className = "hist-badge-rango";
           ve.style.cssText = "background:#fff7ed;color:#c2410c;";
-          _rk(`\\text{rg}(${prefijo}) = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
+          _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${e.r}\\;\\;(${nombreParam}=${_toLaTeX(e.val)})`, ve);
           let ejemploE = _menorEjemploNoNulo(e.r, e.val);
           let ee = _crearJustificacionRango(ejemploE, e.r, e.val);
           if (ee) ee.classList.add("especial");
@@ -1701,7 +1714,7 @@ function iniciarPaso4() {
   let oldSep = caja112 ? caja112.querySelector(".confirmados-caso-sep") : null;
   if (oldSep) oldSep.remove();
   _mostrarRef(
-    "Paso 3 - Caso y solucion",
+    "Paso 3 - Caso y solución",
     null,
     null
   );
@@ -1765,7 +1778,7 @@ function iniciarPaso4() {
     let radioName = `tipo_${Date.now()}_${Math.random()}`;
     [
       { value: "SCD", label: "SCD" },
-      { value: "CSI", label: "SDI" },
+      { value: "CSI", label: "SCI" },
       { value: "SI", label: "SI" }
     ].forEach(opt => {
       let lab = document.createElement("label"); lab.className = "caso-opcion";
@@ -1899,13 +1912,40 @@ function _cramerSimbolicoCD(card, matS, rango, panel, val) {
     let note = document.createElement("div"); note.className = "hist-valor";
     note.textContent = `rg(A) = ${r} < n = ${n} → Compatible indeterminado con ${n - r} parámetro(s) libre(s).`;
     card.appendChild(note);
-    // Show the matrix for the general case
-    let mEl = document.createElement("div"); mEl.className = "hist-valor";
-    _rk(_matLxS(matCoefS), mEl); card.appendChild(mEl);
-    let hint = document.createElement("div"); hint.className = "hist-valor";
-    hint.style.fontSize = "11px"; hint.style.color = "var(--muted)";
-    hint.textContent = "Asigna un parámetro a la(s) incógnita(s) libre(s) y aplica Cramer al subsistema.";
-    card.appendChild(hint);
+    // Solución general: incógnitas libres como parámetros y Cramer en el subsistema de un menor no nulo
+    let gen = _sustitNum(matS, _encontrarValorGenerico());
+    let piv = _primerMenorNoNulo(gen.map(row => row.slice(0, n)), r);
+    if (!piv) {
+      let hint = document.createElement("div"); hint.className = "hist-valor";
+      hint.textContent = "No se ha encontrado un subsistema regular para aplicar Cramer.";
+      card.appendChild(hint);
+      return;
+    }
+    let freeCols = Array.from({ length: n }, (_, i) => i).filter(i => !piv.cols.includes(i));
+    let paramNames = ["t", "s", "u", "v"].filter(p => p !== nombreParam);
+    let params = freeCols.map((_, i) => paramNames[i] || `t_{${i + 1}}`);
+    let info = document.createElement("div"); info.className = "hist-free-note";
+    _rk(`\\text{Dejamos ${freeCols.length === 1 ? "libre" : "libres"} }${freeCols.map((c, i) => `x_{${c + 1}}=${params[i]}`).join(",\\;")}`, info);
+    card.appendChild(info);
+    let rhs = piv.rows.map(ri => _simpl(`(${matS[ri][n]})` + freeCols.map((fc, pi) => `-(${matS[ri][fc]})*${params[pi]}`).join("")));
+    let sub = piv.rows.map(ri => piv.cols.map(c => matS[ri][c]));
+    let detSub = _detStr(sub);
+    let sol = Array(n).fill(null);
+    freeCols.forEach((c, i) => { sol[c] = params[i]; });
+    let solRow = document.createElement("div"); solRow.className = "hist-sol-row";
+    card.appendChild(solRow);
+    piv.cols.forEach((col, k) => {
+      let Ai = sub.map((row, rr) => row.map((v, cc) => cc === k ? rhs[rr] : v));
+      let detAi = _detStr(Ai);
+      let xi = _toLaTeX(_simpl(`(${detAi})/(${detSub})`));
+      let el = document.createElement("div"); el.className = "hist-valor";
+      _rk(`x_{${col + 1}}=\\frac{${_detMatrixTex(Ai)}}{${_detMatrixTex(sub)}}=${xi}`, el);
+      solRow.appendChild(el);
+      sol[col] = xi;
+    });
+    let solEl = document.createElement("div"); solEl.className = "hist-badge-rango hist-sol-linea";
+    _rk(`\\left[${sol.map((s, i) => `x_{${i + 1}}=${s}`).join(",\\quad ")}\\right]`, solEl);
+    _appendSolucionPanel(val, solEl);
   }
 }
 

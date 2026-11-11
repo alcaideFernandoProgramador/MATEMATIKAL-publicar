@@ -447,7 +447,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <p class="ejemplo-paso">Ejemplo — Compatible Indeterminado</p>
     <p>Sistema \(3\times 3\) con \(\operatorname{rg}(A)=\operatorname{rg}(A\,|\,b)=2 < 3=n\):</p>
     <div class="k">\[
-    \left\{\begin{aligned}x_1+x_2+x_3&=2\\x_1-x_2+2x_3&=1\end{aligned}\right.
+    \left\{\begin{aligned}x_1+x_2+x_3&=2\\2x_1+2x_2+2x_3&=4\\x_1-x_2+2x_3&=1\end{aligned}\right.
     \]</div>
     <p>Fijamos la incógnita libre \(x_3=t\) y trasladamos al segundo miembro. El subsistema cuadrado con las ecuaciones 1.ª y 3.ª queda:</p>
     <div class="k">\[
@@ -561,9 +561,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 3 — Calcular rg(A|b)</p>
       <p>Calculamos el determinante de la submatriz \(3 \times 3\) de \((A\,|\,b)\) formada por las columnas 1, 2 y 4 (la de los términos independientes):</p>
       <div class="k">\[\begin{vmatrix}1 & 1 & 2\\2 & 2 & 4\\1 & -1 & 1\end{vmatrix} = 0 \quad \text{(F}_2 = 2\,\text{F}_1\text{ también en esta submatriz)}\]</div>
-      <p>El mismo menor de orden 2 que usamos antes, ampliado con la columna de términos independientes:</p>
-      <div class="k">\[\begin{vmatrix}1 & 2\\1 & 1\end{vmatrix} = 1 - 2 = -1 \neq 0\]</div>
-      <p>Pero este es un menor de \((A\,|\,b)\) de orden 2 con columnas de \(A\). No aumenta el rango. Comprobamos que todos los menores de orden 3 de \((A\,|\,b)\) son nulos (porque \(F_2 = 2F_1\) en toda la matriz ampliada, al ser \(b_2 = 2b_1\)). Por tanto \(\operatorname{rg}(A\,|\,b) = 2\).</p>
+      <p>El menor de orden 2 de \(A\) que usamos antes sigue siendo un menor de \((A\,|\,b)\), así que \(\operatorname{rg}(A\,|\,b)\geq 2\). Para que fuera 3 haría falta un menor de orden 3 no nulo, pero todos los menores de orden 3 de \((A\,|\,b)\) son nulos. Comprobamos que todos los menores de orden 3 de \((A\,|\,b)\) son nulos (porque \(F_2 = 2F_1\) en toda la matriz ampliada, al ser \(b_2 = 2b_1\)). Por tanto \(\operatorname{rg}(A\,|\,b) = 2\).</p>
       <p class="ejemplo-paso">Paso 4 — Clasificación</p>
       <p>\(\operatorname{rg}(A) = \operatorname{rg}(A\,|\,b) = 2 < 3 = n\) → <strong>Sistema Compatible Indeterminado</strong> con \(3 - 2 = 1\) parámetro libre.</p>
       <p class="ejemplo-paso">Paso 5 — Resolución con parámetro</p>

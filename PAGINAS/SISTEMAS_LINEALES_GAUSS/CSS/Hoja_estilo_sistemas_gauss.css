@@ -113,3 +113,7 @@ span.mjx-mtable{padding:0!important;margin:0!important}
   #caja11212{flex-wrap:wrap;}
   #caja1122{flex-wrap:wrap;}
 }
+/* La línea de la solución (una sola fórmula) se puede desplazar en pantallas estrechas en lugar de quedar cortada */
+#caja12{overflow-x:auto}
+#caja12 .katex-html{white-space:nowrap}
+#caja12>div{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}

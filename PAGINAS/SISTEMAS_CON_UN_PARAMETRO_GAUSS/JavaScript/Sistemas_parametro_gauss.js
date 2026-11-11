@@ -207,10 +207,13 @@ function rellenarSistema(tabla){
             }
           }
         }catch(error){
-          document.getElementById("caja11112").style.color="red";
-          if(error.message==="errorC")document.getElementById("caja11112").innerHTML="Se ha introducido un dato erróneo.<br>Inténtalo otra vez por favor";
-          if(error.message==="errorB")document.getElementById("caja11112").innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
-          if(error.message==="errorA")document.getElementById("caja11112").innerHTML="Los paréntesis no están balanceados.<br>Inténtalo otra vez por favor";
+          // El recuadro de mensajes puede no existir ya si el error ocurre después de introducir el sistema
+          let cajaMsg=document.getElementById("caja11112")||document.getElementById("caja1111");
+          if(cajaMsg){cajaMsg.style.color="red";
+          if(error.message==="errorC")cajaMsg.innerHTML="Se ha introducido un dato erróneo.<br>Inténtalo otra vez por favor";
+          else if(error.message==="errorB")cajaMsg.innerHTML="No has introducido nada.<br>Inténtalo otra vez por favor";
+          else if(error.message==="errorA")cajaMsg.innerHTML="Los paréntesis no están balanceados.<br>Inténtalo otra vez por favor";
+          else cajaMsg.innerHTML="No se ha podido estudiar este sistema. Revisa los datos o pulsa «Otro sistema».";}
         }
       }
     });
@@ -303,7 +306,7 @@ function crearFormulario(){
         l1.innerHTML="F<sub>i</sub>:"+"\u00A0".repeat(3)+"i=";l2.innerHTML="F<sub>j</sub>:"+"\u00A0".repeat(3)+"j=";i1.focus();
         let n=matrizActualExpresiones.length,f1=null,f2=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f1=Number(i1.value);if(!Number.isInteger(f1)||f1<1||f1>n)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La fila i no es válida.<br>Debe estar entre 1 y "+n+".");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");if(f1===null){i2.value="";i1.focus();_msgErr("Escribe primero i y pulsa ENTER.");return;}f2=Number(i2.value);if(!Number.isInteger(f2)||f2<1||f2>n||f2===f1)throw 0;matrizActualExpresiones=Matriz.permutarFilas(matrizActualExpresiones,f1-1,f2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarFilas(f1,f2,n,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La fila j no es válida.<br>Debe estar entre 1 y "+n+" y ser distinta de i.");}});
       }break;
@@ -315,7 +318,7 @@ function crearFormulario(){
         l1.innerHTML="C<sub>i</sub>:"+"\u00A0".repeat(3)+"i=";l2.innerHTML="C<sub>j</sub>:"+"\u00A0".repeat(3)+"j=";i1.focus();
         let m=matrizActualExpresiones[0].length-1,c1=null,c2=null;
         i1.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c1=Number(i1.value);if(!Number.isInteger(c1)||c1<1||c1>m)throw 0;i2.focus();}catch(e){i1.value="";i1.focus();_msgErr("La columna i no es válida.<br>Debe estar entre 1 y "+m+".");}});
-        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
+        i2.addEventListener("keydown",function(ev){if(ev.key!=="Enter")return;try{_msgOk("");if(c1===null){i2.value="";i1.focus();_msgErr("Escribe primero i y pulsa ENTER.");return;}c2=Number(i2.value);if(!Number.isInteger(c2)||c2<1||c2>m||c2===c1)throw 0;
           matrizActualExpresiones=Matriz.permutarColumnas(matrizActualExpresiones,c1-1,c2-1);_swapLeyenda(c1-1,c2-1);
           if(!_cmp||!_cmp(matrizActualExpresiones,matrizActualExpresionesCopia)){Representar.simboloPermutarColumnas(c1,c2,matrizActualExpresiones.length,caja2);_after();}_clearUI();
         }catch(e){i2.value="";i2.focus();_msgErr("La columna j no es válida.<br>Debe estar entre 1 y "+m+" y ser distinta de i.");}});
@@ -625,7 +628,7 @@ if(casosAutomatico.length===0){
     caja1244.style.justifyContent="flex-start";caja1244.style.alignItems="center";
     let leyenda2=document.createElement("label");leyenda2.innerHTML=nombreParametro+"=";caja1244.appendChild(leyenda2);caja1244.appendChild(inputCaso);inputCaso.focus();
     let botonEcuacion=document.createElement("button");botonEcuacion.id="ecuacion";caja1245.style.marginTop="20px";
-    let ly=document.createElement("div");ly.innerHTML="Si necesistas resolver una ecuación, puedes hacer click en el botón";caja1245.appendChild(ly);
+    let ly=document.createElement("div");ly.innerHTML="Si necesitas resolver una ecuación, puedes hacer click en el botón";caja1245.appendChild(ly);
     botonEcuacion.innerHTML="RESOLVER ECUACIÓN";caja1245.style.justifyContent="space-around";caja1245.appendChild(botonEcuacion);
     botonEcuacion.addEventListener("click",function(){_abrirModalEcuacion();});
     let botonFin=document.createElement("button");botonFin.innerHTML="FIN";botonFin.style.marginLeft="auto";caja1244.appendChild(botonFin);
@@ -654,7 +657,7 @@ if(casosAutomatico.length===0){
         casos.push("G");casosString.push("G");caja12412.innerHTML="CASOS: "+casosString;
         while(caja1243.firstChild){caja1243.removeChild(caja1243.firstChild);}while(caja1244.firstChild){caja1244.removeChild(caja1244.firstChild);}while(caja1245.firstChild){caja1245.removeChild(caja1245.firstChild);}
         let tx1="Ya has ingresado todos los casos específicos que se deben de estudiar.";
-        let tx2="Ahora, puedes estudiar casa uno de ellos por separado.<br>Además, también debes estudiar el caso general que engloba el resto de valores de "+nombreParametro+". Para ello, introduce\"G\"";
+        let tx2="Ahora, puedes estudiar cada uno de ellos por separado.<br>Además, también debes estudiar el caso general que engloba el resto de valores de "+nombreParametro+". Para ello, introduce\"G\"";
         caja1243.innerHTML=tx1;caja1244.style.margin="20px 5px 20px 5px";caja1244.innerHTML=tx2;
         caja1245.style.display="flex";caja1245.style.justifyContent="inherit";caja1245.style.margin="20px 0px 0px 0px";
         let leyenda3=document.createElement("label");leyenda3.style.display="flex";leyenda3.style.justifyContent="right";leyenda3.style.margin="0px 50px 0px 5px";leyenda3.innerHTML="Introduce el valor a estudiar y presiona \"ENTER\"";

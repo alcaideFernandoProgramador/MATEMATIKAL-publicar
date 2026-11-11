@@ -210,7 +210,7 @@ function _tarjetaRango(prefijo, rango){
   card.className="hist-entrada hist-rango-conf";
   let et=document.createElement("div");et.className="hist-etiqueta";et.textContent="✓ Rango confirmado";card.appendChild(et);
   let v=document.createElement("div");v.className="hist-badge-rango";
-  _rk(`\\text{rg}(${prefijo}) = ${rango}`,v);
+  _rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'} = ${rango}`,v);
   card.appendChild(v);
   return card;
 }
@@ -342,7 +342,7 @@ function _agregarCertificacion(parent, mat, prefijo, rango){
 
   parent.appendChild(resArea);
   let v=document.createElement("div");v.className="hist-badge-rango";
-  _rk("\\text{rg}("+prefijo+") = "+rango,v);
+  _rk("\\text{rg}"+(prefijo.startsWith("(")?prefijo:"("+prefijo+")")+" = "+rango,v);
   parent.appendChild(v);
 }
 
@@ -518,7 +518,7 @@ function _crearTarjetaActiva(mat, numFilas, numCols, maxOrd, prefijo, rangoReal,
     _clear(zona);
 
     let rowR=document.createElement("div");rowR.className="form-row";
-    let lRng=document.createElement("label");_rk(`\\text{rg}(${prefijo})=`,lRng);
+    let lRng=document.createElement("label");_rk(`\\text{rg}${prefijo.startsWith('(')?prefijo:'('+prefijo+')'}=`,lRng);
     let iRng=document.createElement("input");iRng.type="text";iRng.style.width="40px";
     rowR.appendChild(lRng);rowR.appendChild(iRng);
     zona.appendChild(rowR);
@@ -839,6 +839,16 @@ function _cramerCD(card, panel){
   let matCoef=_matCoefN();
   let b=matrizAmpN.map(function(r){return r[nIncognitas];});
   let n=nIncognitas;
+  // Más ecuaciones que incógnitas: Cramer solo vale para un sistema cuadrado. Se eligen n ecuaciones
+  // cuyo determinante no sea nulo; las demás son combinación lineal de ellas (el sistema es compatible).
+  if(matCoef.length!==n){
+    let filAll=Array.from({length:matCoef.length},function(_,i){return i;}),elegidas=null;
+    for(let fC of _combs(filAll,n)){let d=Matriz.determinanteNumerico(fC.map(function(i){return matCoef[i];}));if(d!==null&&Number.isFinite(d)&&!_esCeroNum(d)){elegidas=fC;break;}}
+    if(elegidas){
+      matCoef=elegidas.map(function(i){return matCoef[i];});b=elegidas.map(function(i){return b[i];});
+      _addValorLine(card,"\\text{Hay más ecuaciones que incógnitas: usamos las ecuaciones }"+elegidas.map(function(i){return i+1;}).join(",\\,")+"\\text{ (su determinante no es nulo); las demás son combinación lineal de ellas.}");
+    }
+  }
   let detA=Matriz.determinanteNumerico(matCoef);
 
   let mRows=matCoef.map(function(r){return r.map(_numLx).join("&");});

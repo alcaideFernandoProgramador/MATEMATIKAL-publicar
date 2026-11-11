@@ -176,6 +176,11 @@ function rellenarSistema(tabla){
           let z=0;for(let c=0;c<valores[r].length;c++){let n=_parseRacional(valores[r][c]);if(_esCeroNum(n))z++;}
           if(z===valores[0].length){valores.splice(r,1);numeroEcuaciones--;r--;}
         }
+        if(!valores.length){
+          _clear(caja112);let aviso=document.createElement("p");aviso.style.cssText="margin:10px;font-weight:700;line-height:1.5";
+          aviso.innerHTML="Todos los coeficientes y términos independientes son 0: todas las ecuaciones son 0 = 0.<br>Cualquier valor de las incógnitas es solución (sistema compatible indeterminado con "+numeroIncognitas+" parámetro"+(numeroIncognitas>1?"s":"")+" libre"+(numeroIncognitas>1?"s":"")+").<br>Pulsa «OTRO SISTEMA» para introducir otro.";
+          caja112.appendChild(aviso);return;
+        }
         matrizOriginalS=valores.map(r=>r.map(x=>_strip(x)));matrizOriginalN=matrizOriginalS.map(r=>r.map(_parseRacional));
         matrizActualN=_cloneMat(matrizOriginalN);matrizActualS=_cloneMat(matrizOriginalS);
         if(tablaInput&&tablaInput.parentNode)tablaInput.parentNode.removeChild(tablaInput);tablaInput=null;_renderContinuar();
@@ -296,6 +301,13 @@ function _bigAbs(x){return x<0n?-x:x;}
 function _bigGcd(a,b){a=_bigAbs(a);b=_bigAbs(b);while(b){let t=a%b;a=b;b=t;}return a||1n;}
 function _bigRowGcd(row,from){let g=0n;for(let j=from;j<row.length;j++){let v=_bigAbs(row[j]);if(v===0n)continue;g=g===0n?v:_bigGcd(g,v);if(g===1n)break;}return g||1n;}
 function _bigMatToStr(matB){let out=[];for(let i=0;i<matB.length;i++){let row=[];for(let j=0;j<matB[0].length;j++)row.push(matB[i][j].toString());out.push(row);}return out;}
+// Escribe "aFr - bFi" sin coeficientes 1 ni dobles signos
+function _opCombinacion(r,pv,a,i){
+  const term=(c,name)=>c===1n?name:(c===-1n?"-"+name:c.toString()+name);
+  let s="F"+(r+1)+"="+term(pv,"F"+(r+1)),b=-a;
+  if(b>0n)s+="+"+term(b,"F"+(i+1));else s+="-"+term(-b,"F"+(i+1));
+  return s;
+}
 function _escalonarEnteroConPasos(matStrInt){
   let A=_toBigIntMatFromStrInt(matStrInt),R=A.length,C=A[0].length,steps=[_bigMatToStr(A)],ops=[""],i=0,j=0;
   function push(op){steps.push(_bigMatToStr(A));ops.push(op||"");}
@@ -311,7 +323,7 @@ function _escalonarEnteroConPasos(matStrInt){
     for(let r=i+1;r<R;r++){
       let a=A[r][j];if(a===0n)continue;
       for(let c=j;c<C;c++)A[r][c]=pv*A[r][c]-a*A[i][c];
-      push("F"+(r+1)+"="+pv.toString()+"F"+(r+1)+"-"+a.toString()+"F"+(i+1));
+      push(_opCombinacion(r,pv,a,i));
       let g=_bigRowGcd(A[r],j);if(g>1n){for(let c=j;c<C;c++)A[r][c]/=g;push("F"+(r+1)+"=(1/"+g.toString()+")F"+(r+1));}
     }
     i++;j++;
