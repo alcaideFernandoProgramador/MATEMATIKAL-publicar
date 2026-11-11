@@ -196,7 +196,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <li>Los cuatro tipos principales y cómo factorizar la incógnita.</li>
       <li>Ejemplos resueltos paso a paso de cada tipo.</li>
     </ol>
-    <p class="art-meta">Por Fernando Alcaide · MATEMATIKAL</p>
+    <p class="art-meta">Por Fernando Alcaide Guindo · Matemáticas de Bachillerato</p>
   </div>
 
   <!-- ÍNDICE -->
@@ -333,7 +333,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AX = B \Rightarrow X = A^{-1}B\)</p>
       <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
-      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X = A⁻¹B</p>
       <div class="k">\[X = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}5&4\\3&2\end{pmatrix} = \begin{pmatrix}5-3&4-2\\-5+6&-4+4\end{pmatrix} = \begin{pmatrix}2&2\\1&0\end{pmatrix}\]</div>
       <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&2\\1&0\end{pmatrix}\)</div>
@@ -345,7 +345,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común: el paréntesis queda a la izquierda de X</p>
       <p>\((A+B)X = C \Rightarrow X = (A+B)^{-1}C\)</p>
       <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
-      <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+      <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,[\mathrm{Adj}(A+B)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X</p>
       <div class="k">\[X = (A+B)^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}4&3\\2&3\end{pmatrix} = \begin{pmatrix}4-2&3-3\\-4+4&-3+6\end{pmatrix} = \begin{pmatrix}2&0\\0&3\end{pmatrix}\]</div>
       <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&0\\0&3\end{pmatrix}\)</div>
@@ -357,7 +357,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AXB = C \Rightarrow X = A^{-1}CB^{-1}\)</p>
       <p class="ejemplo-paso">Paso 2: calcular A⁻¹ y B⁻¹</p>
-      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,\text{adj}(B)^T = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,[\mathrm{Adj}(B)]^t = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X = A⁻¹CB⁻¹</p>
       <div class="k">\[X = A^{-1}CB^{-1} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}3&5\\2&3\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&2\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&1\\1&0\end{pmatrix}\]</div>
       <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&1\\1&0\end{pmatrix}\)</div>
@@ -369,7 +369,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
       <p>\(AX = C - B \Rightarrow X = A^{-1}(C-B)\)</p>
       <p class="ejemplo-paso">Paso 2: calcular C − B y A⁻¹</p>
-      <div class="k">\[C-B = \begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix},\qquad A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1\cdot3}\begin{pmatrix}3&0&0\\0&6&0\\0&0&2\end{pmatrix} = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\]</div>
+      <div class="k">\[C-B = \begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix},\qquad A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{2\cdot1\cdot3}\begin{pmatrix}3&0&0\\0&6&0\\0&0&2\end{pmatrix} = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X</p>
       <div class="k">\[X = A^{-1}(C-B) = \begin{pmatrix}\tfrac{1}{2}&0&0\\0&1&0\\0&0&\tfrac{1}{3}\end{pmatrix}\begin{pmatrix}2&0&4\\3&1&-1\\0&6&3\end{pmatrix} = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\]</div>
       <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&2\\3&1&-1\\0&2&1\end{pmatrix}\)</div>
@@ -382,8 +382,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
       <p>\(AXB - AXC = D \Rightarrow AX(B-C) = D \Rightarrow X = A^{-1}D(B-C)^{-1}\)</p>
       <p class="ejemplo-paso">Paso 2: calcular B − C, A⁻¹ y (B−C)⁻¹</p>
       <div class="k">\[B-C = \begin{pmatrix}1&1&0\\0&1&2\\0&0&1\end{pmatrix}\]</div>
-      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\]</div>
-      <div class="k">\[(B-C)^{-1} = \frac{1}{\det(B-C)}\,\text{adj}(B-C)^T = \frac{1}{1}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix}\]</div>
+      <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{1}\begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\]</div>
+      <div class="k">\[(B-C)^{-1} = \frac{1}{\det(B-C)}\,[\mathrm{Adj}(B-C)]^t = \frac{1}{1}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix}\]</div>
       <p class="ejemplo-paso">Paso 3: calcular X</p>
       <div class="k">\[X = A^{-1}D(B-C)^{-1} = \begin{pmatrix}1&0&0\\-2&1&0\\2&-1&1\end{pmatrix}\begin{pmatrix}1&1&2\\1&2&6\\-1&2&7\end{pmatrix}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&1&2\\-1&0&2\\0&2&5\end{pmatrix}\begin{pmatrix}1&-1&2\\0&1&-2\\0&0&1\end{pmatrix} = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\]</div>
       <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&2\\-1&1&0\\0&2&1\end{pmatrix}\)</div>
@@ -407,7 +407,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
           <p>\(AX = B \Rightarrow X = A^{-1}B\)</p>
           <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
-          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{3\cdot1-1\cdot2}\begin{pmatrix}1&-1\\-2&3\end{pmatrix} = \begin{pmatrix}1&-1\\-2&3\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{3\cdot1-1\cdot2}\begin{pmatrix}1&-1\\-2&3\end{pmatrix} = \begin{pmatrix}1&-1\\-2&3\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = A^{-1}B = \begin{pmatrix}1&-1\\-2&3\end{pmatrix}\begin{pmatrix}7&4\\5&3\end{pmatrix} = \begin{pmatrix}7-5&4-3\\-14+15&-8+9\end{pmatrix} = \begin{pmatrix}2&1\\1&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&1\\1&1\end{pmatrix}\)</div>
@@ -426,7 +426,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
           <p>\(XA = B \Rightarrow X = BA^{-1}\)</p>
           <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
-          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = BA^{-1} = \begin{pmatrix}4&3\\7&4\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}4-3&-4+6\\7-4&-7+8\end{pmatrix} = \begin{pmatrix}1&2\\3&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\3&1\end{pmatrix}\)</div>
@@ -445,7 +445,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común: el paréntesis queda a la izquierda de X</p>
           <p>\(AX + BX = C \Rightarrow (A+B)X = C \Rightarrow X = (A+B)^{-1}C\)</p>
           <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
-          <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <div class="k">\[A+B = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,[\mathrm{Adj}(A+B)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = (A+B)^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}8&3\\5&2\end{pmatrix} = \begin{pmatrix}8-5&3-2\\-8+10&-3+4\end{pmatrix} = \begin{pmatrix}3&1\\2&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}3&1\\2&1\end{pmatrix}\)</div>
@@ -464,7 +464,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X</p>
           <p>\(AXB = C \Rightarrow X = A^{-1}CB^{-1}\)</p>
           <p class="ejemplo-paso">Paso 2: calcular A⁻¹ y B⁻¹</p>
-          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,\text{adj}(B)^T = \frac{1}{1}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{1}\begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix} = \begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix},\qquad B^{-1} = \frac{1}{\det(B)}\,[\mathrm{Adj}(B)]^t = \frac{1}{1}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = A^{-1}CB^{-1} = \begin{pmatrix}1&0&0\\-1&1&0\\1&-1&1\end{pmatrix}\begin{pmatrix}1&1&1\\3&4&2\\2&4&3\end{pmatrix}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&1&1\\2&3&1\\0&1&2\end{pmatrix}\begin{pmatrix}1&-1&1\\0&1&-1\\0&0&1\end{pmatrix} = \begin{pmatrix}1&0&1\\2&1&0\\0&1&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&0&1\\2&1&0\\0&1&1\end{pmatrix}\)</div>
@@ -483,7 +483,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común: el paréntesis queda a la izquierda de X</p>
           <p>\(AX - BX + CX = D \Rightarrow (A-B+C)X = D \Rightarrow X = (A-B+C)^{-1}D\)</p>
           <p class="ejemplo-paso">Paso 2: calcular (A−B+C)⁻¹</p>
-          <div class="k">\[A-B+C = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A-B+C)^{-1} = \frac{1}{\det(A-B+C)}\,\text{adj}(A-B+C)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <div class="k">\[A-B+C = \begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad (A-B+C)^{-1} = \frac{1}{\det(A-B+C)}\,[\mathrm{Adj}(A-B+C)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = (A-B+C)^{-1}D = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}10&5\\6&4\end{pmatrix} = \begin{pmatrix}10-6&5-4\\-10+12&-5+8\end{pmatrix} = \begin{pmatrix}4&1\\2&3\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}4&1\\2&3\end{pmatrix}\)</div>
@@ -502,7 +502,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X sacando factor común: el paréntesis queda a la derecha de X</p>
           <p>\(XA + XB = C \Rightarrow X(A+B) = C \Rightarrow X = C(A+B)^{-1}\)</p>
           <p class="ejemplo-paso">Paso 2: calcular (A+B)⁻¹</p>
-          <div class="k">\[A+B = \begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,\text{adj}(A+B)^T = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+          <div class="k">\[A+B = \begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad (A+B)^{-1} = \frac{1}{\det(A+B)}\,[\mathrm{Adj}(A+B)]^t = \frac{1}{1\cdot1-1\cdot0}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = C(A+B)^{-1} = \begin{pmatrix}2&3\\1&4\end{pmatrix}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}2+0&-2+3\\1+0&-1+4\end{pmatrix} = \begin{pmatrix}2&1\\1&3\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&1\\1&3\end{pmatrix}\)</div>
@@ -522,8 +522,8 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p>\(AXB + AXC = D \Rightarrow AX(B+C) = D \Rightarrow X = A^{-1}D(B+C)^{-1}\)</p>
           <p class="ejemplo-paso">Paso 2: calcular B + C, A⁻¹ y (B+C)⁻¹</p>
           <div class="k">\[B+C = \begin{pmatrix}2&1\\1&1\end{pmatrix}\]</div>
-          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{1}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
-          <div class="k">\[(B+C)^{-1} = \frac{1}{\det(B+C)}\,\text{adj}(B+C)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{1}\begin{pmatrix}1&-1\\0&1\end{pmatrix} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\]</div>
+          <div class="k">\[(B+C)^{-1} = \frac{1}{\det(B+C)}\,[\mathrm{Adj}(B+C)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = A^{-1}D(B+C)^{-1} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\begin{pmatrix}5&4\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}4&3\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&2\\0&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\0&1\end{pmatrix}\)</div>
@@ -543,7 +543,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p>\(AX + B = CX + D \Rightarrow (A-C)X = D-B \Rightarrow X = (A-C)^{-1}(D-B)\)</p>
           <p class="ejemplo-paso">Paso 2: calcular A−C, D−B y (A−C)⁻¹</p>
           <div class="k">\[A-C = \begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad D-B = \begin{pmatrix}5&8\\2&3\end{pmatrix}\]</div>
-          <div class="k">\[(A-C)^{-1} = \frac{1}{\det(A-C)}\,\text{adj}(A-C)^T = \frac{1}{2\cdot0-1\cdot1}\begin{pmatrix}0&-1\\-1&2\end{pmatrix} = \begin{pmatrix}0&1\\1&-2\end{pmatrix}\]</div>
+          <div class="k">\[(A-C)^{-1} = \frac{1}{\det(A-C)}\,[\mathrm{Adj}(A-C)]^t = \frac{1}{2\cdot0-1\cdot1}\begin{pmatrix}0&-1\\-1&2\end{pmatrix} = \begin{pmatrix}0&1\\1&-2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = (A-C)^{-1}(D-B) = \begin{pmatrix}0&1\\1&-2\end{pmatrix}\begin{pmatrix}5&8\\2&3\end{pmatrix} = \begin{pmatrix}2&3\\1&2\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}2&3\\1&2\end{pmatrix}\)</div>
@@ -562,7 +562,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
           <p class="ejemplo-paso">Paso 1: Despejar la incógnita X (transpuesta)</p>
           <p>\(AX^t = B \Rightarrow X^t = A^{-1}B \Rightarrow X = \left(A^{-1}B\right)^t\)</p>
           <p class="ejemplo-paso">Paso 2: calcular A⁻¹</p>
-          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,\text{adj}(A)^T = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
+          <div class="k">\[A^{-1} = \frac{1}{\det(A)}\,[\mathrm{Adj}(A)]^t = \frac{1}{2\cdot1-1\cdot1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\]</div>
           <p class="ejemplo-paso">Paso 3: calcular X</p>
           <div class="k">\[X = \left(A^{-1}B\right)^t = \left(\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}4&7\\3&4\end{pmatrix}\right)^t = \begin{pmatrix}1&3\\2&1\end{pmatrix}^t = \begin{pmatrix}1&2\\3&1\end{pmatrix}\]</div>
           <div class="resultado-final">SOLUCIÓN:&nbsp;&nbsp;&nbsp;&nbsp;\(X = \begin{pmatrix}1&2\\3&1\end{pmatrix}\)</div>
@@ -595,7 +595,7 @@ h1.art-titulo{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.7rem)
     <ul class="pasos-lista">
       <li><strong>¿Qué ocurre si X aparece en los dos miembros?</strong> Se pasan al primer miembro: \(AX + B = CX + D \Rightarrow (A-C)X = D-B\).</li>
       <li><strong>¿Puede haber más de una solución?</strong> Si los factores son invertibles, la solución es única. Si alguno es singular, pueden existir infinitas o ninguna.</li>
-      <li><strong>¿Las matrices tienen que ser cuadradas?</strong> Para que la inversa exista, sí.</li>
+      <li><strong>¿Las matrices tienen que ser cuadradas?</strong> Las que hay que invertir (los factores que multiplican a la incógnita) sí, porque solo una matriz cuadrada puede tener inversa. La herramienta de esta página trabaja con matrices cuadradas del mismo orden.</li>
       <li><strong>¿Qué tipo de ecuaciones NO resuelve la herramienta?</strong> Las de Sylvester (\(AX + XB = C\)), donde los factores izquierdo y derecho de X difieren en cada sumando.</li>
       <li><strong>¿Se pueden usar fracciones?</strong> Sí, como enteros, decimales o fracciones \(a/b\).</li>
     </ul>

@@ -181,7 +181,11 @@ function analyzeEquation(lhsStr, rhsStr, unknownName) {
     else        freeTrms.push({ sign:  t.sign, coeff: t.coeff || 1, str: t.str });
   }
 
-  if (xTerms.length === 0) throw `La ecuación no contiene la incógnita ${unknownName}.`;
+  if (xTerms.length === 0) {
+    if ((lhsStr + rhsStr).indexOf(unknownName) !== -1)
+      throw 'No se puede despejar ' + unknownName + ' escrita así: la herramienta no admite la incógnita dentro de paréntesis. Desarrolla primero los paréntesis (por ejemplo, A(X+B)=C se escribe AX+AB=C).';
+    throw `La ecuación no contiene la incógnita ${unknownName}.`;
+  }
 
   // Validar el exponente de la incógnita
   const xExpSet = [...new Set(xTerms.map(t => t.xExp))];
@@ -2157,7 +2161,10 @@ function initFase2(analysis) {
         for (let i = 0; i < gN; i++) {
           const row = [];
           for (let j = 0; j < gN; j++) {
-            const v = cells[i][j].value.trim().replace(',', '.');
+            let v = cells[i][j].value.trim();
+            if (/\d\s+\d/.test(v)) { showError('Valor no válido en ' + name + ' (fila ' + (i+1) + ', col ' + (j+1) + '): hay un espacio entre dos números.', errDiv); return; }
+            v = v.replace(/\s+/g, '').replace(',', '.').replace(/^([+\-]?)\./, function(_, sg){ return sg + '0.'; });
+            if (/\/[+\-]?0+(\.0*)?$/.test(v)) { showError('División por cero en ' + name + ' (fila ' + (i+1) + ', col ' + (j+1) + ').', errDiv); return; }
             if (!v) { showError(`Falta un valor en ${name} (fila ${i+1}, col ${j+1}).`, errDiv); return; }
             row.push(v);
           }
@@ -2232,7 +2239,8 @@ function initFase2(analysis) {
     if (ev.key !== 'Enter' && ev.key !== 'Tab') return;
     ev.preventDefault();
     clearEl(errDiv);
-    const nVal = parseInt(orderInp.value, 10);
+    const nTxt = orderInp.value.trim();
+    const nVal = /^\d+$/.test(nTxt) ? Number(nTxt) : NaN;
     if (!Number.isInteger(nVal) || nVal < 1 || nVal > 5) {
       showError('El orden debe ser un entero entre 1 y 5.', errDiv); return;
     }
