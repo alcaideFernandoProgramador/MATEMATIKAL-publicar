@@ -27,6 +27,7 @@
     try { return normalizeZero(ExpresionAlgebraica.simplificar(String(expr))); }
     catch(e){ return normalizeZero(String(expr)); }
   }
+  function fixDecimal(v){ return String(v ?? '').trim().replace(/,/g,'.').replace(/(^|[^\d])\.(\d)/g,'$10.$2'); }
   function normalizeZero(s){ s = String(s ?? '0').trim(); return (s === '-0' || s === '+0') ? '0' : s; }
 
   function showError(msg, where){
@@ -145,7 +146,7 @@
   }
 
   function normalizeEquationText(text){
-    return String(text || '').trim().replace(/\s+/g,'').replace(/,/g,'.')
+    return fixDecimal(String(text || '').replace(/\s+/g,''))
       .replace(/\^-\s*1/g,'^(-1)').replace(/\^T(?![A-Za-z0-9])/g,'^t')
       .replace(/([A-Z])\^1(?!\d)/g,'$1')
       .replace(/([A-Z])\^2(?!\d)/g,'($1*$1)');
@@ -168,6 +169,10 @@
     if((eq.match(/=/g) || []).length !== 1) throw 'La condición debe tener exactamente un signo igual (=).';
     const parts = eq.split('=');
     if(!parts[0] || !parts[1]) throw 'La condición debe tener dos miembros no vacíos.';
+    for(const side of parts){
+      if(/[+\-*\/^.]$/.test(side) || /^[*\/^.]/.test(side) || /[+\-*\/^][*\/^)]/.test(side) || /[+\-][+\-]/.test(side) || /\(\)/.test(side) || /\([*\/^]/.test(side))
+        throw 'La condición está mal escrita: revisa que no sobre ni falte ningún operador (+, −, ·, ^) ni paréntesis.';
+    }
     return { raw:eq, lhs:parts[0], rhs:parts[1] };
   }
 
@@ -213,7 +218,7 @@
   function buildParticularProblem(rows, cols, entries, condition){
     validateUnknownPower(condition, gUnknownName, rows, cols);
     const eq = parseMatrixEquation(condition);
-    const flatEntries = entries.flat().map(v => String(v || '0').trim().replace(/,/g,'.') || '0');
+    const flatEntries = entries.flat().map(v => fixDecimal(v || '0') || '0');
     if(flatEntries.some(v => /[A-Z]/.test(v))) throw 'En la matriz con parámetros solo se admiten números y letras minúsculas.';
     const variables = collectScalarNames(flatEntries.join('+') + '+' + eq.lhs + '+' + eq.rhs);
     const matrixNames = collectUppercaseNames(eq.lhs + eq.rhs, [gUnknownName,'I']);
@@ -596,7 +601,7 @@
     for(let i = 0; i < rows; i++){
       const row = [];
       for(let j = 0; j < cols; j++){
-        const v = cells[i][j].value.trim().replace(',','.');
+        const v = fixDecimal(cells[i][j].value);
         if(!v) throw 'Falta un valor en ' + name + ' (fila ' + (i+1) + ', columna ' + (j+1) + ').';
         Fraction.from(simplify(v));
         row.push(v);
@@ -774,7 +779,7 @@
   }
 
   function readDimensions(rowsStr, colsStr){
-    const rows = parseInt(rowsStr, 10), cols = parseInt(colsStr, 10);
+    const rows = /^\s*\d+\s*$/.test(rowsStr) ? parseInt(rowsStr, 10) : NaN, cols = /^\s*\d+\s*$/.test(colsStr) ? parseInt(colsStr, 10) : NaN;
     if(!Number.isInteger(rows) || rows < 1 || rows > 6) throw 'El número de filas debe ser un entero entre 1 y 6.';
     if(!Number.isInteger(cols) || cols < 1 || cols > 6) throw 'El número de columnas debe ser un entero entre 1 y 6.';
     return {rows, cols};
@@ -794,7 +799,7 @@
     const entries = [];
     for(let i = 0; i < rows; i++){
       const row = [];
-      for(let j = 0; j < cols; j++) row.push(cells[i][j].value.trim().replace(',','.') || '0');
+      for(let j = 0; j < cols; j++) row.push(fixDecimal(cells[i][j].value) || '0');
       entries.push(row);
     }
     return entries;
@@ -968,8 +973,8 @@
       const dimMap = {};
       try {
         for(const [name, {rowsInp, colsInp}] of Object.entries(dimInputs)){
-          const rows = parseInt(rowsInp.value, 10);
-          const cols = parseInt(colsInp.value, 10);
+          const rows = /^\s*\d+\s*$/.test(rowsInp.value) ? parseInt(rowsInp.value, 10) : NaN;
+          const cols = /^\s*\d+\s*$/.test(colsInp.value) ? parseInt(colsInp.value, 10) : NaN;
           if(!Number.isInteger(rows) || rows < 1 || rows > 6)
             throw 'Dimensiones incorrectas para ' + name + ': el número de filas debe ser un entero entre 1 y 6.';
           if(!Number.isInteger(cols) || cols < 1 || cols > 6)
@@ -1451,7 +1456,7 @@
     wrap.appendChild(matrix); chain.appendChild(wrap);
     function submitMatrix(){
       clearEl(errorDiv);
-      const values = inputs.map(input => input.value.trim().replace(/,/g,'.'));
+      const values = inputs.map(input => fixDecimal(input.value));
       if(values.some(value => !value)){
         showError('Rellena todas las entradas de la matriz X.', errorDiv);
         const missing = inputs.find(input => !input.value.trim()); if(missing) missing.focus(); return;
@@ -1627,6 +1632,10 @@
         addStep(caja21, 'Paso 2: Convertir la igualdad de los dos miembros en un sistema lineal', false, linearCard => {
           return renderLinearSystemStep(linearCard, problem, knownMap, result, () => {
             if(result.solution.status === 'none'){
+              const conclusion = document.createElement('p');
+              conclusion.className = 'msgError';
+              conclusion.textContent = 'El sistema es incompatible (aparece una igualdad imposible, como 0 = 1), así que no existe ninguna matriz ' + problem.unknownName + ' que cumpla la condición.';
+              caja21.appendChild(conclusion);
               appendSolutionSummary(problem, result, null);
               caja21.scrollTop = caja21.scrollHeight; return;
             }
