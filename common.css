@@ -112,3 +112,6 @@ html body .formulaBox strong{
 .mk-btn-validar:active{transform:translateY(1px)}
 /* Botón "Otra matriz" de las calculadoras: mismo aspecto que los enlaces de la cabecera */
 #controlesTop button.abreVentana{color:#2563eb;font-family:inherit;cursor:pointer;line-height:normal}
+
+/* Enlace del autor en la firma de los artículos */
+.art-meta a{color:inherit;text-decoration:underline;text-underline-offset:2px}
