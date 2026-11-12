@@ -227,12 +227,9 @@ footer:not(.siteFooter) a:hover{text-decoration:underline;}
 /* Fix: caja1 inicial ajustada al contenido (no estira en grid) */
 #caja1{display:block;align-self:start;height:auto;min-height:0;}
 
-/* Opción 9: cada signo = empieza una línea nueva, con los signos alineados en una columna */
-#caja21 .exp-linea-vertical{display:grid;grid-template-columns:1em max-content;justify-content:start;align-items:center;column-gap:.4rem;row-gap:.75rem;}
-#caja21 .exp-linea-vertical>.exp-bloque:first-child{grid-column:1/-1;}
-#caja21 .exp-linea-vertical>.exp-igual{grid-column:1;padding:0;}
+/* Opción 9: los pasos van uno detrás de otro y solo pasan a la línea siguiente cuando no caben */
+#caja21 .exp-linea-vertical{display:flex;flex-wrap:wrap;align-items:center;column-gap:.5rem;row-gap:.75rem;}
 #caja21 .exp-linea-vertical .exp-bloque>div{margin-bottom:0!important;}
-#caja21 .exp-linea-vertical>.exp-igual+.exp-bloque{grid-column:2;}
 
 /* ===== RESPONSIVE TABLET / MÓVIL ===== */
 @media (max-width:1100px){
